@@ -20,6 +20,7 @@ const crearBitacora = async ({
         usuarioId,
         mensaje,
         type,
+        
       },
     });
 

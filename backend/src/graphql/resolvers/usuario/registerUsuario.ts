@@ -53,9 +53,7 @@ const registerUsuario = async (_: unknown, args: RegisterUsuarioArgs) => {
 
         await crearBitacora({
             usuarioId: nuevoUsuario.id,
-            accion: `registro de usuario`,
             type: AccionesBitacora.CREATE_USER,
-            ip
         });
 
         // Generar token para el nuevo usuario

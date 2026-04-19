@@ -12,7 +12,6 @@
 // de las tablas se hagan en el orden correcto
 // -------------------------------------------
 
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
@@ -34,15 +33,12 @@ model Usuario {
 }
 
 model Bitacora {
-  id        Int              @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   usuarioId Int
-  usuario   Usuario          @relation(fields: [usuarioId], references: [id])
-  accion    String
-  type      AccionesBitacora
-  ip        String
-  hora      DateTime         @default(now())
-  fecha     DateTime         @updatedAt
-  mensaje   String?
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  type AccionesBitacora
+  hora DateTime @default(now())
+  mensaje String?
 }
 
 enum AccionesBitacora {

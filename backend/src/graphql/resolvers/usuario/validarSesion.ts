@@ -6,7 +6,7 @@ interface validarSesionArgs {
 
 const validarSesion = async (_: unknown, { token }: validarSesionArgs) => {
     try {
-        const { usuario } = await verificarToken(token);
+        const usuario  = await verificarToken(token);
 
         if (!usuario) {
             return errorResponse({ message: 'Token inválido o expirado' });

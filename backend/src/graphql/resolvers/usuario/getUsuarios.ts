@@ -21,9 +21,9 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
     }
 
     try {
-        const { isAuthenticated, usuario } = await verificarToken(token);
+        const usuario = await verificarToken(token);
 
-        if (!isAuthenticated || !usuario) {
+        if (!usuario) {
             return errorResponse({ message: "Token inválido o expirado" });
         }
 
@@ -64,9 +64,7 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
 
         await crearBitacora({
             type: AccionesBitacora.GET_USUARIOS,
-            ip,
             usuarioId: usuario.id,
-            accion: "obtención de usuarios",
         });
 
         return successResponse({

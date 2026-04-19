@@ -54,8 +54,6 @@ const loginUsuario = async (_: unknown, args: LoginUsuarioArgs) => {
 
         await crearBitacora({
             usuarioId: usuario.id,
-            accion: "inicio de sesión",
-            ip: ip || "N/A",
             type: AccionesBitacora.LOGIN
         });
 

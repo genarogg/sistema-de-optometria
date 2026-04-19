@@ -12,7 +12,7 @@ interface resetPassWithTokenArgs {
 const resetPassWithToken = async (_: unknown, { token, nuevaContrasena, ip }: resetPassWithTokenArgs) => {
     try {
 
-        const { usuario } = await verificarToken(token);
+        const usuario = await verificarToken(token);
 
         if (!usuario) {
             return errorResponse({ message: 'Token inválido o expirado' });
@@ -43,10 +43,8 @@ const resetPassWithToken = async (_: unknown, { token, nuevaContrasena, ip }: re
         // Crear una entrada en la bitácora
         crearBitacora({
             usuarioId: usuarioId,
-            accion: `Cambio de contraseña`,
             mensaje: `El usuario ${usuarioActualizado.email} cambió su contraseña`,
             type: AccionesBitacora.CREATE_USER,
-            ip,
         });
 
         const tokenInit = generarToken({ id: Number(usuarioId) });
