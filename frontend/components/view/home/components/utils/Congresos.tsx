@@ -1,7 +1,9 @@
 import { GraduationCap, Users, Globe2, ArrowRight } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import congresoImg from "@/assets/congreso.jpg";
+import imgCongreso from "@/public/congreso.jpg";
+
 
 const Congresos = () => {
   return (
@@ -54,7 +56,7 @@ const Congresos = () => {
 
             <div className="mt-8 pt-6 border-t border-border/60">
               <Button asChild size="lg" className="group">
-                <Link to="/login">
+                <Link href="/login">
                   Inscribirse en el próximo congreso
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
@@ -66,8 +68,9 @@ const Congresos = () => {
           <div className="relative order-1 lg:order-2">
             <div className="absolute -inset-4 bg-gradient-hero opacity-20 rounded-3xl blur-2xl" />
             <div className="relative rounded-2xl overflow-hidden shadow-elegant border border-border/60">
-              <img
-                src={congresoImg}
+              <Image
+                src={imgCongreso}
+                blurDataURL={imgCongreso.blurDataURL}
                 alt="Asistentes en un congreso de optometría con conferencias y exposiciones"
                 width={1024}
                 height={1024}

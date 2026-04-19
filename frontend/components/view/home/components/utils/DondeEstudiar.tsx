@@ -1,5 +1,6 @@
 import { GraduationCap, MapPin } from "lucide-react";
-import university from "@/assets/university.jpg";
+import imgUniversity from "@/public/university.jpg";
+import Image from "next/image";
 
 const universidades = [
   "Universidad de las Ciencias de la Salud",
@@ -12,8 +13,9 @@ const DondeEstudiar = () => {
       <div className="container grid lg:grid-cols-2 gap-12 items-center">
         <div className="relative order-2 lg:order-1">
           <div className="absolute -inset-4 bg-gradient-hero opacity-20 blur-2xl rounded-full" />
-          <img
-            src={university}
+          <Image
+            src={imgUniversity}
+            blurDataURL={imgUniversity.blurDataURL}
             alt="Campus universitario en Venezuela donde se imparte la carrera de Optometría"
             loading="lazy"
             width={1200}

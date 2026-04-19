@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Plus, LayoutGrid, List, Search, BookOpen } from "lucide-react";
 import { Book, INITIAL_BOOKS } from "@/lib/books-data";
-import { BookCard } from "@/components/book-card";
-import { BookTable } from "@/components/book-table";
-import { BookModal } from "@/components/book-modal";
+import { BookCard } from "@/components/mono/book-card";
+import { BookTable } from "@/components/mono/book-table";
+import { BookModal } from "@/components/mono/book-modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
