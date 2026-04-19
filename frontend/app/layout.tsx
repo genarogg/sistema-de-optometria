@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import '../styles/tailwind.css'
+import "../styles/style.css"
 
 const _nunito = Nunito({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
