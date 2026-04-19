@@ -1,0 +1,8 @@
+packages:
+  - api
+  - docs
+  - frontend
+  - backend
+  - lib
+  - lib/* 
+  - lib/**/*

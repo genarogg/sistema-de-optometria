@@ -1,0 +1,40 @@
+{
+  "name": "monorepo",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "description": "Monorepo con Turborepo: Astro (docs), React.js (frontend) y Fastify (backend).",
+  "engines": {
+    "node": "22"
+  },
+  "workspaces": [
+    "docs",
+    "frontend",
+    "backend",
+    "lib"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "dex": "pnpm prismaInit && turbo run dev --parallel",
+    "build": "pnpm run sync:env && turbo run build --filter=backend --filter=frontend --filter=docs",
+    "start": "turbo run start",
+    "-----server-----": "-----------------------------------------",
+    "prismaInit": "cd backend && pnpm run prismaInit",
+    "prismaReset": "cd backend && npx prisma migrate reset",
+    "prismaMigrate": "cd backend && npx prisma migrate",
+    "prismaMigrateOnly": "cd backend && npx prisma migrate --create-only",
+    "prismaGenerate": "cd backend && npx prisma generate",
+    "-----lib-----": "-----------------------------------------",
+    "publicar": "cd lib && pnpm run publicar",
+    "-----Global-----": "-----------------------------------------",
+    "clean:install": "node ./global/clean.js && pnpm install && pnpm run sync:global && pnpm run sync:env",
+    "sync:global": "node ./global/syncToModules.js",
+    "sync:env": "node ./global/envPropagation.js",
+    "enumGenerar": "cd backend && pnpm run enumGenerar && cd.. && pnpm run sync:global"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "turbo": "^2.7.2"
+  },
+  "packageManager": "pnpm@8.15.0"
+}

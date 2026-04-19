@@ -1,0 +1,65 @@
+// Convierte este schema de Prisma a formato database.build, incluyendo:
+// - Todas las tablas con sus columnas y tipos de datos
+// - Claves primarias (pk)
+// - Claves foráneas (fk) con sus relaciones
+// - Campos únicos (unique)
+// - Valores por defecto cuando sean relevantes
+// - Omite de las tablas los valores createdAt y updatedAt
+// - Los enums como tablas de referencia
+
+// -------------------------------------------
+// refactoriza el orden de las tablas para que la creacion
+// de las tablas se hagan en el orden correcto
+// -------------------------------------------
+
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Usuario {
+  id        Int        @id @default(autoincrement())
+  name      String
+  email     String     @unique
+  password  String
+  Bitacora  Bitacora[]
+  rol       Rol        @default(CLIENTE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Bitacora {
+  id        Int              @id @default(autoincrement())
+  usuarioId Int
+  usuario   Usuario          @relation(fields: [usuarioId], references: [id])
+  accion    String
+  type      AccionesBitacora
+  ip        String
+  hora      DateTime         @default(now())
+  fecha     DateTime         @updatedAt
+  mensaje   String?
+}
+
+enum AccionesBitacora {
+  LOGIN
+  CREATE_ADMIN
+  CREATE_USER
+  UPDATE_ADMIN
+  UPDATE_USER
+  DELETE_ADMIN
+  DELETE_USER
+  VIEW
+  ERROR
+  GET_USUARIOS
+}
+
+enum Rol {
+  ADMIN
+  ASISTENTE
+  CLIENTE
+}
