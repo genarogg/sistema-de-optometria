@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ImgHeroEye from "../../../../../public/hero-eye.jpg"
+import ImgHeroEye from "@/public/hero-eye.jpg"
 
 const Hero = () => {
   return (

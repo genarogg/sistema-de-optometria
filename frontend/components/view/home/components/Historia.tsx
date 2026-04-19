@@ -1,6 +1,7 @@
 import { ScrollText, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import historiaImg from "@/assets/historia.jpg";
+import Image from "next/image";
+import historiaImg from "@/public/historia.jpg";
 
 const Historia = () => {
   return (
@@ -44,8 +45,9 @@ const Historia = () => {
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-hero opacity-20 rounded-3xl blur-2xl" />
             <div className="relative rounded-2xl overflow-hidden shadow-elegant border border-border/60">
-              <img
+              <Image
                 src={historiaImg}
+                blurDataURL={historiaImg.blurDataURL}
                 alt="Historia de la optometría en Venezuela: equipos ópticos antiguos"
                 width={1280}
                 height={896}
