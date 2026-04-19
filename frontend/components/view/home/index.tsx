@@ -1,16 +1,20 @@
 'use client'
 import React from 'react'
 import LayoutSimple from "@/components/layout/simple";
-import Hero from './components/utils/Hero'
-import Valores from './components/utils/Valores'
-import MisionVision from './components/utils/MisionVision'
-import LineasAccion from './components/utils/LineasAccion';
-import DondeEstudiar from './components/utils/DondeEstudiar';
-import Congresos from './components/utils/Congresos';
+import Hero from './components/Hero'
+import Valores from './components/Valores'
+import MisionVision from './components/MisionVision'
+import LineasAccion from './components/LineasAccion';
+import DondeEstudiar from './components/DondeEstudiar';
+import Congresos from './components/Congresos';
+import Colegiarte from './components/Colegiarte';
+import Biblioteca from './components/Biblioteca';
+import Historia from './components/Historia';
+import Autoridades from './components/Autoridades';
+import Alianzas from './components/Alianzas';
+import Contacto from './components/Contacto';
 
-interface HomeProps {
-
-}
+interface HomeProps { }
 
 const Home: React.FC<HomeProps> = () => {
     return (
@@ -21,6 +25,12 @@ const Home: React.FC<HomeProps> = () => {
             <LineasAccion />
             <DondeEstudiar />
             <Congresos />
+            <Colegiarte />
+            <Biblioteca />
+            <Historia />
+            <Autoridades />
+            <Alianzas />
+            <Contacto />
         </LayoutSimple>
     );
 }

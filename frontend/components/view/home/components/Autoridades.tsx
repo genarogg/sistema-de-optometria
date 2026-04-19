@@ -1,7 +1,9 @@
-import directiva1 from "@/assets/directiva-1.jpg";
-import directiva2 from "@/assets/directiva-2.jpg";
-import directiva3 from "@/assets/directiva-3.jpg";
-import directiva4 from "@/assets/directiva-4.jpg";
+import Image from "next/image";
+
+import directiva1 from "@/public/directiva-1.jpg";
+import directiva2 from "@/public/directiva-2.jpg";
+import directiva3 from "@/public/directiva-3.jpg";
+import directiva4 from "@/public/directiva-4.jpg";
 
 const miembros = [
   { nombre: "Lcda. Maulin Milano", cargo: "Presidenta interina", foto: directiva1 },
@@ -31,8 +33,9 @@ const Autoridades = () => {
               className="group rounded-2xl bg-card border border-border/60 shadow-soft hover:shadow-elegant transition-all hover:-translate-y-1 overflow-hidden"
             >
               <div className="relative aspect-square overflow-hidden bg-secondary">
-                <img
+                <Image
                   src={m.foto}
+                  blurDataURL={m.foto.blurDataURL}
                   alt={`Retrato de ${m.nombre}, ${m.cargo} de la Sociedad Venezolana de Optometría`}
                   loading="lazy"
                   width={512}

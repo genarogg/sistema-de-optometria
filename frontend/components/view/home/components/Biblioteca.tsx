@@ -1,6 +1,7 @@
 import { BookOpen, ArrowRight } from "lucide-react";
-import { Link } from "@tanstack/react-router";
-import bibliotecaImg from "@/assets/biblioteca.jpg";
+import Link from "next/link";
+import Image from "next/image";
+import bibliotecaImg from "@/public/biblioteca.jpg";
 
 const Biblioteca = () => {
   return (
@@ -11,7 +12,7 @@ const Biblioteca = () => {
           <div className="relative order-last lg:order-first">
             <div className="absolute -inset-4 bg-gradient-hero opacity-20 rounded-3xl blur-2xl" />
             <div className="relative rounded-2xl overflow-hidden shadow-elegant border border-border/60">
-              <img
+              <Image
                 src={bibliotecaImg}
                 alt="Biblioteca de la Sociedad Venezolana de Optometría con libros académicos especializados"
                 width={1280}
@@ -46,7 +47,7 @@ const Biblioteca = () => {
 
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
-                to="/biblioteca"
+                href="/biblioteca"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold shadow-soft hover:shadow-glow hover:opacity-90 transition-all"
               >
                 <BookOpen className="w-4 h-4" />
