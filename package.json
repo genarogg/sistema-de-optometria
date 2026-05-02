@@ -8,10 +8,10 @@
     "node": "22"
   },
   "workspaces": [
-    "docs",
+
     "frontend",
-    "backend",
-    "lib"
+    "backend"
+
   ],
   "scripts": {
     "dev": "turbo run dev --parallel",
