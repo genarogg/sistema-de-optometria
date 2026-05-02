@@ -1,0 +1,25 @@
+export enum AccionesBitacora {
+  CREATE_ADMIN = "CREATE_ADMIN",
+  CREATE_USER = "CREATE_USER",
+  DELETE_ADMIN = "DELETE_ADMIN",
+  DELETE_USER = "DELETE_USER",
+  ERROR = "ERROR",
+  GET_USUARIOS = "GET_USUARIOS",
+  LOGIN = "LOGIN",
+  UPDATE_ADMIN = "UPDATE_ADMIN",
+  UPDATE_USER = "UPDATE_USER",
+  VIEW = "VIEW",
+}
+
+export enum Rol {
+  ADMIN = "ADMIN",
+  ASISTENTE = "ASISTENTE",
+  CLIENTE = "CLIENTE",
+}
+
+/** Rol simulado en desarrollo */
+export enum FakeRol {
+  ADMIN = "ADMIN",
+  SUPER = "SUPER",
+  ESTANDAR = "ESTANDAR",
+}

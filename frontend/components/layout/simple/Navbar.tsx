@@ -1,4 +1,5 @@
 import { Eye } from "lucide-react";
+import { A } from "@/components/nano";
 
 const links = [
   { href: "#mision", label: "Misión" },
@@ -21,7 +22,7 @@ const Navbar = () => {
           <span className="grid place-items-center w-9 h-9 rounded-lg bg-gradient-hero text-primary-foreground shadow-soft">
             <Eye className="w-5 h-5" />
           </span>
-          <span className="text-foreground">SVO</span>
+          <span className="text-foreground">CVO</span>
         </a>
         <ul className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-foreground">
           {links.map((l) => (
@@ -32,12 +33,12 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <a
-          href="#contacto"
-          className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
-        >
-          Únete
-        </a>
+        <A href="/dashboard/login" className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
+          login
+
+        </A>
+
+
       </nav>
     </header>
   );

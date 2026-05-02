@@ -1,0 +1,36 @@
+@keyframes form-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(16px);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.025) translateY(-3px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes form-exit {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9) translateY(-16px);
+  }
+}
+
+.form-enter {
+  animation: form-enter 0.4s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  will-change: transform, opacity;
+}
+
+.form-exit {
+  animation: form-exit 0.22s cubic-bezier(0.4, 0, 1, 1) both;
+  will-change: transform, opacity;
+  pointer-events: none;
+}

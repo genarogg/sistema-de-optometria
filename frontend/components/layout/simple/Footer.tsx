@@ -19,7 +19,7 @@ const Footer = () => {
         <div>
           <h4 className="font-display font-bold mb-4">Contacto</h4>
           <ul className="space-y-2 text-sm text-primary-foreground/80">
-            <li className="flex items-center gap-2"><Mail className="w-4 h-4" /> contacto@svoptometria.org</li>
+            <li className="flex items-center gap-2"><Mail className="w-4 h-4" /> contacto@cvoptometria.org</li>
             <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> Caracas, Venezuela</li>
           </ul>
         </div>
@@ -30,7 +30,7 @@ const Footer = () => {
             Forma parte del gremio que está transformando la optometría venezolana.
           </p>
           <a
-            href="mailto:contacto@svoptometria.org"
+            href="mailto:contacto@cvoptometria.org"
             className="inline-flex px-5 py-2.5 rounded-full font-semibold bg-primary-foreground text-primary hover:bg-primary-foreground/90 transition-colors"
           >
             Agremiarme

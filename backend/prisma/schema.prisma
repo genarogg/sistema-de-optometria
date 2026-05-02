@@ -5,13 +5,10 @@
 // - Campos únicos (unique)
 // - Valores por defecto cuando sean relevantes
 // - Omite de las tablas los valores createdAt y updatedAt
-// - Los enums como tablas de referencia
 
 // -------------------------------------------
-// refactoriza el orden de las tablas para que la creacion
-// de las tablas se hagan en el orden correcto
-// -------------------------------------------
 
+// -------------------------------------------
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
@@ -21,24 +18,13 @@ datasource db {
   provider = "postgresql"
 }
 
-model Usuario {
-  id        Int        @id @default(autoincrement())
-  name      String
-  email     String     @unique
-  password  String
-  Bitacora  Bitacora[]
-  rol       Rol        @default(CLIENTE)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-}
+// ── Enums ──────────────────────────────────────────────
+// Primero los enums, ya que los modelos los referencian
 
-model Bitacora {
-  id        Int     @id @default(autoincrement())
-  usuarioId Int
-  usuario   Usuario @relation(fields: [usuarioId], references: [id])
-  type AccionesBitacora
-  hora DateTime @default(now())
-  mensaje String?
+enum Rol {
+  ADMIN
+  ASISTENTE
+  CLIENTE
 }
 
 enum AccionesBitacora {
@@ -54,8 +40,30 @@ enum AccionesBitacora {
   GET_USUARIOS
 }
 
-enum Rol {
-  ADMIN
-  ASISTENTE
-  CLIENTE
+// ── Modelos ────────────────────────────────────────────
+// Usuario va primero porque Bitacora depende de él
+
+model Usuario {
+  id             Int        @id @default(autoincrement())
+  primerNombre   String
+  primerApellido String
+  avatar         String?
+  telefono       String
+  cedula         String     @unique
+  email          String     @unique
+  password       String
+  Bitacora       Bitacora[]
+  rol            Rol        @default(CLIENTE)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Bitacora {
+  id        Int     @id @default(autoincrement())
+  usuarioId Int
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  type    AccionesBitacora
+  fecha   DateTime         @default(now())
+  mensaje String?
 }

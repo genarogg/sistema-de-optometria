@@ -6,7 +6,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const seed = async () => {
     try {
         const adminUser = await prisma.usuario.findUnique({
-            where: { email: "admin@admin.com" },
+            where: { email: "genarrogg@gmail.com" },
         });
 
         if (adminUser) {

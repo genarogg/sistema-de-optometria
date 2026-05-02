@@ -1,0 +1,15 @@
+.perfil {
+  &.clean.containerAll > main {
+    align-items: flex-start;
+    /* padding-top: 20px; */
+  }
+
+  & .modal-trigger {
+    color: #282828;
+    background-color: transparent;
+
+    &:hover {
+      background-color: #e4e9f1;
+    }
+  }
+}
