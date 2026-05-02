@@ -2,6 +2,7 @@ import ApolloClientProvider from '@/providers/ApolloProvider'
 import type { Metadata } from 'next'
 import { Nunito } from 'next/font/google'
 import '../styles/tailwind.css'
+import "../styles/style.css"
 import { Toaster } from 'sonner'
 
 const nunito = Nunito({ subsets: ["latin"], weight: ["400", "600", "800"] });

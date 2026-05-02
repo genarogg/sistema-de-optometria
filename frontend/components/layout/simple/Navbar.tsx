@@ -1,6 +1,7 @@
 import { Eye, Menu } from "lucide-react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -8,8 +9,6 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-import A from "@/components/nano/A"
 
 const links = [
   { href: "#mision", label: "Misión" },
@@ -54,12 +53,14 @@ const Navbar = () => {
                     <ul className="flex flex-col">
                       {links.map((l) => (
                         <li key={l.href}>
-                          <A
-                            href={l.href}
-                            className="text-base font-medium text-muted-foreground hover:text-primary transition-colors block py-3 border-b border-border/40"
-                          >
-                            {l.label}
-                          </A>
+                          <SheetClose asChild>
+                            <a
+                              href={l.href}
+                              className="text-base font-medium text-muted-foreground hover:text-primary transition-colors block py-3 border-b border-border/40"
+                            >
+                              {l.label}
+                            </a>
+                          </SheetClose>
                         </li>
                       ))}
                     </ul>
@@ -100,12 +101,12 @@ const Navbar = () => {
           >
             {links.map((l) => (
               <li key={l.href}>
-                <A
+                <a
                   href={l.href}
                   className="hover:text-primary transition-colors whitespace-nowrap leading-tight block"
                 >
                   {l.label}
-                </A>
+                </a>
               </li>
             ))}
           </ul>
@@ -113,13 +114,12 @@ const Navbar = () => {
 
         {/* ── Derecha ── */}
         <div className="flex justify-end shrink-0 md:w-[120px] lg:w-[140px]">
-
-          <A
+          <a
             href="/dashboard/login"
             className="inline-flex items-center px-3 py-1.5 rounded-full text-xs lg:text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity whitespace-nowrap"
           >
             Login
-          </A>
+          </a>
         </div>
 
       </nav >
