@@ -1,3 +1,8 @@
 html, body{
     scroll-behavior: smooth;
 }
+
+/* .dashboard{
+    display: flex;
+    justify-content: center;
+} */

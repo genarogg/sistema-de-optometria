@@ -82,47 +82,49 @@ const Navbar = () => {
         {/* ── Centro ── */}
 
         {/* Nombre — solo móvil */}
-        <div className="flex-1 flex justify-center md:hidden">
+   
+
+        <div className="flex md:hidden flex-col leading-tight text-center">
           <a href="#" className="flex flex-col leading-tight text-center">
-            <span className="text-primary text-[14px] sm:text-sm font-bold">
-              Colegio de Optometristas
-            </span>
-            {/* <span className="text-primary text-[10px] sm:text-xs opacity-80">
-              de Venezuela
-            </span> */}
-          </a>
-        </div>
+          <span className="text-primary text-[14px] sm:text-sm font-bold">
+            Colegio de Optometristas
+          </span>
+          <span className="text-primary text-[10px] sm:text-xs opacity-80">
+            de Venezuela
+          </span>
+        </a>
+      </div>
 
-        {/* Links — solo desktop: máximo 2 líneas */}
-        <div className="hidden md:flex flex-1 justify-center overflow-hidden px-3">
-          <ul
-            className="flex items-center justify-center gap-x-3 lg:gap-x-5 gap-y-0.5 text-xs lg:text-sm font-medium text-muted-foreground flex-wrap"
-            style={{ maxHeight: "2.8rem", overflow: "hidden" }}
-          >
-            {links.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
-                  className="hover:text-primary transition-colors whitespace-nowrap leading-tight block"
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* Links — solo desktop: máximo 2 líneas */}
+      <div className="hidden md:flex flex-1 justify-center overflow-hidden px-3">
+        <ul
+          className="flex items-center justify-center gap-x-3 lg:gap-x-5 gap-y-0.5 text-xs lg:text-sm font-medium text-muted-foreground flex-wrap"
+          style={{ maxHeight: "2.8rem", overflow: "hidden" }}
+        >
+          {links.map((l) => (
+            <li key={l.href}>
+              <a
+                href={l.href}
+                className="hover:text-primary transition-colors whitespace-nowrap leading-tight block"
+              >
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-        {/* ── Derecha ── */}
-        <div className="flex justify-end shrink-0 md:w-[120px] lg:w-[140px]">
-          <a
-            href="/dashboard/login"
-            className="inline-flex items-center px-3 py-1.5 rounded-full text-xs lg:text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity whitespace-nowrap"
-          >
-            Login
-          </a>
-        </div>
+      {/* ── Derecha ── */}
+      <div className="flex justify-end shrink-0 md:w-[120px] lg:w-[140px]">
+        <a
+          href="/dashboard/login"
+          className="inline-flex items-center px-3 py-1.5 rounded-full text-xs lg:text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity whitespace-nowrap"
+        >
+          Login
+        </a>
+      </div>
 
-      </nav >
+    </nav >
     </header >
   );
 };

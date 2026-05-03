@@ -7,6 +7,7 @@ import Title from "./Title";
 import SideBar from "./sidebar";
 
 import Nav from "../nav";
+import { useAuthStore } from "@/context/auth/AuthContext";
 
 interface HeaderProps {
     children?: React.ReactNode;
@@ -14,6 +15,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = () => {
+
+    const { isAuthenticated, logout } = useAuthStore((state) => state);
 
     const btnRemove = () => {
         console.log("btnRemove");
@@ -27,8 +30,17 @@ const Header: React.FC<HeaderProps> = () => {
     }
 
     const menuItems = [
-        { href: "#inicio", label: "Inicio" },
-        { href: "#servicios", label: "Servicios" },
+        { href: "/", label: "Inicio", visible: !isAuthenticated },
+        { href: "/dashboard/perfil", label: "Perfil", visible: isAuthenticated },
+        { href: "/dashboard/usuarios", label: "Usuarios", visible: isAuthenticated },
+        { href: "/dashboard/bitacora", label: "bitacora", visible: isAuthenticated },
+        {
+            href: "/dashboard/login",
+            label: "Salir",
+            visible: isAuthenticated,
+            onClick: () => { btnRemove(); logout(); }
+        },
+
     ];
 
 

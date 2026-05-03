@@ -77,7 +77,7 @@ const TablaUsuarios: React.FC<TablaUsuariosProps> = React.memo(
                 usuariosPaginados.map((usuario, index) => (
                   <TableRow
                     key={usuario.id}
-                    className={`transition-colors hover:bg-[#bedcff] ${
+                    className={`transition-colors hover:bg-primary/20 ${
                       index % 2 === 0 ? "bg-background" : "bg-muted/80"
                     }`}
                   >

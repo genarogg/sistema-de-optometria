@@ -1,13 +1,14 @@
 'use client'
 import React from 'react'
 import { Eye } from "lucide-react";
+import { A } from '@/components/nano';
 
 interface TitleProps { }
 
 const Title: React.FC<TitleProps> = () => {
     return (
         <div className="titulo">
-            <a href="#" className="flex items-center gap-2 font-display font-bold">
+            <A href="/" className="flex items-center gap-2 font-display font-bold">
                 {/* Desktop: Icono + CVO */}
                 <div className="hidden md:flex items-center gap-2">
                     <span className="grid place-items-center w-8 h-8 rounded-lg bg-gradient-hero text-primary-foreground shadow-soft shrink-0">
@@ -25,7 +26,7 @@ const Title: React.FC<TitleProps> = () => {
                         de Venezuela
                     </span>
                 </div>
-            </a>
+            </A>
         </div>
     );
 }
