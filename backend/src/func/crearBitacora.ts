@@ -18,9 +18,8 @@ const crearBitacora = async ({
     const bitacora = await prisma.bitacora.create({
       data: {
         usuarioId,
-        mensaje,
         type,
-        
+        mensaje,
       },
     });
 

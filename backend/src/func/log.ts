@@ -1,26 +1,44 @@
 import chalk from "chalk";
 
-const success = (...args: any[]) => {
-  return console.log(chalk.green(JSON.stringify(args.length === 1 ? args[0] : args, null, 2)));
+const isDev = process.env.NODE_ENV !== "production";
+
+const formatArgs = (args: any[]): string => {
+  return args
+    .map((arg) => {
+      if (typeof arg === "object" && arg !== null) {
+        return JSON.stringify(arg, null, 2);
+      }
+      return arg;
+    })
+    .join(" ");
 };
 
-const warning = (...args: any[]) => {
-  return console.log(chalk.yellow(JSON.stringify(args.length === 1 ? args[0] : args, null, 2)));
+const createLogger = (color: (value: string) => string) => {
+  return (...args: any[]) => {
+    console.log(color(formatArgs(args)));
+  };
 };
 
-const error = (...args: any[]) => {
-  return console.log(chalk.red(JSON.stringify(args.length === 1 ? args[0] : args, null, 2)));
+const createDevLogger = (color: (value: string) => string) => {
+  return (...args: any[]) => {
+    if (isDev) {
+      console.log(color(formatArgs(args)));
+    }
+  };
 };
 
-const info = (...args: any[]) => {
-  return console.log(chalk.cyan(JSON.stringify(args.length === 1 ? args[0] : args, null, 2)));
-};
+const success = createLogger(chalk.green);
+const warning = createLogger(chalk.yellow);
+const error = createLogger(chalk.red);
+const info = createLogger(chalk.cyan);
+const dev = createDevLogger(chalk.green);
 
 const log = {
   success,
   warning,
   error,
   info,
+  dev,
 };
 
 export default log;

@@ -71,7 +71,7 @@ import routerWorkes from '@/test/workes/router';
       head: ['nombre', 'Status'],
       colWidths: [20, 50]
     });
-
+// 
     tack()
     const semilla = await seed()
 

@@ -1,0 +1,37 @@
+##############################################
+# TIPOS
+##############################################
+
+type Bitacora {
+  id: Int!
+  usuario: Usuario!
+  
+  type: AccionesBitacora!
+  fecha: String!
+  mensaje: String
+}
+
+##############################################
+# RESPONSE
+##############################################
+
+type BitacoraResponse {
+  type: String!
+  message: String!
+  data: [Bitacora!]!
+  meta: Meta
+}
+
+##############################################
+# QUERY
+##############################################
+
+extend type Query {
+  getBitacora(
+    token: String!
+    page: Int
+    rol: Rol
+    accion: AccionesBitacora
+    searchTerm: String
+  ): BitacoraResponse!
+}

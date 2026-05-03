@@ -5,7 +5,8 @@ import {
     prisma,
     generarToken,
     compararContrasena,
-    validarCapchat
+    validarCapchat,
+    log
 } from "@fn";
 
 import { AccionesBitacora } from "@prisma/client";
@@ -14,24 +15,26 @@ interface LoginUsuarioArgs {
     email: string;
     password: string;
     captchaToken?: string;
-    ip?: string;
 }
 
 const loginUsuario = async (_: unknown, args: LoginUsuarioArgs) => {
-    const { email, password, captchaToken, ip } = args;
+
+    log.dev("Iniciando login de usuario", args);
+
+     const { email, password, captchaToken } = args;
 
     if (!email || !password) {
         return errorResponse({ message: "Email y contraseña son obligatorios" });
     }
 
-    if (captchaToken) {
-        const captchaValido = await validarCapchat(captchaToken);
+    // if (captchaToken) {
+    //     const captchaValido = await validarCapchat(captchaToken);
 
-        if (!captchaValido) {
-            return errorResponse({ message: "Captcha inválido" });
-        }
-    }
-    
+    //     if (!captchaValido) {
+    //         return errorResponse({ message: "Captcha inválido" });
+    //     }
+    // }
+
     try {
         const usuario = await prisma.usuario.findUnique({
             where: { email }
@@ -58,10 +61,7 @@ const loginUsuario = async (_: unknown, args: LoginUsuarioArgs) => {
         });
 
         const data = {
-            id: usuario.id,
-            name: usuario.name,
-            email: usuario.email,
-            rol: usuario.rol,
+            ...usuario,
             token
         }
 

@@ -1,19 +1,18 @@
 export enum AccionesBitacora {
-  CreateAdmin = 'CREATE_ADMIN',
-  CreateUser = 'CREATE_USER',
-  DeleteAdmin = 'DELETE_ADMIN',
-  DeleteUser = 'DELETE_USER',
-  Error = 'ERROR',
-  GetUsuarios = 'GET_USUARIOS',
-  Login = 'LOGIN',
-  UpdateAdmin = 'UPDATE_ADMIN',
-  UpdateUser = 'UPDATE_USER',
-  View = 'VIEW'
+  CREATE_ADMIN = 'CREATE_ADMIN',
+  CREATE_USER = 'CREATE_USER',
+  DELETE_ADMIN = 'DELETE_ADMIN',
+  DELETE_USER = 'DELETE_USER',
+  ERROR = 'ERROR',
+  GET_USUARIOS = 'GET_USUARIOS',
+  LOGIN = 'LOGIN',
+  UPDATE_ADMIN = 'UPDATE_ADMIN',
+  UPDATE_USER = 'UPDATE_USER',
+  VIEW = 'VIEW'
 }
 
 export enum Rol {
-  Admin = 'ADMIN',
-  Asistente = 'ASISTENTE',
-  Cliente = 'CLIENTE'
+  ADMIN = 'ADMIN',
+  ASISTENTE = 'ASISTENTE',
+  CLIENTE = 'CLIENTE'
 }
-/*  */

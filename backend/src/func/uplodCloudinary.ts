@@ -87,13 +87,38 @@ interface ArchivoSubido {
 }
 
 /**
- * Sube un archivo multimedia desde GraphQL Upload a Cloudinary
- * @param file - Objeto Upload de GraphQL
+ * Sube un archivo a Cloudinary. Soporta tanto archivos de GraphQL Upload como strings Base64.
+ * @param file - Objeto Upload de GraphQL o string Base64
  * @param folder - Carpeta opcional donde guardar en Cloudinary
  * @returns Objeto con información del archivo subido
  */
 export const guardarArchivo = async (file: any, folder = 'uploads'): Promise<ArchivoSubido> => {
     try {
+        // 1. Caso: El archivo es una cadena Base64
+        if (typeof file === 'string' && file.startsWith('data:image/')) {
+            const result = await cloudinary.uploader.upload(file, {
+                folder: folder,
+                resource_type: 'image',
+                quality: 'auto',
+                fetch_format: 'webp'
+            });
+
+            const publicId = result.public_id.split('/').pop() || result.public_id;
+            const format = result.format || 'webp';
+            const fileName = `${publicId}.${format}`;
+
+            return {
+                id: publicId,
+                format: format,
+                fileName: fileName,
+                url: result.url || '',
+                secureUrl: result.secure_url || '',
+                resourceType: result.resource_type || 'image',
+                originalFilename: 'base64_image'
+            };
+        }
+
+        // 2. Caso: El archivo viene de GraphQL Upload (createReadStream)
         const { createReadStream, filename, mimetype } = file.file;
 
         // Generar un hash único para el nombre del archivo
@@ -150,7 +175,7 @@ export const guardarArchivo = async (file: any, folder = 'uploads'): Promise<Arc
                     });
 
                     // Extraer el ID público (sin la carpeta)
-                    const publicId = result.public_id.split('/').pop();
+                    const publicId = result.public_id.split('/').pop() || result.public_id;
                     
                     // Determinar el formato final del archivo
                     // Si es una imagen y se ha convertido a webp, usamos webp
@@ -164,9 +189,9 @@ export const guardarArchivo = async (file: any, folder = 'uploads'): Promise<Arc
                         id: publicId,
                         format: format,
                         fileName: fileName, // Nuevo campo unificado
-                        url: result.url,
-                        secureUrl: result.secure_url,
-                        resourceType: result.resource_type,
+                        url: result.url || '',
+                        secureUrl: result.secure_url || '',
+                        resourceType: result.resource_type || 'auto',
                         originalFilename: filename
                     });
                 } catch (error) {

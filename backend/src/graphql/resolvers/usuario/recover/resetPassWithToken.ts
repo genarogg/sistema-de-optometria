@@ -43,8 +43,8 @@ const resetPassWithToken = async (_: unknown, { token, nuevaContrasena, ip }: re
         // Crear una entrada en la bitácora
         crearBitacora({
             usuarioId: usuarioId,
-            mensaje: `El usuario ${usuarioActualizado.email} cambió su contraseña`,
             type: AccionesBitacora.CREATE_USER,
+            mensaje: `El usuario ${usuarioActualizado.email} cambió su contraseña`,
         });
 
         const tokenInit = generarToken({ id: Number(usuarioId) });

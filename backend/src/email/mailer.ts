@@ -48,7 +48,7 @@ function getNextAccount(): Account {
   return account;
 }
 
-const mailer = async ({ email, subject, html }: EmailOptions): Promise<void> => {
+const mailer = async ({ email, subject, html }: EmailOptions): Promise<any> => {
   try {
     if (accounts.length === 0) {
       throw new Error("⚠️ No hay cuentas configuradas en el .env");
@@ -70,10 +70,17 @@ const mailer = async ({ email, subject, html }: EmailOptions): Promise<void> => 
       html,
     });
 
-    console.log(`✅ Email enviado con la cuenta: ${user}`);
+    return {
+      message: "Correo enviado exitosamente",
+      type: "success",
+    };
+
   } catch (error) {
     console.error("❌ Error al enviar email:", error);
+    return {
+      message: "Error al enviar el correo",
+      type: "error",
+    };
   }
 };
-
 export default mailer;

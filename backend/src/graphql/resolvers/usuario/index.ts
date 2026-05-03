@@ -1,22 +1,33 @@
-import registerUsuario from "./registerUsuario";
-import loginUsuario from "./loginUsuario";
-import resetPassword from "./resetSendEmail";
-import resetPassWithToken from "./resetPassWithToken";
+// auth
+import registerUsuario from "./auth/registerUsuario";
+import loginUsuario from "./auth/loginUsuario";
+import validarSesion from "./auth/validarSesion";
 
-import validarSesion from "./validarSesion";
-import getUsuarios from "./getUsuarios";
+// recover
+import resetSendEmail from "./recover/resetSendEmail";
+import resetPassWithToken from "./recover/resetPassWithToken";
+
+// admin usuarios
+import getUsuarios from "./usuarios/getUsuarios";
+import updateUsuarioAdmin from "./usuarios/updateUsuarioAdmin";
+//perfil
+import updateMyUsuario from "./perfil/updateMyUsuario";
+import getMyUsuario from "./perfil/getMyUsuario";
 
 const resolvers = {
     Query: {
         validarSesion,
-        getUsuarios
+        getUsuarios,
+        getMyUsuario
     },
-    
+
     Mutation: {
         registerUsuario,
         loginUsuario,
-        resetPassword,
-        resetPassWithToken
+        resetSendEmail,
+        resetPassWithToken,
+        updateMyUsuario,
+        updateUsuarioAdmin
     }
 };
 

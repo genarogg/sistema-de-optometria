@@ -3,18 +3,21 @@ import {
     errorResponse,
     prisma,
     verificarToken,
-    crearBitacora
+    crearBitacora,
+    log
 } from "@fn";
+
 import { Prisma, Rol, AccionesBitacora } from "@prisma/client";
 
 interface GetUsuariosArgs {
     token: string;
     filtro?: string;
-    ip?: string;
 }
 
 const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
-    const { token, filtro, ip } = args;
+    log.dev("getUsuarios called with args:", args);
+    
+    const { token, filtro } = args;
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
@@ -33,7 +36,7 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
             const filtroCleaned = filtro.trim();
             whereClause.OR = [
                 { email: { contains: filtroCleaned } },
-                { name: { contains: filtroCleaned } },
+                { cedula: { contains: filtroCleaned } },
             ];
         }
 
@@ -50,14 +53,8 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
 
         const usuarios = await prisma.usuario.findMany({
             where: whereClause,
-            select: {
-                id: true,
-                email: true,
-                name: true,
-                rol: true,
-                createdAt: true,
-            },
             orderBy: { createdAt: "desc" },
+            omit: { password: true }
         });
 
         const total = await prisma.usuario.count({ where: whereClause });

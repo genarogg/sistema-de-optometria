@@ -32,19 +32,26 @@ const sendEmail = async ({
   subject,
   templateName,
   templateData,
-}: sendEmailArgs): Promise<void> => {
+}: sendEmailArgs): Promise<{ message: string; type: string }> => {
   try {
     // Genera el HTML utilizando compileEJSTemplate
     const html = await compileEJSTemplate(templateName, templateData);
 
     // Envía el email con el HTML generado
-    await mailer({
+    const emailResult = await mailer({
       email,
       subject,
       html,
     });
+
+    return emailResult;
+
   } catch (error) {
     console.error("Error al enviar el email:", error);
+    return {
+      message: "Error al enviar el correo",
+      type: "error",
+    };
   }
 };
 

@@ -20,7 +20,7 @@
     "prismaMigrateOnly": "npx prisma migrate --create-only",
     "prismaGenerate": "npx prisma generate",
     "-----GraphQL-----": "-----------------------------------------",
-    "enumGenerar": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml && tsx scripts/getTypesPrisma.ts"
   },
   "dependencies": {
     "@apollo/server": "^5.2.0",

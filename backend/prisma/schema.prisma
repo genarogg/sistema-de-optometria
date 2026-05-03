@@ -5,10 +5,13 @@
 // - Campos únicos (unique)
 // - Valores por defecto cuando sean relevantes
 // - Omite de las tablas los valores createdAt y updatedAt
+// - Los enums como tablas de referencia
 
 // -------------------------------------------
-
+// refactoriza el orden de las tablas para que la creacion
+// de las tablas se hagan en el orden correcto
 // -------------------------------------------
+
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
@@ -17,31 +20,6 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
-// ── Enums ──────────────────────────────────────────────
-// Primero los enums, ya que los modelos los referencian
-
-enum Rol {
-  ADMIN
-  ASISTENTE
-  CLIENTE
-}
-
-enum AccionesBitacora {
-  LOGIN
-  CREATE_ADMIN
-  CREATE_USER
-  UPDATE_ADMIN
-  UPDATE_USER
-  DELETE_ADMIN
-  DELETE_USER
-  VIEW
-  ERROR
-  GET_USUARIOS
-}
-
-// ── Modelos ────────────────────────────────────────────
-// Usuario va primero porque Bitacora depende de él
 
 model Usuario {
   id             Int        @id @default(autoincrement())
@@ -66,4 +44,23 @@ model Bitacora {
   type    AccionesBitacora
   fecha   DateTime         @default(now())
   mensaje String?
+}
+
+enum AccionesBitacora {
+  LOGIN
+  CREATE_ADMIN
+  CREATE_USER
+  UPDATE_ADMIN
+  UPDATE_USER
+  DELETE_ADMIN
+  DELETE_USER
+  VIEW
+  ERROR
+  GET_USUARIOS
+}
+
+enum Rol {
+  ADMIN
+  ASISTENTE
+  CLIENTE
 }

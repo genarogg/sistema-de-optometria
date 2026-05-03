@@ -4,10 +4,14 @@
 
 type Usuario {
   id: Int!
-  name: String!
+  primerNombre: String!
+  primerApellido: String!
+  telefono: String!
+  cedula: String!
   email: String!
   rol: Rol!
   token: String!
+  avatar: String
 }
 
 ##############################################
@@ -34,25 +38,51 @@ type UsuariosResponse {
 extend type Query {
   validarSesion(token: String!): UsuarioResponse!
   getUsuarios(token: String!, filtro: String): UsuariosResponse!
+  getMyUsuario(token: String!): UsuarioResponse!
 }
 
 extend type Mutation {
   registerUsuario(
     token: String
-    name: String!
+    primerNombre: String!
+    primerApellido: String!
+    telefono: String!
+    cedula: String!
     email: String!
     password: String!
     captchaToken: String
-    rol: Rol
   ): UsuarioResponse!
 
   loginUsuario(
-    email: String!,
-    password: String!,
+    email: String!
+    password: String!
     captchaToken: String
   ): UsuarioResponse!
 
-  resetPassword(email: String!): NotificacionResponse!
+  resetSendEmail(email: String!): NotificacionResponse!
 
   resetPassWithToken(token: String!, nuevaContrasena: String!): UsuarioResponse!
+
+  updateMyUsuario(
+    token: String!
+    primerNombre: String
+    primerApellido: String
+    telefono: String
+    cedula: String
+    email: String
+    password: String
+    avatar: String
+  ): UsuarioResponse!
+
+  updateUsuarioAdmin(
+    token: String!
+    primerNombre: String
+    primerApellido: String
+    telefono: String
+    cedula: String
+    email: String
+    password: String
+    rol: Rol
+    usuarioId: Int!
+  ): UsuarioResponse!
 }

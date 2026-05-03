@@ -5,8 +5,12 @@ interface Usuario {
 }
 
 const generarToken = (usuario: Usuario): string => {
-  const JWTSECRETO = process.env.JWTSECRETO || "jwt-secret";
-  const JWTTIEMPO = process.env.JWTTIEMPO || "1d";
+  const JWTSECRETO = process.env.JWTSECRETO;
+  const JWTTIEMPO = process.env.JWTTIEMPO;
+
+  if (!JWTSECRETO || !JWTTIEMPO) {
+    throw new Error("Variables de entorno JWTSECRETO o JWTTIEMPO no definidas");
+  }
 
   const { id } = usuario;
 

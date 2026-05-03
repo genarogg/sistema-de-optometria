@@ -5,34 +5,39 @@ import {
     errorResponse,
     prisma,
     generarToken,
-    validarCapchat
+    validarCapchat,
+    log
 } from "@fn";
 import { AccionesBitacora, Rol } from "@prisma/client";
 
 interface RegisterUsuarioArgs {
-    name: string;
+    primerNombre: string;
+    primerApellido: string;
+    telefono: string;
+    cedula: string;
     email: string;
     password: string;
-    rol?: Rol;
     captchaToken?: string;
-    ip?: string;
 }
 
 const registerUsuario = async (_: unknown, args: RegisterUsuarioArgs) => {
-    const { name, email, password, rol, captchaToken, ip } = args;
 
-    if (!name || !email || !password) {
+    log.dev("Iniciando registro de usuario", args);
+
+    const { primerNombre, primerApellido, telefono, cedula, email, password, captchaToken } = args;
+
+    if (!primerNombre || !primerApellido || !telefono || !cedula || !email || !password) {
         return errorResponse({ message: "Todos los campos son obligatorios" });
     }
 
-    if (captchaToken) {
-        const captchaValido = await validarCapchat(captchaToken);
+    // if (captchaToken) {
+    //     const captchaValido = await validarCapchat(captchaToken);
 
-        if (!captchaValido) {
-            return errorResponse({ message: "Captcha inválido" });
-        }
-    }
-
+    //     if (!captchaValido) {
+    //         return errorResponse({ message: "Captcha inválido" });
+    //     }
+    // }
+// 
     try {
         const existe = await prisma.usuario.findUnique({ where: { email } });
 
@@ -44,7 +49,10 @@ const registerUsuario = async (_: unknown, args: RegisterUsuarioArgs) => {
 
         const nuevoUsuario = await prisma.usuario.create({
             data: {
-                name,
+                primerNombre,
+                primerApellido,
+                telefono,
+                cedula,
                 email,
                 password: hashedPassword,
                 rol: Rol.CLIENTE,

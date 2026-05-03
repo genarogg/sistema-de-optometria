@@ -1,4 +1,3 @@
-import * as util from "util";
 import ejs from "ejs";
 import path from "path";
 import { fileURLToPath } from "url";

@@ -3,9 +3,14 @@ import { prisma } from "@fn";
 import { Usuario } from "@prisma/client"
 
 const verificarToken = async (token: string): Promise<Usuario | null> => {
-    const JWTSECRETO = process.env.JWTSECRETO || "jwt-secret";
+    const JWTSECRETO = process.env.JWTSECRETO;
 
     try {
+
+        if (!JWTSECRETO) {
+            throw new Error("JWTSECRETO no definido");
+        }
+
         const payload = jwt.verify(token, JWTSECRETO) as JwtPayload;
 
         if (!payload?.id) {
