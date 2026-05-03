@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { LoginForm } from '@/components/view/loginFreya/components/LoginForm'
+import LayoutAuth from '@/components/layout/auth'
 
 interface pageProps {
 
@@ -8,7 +9,9 @@ interface pageProps {
 
 const page: React.FC<pageProps> = () => {
     return (
-        <LoginForm />
+        <LayoutAuth>
+            <LoginForm />
+        </LayoutAuth>
     );
 }
 

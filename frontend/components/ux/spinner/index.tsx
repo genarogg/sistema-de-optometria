@@ -38,13 +38,13 @@ export function OptometrySpinner() {
         </div>
 
         {/* Loading Text */}
-        <div className="text-center">
+        {/* <div className="text-center">
           <p className="text-xl font-semibold text-gray-700">Examinando</p>
           <p className="text-sm text-gray-500 mt-2">Procesando tu visión...</p>
-        </div>
+        </div> */}
 
         {/* Animated dots */}
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <div 
             className="w-2 h-2 rounded-full bg-blue-500"
             style={{
@@ -66,7 +66,7 @@ export function OptometrySpinner() {
               animationDelay: '0.4s'
             }}
           />
-        </div>
+        </div> */}
       </div>
 
       <style>{`

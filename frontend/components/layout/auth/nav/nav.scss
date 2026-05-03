@@ -1,0 +1,166 @@
+@mixin max-width($size) {
+  @media screen and (max-width: $size) {
+    @content;
+  }
+}
+
+.container-nav {
+  font-family: sans-serif;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav>ul {
+    display: flex;
+    gap: 5px;
+  }
+
+  li {
+    position: relative;
+    cursor: pointer;
+
+    .container-component {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container-label {
+      // padding: 0.5rem 1rem;
+      white-space: nowrap;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      font-weight: 600;
+      // padding: 0.5rem 1rem;
+    }
+
+    // &:hover > a,
+    // &:hover > .container-label {
+    //   background: #f0f0f0;
+    // }
+
+    /* ===== SUBMENÚ SIEMPRE VISIBLE ===== */
+    .submenu {
+      display: block;
+      position: relative;
+
+      top: auto;
+      left: auto;
+      background: transparent;
+      border: none;
+      min-width: auto;
+      box-shadow: none;
+      margin-left: 10px;
+
+
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        // padding-left: 1rem; /* indentación para diferenciar niveles */
+      }
+
+      li {
+        width: 100%;
+
+        a {
+          font-weight: 500 !important;
+        }
+      }
+    }
+
+    /* Subniveles anidados */
+    .submenu .submenu {
+      // padding-left: 1rem; /* más indentación */
+      border-left: none;
+    }
+  }
+
+  &.sin-iconos li .container-label {
+    // padding-left: 1rem;
+  }
+
+  .container-icono {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 0.5rem;
+  }
+
+  .container-label {
+    display: inline-block;
+  }
+}
+
+.nav-xs {
+  display: none;
+}
+
+
+
+@include max-width(1000px) {
+  .container-nav {
+    nav {
+      ul {
+        li {
+          .container-icono {
+            margin: 0 5px 0 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* @include max-width(950px) {
+
+  .header .container-nav {
+    display: none;
+  }
+
+} */
+
+@include max-width(950px) {
+
+  .nav-xs {
+    display: flex;
+
+  }
+
+
+  .container-nav.nav-xs {
+    background-color: rgba(#442897, 0.3);
+    background-color: #1c1c1c;
+    backdrop-filter: blur(10px);
+    height: 100vh;
+    width: 200px;
+    position: absolute;
+    right: -100%;
+    border-left: 1px solid rgba(28, 28, 28, 0.5);
+    ;
+
+    &.active {
+      right: 0;
+    }
+
+    nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+
+      li {
+        height: 36px;
+
+        .container-icono {
+          margin: 0 7px 0 15px;
+        }
+      }
+
+    }
+  }
+}

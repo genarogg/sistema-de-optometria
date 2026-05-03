@@ -5,6 +5,7 @@ import "./css/layout.scss"
 
 import { OptometrySpinner } from '@/components/ux/spinner';
 import { useAuthStore } from '@/context/auth/AuthContext';
+import useValidarSesion from "@/context/auth/useValidarSesion"
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -21,6 +22,8 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
 
     const { loading } = useAuthStore((state) => state);
+
+    useValidarSesion();
 
     return (
         <div className={`containerAll clean ${where}`}>

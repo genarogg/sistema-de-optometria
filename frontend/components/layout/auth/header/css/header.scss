@@ -1,4 +1,4 @@
-@import "../../../../../css/style.scss";
+
 
 .header-container {
     width: 100%;
@@ -25,7 +25,7 @@
         font-weight: 600;
 
         h1 {
-            color: $color-secondary;
+            color: #3d65fd;
             font-size: 18px;
         }
 
@@ -43,7 +43,7 @@
                 position: relative;
 
                 a {
-                    color: $color-secondary;
+                    color: #3d65fd;
                     text-decoration: none;
                     font-size: 14px;
                     font-weight: bold;
@@ -61,7 +61,7 @@
                 .user-img {
                     border-radius: 50%;
                     overflow: hidden;
-                    // @include square(40px);
+              
                     border: 3px solid #fff;
                     display: flex;
                     justify-content: center;
