@@ -39,6 +39,7 @@ const useValidarSesion = () => {
                     fetchPolicy: 'no-cache',
                 });
 
+                console.log(response)
                 const data: any = response.data;
 
                 console.log("validacion data: ", data)

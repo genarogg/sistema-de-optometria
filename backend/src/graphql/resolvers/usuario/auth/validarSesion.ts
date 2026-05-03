@@ -1,4 +1,4 @@
-import { verificarToken, successResponse, errorResponse } from '@fn';
+import { verificarToken, successResponse, errorResponse, log } from '@fn';
 
 interface validarSesionArgs {
     token: string;
@@ -6,6 +6,7 @@ interface validarSesionArgs {
 
 const validarSesion = async (_: unknown, { token }: validarSesionArgs) => {
     try {
+        log.dev('Validando sesión con token:', token);
         const usuario = await verificarToken(token);
 
         if (!usuario) {

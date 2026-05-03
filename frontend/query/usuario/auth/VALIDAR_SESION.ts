@@ -1,12 +1,10 @@
 import { gql } from "@apollo/client";
 
 const VALIDAR_SESION = gql`
-  query ValidarSesion($token: String!) {
+  query validarSesion($token: String!) {
     validarSesion(token: $token) {
       data {
-        token
         rol
-        
       }
     }
   }

@@ -126,7 +126,9 @@ const AuthSubmitButton = ({
         const { data: res } = await registerUsuario({
           variables: {
             primerNombre: data.firstName,
+            segundoNombre: data.secondName,
             primerApellido: data.lastName,
+            segundoApellido: data.secondLastName,
             telefono: data.phone,
             cedula: data.idNumber,
             email: data.email.toLowerCase(),

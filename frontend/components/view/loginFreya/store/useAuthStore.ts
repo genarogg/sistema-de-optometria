@@ -9,7 +9,9 @@ interface LoginData {
 
 interface RegisterData {
   firstName: string;
+  secondName: string;
   lastName: string;
+  secondLastName: string;
   idNumber: string;
   email: string;
   phone: string;
@@ -58,7 +60,9 @@ const initialLoginData: LoginData = {
 
 const initialRegisterData: RegisterData = {
   firstName: "",
+  secondName: "",
   lastName: "",
+  secondLastName: "",
   idNumber: "",
   email: "",
   phone: "",

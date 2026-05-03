@@ -6,6 +6,8 @@ import { Eye, EyeOff } from 'lucide-react';
 
 interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'type'> {
     className?: string;
+    classNameInputContainer?: string;
+    classNameInput?: string;
     name: string;
     type: 'password' | 'text' | 'email' | 'date' | 'number' | 'tel' | 'url';
     icon?: React.ReactNode;
@@ -46,6 +48,8 @@ const resolveInitialHasContent = (
 
 const Input = forwardRef<InputRef, InputProps>(({
     className = "",
+    classNameInput = "",
+    classNameInputContainer = "",
     icon,
     iconFixed = false,
     name,
@@ -141,7 +145,8 @@ const Input = forwardRef<InputRef, InputProps>(({
 
             <div
                 className={`
-                    container-input 
+                    ${classNameInputContainer}
+                    container-input
                     ${isFocused ? "focus" : ""} 
                     ${icon ? "" : "no-icon"} 
                     ${error ? "error" : ""} 
@@ -156,6 +161,7 @@ const Input = forwardRef<InputRef, InputProps>(({
                 )}
 
                 <input
+                    className={classNameInput}
                     ref={inputRef}
                     type={inputType}
                     name={name}

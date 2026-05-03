@@ -21,19 +21,20 @@ export function RegisterForm() {
   return (
     <>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl text-primary">Crear cuenta</CardTitle>
-        <CardDescription>Completa el formulario para registrarte</CardDescription>
+        <CardTitle className="text-2xl text-primary mb-3">Crear cuenta</CardTitle>
+        {/* <CardDescription>Completa el formulario para registrarte</CardDescription> */}
       </CardHeader>
       <CardContent>
-        <form 
+        <form
           onSubmit={(e) => e.preventDefault()}
           className="space-y-4 pt-4"
         >
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 h-[70px]">
             <Input
+              classNameInputContainer="!min-w-[170]"
               name="firstName"
               type="text"
-              placeholder="Nombre"
+              placeholder="Primer nombre"
               icon={<BsPersonFill />}
               value={registerData.firstName}
               onChange={(e) => updateRegisterData({ firstName: e.target.value })}
@@ -42,19 +43,45 @@ export function RegisterForm() {
             />
 
             <Input
+              classNameInputContainer="!min-w-[170]"
+              name="secondName"
+              type="text"
+              placeholder="Segundo nombre"
+              icon={<BsPersonFill />}
+              value={registerData.secondName}
+              onChange={(e) => updateRegisterData({ secondName: e.target.value })}
+              disabled={isLoading}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 h-[70px]">
+            <Input
+              classNameInputContainer="!min-w-[170]"
               name="lastName"
               type="text"
-              placeholder="Apellido"
+              placeholder="Primer apellido"
               icon={<BsPersonFill />}
               value={registerData.lastName}
               onChange={(e) => updateRegisterData({ lastName: e.target.value })}
               required
               disabled={isLoading}
             />
+
+            <Input
+              classNameInputContainer="!min-w-[170]"
+              name="secondLastName"
+              type="text"
+              placeholder="Segundo apellido"
+              icon={<BsPersonFill />}
+              value={registerData.secondLastName}
+              onChange={(e) => updateRegisterData({ secondLastName: e.target.value })}
+              disabled={isLoading}
+            />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 h-[70px]">
             <Input
+              classNameInputContainer="!min-w-[170]"
               name="idNumber"
               type="text"
               placeholder="Cédula"
@@ -66,6 +93,7 @@ export function RegisterForm() {
             />
 
             <Input
+              classNameInputContainer="!min-w-[170]"
               name="phone"
               type="tel"
               placeholder="Teléfono"
