@@ -20,7 +20,7 @@ export function LoginForm() {
   return (
     <>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Iniciar sesión</CardTitle>
+        <CardTitle className="text-2xl text-primary">Iniciar sesión</CardTitle>
       </CardHeader>
       <CardContent>
         <form 

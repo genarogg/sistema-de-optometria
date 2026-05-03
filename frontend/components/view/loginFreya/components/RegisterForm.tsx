@@ -21,7 +21,7 @@ export function RegisterForm() {
   return (
     <>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Crear cuenta</CardTitle>
+        <CardTitle className="text-2xl text-primary">Crear cuenta</CardTitle>
         <CardDescription>Completa el formulario para registrarte</CardDescription>
       </CardHeader>
       <CardContent>

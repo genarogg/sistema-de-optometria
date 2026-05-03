@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import LoginFreya  from '@/components/view/loginFreya/components/index'
+import LoginFreya from '@/components/view/loginFreya'
 import LayoutAuth from '@/components/layout/auth'
 import "./css/style.scss"
 

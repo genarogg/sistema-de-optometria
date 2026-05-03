@@ -8,8 +8,8 @@ const Footer: React.FC<FooterProps> = () => {
 
     return (
         <footer className="footer-container">
-            <div className="desktop-footer">
-                <p><strong>© {new Date().getFullYear()} Sociedad Venezolana de Optometría. Todos los derechos reservados.</strong></p>
+            <div className="desktop-footer text-primary">
+                <p className="text-primary"><strong className="text-primary">© {new Date().getFullYear()} Sociedad Venezolana de Optometría. Todos los derechos reservados.</strong></p>
             </div>
         </footer>
     );

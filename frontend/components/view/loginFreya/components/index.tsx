@@ -79,9 +79,9 @@ function AuthForm() {
   if (!isReady) return null;
 
   return (
-    <div className="conteiner-form">
-      <Card className="w-full max-w-md mx-auto overflow-hidden ">
-        <div className={wrapperClass}>
+    <div className="container-form">
+      <Card className="w-full max-w-md mx-auto overflow-hidden">
+        <div key={displayView} className={wrapperClass}>
           {displayView === "login" && <LoginForm />}
           {displayView === "register" && <RegisterForm />}
           {displayView === "reset" && <ResetPasswordForm />}

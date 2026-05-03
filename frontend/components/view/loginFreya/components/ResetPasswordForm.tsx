@@ -19,7 +19,7 @@ export function ResetPasswordForm() {
   return (
     <>
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Restablecer contraseña</CardTitle>
+        <CardTitle className="text-2xl text-primary">Restablecer contraseña</CardTitle>
         <CardDescription>Ingresa tu correo y te enviaremos un enlace de recuperación</CardDescription>
       </CardHeader>
       <CardContent>
