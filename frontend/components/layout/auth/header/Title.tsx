@@ -1,28 +1,32 @@
 'use client'
 import React from 'react'
-import { A } from '@/components/nano'
+import { Eye } from "lucide-react";
 
-interface TitleProps {
-
-}
+interface TitleProps { }
 
 const Title: React.FC<TitleProps> = () => {
-    const Separador = () => {
-        return <span style={{ position: "relative", bottom: "1px" }}> | </span>
-    }
     return (
-
         <div className="titulo">
-            <A href="#" className="titulo-link">
-                <h1>
-                    <strong>
-                        UNERG<Separador />SOLICITUDES
-                    </strong>
-                </h1>
-            </A>
+            <a href="#" className="flex items-center gap-2 font-display font-bold">
+                {/* Desktop: Icono + CVO */}
+                <div className="hidden md:flex items-center gap-2">
+                    <span className="grid place-items-center w-8 h-8 rounded-lg bg-gradient-hero text-primary-foreground shadow-soft shrink-0">
+                        <Eye className="w-4 h-4" />
+                    </span>
+                    <span className="text-foreground text-base">CVO</span>
+                </div>
+
+                {/* Móvil: Nombre completo en dos líneas */}
+                <div className="flex md:hidden flex-col leading-tight text-center">
+                    <span className="text-primary text-[14px] sm:text-sm font-bold">
+                        Colegio de Optometristas
+                    </span>
+                    <span className="text-primary text-[10px] sm:text-xs opacity-80">
+                        de Venezuela
+                    </span>
+                </div>
+            </a>
         </div>
-
-
     );
 }
 

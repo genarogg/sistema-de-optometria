@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from "./header"
 import Footer from './Footer'
+
 import "./css/layout.scss"
 
 import { OptometrySpinner } from '@/components/ux/spinner';

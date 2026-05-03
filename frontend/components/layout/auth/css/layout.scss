@@ -1,20 +1,24 @@
-
-
 .clean.containerAll {
     display: grid;
-    min-height: 130vh;
-    min-height: 130dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     grid-template-rows: auto 1fr auto;
 
 
     background-color: #f5e6ed;
     background-color: #f6f9ff;
-    background-image: url(/img/logo-unerg.webp);
+    // background-image: url(/img/logo-unerg.webp);
     background-size: contain;
     background-position: 50%;
     background-repeat: no-repeat;
     background-blend-mode: soft-light;
     background-attachment: fixed;
+
+    >main {
+        // justify-content: center;
+        // align-items: center;
+        // display: flex;
+    }
 
 
     >header {

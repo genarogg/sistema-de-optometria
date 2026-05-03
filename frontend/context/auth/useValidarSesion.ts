@@ -26,7 +26,7 @@ const useValidarSesion = () => {
                     console.log("No hay token");
 
                     if (location?.startsWith("/dashboard")) {
-                        navigate.push("/");
+                        navigate.push("/dashboard/login");
                     }
 
                     logout();
@@ -58,7 +58,7 @@ const useValidarSesion = () => {
                 pendingLogin.current = { usuario, token };
 
                 // Si estamos en la página de inicio, redirigimos
-                if (location === "/") {
+                if (location === "/dashboard/login") {
                     navigate.push("/dashboard");
                 }
 

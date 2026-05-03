@@ -7,5 +7,6 @@ import CheckBox from "./btn/checkbox";
 import BtnRowCircle from "./btn/btn-row-circle";
 import WhatsAppButton from "./btn/whatsapp"
 import BtnLoki from "./btn/btn-loki";
+import BtnFreya from "./btn/btn-freya";
 
-export { Icon, Input, BtnText, CheckBox, BtnRowCircle, WhatsAppButton, BtnLoki };
+export { Icon, Input, BtnText, CheckBox, BtnRowCircle, WhatsAppButton, BtnLoki, BtnFreya };

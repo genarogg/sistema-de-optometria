@@ -1,7 +1,7 @@
 import React from "react";
 import "./css/header.scss";
 
-import { BtnLoki } from "@/components/ux";
+import { BtnFreya } from "@/components/ux";
 
 import Title from "./Title";
 import SideBar from "./sidebar";
@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = () => {
                 <nav>
                     <ul className="elements">
                         <li>
-                            <BtnLoki onClick={() => { toggleAside() }} />
+                            <BtnFreya onClick={() => { toggleAside() }} />
                         </li>
                         <li>
                             <Title />

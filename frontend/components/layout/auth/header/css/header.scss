@@ -1,13 +1,14 @@
-
-
 .header-container {
+    border-bottom: 1px solid #10707f80;
+    box-shadow: 0px 1px 17px 0px #10707f66;
     width: 100%;
-    height: 70px;
-    // background-color: #0e0f1a;
-    border-bottom: 1px solid #fff;
-    box-shadow: rgba(1, 41, 112, 0.2) 0px 0px 30px;
+    height: 64px;
+    background-color: rgba(var(--background), 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(var(--border), 0.6);
     z-index: 1000000;
-    position: relative;
+    position: sticky;
+    top: 0;
 
     .desktop-header,
     .movile-header {
@@ -15,20 +16,14 @@
         display: flex;
         height: inherit;
         justify-content: space-between;
-        padding: 0 40px;
-        box-shadow: 0px 0 30px rgba(1, 41, 112, 0.2);
+        padding: 0 1.5rem;
+        max-width: 1536px;
+        margin: 0 auto;
     }
 
     .titulo {
-        min-width: 200px;
-        font-size: 10px;
-        font-weight: 600;
-
-        h1 {
-            color: #3d65fd;
-            font-size: 18px;
-        }
-
+        display: flex;
+        align-items: center;
     }
 
     nav {
@@ -61,7 +56,7 @@
                 .user-img {
                     border-radius: 50%;
                     overflow: hidden;
-              
+
                     border: 3px solid #fff;
                     display: flex;
                     justify-content: center;

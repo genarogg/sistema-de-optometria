@@ -5,89 +5,79 @@
 }
 
 .container-aside {
-  @include width(240px);
-  transition: all 0.5s ease;
+  @include width(280px);
+  transition: transform 0.3s ease-in-out;
 
-  position: absolute;
+  position: fixed;
   left: 0;
-  height: calc(100vh - 70px);
-  height: calc(100dvh - 70px);
-  top: 70px;
-  left: -100%;
-  box-shadow: 20px 20px 30px 10px rgba(1, 42, 112, 0.1);
-  z-index: 1000;
-  background-color: #fff;
+  height: 100vh;
+  height: 100dvh;
+  top: 0;
+  transform: translateX(-100%);
+  z-index: 1000001;
+  background-color: hsl(var(--background));
+  border-right: 1px solid rgba(var(--border), 0.6);
+  padding: 1.5rem 0;
 
   .sidebar {
     display: flex;
-
     flex-direction: column;
-    align-items: center;
-
-    padding-top: 25px;
-    position: relative;
+    height: 100%;
 
     .container-nav {
       width: 100%;
-    }
+      padding: 0 1.5rem;
 
-    nav {
-      width: 90%;
-      margin-left: 40px;
+      nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
 
-      ul {
+        li {
+          margin: 0;
+          
+          a {
+            display: block;
+            padding: 0.75rem 0;
+            color: hsl(var(--muted-foreground));
+            font-size: 1rem;
+            font-weight: 500;
+            border-bottom: 1px solid rgba(var(--border), 0.4);
+            transition: color 0.2s;
 
-        display: grid;
+            &:hover {
+              color: hsl(var(--primary));
+            }
 
-        margin-top: 0;
-        padding-left: 0;
-      }
-
-      li {
-        list-style: none;
-        margin: 0 !important;
-
-        a {
-
-
-          label {
-            min-width: 160px;
-            display: flex;
-            height: 40px;
-            cursor: pointer;
-            align-items: center;
+            label {
+              cursor: pointer;
+            }
           }
         }
       }
-
-      button {
-        display: none;
-      }
     }
-
-
-
-
-
   }
 
   .salirBtn {
     width: 100%;
-    position: absolute;
-    bottom: 0;
+    padding: 0 1.5rem;
+    margin-top: auto;
+    padding-bottom: 2rem;
 
     button {
       width: 100%;
-      height: 50px;
-      background-color: #3d65fd;
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
+      height: 44px;
+      background-color: hsl(var(--primary));
+      color: hsl(var(--primary-foreground));
+      font-size: 0.875rem;
+      font-weight: 600;
       border: none;
+      border-radius: 9999px;
       cursor: pointer;
+      transition: opacity 0.2s;
 
       &:hover {
-        background-color: #3d65fd;
+        opacity: 0.9;
       }
     }
   }

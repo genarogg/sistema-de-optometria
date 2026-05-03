@@ -79,14 +79,16 @@ function AuthForm() {
   if (!isReady) return null;
 
   return (
-    <Card className="w-full max-w-md mx-auto overflow-hidden">
-      <div className={wrapperClass}>
-        {displayView === "login" && <LoginForm />}
-        {displayView === "register" && <RegisterForm />}
-        {displayView === "reset" && <ResetPasswordForm />}
-        {displayView === "reboot" && <RebootPasswordForm />}
-      </div>
-    </Card>
+    <div className="conteiner-form">
+      <Card className="w-full max-w-md mx-auto overflow-hidden ">
+        <div className={wrapperClass}>
+          {displayView === "login" && <LoginForm />}
+          {displayView === "register" && <RegisterForm />}
+          {displayView === "reset" && <ResetPasswordForm />}
+          {displayView === "reboot" && <RebootPasswordForm />}
+        </div>
+      </Card>
+    </div>
   );
 }
 
