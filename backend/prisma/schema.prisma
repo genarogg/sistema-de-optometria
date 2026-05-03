@@ -22,18 +22,21 @@ datasource db {
 }
 
 model Usuario {
-  id             Int        @id @default(autoincrement())
-  primerNombre   String
-  primerApellido String
-  avatar         String?
-  telefono       String
-  cedula         String     @unique
-  email          String     @unique
-  password       String
-  Bitacora       Bitacora[]
-  rol            Rol        @default(CLIENTE)
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  id              Int        @id @default(autoincrement())
+  primerNombre    String
+  segundoNombre   String?
+  primerApellido  String
+  segundoApellido String?
+  numeroGremino   Int?
+  avatar          String?
+  telefono        String
+  cedula          String     @unique
+  email           String     @unique
+  password        String
+  Bitacora        Bitacora[]
+  rol             Rol        @default(CLIENTE)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 }
 
 model Bitacora {

@@ -7,7 +7,14 @@ CREATE TYPE "Rol" AS ENUM ('ADMIN', 'ASISTENTE', 'CLIENTE');
 -- CreateTable
 CREATE TABLE "Usuario" (
     "id" SERIAL NOT NULL,
-    "name" TEXT NOT NULL,
+    "primerNombre" TEXT NOT NULL,
+    "segundoNombre" TEXT,
+    "primerApellido" TEXT NOT NULL,
+    "segundoApellido" TEXT,
+    "numeroGremino" INTEGER,
+    "avatar" TEXT,
+    "telefono" TEXT NOT NULL,
+    "cedula" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "rol" "Rol" NOT NULL DEFAULT 'CLIENTE',
@@ -21,15 +28,15 @@ CREATE TABLE "Usuario" (
 CREATE TABLE "Bitacora" (
     "id" SERIAL NOT NULL,
     "usuarioId" INTEGER NOT NULL,
-    "accion" TEXT NOT NULL,
     "type" "AccionesBitacora" NOT NULL,
-    "ip" TEXT NOT NULL,
-    "hora" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "fecha" TIMESTAMP(3) NOT NULL,
+    "fecha" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "mensaje" TEXT,
 
     CONSTRAINT "Bitacora_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Usuario_cedula_key" ON "Usuario"("cedula");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
