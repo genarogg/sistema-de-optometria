@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 /**
  * Lista blanca de archivos a sincronizar desde global a frontend y backend
  */
-export const WHITELIST = ['enums.ts'];
+export const WHITELIST = ['enums.ts', "prismaTypes.ts", "customTypes.ts"];
 
 /**
  * Directorios destino donde sincronizar los archivos
@@ -40,12 +40,12 @@ export const syncGlobalFiles = (globalDir = __dirname) => {
         // Copiar a cada destino
         DESTINATIONS.forEach((dest) => {
             const destBaseDir = path.join(rootDir, dest);
-            
+
             // Para frontend usa la ruta directa, para backend usa src/global
-            const destGlobalDir = dest === 'frontend' 
+            const destGlobalDir = dest === 'frontend'
                 ? path.join(destBaseDir, 'global')
                 : path.join(destBaseDir, 'src', 'global');
-            
+
             const destPath = path.join(destGlobalDir, file);
 
             // Verificar que el directorio destino existe

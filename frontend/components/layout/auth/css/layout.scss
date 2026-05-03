@@ -1,0 +1,39 @@
+@import "/src/css/global/variables";
+
+
+.clean.containerAll {
+    display: grid;
+    min-height: 130vh;
+    min-height: 130dvh;
+    grid-template-rows: auto 1fr auto;
+
+
+    background-color: $color-tertiary;
+    background-color: #f6f9ff;
+    background-image: url(/img/logo-unerg.webp);
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-blend-mode: soft-light;
+    background-attachment: fixed;
+
+
+    >header {
+        background-color: $colorHederFooter;
+        // border-bottom: 1px solid $color-secondary;
+        color: $text-color-white;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    // >main {
+    //     background-color: $color-tertiary;
+    // }
+
+    >footer {
+        background-color: $colorHederFooter;
+        // border-top: 1px solid $color-secondary;
+        color: $text-color-white;
+    }
+}

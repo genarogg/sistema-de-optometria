@@ -1,0 +1,313 @@
+@keyframes border-gradient-animation {
+  0% {
+    background-position: 0% 50%; }
+  50% {
+    background-position: 100% 50%; }
+  100% {
+    background-position: 0% 50%; } }
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0; }
+
+main {
+  display: block; }
+
+h1 {
+  font-size: 2em; }
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible; }
+
+pre {
+  font-family: monospace, monospace;
+  font-size: 1em; }
+
+a {
+  background-color: transparent; }
+
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration: underline dotted; }
+
+b,
+strong {
+  font-weight: bolder; }
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em; }
+
+small {
+  font-size: 80%; }
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sub {
+  bottom: -0.25em; }
+
+sup {
+  top: -0.5em; }
+
+img {
+  border-style: none; }
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0; }
+
+button,
+input {
+  overflow: visible; }
+
+button,
+select {
+  text-transform: none; }
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  appearance: button; }
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0; }
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText; }
+
+fieldset {
+  padding: 0; }
+
+legend {
+  box-sizing: border-box;
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  padding: 0;
+  white-space: normal; }
+
+progress {
+  vertical-align: baseline; }
+
+textarea {
+  overflow: auto; }
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0; }
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+[type="search"] {
+  appearance: textfield;
+  outline-offset: -2px; }
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none; }
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit; }
+
+details {
+  display: block; }
+
+summary {
+  display: list-item; }
+
+template {
+  display: none; }
+
+[hidden] {
+  display: none; }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  font-family: "Nunito", "Albert Sans"; }
+
+a {
+  text-decoration: none;
+  color: #fff;
+  display: flex; }
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent; }
+
+ul {
+  list-style: none; }
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+::-webkit-scrollbar {
+  width: 6px; }
+
+::-webkit-scrollbar-track {
+  background: #1c1c1c; }
+
+::-webkit-scrollbar-thumb {
+  background: #3d65fd; }
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3d65fd; }
+
+/* Animaciones */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5); }
+  60% {
+    opacity: 1;
+    transform: scale(1.1); }
+  100% {
+    transform: scale(1); } }
+@keyframes bounceOut {
+  0% {
+    transform: scale(1); }
+  100% {
+    opacity: 0;
+    transform: scale(0.5); } }
+@keyframes slideIn {
+  0% {
+    transform: translate(-30px, 0);
+    opacity: 0; }
+  80% {
+    transform: translate(10px, 0);
+    opacity: 0.9; }
+  100% {
+    transform: translate(0px, 0);
+    opacity: 1; } }
+.slideIn {
+  animation: slideIn 0.8s ease forwards; }
+
+.hover-border-bottom {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  overflow: hidden; }
+  .hover-border-bottom::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out; }
+  .hover-border-bottom:hover::before {
+    transform: translateX(0); }
+  .hover-border-bottom:not(:hover)::before {
+    transform: translateX(-105%); }
+
+.container-aside {
+  width: 240px;
+  min-width: 240px;
+  max-width: 240px;
+  transition: all 0.5s ease;
+  position: absolute;
+  left: 0;
+  height: calc(100vh - 70px);
+  height: calc(100dvh - 70px);
+  top: 70px;
+  left: -100%;
+  box-shadow: 20px 20px 30px 10px rgba(1, 42, 112, 0.1);
+  z-index: 1000;
+  background-color: #fff; }
+  .container-aside .sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    position: relative; }
+    .container-aside .sidebar .container-nav {
+      width: 100%; }
+    .container-aside .sidebar nav {
+      width: 90%;
+      margin-left: 40px; }
+      .container-aside .sidebar nav ul {
+        display: grid;
+        margin-top: 0;
+        padding-left: 0; }
+      .container-aside .sidebar nav li {
+        list-style: none;
+        margin: 0 !important; }
+        .container-aside .sidebar nav li a label {
+          min-width: 160px;
+          display: flex;
+          height: 40px;
+          cursor: pointer;
+          align-items: center; }
+      .container-aside .sidebar nav button {
+        display: none; }
+  .container-aside .salirBtn {
+    width: 100%;
+    position: absolute;
+    bottom: 0; }
+    .container-aside .salirBtn button {
+      width: 100%;
+      height: 50px;
+      background-color: #3d65fd;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer; }
+      .container-aside .salirBtn button:hover {
+        background-color: #3d65fd; }
+
+@media screen and (max-width: 799px) {
+  .container-aside .salirBtn {
+    width: 100%;
+    position: absolute;
+    bottom: 0; } }
+@media screen and (max-width: 799px) {
+  .container-aside.sidebar-header {
+    left: 0%;
+    top: 71px;
+    z-index: 1000;
+    position: fixed;
+    backdrop-filter: blur(10px);
+    position: fixed; }
+    .container-aside.sidebar-header .sidebar ul li {
+      margin: 0; } }
+
+/*# sourceMappingURL=sideBar.css.map */
