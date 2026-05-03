@@ -11,7 +11,10 @@ const GET_MY_USUARIO = gql`
         cedula
         email
         primerApellido
+        segundoApellido
+        segundoNombre
         primerNombre
+        numeroGremino
         rol
         telefono
       }

@@ -8,7 +8,10 @@ const REGISTER_USUARIO = gql`
     $password: String!, 
     $captchaToken: String
     $primerNombre: String!,
+    $segundoNombre: String,
     $primerApellido: String!
+    $segundoApellido: String,
+    $numeroGremino: Int
     ) {
     registerUsuario(
       telefono: $telefono, 
@@ -17,7 +20,10 @@ const REGISTER_USUARIO = gql`
       password: $password, 
       captchaToken: $captchaToken,
       primerNombre: $primerNombre,
-      primerApellido: $primerApellido
+      segundoNombre: $segundoNombre,
+      primerApellido: $primerApellido,
+      segundoApellido: $segundoApellido,
+      numeroGremino: $numeroGremino
     ) {
       type
       message

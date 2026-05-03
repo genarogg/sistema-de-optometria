@@ -14,7 +14,10 @@ import {
 interface ActualizarMiUsuarioArgs {
     token: string;
     primerNombre?: string;
+segundoNombre?: string;
     primerApellido?: string;
+    segundoApellido?: string;
+    numeroGremino?: number;
     telefono?: string;
     cedula?: string;
     email?: string;
@@ -26,7 +29,7 @@ const updateMyUsuario = async (_: unknown, args: ActualizarMiUsuarioArgs) => {
 
     log.dev("updateMyUsuario called with args:", args);
 
-    const { token, primerNombre, primerApellido, telefono, cedula, email, password, avatar } = args;
+    const { token, primerNombre, segundoNombre, primerApellido, segundoApellido, numeroGremino, telefono, cedula, email, password, avatar } = args;
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
@@ -43,7 +46,10 @@ const updateMyUsuario = async (_: unknown, args: ActualizarMiUsuarioArgs) => {
 
         const actualizarData = {
             primerNombre,
+            segundoNombre,
             primerApellido,
+            segundoApellido,
+            numeroGremino,
             telefono,
             cedula,
             email,

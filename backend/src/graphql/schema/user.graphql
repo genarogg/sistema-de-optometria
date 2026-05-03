@@ -5,7 +5,10 @@
 type Usuario {
   id: Int!
   primerNombre: String!
+  segundoNombre: String
   primerApellido: String!
+  segundoApellido: String
+  numeroGremino: String
   telefono: String!
   cedula: String!
   email: String!
@@ -45,7 +48,10 @@ extend type Mutation {
   registerUsuario(
     token: String
     primerNombre: String!
+    segundoNombre: String
     primerApellido: String!
+    segundoApellido: String
+    numeroGremino: Int
     telefono: String!
     cedula: String!
     email: String!
@@ -66,7 +72,10 @@ extend type Mutation {
   updateMyUsuario(
     token: String!
     primerNombre: String
+    segundoNombre: String
     primerApellido: String
+    segundoApellido: String
+    numeroGremino: Int
     telefono: String
     cedula: String
     email: String
