@@ -8,15 +8,13 @@
     "node": "22"
   },
   "workspaces": [
-    "docs",
     "frontend",
-    "backend",
-    "lib"
+    "backend"
   ],
   "scripts": {
     "dev": "turbo run dev --parallel",
     "dex": "pnpm prismaInit && turbo run dev --parallel",
-    "build": "pnpm run sync:env && turbo run build --filter=backend --filter=frontend --filter=docs",
+    "build": "pnpm run sync:env && turbo run build --filter=backend --filter=frontend ",
     "start": "turbo run start",
     "-----server-----": "-----------------------------------------",
     "prismaInit": "cd backend && pnpm run prismaInit",
