@@ -8,6 +8,11 @@ interface ProfileData {
   telefono: string
   nombres: string
   apellidos: string
+  primerNombre: string
+  segundoNombre: string
+  primerApellido: string
+  segundoApellido: string
+  numeroGremino: string | number | null
   nombreCompleto: string // generado
 }
 
@@ -27,6 +32,11 @@ const initialState: ProfileData = {
   telefono: "",
   nombres: "",
   apellidos: "",
+  primerNombre: "",
+  segundoNombre: "",
+  primerApellido: "",
+  segundoApellido: "",
+  numeroGremino: null,
   nombreCompleto: "",
 }
 
@@ -42,7 +52,14 @@ export const useProfileStore = create<ProfileStore>((set, get) => ({
       const nextState = { ...state, ...data }
 
       // Generar nombre completo automáticamente
-      nextState.nombreCompleto = `${nextState.nombres || ""} ${nextState.apellidos || ""}`.trim()
+      const full = [
+        nextState.primerNombre,
+        nextState.segundoNombre,
+        nextState.primerApellido,
+        nextState.segundoApellido
+      ].filter(Boolean).join(" ")
+
+      nextState.nombreCompleto = full || `${nextState.nombres || ""} ${nextState.apellidos || ""}`.trim()
 
       return nextState
     }),

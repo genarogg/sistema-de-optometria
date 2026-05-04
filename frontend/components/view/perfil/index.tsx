@@ -16,12 +16,15 @@ import "./css/style.css"
 function ProfileForm() {
   const {
     avatar,
-    nombres,
-    apellidos,
+    primerNombre,
+    segundoNombre,
+    primerApellido,
+    segundoApellido,
     email,
     telefono,
     rol,
     cedula,
+    numeroGremino,
     set
   } = useProfileStore()
 
@@ -84,15 +87,15 @@ function ProfileForm() {
   if (isFetching) return <ProfileFormSkeleton />
 
   return (
-    <div className="p-2 md:p-4 lg:p-6 mx-auto">
+    <div className="p-2 md:p-4 lg:p-6 mx-auto w-[95vw] max-w-[1200px]  m-auto">
       <div className="flex items-center gap-3 mb-6">
         <div className="h-8 w-1 rounded-full bg-primary"></div>
-        <h3 className="text-2xl font-bold text-foreground" style={{ color: "#3d65fd" }}>
+        <h3 className="text-2xl font-bold text-foreground text-primary">
           Perfil
         </h3>
       </div>
 
-      <Card className="w-[95vw] max-w-[1200px] bg-white m-auto">
+      <Card className="">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-8">
             {/* Foto de perfil */}
@@ -101,7 +104,7 @@ function ProfileForm() {
                 <Avatar className="w-40 h-40 border-4 border-muted transition-opacity group-hover:opacity-80">
                   <AvatarImage src={avatar || "/person-profile.png"} />
                   <AvatarFallback className="text-4xl">
-                    {nombres ? nombres.charAt(0).toUpperCase() : "US"}
+                    {primerNombre ? primerNombre.charAt(0).toUpperCase() : "US"}
                   </AvatarFallback>
                 </Avatar>
                 <div className="absolute bottom-0 right-0 rounded-full bg-secondary p-2 shadow-md">
@@ -127,26 +130,50 @@ function ProfileForm() {
             <div className="flex-1 space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                {/* Nombres */}
+                {/* Primer Nombre */}
                 <div className="space-y-2">
-                  <Label htmlFor="nombres">Nombres</Label>
+                  <Label htmlFor="primerNombre">Primer Nombre</Label>
                   <Input
-                    id="nombres"
+                    id="primerNombre"
                     type="text"
-                    value={nombres}
-                    onChange={(e) => set("nombres", e.target.value)}
+                    value={primerNombre}
+                    onChange={(e) => set("primerNombre", e.target.value)}
                     className="h-[41px]"
                   />
                 </div>
 
-                {/* Apellidos */}
+                {/* Segundo Nombre */}
                 <div className="space-y-2">
-                  <Label htmlFor="apellidos">Apellidos</Label>
+                  <Label htmlFor="segundoNombre">Segundo Nombre</Label>
                   <Input
-                    id="apellidos"
+                    id="segundoNombre"
                     type="text"
-                    value={apellidos}
-                    onChange={(e) => set("apellidos", e.target.value)}
+                    value={segundoNombre}
+                    onChange={(e) => set("segundoNombre", e.target.value)}
+                    className="h-[41px]"
+                  />
+                </div>
+
+                {/* Primer Apellido */}
+                <div className="space-y-2">
+                  <Label htmlFor="primerApellido">Primer Apellido</Label>
+                  <Input
+                    id="primerApellido"
+                    type="text"
+                    value={primerApellido}
+                    onChange={(e) => set("primerApellido", e.target.value)}
+                    className="h-[41px]"
+                  />
+                </div>
+
+                {/* Segundo Apellido */}
+                <div className="space-y-2">
+                  <Label htmlFor="segundoApellido">Segundo Apellido</Label>
+                  <Input
+                    id="segundoApellido"
+                    type="text"
+                    value={segundoApellido}
+                    onChange={(e) => set("segundoApellido", e.target.value)}
                     className="h-[41px]"
                   />
                 </div>
@@ -176,18 +203,6 @@ function ProfileForm() {
                   />
                 </div>
 
-                {/* Rol */}
-                {/* <div className="space-y-2">
-                  <Label htmlFor="rol">Rol</Label>
-                  <Input
-                    id="rol"
-                    type="text"
-                    value={rol}
-                    disabled
-                    className="h-[41px] bg-muted cursor-not-allowed"
-                  />
-                </div> */}
-
                 {/* Cédula */}
                 <div className="space-y-2">
                   <Label htmlFor="cedula">Cédula</Label>
@@ -195,6 +210,18 @@ function ProfileForm() {
                     id="cedula"
                     type="text"
                     value={cedula}
+                    disabled
+                    className="h-[41px] bg-muted cursor-not-allowed"
+                  />
+                </div>
+
+                {/* Número de Gremio */}
+                <div className="space-y-2">
+                  <Label htmlFor="numeroGremino">Número de Gremio</Label>
+                  <Input
+                    id="numeroGremino"
+                    type="text"
+                    value={numeroGremino || "No disponible"}
                     disabled
                     className="h-[41px] bg-muted cursor-not-allowed"
                   />
@@ -215,8 +242,8 @@ function ProfileForm() {
                 <Button
                   onClick={handleSaveProfile}
                   disabled={isLoading}
-                  style={{ backgroundColor: "#020817" }}
-                  className="text-white hover:opacity-90"
+                  
+                  className="text-white hover:opacity-90 bg-primary"
                 >
                   {isLoading ? "Guardando..." : "Guardar cambios"}
                 </Button>

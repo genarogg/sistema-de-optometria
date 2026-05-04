@@ -8,16 +8,16 @@ import { Toaster } from 'sonner'
 const nunito = Nunito({ subsets: ["latin"], weight: ["400", "600", "800"] });
 
 // Variables del sitio
-const siteTitle = "Biblioteca - Gestión de Libros";
-const siteDescription = "CRUD de libros con vista tarjeta y tabla";
-const siteUrl = "https://biblioteca.tudominio.com";
-const siteName = "Biblioteca";
-const logoImage = `${siteUrl}/og-image.png`;
+const siteTitle = "Sociedad Venezolana de Optometría";
+const siteDescription = "Organización gremial sin fines de lucro que impulsa la educación, el ejercicio profesional y el cuidado visual en Venezuela.";
+const siteUrl = "https://optometria.nimbux.cloud";
+const siteName = "Sociedad Venezolana de Optometría";
+const logoImage = `${siteUrl}/iconos/logo-isotipo.png`;
 const author = {
-  name: "Tu Nombre",
-  contact: "+580000000000",
+  name: "Sociedad Venezolana de Optometría",
+  contact: "",
 };
-const keywords = "biblioteca, libros, gestión, CRUD";
+const keywords = "optometría, salud visual, gremio, educación, Venezuela, ejercicio profesional";
 const locale = "es_VE";
 
 // Configuración de imágenes OG
@@ -25,25 +25,22 @@ const imageConfig = {
   url: logoImage,
   width: 1200,
   height: 630,
-  alt: "Biblioteca - Sistema de Gestión de Libros",
+  alt: "Sociedad Venezolana de Optometría - Cuidado visual en Venezuela",
 };
 
 // Configuración de iconos
+// Configuración de iconos
 const iconConfig = {
-  icon: [
-    { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },
-    { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' },
-    { url: '/icon.svg', type: 'image/svg+xml' },
-  ],
-  shortcut: "/icon-light-32x32.png",
-  apple: "/apple-icon.png",
+  icon: "/iconos/logo.png",
+  shortcut: "/iconos/logo.png",
+  apple: "/iconos/logo.png",
 };
 
 export const metadata: Metadata = {
   title: siteTitle,
   description: siteDescription,
   keywords,
-  authors: [{ name: `${author.name}, contacto: ${author.contact}` }],
+  authors: [{ name: author.name }],
   creator: author.name,
   openGraph: {
     title: siteTitle,
@@ -72,7 +69,7 @@ export default function RootLayout({
     <html lang="es">
       <head>
         {/* <script src="https://unpkg.com/react-scan/dist/auto.global.js"></script> */}
-        <link rel="shortcut icon" href="/logo.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="/iconos/logo-isotipo.png" type="image/x-icon" />
       </head>
       <body className={`${nunito.className} antialiased`}>
         <ApolloClientProvider>

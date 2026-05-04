@@ -77,12 +77,12 @@ const BitacoraView = memo(function BitacoraView() {
     isProd ? (fakeRol === FakeRol.ADMIN) : true;
 
   return (
-    <Card className="w-full">
+    <Card className="w-full  max-w-[1200] m-auto my-4">
       <CardHeader className="pb-0 border-b" style={{
         paddingBottom: 0
       }}>
         <div className="flex items-center justify-between ">
-          <CardTitle className="flex items-center gap-2 text-lg">
+          <CardTitle className="flex items-center gap-2 text-lg text-primary">
             <ClipboardList className="h-5 w-5" aria-hidden="true" />
             Bitácora
           </CardTitle>

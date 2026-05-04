@@ -17,7 +17,7 @@ export function ProfileFormSkeleton() {
 
                         {/* Foto de perfil skeleton */}
                         <div className="flex flex-col items-center gap-4">
-                            <Squeleto width={160} height={160} baseColor="#e0e7ff" />
+                            <Squeleto width={160} height={160} />
                             <Squeleto width={100} height={16} />
                         </div>
 
@@ -25,13 +25,25 @@ export function ProfileFormSkeleton() {
                         <div className="flex-1 space-y-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                                {/* Nombres */}
+                                {/* Primer Nombre */}
                                 <div className="space-y-2">
                                     <Squeleto width={120} height={16} />
                                     <Squeleto width="100%" height={40} />
                                 </div>
 
-                                {/* Apellidos */}
+                                {/* Segundo Nombre */}
+                                <div className="space-y-2">
+                                    <Squeleto width={120} height={16} />
+                                    <Squeleto width="100%" height={40} />
+                                </div>
+
+                                {/* Primer Apellido */}
+                                <div className="space-y-2">
+                                    <Squeleto width={100} height={16} />
+                                    <Squeleto width="100%" height={40} />
+                                </div>
+
+                                {/* Segundo Apellido */}
                                 <div className="space-y-2">
                                     <Squeleto width={100} height={16} />
                                     <Squeleto width="100%" height={40} />
@@ -49,15 +61,15 @@ export function ProfileFormSkeleton() {
                                     <Squeleto width="100%" height={40} />
                                 </div>
 
-                                {/* Rol */}
-                                <div className="space-y-2">
-                                    <Squeleto width={40} height={16} />
-                                    <Squeleto width="100%" height={40} />
-                                </div>
-
                                 {/* Cédula */}
                                 <div className="space-y-2">
                                     <Squeleto width={60} height={16} />
+                                    <Squeleto width="100%" height={40} />
+                                </div>
+
+                                {/* Número de Gremio */}
+                                <div className="space-y-2">
+                                    <Squeleto width={120} height={16} />
                                     <Squeleto width="100%" height={40} />
                                 </div>
                             </div>

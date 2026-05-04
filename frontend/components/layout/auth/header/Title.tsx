@@ -22,9 +22,9 @@ const Title: React.FC<TitleProps> = () => {
                     <span className="text-primary text-[14px] sm:text-sm font-bold">
                         Colegio de Optometristas
                     </span>
-                    <span className="text-primary text-[10px] sm:text-xs opacity-80">
+                    {/* <span className="text-primary text-[10px] sm:text-xs opacity-80">
                         de Venezuela
-                    </span>
+                    </span> */}
                 </div>
             </A>
         </div>

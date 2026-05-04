@@ -44,7 +44,7 @@ const Navbar = () => {
                   <SheetTitle asChild>
                     <a href="#" className="flex flex-col leading-tight">
                       <span className="text-primary text-sm font-bold">Colegio de Optometristas</span>
-                      <span className="text-primary text-xs opacity-80">de Venezuela</span>
+                      {/* <span className="text-primary text-xs opacity-80">de Venezuela</span> */}
                     </a>
                   </SheetTitle>
                 </SheetHeader>

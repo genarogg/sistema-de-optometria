@@ -14,8 +14,8 @@ interface SqueletoProps {
 const Squeleto: React.FC<SqueletoProps> = ({
     width,
     height,
-    baseColor = "#f0f0f0",
-    highlightColor = "#e0e0e0",
+    baseColor = "hsl(var(--primary) / 0.1)",
+    highlightColor = "hsl(var(--primary-glow) / 0.2)",
     duration = 1.5
 }) => {
     return (

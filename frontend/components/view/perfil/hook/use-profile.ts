@@ -60,6 +60,11 @@ export function useProfile() {
         telefono: data.telefono || "",
         nombres: data.primerNombre || "",
         apellidos: data.primerApellido || "",
+        primerNombre: data.primerNombre || "",
+        segundoNombre: data.segundoNombre || "",
+        primerApellido: data.primerApellido || "",
+        segundoApellido: data.segundoApellido || "",
+        numeroGremino: data.numeroGremino || null,
         // nombreCompleto NO hace falta: lo genera automáticamente el store
       })
 
@@ -107,7 +112,9 @@ export function useProfile() {
         email?: string | null
         telefono?: string | null
         primerNombre?: string | null
+        segundoNombre?: string | null
         primerApellido?: string | null
+        segundoApellido?: string | null
       } = {}
 
       const changeAvatar = (profileData.avatar || "") !== (original.avatar || "")
@@ -124,12 +131,20 @@ export function useProfile() {
         changedFields.telefono = profileData.telefono || null
       }
 
-      if ((profileData.nombres || "") !== (original.primerNombre || "")) {
-        changedFields.primerNombre = profileData.nombres || null
+      if ((profileData.primerNombre || "") !== (original.primerNombre || "")) {
+        changedFields.primerNombre = profileData.primerNombre || null
       }
 
-      if ((profileData.apellidos || "") !== (original.primerApellido || "")) {
-        changedFields.primerApellido = profileData.apellidos || null
+      if ((profileData.segundoNombre || "") !== (original.segundoNombre || "")) {
+        changedFields.segundoNombre = profileData.segundoNombre || null
+      }
+
+      if ((profileData.primerApellido || "") !== (original.primerApellido || "")) {
+        changedFields.primerApellido = profileData.primerApellido || null
+      }
+
+      if ((profileData.segundoApellido || "") !== (original.segundoApellido || "")) {
+        changedFields.segundoApellido = profileData.segundoApellido || null
       }
 
       // 3️⃣ Si no cambió nada, avisamos y salimos
