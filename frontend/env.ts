@@ -7,7 +7,7 @@ const FRONTEND_DEV = "http://localhost:3000"
 const FRONTEND_PROD = "https://optometria.nimbux.cloud"
 
 /* GOOGLE */
-const RECAPTCHA_KEY = "6LftVtMrAAAAAJLjNlwnzuak4g3g1vNY8eRtj5AC"
+const RECAPTCHA_KEY = "6LchANgsAAAAAARpGsiaoQccnqkuRJ2KHvP_aZIF"
 
 // saber si estoy en produccion
 const NODE_ENV = process.env.NODE_ENV;
