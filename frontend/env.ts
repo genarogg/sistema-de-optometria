@@ -1,10 +1,10 @@
 const DEBUG = false
 
 const BACKEND_DEV = "http://localhost:4000"
-const BACKEND_PROD = "http://localhost:4000"
+const BACKEND_PROD = "https://optometria.nimbux.cloud/"
 
 const FRONTEND_DEV = "http://localhost:3000"
-const FRONTEND_PROD = process.env.NEXT_PUBLIC_FRONTEND
+const FRONTEND_PROD = "https://optometria.nimbux.cloud/"
 
 /* GOOGLE */
 const RECAPTCHA_KEY = "6LftVtMrAAAAAJLjNlwnzuak4g3g1vNY8eRtj5AC"
