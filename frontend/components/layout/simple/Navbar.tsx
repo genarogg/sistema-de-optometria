@@ -26,7 +26,7 @@ const links = [
 const Navbar = () => {
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-background/70 border-b border-border/60">
-      <nav className="flex items-center h-16 px-2 sm:px-4 md:px-6 lg:px-8 max-w-screen-2xl mx-auto">
+      <nav className="flex items-center h-16 px-2 sm:px-4 md:px-6 lg:px-8 max-w-screen-2xl mx-auto justify-between">
 
         {/* ── Izquierda ── */}
         <div className="flex items-center shrink-0 md:w-[120px] lg:w-[140px]">

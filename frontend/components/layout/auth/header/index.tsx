@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = () => {
                 <nav>
                     <ul className="elements">
                         <li>
-                            {isAuthenticated && (<BtnFreya onClick={() => { toggleAside() }} />)}
+                            <BtnFreya onClick={() => { toggleAside() }} />
                         </li>
                         <li>
                             <Title />
