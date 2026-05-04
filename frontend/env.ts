@@ -1,7 +1,7 @@
 const DEBUG = false
 
 const BACKEND_DEV = "http://localhost:4000"
-const BACKEND_PROD = "PROD"
+const BACKEND_PROD = "http://localhost:4000"
 
 const FRONTEND_DEV = "http://localhost:3000"
 const FRONTEND_PROD = process.env.NEXT_PUBLIC_FRONTEND
