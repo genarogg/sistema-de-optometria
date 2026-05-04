@@ -78,11 +78,11 @@ const UsuariosView: React.FC = () => {
       <CardHeader className="border-b" style={{ paddingBottom: "0px" }} >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           {/* Titulo */}
-          <div className="flex items-center gap-2 ">
-            <Users className="h-5 w-5 text-muted-foreground " />
-            <CardTitle className="text-xl">Usuarios</CardTitle>
+          <div className="flex items-center gap-2 text-primary">
+            <Users className="h-5 w-5  " />
+            <CardTitle className="text-xl ">Usuarios</CardTitle>
             {!cargando && (
-              <span className="text-sm text-muted-foreground font-normal">
+              <span className="text-sm  font-normal">
                 ({usuariosFiltradosPorRol.length})
               </span>
             )}

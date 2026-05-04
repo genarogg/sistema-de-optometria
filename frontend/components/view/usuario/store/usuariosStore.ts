@@ -5,10 +5,13 @@ import { Rol } from "@/global/enums";
 export interface Usuario {
   id: string;
   primerNombre: string;
+  segundoNombre: string | null;
   primerApellido: string;
+  segundoApellido: string | null;
   email: string;
   cedula: string;
   telefono: string | null;
+  numeroGremino: number | null;
   rol: Rol;
 }
 

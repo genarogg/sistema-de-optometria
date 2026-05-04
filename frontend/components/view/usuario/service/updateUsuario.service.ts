@@ -2,14 +2,18 @@ import { clientApollo } from "@/functions";
 import UPDATE_USUARIO_ADMIN from "../querys/UPDATE_USUARIO_ADMIN";
 import useUsuariosStore from "../store/usuariosStore";
 import { Rol } from "@/global/enums";
+import { notify } from "@/components/nano";
 
 interface UpdateUsuarioParams {
   id: string;
   primerNombre?: string;
+  segundoNombre?: string | null;
   primerApellido?: string;
+  segundoApellido?: string | null;
   telefono?: string;
   cedula?: string;
   email?: string;
+  numeroGremino?: number | null;
   password?: string;
   rol?: Rol;
 }
@@ -20,7 +24,7 @@ export async function updateUsuarioService(params: UpdateUsuarioParams) {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    console.error("No se encontró token de autenticación.");
+    notify({ type: "error", message: "No se encontró token de autenticación." });
     return;
   }
 
@@ -30,12 +34,18 @@ export async function updateUsuarioService(params: UpdateUsuarioParams) {
 
   try {
     const client = clientApollo;
-    await client.mutate({
+    const { data } = await client.mutate({
       mutation: UPDATE_USUARIO_ADMIN,
-      variables: { usuarioId: id, token, password, ...camposDeUsuario },
+      variables: { usuarioId: parseInt(id), token, password, ...camposDeUsuario },
     });
-  } catch (err) {
+
+    if (data?.updateUsuarioAdmin) {
+      const { type, message } = data.updateUsuarioAdmin;
+      notify({ type, message });
+    }
+  } catch (err: any) {
     console.error("Error al actualizar usuario:", err);
+    notify({ type: "error", message: err.message || "Error al actualizar usuario" });
     // En un caso real, aqui se podria revertir el cambio optimista
   }
 }

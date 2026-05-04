@@ -11,7 +11,10 @@ const GET_USUARIOS = gql`
         email
         telefono
         primerApellido
+        segundoApellido
         primerNombre
+        segundoNombre
+        numeroGremino
         rol
       }
       meta {

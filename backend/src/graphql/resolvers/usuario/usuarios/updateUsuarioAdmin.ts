@@ -13,7 +13,10 @@ import {
 interface UpdateUsuarioAdminArgs {
     usuarioId: number;
     primerNombre?: string;
+    segundoNombre?: string;
     primerApellido?: string;
+    segundoApellido?: string;
+    numeroGremino?: number;
     telefono?: string;
     cedula?: string;
     email?: string;
@@ -22,10 +25,35 @@ interface UpdateUsuarioAdminArgs {
     token: string;
 }
 
-const updateUsuarioAdmin = async (_: any, { usuarioId, primerNombre, primerApellido, telefono, cedula, email, password, rol, token }: UpdateUsuarioAdminArgs) => {
+const updateUsuarioAdmin = async (_: any, { 
+    usuarioId, 
+    primerNombre, 
+    segundoNombre,
+    primerApellido, 
+    segundoApellido,
+    numeroGremino,
+    telefono, 
+    cedula, 
+    email, 
+    password, 
+    rol, 
+    token 
+}: UpdateUsuarioAdminArgs) => {
     try {
 
-        log.dev("updateUsuarioAdmin called with args:", { usuarioId, primerNombre, primerApellido, telefono, cedula, email, password, rol });
+        log.dev("updateUsuarioAdmin called with args:", { 
+            usuarioId, 
+            primerNombre, 
+            segundoNombre,
+            primerApellido, 
+            segundoApellido,
+            numeroGremino,
+            telefono, 
+            cedula, 
+            email, 
+            password, 
+            rol 
+        });
 
         const usuario = await verificarToken(token);
 
@@ -61,7 +89,10 @@ const updateUsuarioAdmin = async (_: any, { usuarioId, primerNombre, primerApell
             where: { id: Number(usuarioId) },
             data: {
                 primerNombre,
+                segundoNombre,
                 primerApellido,
+                segundoApellido,
+                numeroGremino,
                 telefono,
                 cedula,
                 email,
