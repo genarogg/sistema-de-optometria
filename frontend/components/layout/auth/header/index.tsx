@@ -8,6 +8,7 @@ import SideBar from "./sidebar";
 
 import Nav from "../nav";
 import { useAuthStore } from "@/context/auth/AuthContext";
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
     children?: React.ReactNode;
@@ -17,7 +18,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = () => {
 
     const { isAuthenticated, logout } = useAuthStore((state) => state);
-
+    const router = useRouter();
     const btnRemove = () => {
         console.log("btnRemove");
         const btn = document.getElementById("btn-hamburguer-loki");
@@ -55,18 +56,19 @@ const Header: React.FC<HeaderProps> = () => {
                 <nav>
                     <ul className="elements">
                         <li>
-                            <BtnFreya onClick={() => { toggleAside() }} />
+                            {isAuthenticated && (<BtnFreya onClick={() => { toggleAside() }} />)}
                         </li>
                         <li>
                             <Title />
                         </li>
+                        <li></li>
                     </ul>
                     <SideBar
-                        logoutfn={() => { btnRemove(); toggleAside(); }}
+                        logoutfn={() => { btnRemove(); logout(); router.push('/dashboard/login'); }}
                     >
                         <Nav
                             menuItems={menuItems}
-                            onClick={() => { btnRemove(); toggleAside(); }}
+                            onClick={() => { btnRemove(); }}
                         />
                     </SideBar>
                 </nav>
