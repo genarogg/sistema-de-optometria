@@ -11,7 +11,6 @@
 // refactoriza el orden de las tablas para que la creacion
 // de las tablas se hagan en el orden correcto
 // -------------------------------------------
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
@@ -21,33 +20,7 @@ datasource db {
   provider = "postgresql"
 }
 
-model Usuario {
-  id              Int        @id @default(autoincrement())
-  primerNombre    String
-  segundoNombre   String?
-  primerApellido  String
-  segundoApellido String?
-  numeroGremino   Int?
-  avatar          String?
-  telefono        String
-  cedula          String     @unique
-  email           String     @unique
-  password        String
-  Bitacora        Bitacora[]
-  rol             Rol        @default(CLIENTE)
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-}
-
-model Bitacora {
-  id        Int     @id @default(autoincrement())
-  usuarioId Int
-  usuario   Usuario @relation(fields: [usuarioId], references: [id])
-
-  type    AccionesBitacora
-  fecha   DateTime         @default(now())
-  mensaje String?
-}
+// ─── Enums ────────────────────────────────────────────────────────────────────
 
 enum AccionesBitacora {
   LOGIN
@@ -63,7 +36,157 @@ enum AccionesBitacora {
 }
 
 enum Rol {
-  ADMIN
-  ASISTENTE
-  CLIENTE
+  SUPER_USUARIO
+  ADMINISTRADOR
+  AGREMIADO
+  PROFESOR
+  ESTUDIANTE
+  VISITANTE
+}
+
+enum TipoAutoridad {
+  presidente
+  vicepresidente
+}
+
+enum TipoEvento {
+  taller
+  diplomado
+  congreso
+}
+
+enum TipoSuscripcion {
+  agremiado_solvente
+  agremiado_insolvente
+  estudiante
+  profesor
+}
+
+enum EstatusSuscripcion {
+  pendiente
+  validado
+  vencido
+}
+
+// ─── Nivel 1: sin dependencias ────────────────────────────────────────────────
+
+model Usuario {
+  id              Int     @id @default(autoincrement())
+  primerNombre    String
+  segundoNombre   String?
+  primerApellido  String
+  segundoApellido String?
+  avatar          String?
+  telefono        String
+  cedula          String  @unique
+  email           String  @unique
+  password        String
+  rol             Rol     @default(VISITANTE)
+
+  Autoridad          Autoridad[]
+  Gremio             Gremio[]
+  Bitacora           Bitacora[]
+  Evento             Evento[]
+  Ponente_Evento     Ponente_Evento[]
+  suscripcionEventos Suscripcion_Evento[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Nivel 2: dependen de Usuario ─────────────────────────────────────────────
+
+model Autoridad {
+  id            Int           @id @default(autoincrement())
+  firma         String
+  tipoAutoridad TipoAutoridad
+  usuarioId     Int
+  Usuario       Usuario       @relation(fields: [usuarioId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Gremio {
+  id             Int    @id @default(autoincrement())
+  numeroGremio   Int
+  nivelAcademico String
+
+  usuarioId Int
+  Usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Suscripcion Suscripcion[]
+}
+
+model Bitacora {
+  id        Int              @id @default(autoincrement())
+  type      AccionesBitacora
+  fecha     DateTime         @default(now())
+  mensaje   String?
+  usuarioId Int
+  usuario   Usuario          @relation(fields: [usuarioId], references: [id])
+}
+
+model Evento {
+  id        Int        @id @default(autoincrement())
+  nombre    String
+  fecha     DateTime
+  lugar     String
+  precio    Int
+  descuento Float      @default(0)
+  tipo      TipoEvento
+  usuarioId Int
+  Usuario   Usuario    @relation(fields: [usuarioId], references: [id])
+
+  Ponente_Evento     Ponente_Evento[]
+  Suscripcion_Evento Suscripcion_Evento[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Nivel 3: dependen de Usuario + Evento ────────────────────────────────────
+
+model Ponente_Evento {
+  id        Int     @id @default(autoincrement())
+  usuarioId Int
+  eventoId  Int
+  Usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  Evento    Evento  @relation(fields: [eventoId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([usuarioId, eventoId])
+}
+
+model Suscripcion_Evento {
+  id                  Int     @id @default(autoincrement())
+  precioAlSuscripcion Int
+  eventoId            Int
+  usuarioId           Int
+  Evento              Evento  @relation(fields: [eventoId], references: [id])
+  Usuario             Usuario @relation(fields: [usuarioId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([usuarioId, eventoId])
+}
+
+model Suscripcion {
+  id                 Int                @id @default(autoincrement())
+  gremioId           Int
+  tipo               TipoSuscripcion
+  estatus            EstatusSuscripcion
+  comprobante        Int
+  comprobanteImg     String
+  contodesuscripcion Int
+  Gremio             Gremio             @relation(fields: [gremioId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
