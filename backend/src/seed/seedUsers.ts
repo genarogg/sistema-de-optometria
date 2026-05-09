@@ -2,142 +2,127 @@ import { encriptarContrasena, prisma } from "@fn";
 import { Rol } from "@prisma/client";
 
 const seedUsers = async () => {
-    const admins = [
+    const usersData = [
         {
-            primerNombre: "genaro",
-            segundoNombre: "octavio",
-            primerApellido: "gonzalez",
-            segundoApellido: "gonzalez",
+            primerNombre: "Genaro",
+            segundoNombre: "Octavio",
+            primerApellido: "González",
+            segundoApellido: "González",
             email: "genarrogg@gmail.com",
             password: "#2Programadores",
             telefono: "04127554970",
             cedula: "25074591",
-            numeroGremino: 153,
-            rol: Rol.ADMIN,
+            rol: Rol.SUPER_USUARIO,
         },
         {
             primerNombre: "Administrador",
             segundoNombre: "",
-            primerApellido: "1",
+            primerApellido: "Uno",
             segundoApellido: "",
-            email: "admin1@admin.com",
-            password: "admin",
-            telefono: "0990000001",
-            cedula: "1000000001",
-            numeroGremino: 154,
-            rol: Rol.ADMIN,
+            email: "admin1@svo.com",
+            password: "admin123",
+            telefono: "04120000001",
+            cedula: "10000001",
+            rol: Rol.ADMINISTRADOR,
         },
         {
             primerNombre: "Administrador",
             segundoNombre: "",
-            primerApellido: "2",
+            primerApellido: "Dos",
             segundoApellido: "",
-            email: "admin2@admin.com",
-            password: "admin",
-            telefono: "0990000002",
-            cedula: "1000000002",
-            numeroGremino: 155,
-            rol: Rol.ADMIN,
+            email: "admin2@svo.com",
+            password: "admin123",
+            telefono: "04120000002",
+            cedula: "10000002",
+            rol: Rol.ADMINISTRADOR,
         },
         {
-            primerNombre: "Administrador",
-            segundoNombre: "",
-            primerApellido: "3",
+            primerNombre: "Ana",
+            segundoNombre: "María",
+            primerApellido: "Pérez",
+            segundoApellido: "Rodríguez",
+            email: "ana.perez@optometria.com",
+            password: "agremiado123",
+            telefono: "04141111111",
+            cedula: "20000001",
+            rol: Rol.AGREMIADO,
+        },
+        {
+            primerNombre: "Carlos",
+            segundoNombre: "José",
+            primerApellido: "López",
+            segundoApellido: "García",
+            email: "carlos.lopez@optometria.com",
+            password: "agremiado123",
+            telefono: "04141111112",
+            cedula: "20000002",
+            rol: Rol.AGREMIADO,
+        },
+        {
+            primerNombre: "Dra. Laura",
+            segundoNombre: "Fernanda",
+            primerApellido: "Martínez",
+            segundoApellido: "Silva",
+            email: "laura.martinez@universidad.com",
+            password: "profesor123",
+            telefono: "04242222221",
+            cedula: "30000001",
+            rol: Rol.PROFESOR,
+        },
+        {
+            primerNombre: "Estudiante",
+            segundoNombre: "Uno",
+            primerApellido: "Rondón",
             segundoApellido: "",
-            email: "admin3@admin.com",
-            password: "admin",
-            telefono: "0990000003",
-            cedula: "1000000003",
-            numeroGremino: 156,
-            rol: Rol.ADMIN,
+            email: "estudiante1@universidad.com",
+            password: "estudiante123",
+            telefono: "04243333331",
+            cedula: "40000001",
+            rol: Rol.ESTUDIANTE,
+        },
+        {
+            primerNombre: "Visitante",
+            segundoNombre: "Demo",
+            primerApellido: "Test",
+            segundoApellido: "",
+            email: "visitante@test.com",
+            password: "visitante123",
+            telefono: "04149999999",
+            cedula: "90000001",
+            rol: Rol.VISITANTE,
         },
     ];
 
-    const assistants = [
-        {
-            primerNombre: "Asistente",
-            segundoNombre: "",
-            primerApellido: "1",
-            segundoApellido: "",
-            email: "asistente1@gmail.com",
-            password: "demo",
-            telefono: "0990000011",
-            cedula: "1000000011",
-            numeroGremino: 201,
-            rol: Rol.ASISTENTE,
+    const existingEmails = await prisma.usuario.findMany({
+        where: {
+            email: { in: usersData.map(u => u.email) }
         },
-        {
-            primerNombre: "Asistente",
-            segundoNombre: "",
-            primerApellido: "2",
-            segundoApellido: "",
-            email: "asistente2@gmail.com",
-            password: "demo",
-            telefono: "0990000012",
-            cedula: "1000000012",
-            numeroGremino: 202,
-            rol: Rol.ASISTENTE,
-        },
-        {
-            primerNombre: "Asistente",
-            segundoNombre: "",
-            primerApellido: "3",
-            segundoApellido: "",
-            email: "asistente3@gmail.com",
-            password: "demo",
-            telefono: "0990000013",
-            cedula: "1000000013",
-            numeroGremino: 203,
-            rol: Rol.ASISTENTE,
-        },
-        {
-            primerNombre: "Asistente",
-            segundoNombre: "",
-            primerApellido: "4",
-            segundoApellido: "",
-            email: "asistente4@gmail.com",
-            password: "demo",
-            telefono: "0990000014",
-            cedula: "1000000014",
-            numeroGremino: 204,
-            rol: Rol.ASISTENTE,
-        },
-    ];
+        select: { email: true }
+    });
 
-    const clientes = Array.from({ length: 30 }, (_, index) => ({
-        primerNombre: "Cliente",
-        segundoNombre: "",
-        primerApellido: `${index + 1}`,
-        segundoApellido: "",
-        email: `cliente${index + 1}@gmail.com`,
-        password: "demo",
-        telefono: `0990000${100 + index}`,
-        cedula: `1000000${100 + index}`,
-        numeroGremino: 301 + index,
-        rol: Rol.CLIENTE,
-    }));
+    const existingEmailsSet = new Set(existingEmails.map(u => u.email));
+    const usersToCreate = usersData.filter(u => !existingEmailsSet.has(u.email));
 
-    const users = [...admins, ...assistants, ...clientes];
-
-    for (const user of users) {
-        const { email, password, ...userData } = user;
-        const existingUser = await prisma.usuario.findUnique({
-            where: { email },
+    for (const user of usersToCreate) {
+        const hashedPassword = await encriptarContrasena({ password: user.password });
+        await prisma.usuario.create({
+            data: {
+                primerNombre: user.primerNombre,
+                segundoNombre: user.segundoNombre || null,
+                primerApellido: user.primerApellido,
+                segundoApellido: user.segundoApellido || null,
+                email: user.email,
+                password: hashedPassword,
+                telefono: user.telefono,
+                cedula: user.cedula,
+                rol: user.rol,
+            },
         });
+        console.log(`✅ Usuario ${user.email} creado`);
+    }
 
-        if (!existingUser) {
-            const hashedPassword = await encriptarContrasena({ password });
-            await prisma.usuario.create({
-                data: {
-                    ...userData,
-                    email,
-                    password: hashedPassword,
-                },
-            });
-            console.log(`Usuario ${email} creado`);
-        } else {
-            console.log(`Usuario ${email} ya existe`);
-        }
+    if (usersToCreate.length === 0) {
+        console.log("ℹ️ Todos los usuarios ya existen");
     }
 };
 
