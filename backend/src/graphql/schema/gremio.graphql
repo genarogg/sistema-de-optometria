@@ -1,0 +1,12 @@
+type Gremio {
+  id: Int!
+  numeroGremio: Int!
+  nivelAcademico: NivelAcademico!
+
+  usuarioId: Int!
+  Usuario: Usuario!
+
+  createdAt: Date!
+  updatedAt: Date!
+}
+

@@ -1,0 +1,41 @@
+##############################################
+# Tipo Suscripcion
+##############################################
+
+type Suscripcion {
+  id: Int!
+  tipo: TipoSuscripcion!
+  estatus: EstatusSuscripcion!
+  comprobante: Int!
+  comprobanteImg: String!
+  contodesuscripcion: Int!
+  usuarioId: Int!
+  usuario: Usuario!
+  isActivo: Boolean!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type SuscripcionPrecio {
+  id: Int!
+  costo: Int!
+  createdAt: String!
+  updatedAt: String!
+}
+
+##############################################
+# Responses
+##############################################
+
+type SuscripcionResponse {
+  type: String!
+  message: String!
+  data: Suscripcion
+}
+
+type SuscripcionesResponse {
+  type: String!
+  message: String!
+  data: [Suscripcion!]!
+  meta: Meta
+}

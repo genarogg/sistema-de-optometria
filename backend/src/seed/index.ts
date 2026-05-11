@@ -13,12 +13,12 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const seed = async () => {
     try {
 
-        const adminUser = await prisma.usuario.findUnique({
-            where: { email: "genarrogg@gmail.com" },
-        });
-        if (adminUser) {
-            return "ya plantada"
-        }
+        // const adminUser = await prisma.usuario.findUnique({
+        //     where: { email: "genarrogg@gmail.com" },
+        // });
+        // if (adminUser) {
+        //     return "ya plantada"
+        // }
 
         console.log("🌱 Iniciando siembra de la base de datos...\n");
         // Nivel 1: Usuarios (sin dependencias)
@@ -44,12 +44,12 @@ const seed = async () => {
         await delay(200);
         console.log("");
 
-        // Nivel 4: Dependen de Gremio
+        // Nivel 4: Dependen de Usuario
         await seedSuscripcion();
         await delay(200);
         console.log("");
 
-        // console.log("✅ Siembra completada exitosamente!");
+        console.log("✅ Siembra completada exitosamente!");
         return "recien plantada";
     } catch (error) {
         console.error("Error al sembrar la base de datos:", error);

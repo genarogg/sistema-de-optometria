@@ -68,6 +68,11 @@ enum EstatusSuscripcion {
   vencido
 }
 
+enum NivelAcademico {
+  licenciado
+  tsu
+}
+
 // ─── Nivel 1: sin dependencias ────────────────────────────────────────────────
 
 model Usuario {
@@ -89,6 +94,8 @@ model Usuario {
   Evento             Evento[]
   Ponente_Evento     Ponente_Evento[]
   suscripcionEventos Suscripcion_Evento[]
+  Suscripcion        Suscripcion[]
+  SuscripcionPrecio  SuscripcionPrecio[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -108,17 +115,15 @@ model Autoridad {
 }
 
 model Gremio {
-  id             Int    @id @default(autoincrement())
-  numeroGremio   Int
-  nivelAcademico String
+  id             Int            @id @default(autoincrement())
+  numeroGremio   Int            @unique
+  nivelAcademico NivelAcademico
 
   usuarioId Int
   Usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  Suscripcion Suscripcion[]
 }
 
 model Bitacora {
@@ -167,8 +172,8 @@ model Suscripcion_Evento {
   id                  Int     @id @default(autoincrement())
   precioAlSuscripcion Int
   eventoId            Int
-  usuarioId           Int
   Evento              Evento  @relation(fields: [eventoId], references: [id])
+  usuarioId           Int
   Usuario             Usuario @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
@@ -177,15 +182,26 @@ model Suscripcion_Evento {
   @@unique([usuarioId, eventoId])
 }
 
+model SuscripcionPrecio {
+  id        Int     @id @default(autoincrement())
+  costo     Int
+  usuarioId Int
+  Usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model Suscripcion {
   id                 Int                @id @default(autoincrement())
-  gremioId           Int
   tipo               TipoSuscripcion
   estatus            EstatusSuscripcion
   comprobante        Int
   comprobanteImg     String
   contodesuscripcion Int
-  Gremio             Gremio             @relation(fields: [gremioId], references: [id])
+  usuarioId          Int
+  Usuario            Usuario            @relation(fields: [usuarioId], references: [id])
+  isActivo           Boolean            @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

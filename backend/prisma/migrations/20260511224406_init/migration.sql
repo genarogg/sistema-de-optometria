@@ -1,10 +1,9 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "AccionesBitacora" AS ENUM ('LOGIN', 'CREATE_ADMIN', 'CREATE_USER', 'UPDATE_ADMIN', 'UPDATE_USER', 'DELETE_ADMIN', 'DELETE_USER', 'VIEW', 'ERROR', 'GET_USUARIOS');
 
-  - The values [ADMIN,ASISTENTE,CLIENTE] on the enum `Rol` will be removed. If these variants are still used in the database, this will fail.
-  - You are about to drop the column `numeroGremino` on the `Usuario` table. All the data in the column will be lost.
+-- CreateEnum
+CREATE TYPE "Rol" AS ENUM ('SUPER_USUARIO', 'ADMINISTRADOR', 'AGREMIADO', 'PROFESOR', 'ESTUDIANTE', 'VISITANTE');
 
-*/
 -- CreateEnum
 CREATE TYPE "TipoAutoridad" AS ENUM ('presidente', 'vicepresidente');
 
@@ -17,20 +16,27 @@ CREATE TYPE "TipoSuscripcion" AS ENUM ('agremiado_solvente', 'agremiado_insolven
 -- CreateEnum
 CREATE TYPE "EstatusSuscripcion" AS ENUM ('pendiente', 'validado', 'vencido');
 
--- AlterEnum
-BEGIN;
-CREATE TYPE "Rol_new" AS ENUM ('SUPER_USUARIO', 'ADMINISTRADOR', 'AGREMIADO', 'PROFESOR', 'ESTUDIANTE', 'VISITANTE');
-ALTER TABLE "public"."Usuario" ALTER COLUMN "rol" DROP DEFAULT;
-ALTER TABLE "Usuario" ALTER COLUMN "rol" TYPE "Rol_new" USING ("rol"::text::"Rol_new");
-ALTER TYPE "Rol" RENAME TO "Rol_old";
-ALTER TYPE "Rol_new" RENAME TO "Rol";
-DROP TYPE "public"."Rol_old";
-ALTER TABLE "Usuario" ALTER COLUMN "rol" SET DEFAULT 'VISITANTE';
-COMMIT;
+-- CreateEnum
+CREATE TYPE "NivelAcademico" AS ENUM ('licenciado', 'tsu');
 
--- AlterTable
-ALTER TABLE "Usuario" DROP COLUMN "numeroGremino",
-ALTER COLUMN "rol" SET DEFAULT 'VISITANTE';
+-- CreateTable
+CREATE TABLE "Usuario" (
+    "id" SERIAL NOT NULL,
+    "primerNombre" TEXT NOT NULL,
+    "segundoNombre" TEXT,
+    "primerApellido" TEXT NOT NULL,
+    "segundoApellido" TEXT,
+    "avatar" TEXT,
+    "telefono" TEXT NOT NULL,
+    "cedula" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "rol" "Rol" NOT NULL DEFAULT 'VISITANTE',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Autoridad" (
@@ -48,12 +54,23 @@ CREATE TABLE "Autoridad" (
 CREATE TABLE "Gremio" (
     "id" SERIAL NOT NULL,
     "numeroGremio" INTEGER NOT NULL,
-    "nivelAcademico" TEXT NOT NULL,
+    "nivelAcademico" "NivelAcademico" NOT NULL,
     "usuarioId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Gremio_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Bitacora" (
+    "id" SERIAL NOT NULL,
+    "type" "AccionesBitacora" NOT NULL,
+    "fecha" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "mensaje" TEXT,
+    "usuarioId" INTEGER NOT NULL,
+
+    CONSTRAINT "Bitacora_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -96,19 +113,40 @@ CREATE TABLE "Suscripcion_Evento" (
 );
 
 -- CreateTable
+CREATE TABLE "SuscripcionPrecio" (
+    "id" SERIAL NOT NULL,
+    "costo" INTEGER NOT NULL,
+    "usuarioId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "SuscripcionPrecio_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Suscripcion" (
     "id" SERIAL NOT NULL,
-    "gremioId" INTEGER NOT NULL,
     "tipo" "TipoSuscripcion" NOT NULL,
     "estatus" "EstatusSuscripcion" NOT NULL,
     "comprobante" INTEGER NOT NULL,
     "comprobanteImg" TEXT NOT NULL,
     "contodesuscripcion" INTEGER NOT NULL,
+    "usuarioId" INTEGER NOT NULL,
+    "isActivo" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Suscripcion_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Usuario_cedula_key" ON "Usuario"("cedula");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Gremio_numeroGremio_key" ON "Gremio"("numeroGremio");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Ponente_Evento_usuarioId_eventoId_key" ON "Ponente_Evento"("usuarioId", "eventoId");
@@ -121,6 +159,9 @@ ALTER TABLE "Autoridad" ADD CONSTRAINT "Autoridad_usuarioId_fkey" FOREIGN KEY ("
 
 -- AddForeignKey
 ALTER TABLE "Gremio" ADD CONSTRAINT "Gremio_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Bitacora" ADD CONSTRAINT "Bitacora_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Evento" ADD CONSTRAINT "Evento_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -138,4 +179,7 @@ ALTER TABLE "Suscripcion_Evento" ADD CONSTRAINT "Suscripcion_Evento_eventoId_fke
 ALTER TABLE "Suscripcion_Evento" ADD CONSTRAINT "Suscripcion_Evento_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Suscripcion" ADD CONSTRAINT "Suscripcion_gremioId_fkey" FOREIGN KEY ("gremioId") REFERENCES "Gremio"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "SuscripcionPrecio" ADD CONSTRAINT "SuscripcionPrecio_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Suscripcion" ADD CONSTRAINT "Suscripcion_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

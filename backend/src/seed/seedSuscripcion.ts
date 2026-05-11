@@ -1,34 +1,35 @@
 import { prisma } from "@fn";
-import { TipoSuscripcion, EstatusSuscripcion } from "@prisma/client";
+import { TipoSuscripcion, EstatusSuscripcion, Rol } from "@prisma/client";
 
 const seedSuscripcion = async () => {
-    const gremio = await prisma.gremio.findFirst({
-        include: { Usuario: true },
+    const agremiado = await prisma.usuario.findFirst({
+        where: { rol: Rol.AGREMIADO },
     });
 
-    if (!gremio) {
-        console.log("⚠️ No se encontró gremio para crear suscripción");
+    if (!agremiado) {
+        console.log("⚠️ No se encontró un usuario agremiado para crear suscripción");
         return;
     }
 
     const existingSuscripcion = await prisma.suscripcion.findFirst({
-        where: { gremioId: gremio.id },
+        where: { usuarioId: agremiado.id },
     });
 
     if (!existingSuscripcion) {
         await prisma.suscripcion.create({
             data: {
-                gremioId: gremio.id,
+                usuarioId: agremiado.id,
                 tipo: TipoSuscripcion.agremiado_solvente,
                 estatus: EstatusSuscripcion.validado,
                 comprobante: 12345,
                 comprobanteImg: "comprobante_12345.png",
                 contodesuscripcion: 2026,
+                isActivo: true,
             },
         });
-        console.log(`✅ Suscripción creada para ${gremio.Usuario.email}`);
+        console.log(`✅ Suscripción creada para ${agremiado.email}`);
     } else {
-        console.log(`ℹ️ Suscripción ya existe para ${gremio.Usuario.email}`);
+        console.log(`ℹ️ Suscripción ya existe para ${agremiado.email}`);
     }
 };
 

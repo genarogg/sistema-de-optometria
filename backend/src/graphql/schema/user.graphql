@@ -8,13 +8,15 @@ type Usuario {
   segundoNombre: String
   primerApellido: String!
   segundoApellido: String
-  numeroGremino: Int
   telefono: String!
   cedula: String!
   email: String!
   rol: Rol!
   token: String!
   avatar: String
+
+  suscripcion: Suscripcion
+  gremio: Gremio
 }
 
 ##############################################
