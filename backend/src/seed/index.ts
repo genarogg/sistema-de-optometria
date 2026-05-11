@@ -7,6 +7,7 @@ import seedBitacora from "./seedBitacora";
 import seedPonenteEvento from "./seedPonenteEvento";
 import seedSuscripcionEvento from "./seedSuscripcionEvento";
 import seedSuscripcion from "./seedSuscripcion";
+import seedSuscripcionDetails from "./seedSuscripcionDetails";
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -46,6 +47,8 @@ const seed = async () => {
 
         // Nivel 4: Dependen de Usuario
         await seedSuscripcion();
+        await delay(200);
+        await seedSuscripcionDetails();
         await delay(200);
         console.log("");
 

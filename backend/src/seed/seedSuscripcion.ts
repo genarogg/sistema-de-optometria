@@ -1,5 +1,5 @@
 import { prisma } from "@fn";
-import { TipoSuscripcion, EstatusSuscripcion, Rol } from "@prisma/client";
+import { TipoSuscripcion, Rol } from "@prisma/client";
 
 const seedSuscripcion = async () => {
     const agremiado = await prisma.usuario.findFirst({
@@ -20,11 +20,7 @@ const seedSuscripcion = async () => {
             data: {
                 usuarioId: agremiado.id,
                 tipo: TipoSuscripcion.agremiado_solvente,
-                estatus: EstatusSuscripcion.validado,
-                comprobante: 12345,
-                comprobanteImg: "comprobante_12345.png",
-                contodesuscripcion: 2026,
-                isActivo: true,
+                costo: 0,
             },
         });
         console.log(`✅ Suscripción creada para ${agremiado.email}`);
