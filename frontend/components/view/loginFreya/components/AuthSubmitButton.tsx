@@ -108,6 +108,8 @@ const AuthSubmitButton = ({
         }
       }
 
+      console.log("Datos validados, ejecutando mutación con context:", context)
+      console.log("Datos enviados:", data)
       // ─── Ejecutar la mutación según el contexto ─────────────────────
       let responseData: any
 
