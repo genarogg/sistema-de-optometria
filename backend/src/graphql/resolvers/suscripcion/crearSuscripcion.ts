@@ -6,12 +6,13 @@ interface CrearSuscripcionArgs {
     planId: number;
     comprobante: number;
     comprobanteImg: string;
+    isActivo?: boolean;
 }
 
 const crearSuscripcion = async (_: unknown, args: CrearSuscripcionArgs) => {
     log.dev("crearSuscripcion called with args:", args);
 
-    const { token, planId, comprobante, comprobanteImg } = args;
+    const { token, planId, comprobante, comprobanteImg, isActivo = true } = args;
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
@@ -43,7 +44,7 @@ const crearSuscripcion = async (_: unknown, args: CrearSuscripcionArgs) => {
                 contodesuscripcion: plan.costo,
                 usuarioId: usuario.id,
                 suscripcionId: planId,
-                isActivo: true,
+                isActivo: isActivo,
             },
         });
 

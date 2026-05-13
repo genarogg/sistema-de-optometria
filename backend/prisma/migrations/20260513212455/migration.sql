@@ -117,6 +117,7 @@ CREATE TABLE "PlanSuscripcion" (
     "id" SERIAL NOT NULL,
     "costo" INTEGER NOT NULL,
     "tipo" "TipoSuscripcion" NOT NULL,
+    "isActivo" BOOLEAN NOT NULL DEFAULT true,
     "usuarioId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

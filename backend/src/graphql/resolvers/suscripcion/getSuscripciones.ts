@@ -41,7 +41,7 @@ const getSuscripciones = async (_: unknown, args: GetSuscripcionesArgs) => {
             where: whereClause,
             include: {
                 Usuario: true,
-                Suscripcion: {
+                planSuscripcion: {
                     include: {
                         Usuario: true,
                     },

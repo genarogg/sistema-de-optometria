@@ -1,4 +1,3 @@
-import getPlan from "./planes/getPlan";
 import getPlanes from "./planes/getPlanes";
 import crearPlan from "./planes/crearPlan";
 import updatePlan from "./planes/updatePlan";
@@ -8,7 +7,6 @@ import getSuscripciones from "./getSuscripciones";
 
 const resolvers = {
     Query: {
-        getPlan,
         getPlanes,
         getSuscripciones,
     },

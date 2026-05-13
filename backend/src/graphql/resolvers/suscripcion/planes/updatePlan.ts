@@ -7,12 +7,13 @@ interface UpdatePlanArgs {
     planId: number;
     costo?: number;
     tipo?: TipoSuscripcion;
+    isActivo?: boolean;
 }
 
 const updatePlan = async (_: unknown, args: UpdatePlanArgs) => {
     log.dev("updatePlan called with args:", args);
 
-    const { token, planId, costo, tipo } = args;
+    const { token, planId, costo, tipo, isActivo } = args;
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
@@ -46,17 +47,20 @@ const updatePlan = async (_: unknown, args: UpdatePlanArgs) => {
             dataToUpdate.costo = decimalToInt(costo);
         }
 
-        if (tipo !== undefined) {
-            dataToUpdate.tipo = tipo;
-        }
+        dataToUpdate.tipo = tipo;
+        dataToUpdate.isActivo = isActivo;
 
-        if (Object.keys(dataToUpdate).length === 0) {
+        const filteredData = Object.fromEntries(
+            Object.entries(dataToUpdate).filter(([_, value]) => value !== undefined)
+        );
+
+        if (Object.keys(filteredData).length === 0) {
             return errorResponse({ message: "No se proporcionaron campos para actualizar" });
         }
 
         const planActualizado = await prisma.planSuscripcion.update({
             where: { id: planId },
-            data: dataToUpdate,
+            data: filteredData,
         });
 
         // Registrar en bitácora
