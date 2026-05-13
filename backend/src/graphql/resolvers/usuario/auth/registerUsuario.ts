@@ -61,7 +61,7 @@ const registerUsuario = async (_: unknown, args: RegisterUsuarioArgs) => {
                 cedula,
                 email,
                 password: hashedPassword,
-                rol: Rol.CLIENTE,
+                rol: Rol.VISITANTE,
             },
         });
 
