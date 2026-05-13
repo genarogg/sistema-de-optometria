@@ -33,6 +33,14 @@ enum AccionesBitacora {
   VIEW
   ERROR
   GET_USUARIOS
+
+  CREAR_PLAN_SUSCRIPCION
+  UPDATE_PLAN_SUSCRIPCION
+
+  CREAR_SUSCRIPCION
+  VALIDAR_SUSCRIPCION
+  RECHAZAR_SUSCRIPCION
+  VENCIADA_SUSCRIPCION
 }
 
 enum Rol {
@@ -45,32 +53,33 @@ enum Rol {
 }
 
 enum TipoAutoridad {
-  presidente
-  vicepresidente
+  PRESIDENTE
+  VICEPRESIDENTE
 }
 
 enum TipoEvento {
-  taller
-  diplomado
-  congreso
+  TALLER
+  DIPLOMADO
+  CONGRESO
 }
 
 enum TipoSuscripcion {
-  agremiado_solvente
-  agremiado_insolvente
-  estudiante
-  profesor
+  AGREMIADO_SOLVENTE
+  AGREMIADO_INSOLVENTE
+  ESTUDIANTE
+  PROFESOR
 }
 
 enum EstatusSuscripcion {
-  pendiente
-  validado
-  vencido
+  PENDIENTE
+  VALIDADO
+  VENCIDO
+  RECHAZADA
 }
 
 enum NivelAcademico {
-  licenciado
-  tsu
+  LICENCIADO
+  TSU
 }
 
 // ─── Nivel 1: sin dependencias ────────────────────────────────────────────────
@@ -94,8 +103,8 @@ model Usuario {
   Evento             Evento[]
   Ponente_Evento     Ponente_Evento[]
   suscripcionEventos Suscripcion_Evento[]
+  PlanSuscripcion    PlanSuscripcion[]
   Suscripcion        Suscripcion[]
-  SuscripcionDetails SuscripcionDetails[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -182,19 +191,19 @@ model Suscripcion_Evento {
   @@unique([usuarioId, eventoId])
 }
 
-model Suscripcion {
-  id            Int             @id @default(autoincrement())
-  costo         Int
-  tipo          TipoSuscripcion
-  usuarioId     Int
-  Usuario       Usuario         @relation(fields: [usuarioId], references: [id])
-  detalle       SuscripcionDetails?
+model PlanSuscripcion {
+  id        Int             @id @default(autoincrement())
+  costo     Int
+  tipo      TipoSuscripcion
+  usuarioId Int
+  Usuario   Usuario         @relation(fields: [usuarioId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  suscripcion Suscripcion?
 }
 
-model SuscripcionDetails {
+model Suscripcion {
   id                 Int                @id @default(autoincrement())
   estatus            EstatusSuscripcion
   comprobante        Int
@@ -203,7 +212,7 @@ model SuscripcionDetails {
   usuarioId          Int
   Usuario            Usuario            @relation(fields: [usuarioId], references: [id])
   suscripcionId      Int                @unique
-  Suscripcion        Suscripcion        @relation(fields: [suscripcionId], references: [id])
+  Suscripcion        PlanSuscripcion    @relation(fields: [suscripcionId], references: [id])
   isActivo           Boolean            @default(true)
 
   createdAt DateTime @default(now())

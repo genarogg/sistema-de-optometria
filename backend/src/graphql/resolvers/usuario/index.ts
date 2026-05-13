@@ -1,3 +1,5 @@
+import { prisma } from "@fn";
+
 // auth
 import registerUsuario from "./auth/registerUsuario";
 import loginUsuario from "./auth/loginUsuario";

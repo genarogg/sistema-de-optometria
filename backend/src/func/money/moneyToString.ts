@@ -1,20 +1,6 @@
-import accounting from 'accounting'
+
 import writtenNumber from 'written-number';
 
-/**
- * Formatea un número como moneda usando puntos tanto para miles como para decimales.
- *
- * @param value - El valor numérico a formatear (puede ser número o cadena).
- * @returns La cadena formateada, por ejemplo "19.134.18".
- */
-const money = (value: number | string): string => {
-    return accounting.formatMoney(value, {
-        symbol: '',
-        precision: 2,
-        thousand: '.',
-        decimal: '.',
-    })
-}
 
 /**
  * Convierte un monto numérico a su representación en texto
@@ -47,7 +33,7 @@ const moneyToString = (
 
         // Convertir parte entera a texto
         let textoEntero = writtenNumber(entero, { lang: 'es' });
-        
+
         // Capitalizar primera letra
         textoEntero = textoEntero.charAt(0).toUpperCase() + textoEntero.slice(1);
 
@@ -56,7 +42,7 @@ const moneyToString = (
 
         // Determinar si es singular o plural para la moneda
         const textoMoneda = entero === 1 ? configuracionMoneda.singular : configuracionMoneda.plural;
-        
+
         // Determinar si es singular o plural para los centavos
         const textoCentimos = decimales === 1 ? configuracionMoneda.centSingular : configuracionMoneda.centPlural;
 
@@ -70,4 +56,4 @@ const moneyToString = (
     }
 }
 
-export { money, moneyToString };
+export default moneyToString;

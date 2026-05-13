@@ -7,25 +7,25 @@ const seedSuscripcion = async () => {
     });
 
     if (!agremiado) {
-        console.log("⚠️ No se encontró un usuario agremiado para crear suscripción");
+        console.log("⚠️ No se encontró un usuario agremiado para crear plan de suscripción");
         return;
     }
 
-    const existingSuscripcion = await prisma.suscripcion.findFirst({
+    const existingPlan = await prisma.planSuscripcion.findFirst({
         where: { usuarioId: agremiado.id },
     });
 
-    if (!existingSuscripcion) {
-        await prisma.suscripcion.create({
+    if (!existingPlan) {
+        await prisma.planSuscripcion.create({
             data: {
                 usuarioId: agremiado.id,
                 tipo: TipoSuscripcion.agremiado_solvente,
                 costo: 0,
             },
         });
-        console.log(`✅ Suscripción creada para ${agremiado.email}`);
+        console.log(`✅ Plan de suscripción creado para ${agremiado.email}`);
     } else {
-        console.log(`ℹ️ Suscripción ya existe para ${agremiado.email}`);
+        console.log(`ℹ️ Plan de suscripción ya existe para ${agremiado.email}`);
     }
 };
 

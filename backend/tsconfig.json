@@ -16,9 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@fn": ["./src/func/index.ts"]
+      "@fn": ["./src/func/index.ts"],
+      "@fn/*": ["./src/func/*"]
     },
     "types": ["node"]
   },
-  "include": ["src", "index.ts", "scripts/**/*.ts"]
+  "include": ["src", "index.ts", "scripts/**/*.ts", "src/func/money"]
 }

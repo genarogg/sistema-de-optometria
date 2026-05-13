@@ -7,28 +7,28 @@ const seedSuscripcionDetails = async () => {
     });
 
     if (!agremiado) {
-        console.log("⚠️ No se encontró un usuario agremiado para crear detalles de suscripción");
+        console.log("⚠️ No se encontró un usuario agremiado para crear suscripción");
         return;
     }
 
-    const suscripcion = await prisma.suscripcion.findFirst({
+    const plan = await prisma.planSuscripcion.findFirst({
         where: { usuarioId: agremiado.id },
     });
 
-    if (!suscripcion) {
-        console.log("⚠️ No se encontró una suscripción existente para crear los detalles");
+    if (!plan) {
+        console.log("⚠️ No se encontró un plan de suscripción existente para crear la suscripción");
         return;
     }
 
-    const existingDetails = await prisma.suscripcionDetails.findFirst({
-        where: { suscripcionId: suscripcion.id },
+    const existingSubscription = await prisma.suscripcion.findFirst({
+        where: { suscripcionId: plan.id },
     });
 
-    if (!existingDetails) {
-        await prisma.suscripcionDetails.create({
+    if (!existingSubscription) {
+        await prisma.suscripcion.create({
             data: {
                 usuarioId: agremiado.id,
-                suscripcionId: suscripcion.id,
+                suscripcionId: plan.id,
                 estatus: EstatusSuscripcion.validado,
                 comprobante: 12345,
                 comprobanteImg: "comprobante_12345.png",
@@ -36,9 +36,9 @@ const seedSuscripcionDetails = async () => {
                 isActivo: true,
             },
         });
-        console.log(`✅ Detalles de suscripción creados para ${agremiado.email}`);
+        console.log(`✅ Suscripción creada para ${agremiado.email}`);
     } else {
-        console.log(`ℹ️ Detalles de suscripción ya existen para ${agremiado.email}`);
+        console.log(`ℹ️ Suscripción ya existe para ${agremiado.email}`);
     }
 };
 

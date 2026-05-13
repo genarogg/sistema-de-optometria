@@ -12,11 +12,20 @@ type Usuario {
   cedula: String!
   email: String!
   rol: Rol!
-  token: String!
+  token: String
   avatar: String
 
-  suscripcion: Suscripcion
-  gremio: Gremio
+  planSuscripciones: [PlanSuscripcion]
+  suscripciones: [Suscripcion]
+  gremios: [Gremio]
+}
+
+type Gremio {
+  id: Int!
+  numeroGremio: Int!
+  nivelAcademico: NivelAcademico!
+  usuarioId: Int!
+  usuario: Usuario
 }
 
 ##############################################

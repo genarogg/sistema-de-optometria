@@ -14,12 +14,12 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const seed = async () => {
     try {
 
-        // const adminUser = await prisma.usuario.findUnique({
-        //     where: { email: "genarrogg@gmail.com" },
-        // });
-        // if (adminUser) {
-        //     return "ya plantada"
-        // }
+        const adminUser = await prisma.usuario.findUnique({
+            where: { email: "genarrogg@gmail.com" },
+        });
+        if (adminUser) {
+            return "ya plantada"
+        }
 
         console.log("🌱 Iniciando siembra de la base de datos...\n");
         // Nivel 1: Usuarios (sin dependencias)

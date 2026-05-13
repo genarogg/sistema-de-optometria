@@ -113,7 +113,7 @@ CREATE TABLE "Suscripcion_Evento" (
 );
 
 -- CreateTable
-CREATE TABLE "Suscripcion" (
+CREATE TABLE "PlanSuscripcion" (
     "id" SERIAL NOT NULL,
     "costo" INTEGER NOT NULL,
     "tipo" "TipoSuscripcion" NOT NULL,
@@ -121,11 +121,11 @@ CREATE TABLE "Suscripcion" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Suscripcion_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "PlanSuscripcion_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "SuscripcionDetails" (
+CREATE TABLE "Suscripcion" (
     "id" SERIAL NOT NULL,
     "estatus" "EstatusSuscripcion" NOT NULL,
     "comprobante" INTEGER NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE "SuscripcionDetails" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "SuscripcionDetails_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Suscripcion_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -156,7 +156,7 @@ CREATE UNIQUE INDEX "Ponente_Evento_usuarioId_eventoId_key" ON "Ponente_Evento"(
 CREATE UNIQUE INDEX "Suscripcion_Evento_usuarioId_eventoId_key" ON "Suscripcion_Evento"("usuarioId", "eventoId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "SuscripcionDetails_suscripcionId_key" ON "SuscripcionDetails"("suscripcionId");
+CREATE UNIQUE INDEX "Suscripcion_suscripcionId_key" ON "Suscripcion"("suscripcionId");
 
 -- AddForeignKey
 ALTER TABLE "Autoridad" ADD CONSTRAINT "Autoridad_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -183,10 +183,10 @@ ALTER TABLE "Suscripcion_Evento" ADD CONSTRAINT "Suscripcion_Evento_eventoId_fke
 ALTER TABLE "Suscripcion_Evento" ADD CONSTRAINT "Suscripcion_Evento_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "PlanSuscripcion" ADD CONSTRAINT "PlanSuscripcion_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Suscripcion" ADD CONSTRAINT "Suscripcion_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "SuscripcionDetails" ADD CONSTRAINT "SuscripcionDetails_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "SuscripcionDetails" ADD CONSTRAINT "SuscripcionDetails_suscripcionId_fkey" FOREIGN KEY ("suscripcionId") REFERENCES "Suscripcion"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Suscripcion" ADD CONSTRAINT "Suscripcion_suscripcionId_fkey" FOREIGN KEY ("suscripcionId") REFERENCES "PlanSuscripcion"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

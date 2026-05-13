@@ -1,41 +1,80 @@
 ##############################################
-# Tipo Suscripcion
+# Tipos de Suscripción
 ##############################################
+
+type PlanSuscripcion {
+  id: Int!
+  costo: Int!
+  tipo: TipoSuscripcion!
+  usuario: Usuario
+  suscripcion: Suscripcion
+}
 
 type Suscripcion {
   id: Int!
-  tipo: TipoSuscripcion!
   estatus: EstatusSuscripcion!
   comprobante: Int!
   comprobanteImg: String!
   contodesuscripcion: Int!
-  usuarioId: Int!
-  usuario: Usuario!
+  usuario: Usuario
+  suscripcionId: Int!
+  planSuscripcion: PlanSuscripcion
   isActivo: Boolean!
-  createdAt: String!
-  updatedAt: String!
 }
 
-type SuscripcionPrecio {
-  id: Int!
-  costo: Int!
-  createdAt: String!
-  updatedAt: String!
+type PlanSuscripcionResponse {
+  type: String
+  message: String
+  data: PlanSuscripcion
 }
 
-##############################################
-# Responses
-##############################################
+type PlanSuscripcionesResponse {
+  type: String
+  message: String
+  data: [PlanSuscripcion]
+}
 
 type SuscripcionResponse {
-  type: String!
-  message: String!
+  type: String
+  message: String
   data: Suscripcion
 }
 
 type SuscripcionesResponse {
-  type: String!
-  message: String!
-  data: [Suscripcion!]!
-  meta: Meta
+  type: String
+  message: String
+  data: [Suscripcion]
 }
+
+extend type Query {
+  getPlan(token: String!, planId: Int!): PlanSuscripcionResponse!
+  getPlanes(token: String!): PlanSuscripcionesResponse!
+  getSuscripciones(token: String!, filtro: String): SuscripcionesResponse!
+}
+
+extend type Mutation {
+  crearPlan(
+    token: String!
+    usuarioId: Int!
+    costo: Int!
+    tipo: TipoSuscripcion!
+  ): PlanSuscripcionResponse!
+
+  updatePlan(
+    token: String!
+    planId: Int!
+    costo: Int
+    tipo: TipoSuscripcion
+  ): PlanSuscripcionResponse!
+
+  crearSuscripcion(
+    token: String!
+    planId: Int!
+    comprobante: Int!
+    comprobanteImg: String!
+  ): SuscripcionResponse!
+  updateSuscripcionEstatus(
+    token: String!
+    suscripcionId: Int!
+    estatus: EstatusSuscripcion!
+  ): SuscripcionResponse!}
