@@ -83,6 +83,9 @@ importers:
       console-clear:
         specifier: ^1.1.1
         version: 1.1.1
+      decimal.js:
+        specifier: ^10.6.0
+        version: 10.6.0
       ejs:
         specifier: ^4.0.1
         version: 4.0.1
@@ -119,6 +122,9 @@ importers:
       react-dom:
         specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
+      written-number:
+        specifier: ^0.11.1
+        version: 0.11.1
     devDependencies:
       '@graphql-codegen/cli':
         specifier: ^6.1.1
@@ -5612,6 +5618,10 @@ packages:
     resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
     dev: false
 
+  /decimal.js@10.6.0:
+    resolution: {integrity: sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==}
+    dev: false
+
   /decompress-response@6.0.0:
     resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
     engines: {node: '>=10'}
@@ -9419,6 +9429,10 @@ packages:
 
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+    dev: false
+
+  /written-number@0.11.1:
+    resolution: {integrity: sha512-LhQ68uUnzHH0bwm/QiGA9JwqgadSDOwqB2AIs/LBsrOY6ScqVXKRN2slTCeKAhstDBJ/Of/Yxcjn0pnQmVlmtg==}
     dev: false
 
   /ws@7.5.10:
