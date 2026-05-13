@@ -11,7 +11,7 @@ const UPDATE_USUARIO_ADMIN = gql`
     $telefono: String
     $cedula: String
     $email: String
-    $numeroGremino: Int
+
     $password: String
     $rol: Rol
   ) {
@@ -25,7 +25,7 @@ const UPDATE_USUARIO_ADMIN = gql`
       telefono: $telefono
       cedula: $cedula
       email: $email
-      numeroGremino: $numeroGremino
+
       password: $password
       rol: $rol
     ) {

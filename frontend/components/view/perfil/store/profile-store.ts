@@ -12,7 +12,7 @@ interface ProfileData {
   segundoNombre: string
   primerApellido: string
   segundoApellido: string
-  numeroGremino: string | number | null
+
   nombreCompleto: string // generado
 }
 
@@ -36,7 +36,7 @@ const initialState: ProfileData = {
   segundoNombre: "",
   primerApellido: "",
   segundoApellido: "",
-  numeroGremino: null,
+
   nombreCompleto: "",
 }
 

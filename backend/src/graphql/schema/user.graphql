@@ -62,7 +62,7 @@ extend type Mutation {
     segundoNombre: String
     primerApellido: String!
     segundoApellido: String
-    numeroGremino: Int
+
     telefono: String!
     cedula: String!
     email: String!
@@ -86,7 +86,7 @@ extend type Mutation {
     segundoNombre: String
     primerApellido: String
     segundoApellido: String
-    numeroGremino: Int
+
     telefono: String
     cedula: String
     email: String
@@ -100,7 +100,7 @@ extend type Mutation {
     segundoNombre: String
     primerApellido: String
     segundoApellido: String
-    numeroGremino: Int
+
     telefono: String
     cedula: String
     email: String

@@ -38,7 +38,7 @@ const ModalEditarUsuario: React.FC<ModalEditarUsuarioProps> = React.memo(
       segundoApellido: usuario.segundoApellido || "",
       email: usuario.email,
       cedula: usuario.cedula,
-      numeroGremino: usuario.numeroGremino ? String(usuario.numeroGremino) : "",
+
       rol: usuario.rol,
     });
     const [guardando, setGuardando] = useState(false);
@@ -71,7 +71,7 @@ const ModalEditarUsuario: React.FC<ModalEditarUsuarioProps> = React.memo(
       await updateUsuarioService({
         id: usuario.id,
         ...form,
-        numeroGremino: form.numeroGremino ? parseInt(form.numeroGremino) : null,
+
       });
       setGuardando(false);
       onClose();
@@ -140,16 +140,7 @@ const ModalEditarUsuario: React.FC<ModalEditarUsuarioProps> = React.memo(
                 />
               </div>
 
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="edit-gremio">N° Gremio</Label>
-                <Input
-                  id="edit-gremio"
-                  type="number"
-                  value={form.numeroGremino}
-                  onChange={handleChange("numeroGremino")}
-                  placeholder="N° de gremio"
-                />
-              </div>
+            
             </div>
 
             <div className="flex flex-col gap-1.5">

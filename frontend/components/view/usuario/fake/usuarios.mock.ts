@@ -12,7 +12,7 @@ const USUARIOS_MOCK: Usuario[] = [
     rol: Rol.ADMINISTRADOR,
     segundoNombre: null,
     segundoApellido: null,
-    numeroGremino: null
+    
   },
   {
     id: "2",
@@ -24,7 +24,7 @@ const USUARIOS_MOCK: Usuario[] = [
     rol: Rol.VISITANTE,
     segundoNombre: null,
     segundoApellido: null,
-    numeroGremino: null
+    
   },
   {
     id: "3",
@@ -36,7 +36,7 @@ const USUARIOS_MOCK: Usuario[] = [
     rol: Rol.PROFESOR,
     segundoNombre: null,
     segundoApellido: null,
-    numeroGremino: null
+    
   },
   {
     id: "4",
@@ -48,7 +48,7 @@ const USUARIOS_MOCK: Usuario[] = [
     rol: Rol.ESTUDIANTE,
     segundoNombre: null,
     segundoApellido: null,
-    numeroGremino: null
+    
   },
   {
     id: "5",
@@ -60,7 +60,7 @@ const USUARIOS_MOCK: Usuario[] = [
     rol: Rol.AGREMIADO_SOLVENTE,
     segundoNombre: null,
     segundoApellido: null,
-    numeroGremino: null
+    
   },
   {
     id: "6",
@@ -72,7 +72,7 @@ const USUARIOS_MOCK: Usuario[] = [
     rol: Rol.AGREMIADO_INSOLVENTE,
     segundoNombre: null,
     segundoApellido: null,
-    numeroGremino: null
+    
   },
 ];
 

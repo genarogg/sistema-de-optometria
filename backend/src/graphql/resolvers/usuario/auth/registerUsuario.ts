@@ -15,7 +15,6 @@ interface RegisterUsuarioArgs {
     segundoNombre?: string;
     primerApellido: string;
     segundoApellido?: string;
-    numeroGremino?: number;
     telefono: string;
     cedula: string;
     email: string;
@@ -27,7 +26,7 @@ const registerUsuario = async (_: unknown, args: RegisterUsuarioArgs) => {
 
     log.dev("Iniciando registro de usuario", args);
 
-    const { primerNombre, segundoNombre, primerApellido, segundoApellido, numeroGremino, telefono, cedula, email, password, captchaToken } = args;
+    const { primerNombre, segundoNombre, primerApellido, segundoApellido, telefono, cedula, email, password, captchaToken } = args;
 
     if (!primerNombre || !primerApellido || !telefono || !cedula || !email || !password) {
         return errorResponse({ message: "Todos los campos son obligatorios" });
@@ -56,7 +55,6 @@ const registerUsuario = async (_: unknown, args: RegisterUsuarioArgs) => {
                 segundoNombre,
                 primerApellido,
                 segundoApellido,
-                numeroGremino,
                 telefono,
                 cedula,
                 email,

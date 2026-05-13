@@ -13,7 +13,7 @@ interface UpdateUsuarioParams {
   telefono?: string;
   cedula?: string;
   email?: string;
-  numeroGremino?: number | null;
+
   password?: string;
   rol?: Rol;
 }

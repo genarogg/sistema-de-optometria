@@ -11,7 +11,7 @@ const REGISTER_USUARIO = gql`
     $segundoNombre: String,
     $primerApellido: String!
     $segundoApellido: String,
-    $numeroGremino: Int
+
     ) {
     registerUsuario(
       telefono: $telefono, 
@@ -23,7 +23,7 @@ const REGISTER_USUARIO = gql`
       segundoNombre: $segundoNombre,
       primerApellido: $primerApellido,
       segundoApellido: $segundoApellido,
-      numeroGremino: $numeroGremino
+
     ) {
       type
       message

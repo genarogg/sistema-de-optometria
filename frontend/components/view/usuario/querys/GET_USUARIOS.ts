@@ -14,7 +14,7 @@ const GET_USUARIOS = gql`
         segundoApellido
         primerNombre
         segundoNombre
-        numeroGremino
+        
         rol
       }
       meta {

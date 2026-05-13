@@ -10,7 +10,7 @@ const UPDATE_MY_USUARIO = gql`
     $segundoNombre: String
     $primerApellido: String
     $segundoApellido: String
-    $numeroGremino: Int
+
   ) {
     updateMyUsuario(
       token: $token
@@ -21,7 +21,7 @@ const UPDATE_MY_USUARIO = gql`
       segundoNombre: $segundoNombre
       primerApellido: $primerApellido
       segundoApellido: $segundoApellido
-      numeroGremino: $numeroGremino
+
     ) {
       type
       message

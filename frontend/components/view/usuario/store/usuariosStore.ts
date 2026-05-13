@@ -11,7 +11,6 @@ export interface Usuario {
   email: string;
   cedula: string;
   telefono: string | null;
-  numeroGremino: number | null;
   rol: Rol;
 }
 

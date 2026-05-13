@@ -24,7 +24,7 @@ function ProfileForm() {
     telefono,
     rol,
     cedula,
-    numeroGremino,
+
     set
   } = useProfileStore()
 
@@ -216,16 +216,7 @@ function ProfileForm() {
                 </div>
 
                 {/* Número de Gremio */}
-                <div className="space-y-2">
-                  <Label htmlFor="numeroGremino">Número de Gremio</Label>
-                  <Input
-                    id="numeroGremino"
-                    type="text"
-                    value={numeroGremino || "No disponible"}
-                    disabled
-                    className="h-[41px] bg-muted cursor-not-allowed"
-                  />
-                </div>
+              
               </div>
 
               <div className="flex justify-end flex-col sm:flex-row gap-4 pt-4">

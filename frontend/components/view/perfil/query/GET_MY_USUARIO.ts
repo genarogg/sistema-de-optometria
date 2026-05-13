@@ -14,7 +14,7 @@ const GET_MY_USUARIO = gql`
         segundoApellido
         segundoNombre
         primerNombre
-        numeroGremino
+        
         rol
         telefono
       }

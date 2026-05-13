@@ -64,7 +64,7 @@ export function useProfile() {
         segundoNombre: data.segundoNombre || "",
         primerApellido: data.primerApellido || "",
         segundoApellido: data.segundoApellido || "",
-        numeroGremino: data.numeroGremino || null,
+
         // nombreCompleto NO hace falta: lo genera automáticamente el store
       })
 

@@ -16,7 +16,6 @@ interface UpdateUsuarioAdminArgs {
     segundoNombre?: string;
     primerApellido?: string;
     segundoApellido?: string;
-    numeroGremino?: number;
     telefono?: string;
     cedula?: string;
     email?: string;
@@ -31,7 +30,7 @@ const updateUsuarioAdmin = async (_: any, {
     segundoNombre,
     primerApellido,
     segundoApellido,
-    numeroGremino,
+
     telefono,
     cedula,
     email,
@@ -47,7 +46,7 @@ const updateUsuarioAdmin = async (_: any, {
             segundoNombre,
             primerApellido,
             segundoApellido,
-            numeroGremino,
+
             telefono,
             cedula,
             email,
@@ -88,7 +87,7 @@ const updateUsuarioAdmin = async (_: any, {
                 segundoNombre,
                 primerApellido,
                 segundoApellido,
-                numeroGremino,
+
                 telefono,
                 cedula,
                 email,
