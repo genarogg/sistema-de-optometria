@@ -34,7 +34,7 @@ const UsuariosView: React.FC = () => {
   const isMobile = useIsMobile();
 
   // Mostrar selector de rol: en produccion solo ADMIN, en desarrollo siempre
-  const mostrarSelectorRol = !isProd || rolActual === Rol.ADMIN;
+  const mostrarSelectorRol = !isProd || rolActual === Rol.SUPER_USUARIO;
 
   useEffect(() => {
     getUsuariosService({});
@@ -58,10 +58,10 @@ const UsuariosView: React.FC = () => {
   // Roles que el usuario actual puede ver/seleccionar
   const rolesSeleccionables = useMemo(() => {
     switch (rolActual) {
-      case Rol.ADMIN:
+      case Rol.SUPER_USUARIO:
         return Object.values(Rol);
-      case Rol.ASISTENTE:
-        return [Rol.ASISTENTE, Rol.CLIENTE];
+      case Rol.ADMINISTRADOR:
+        return Object.values(Rol).filter(rol => rol !== Rol.SUPER_USUARIO);
       default:
         return [rolActual];
     }
@@ -69,8 +69,8 @@ const UsuariosView: React.FC = () => {
 
   // Filtrado por rol en el cliente: el ADMIN ve todos, otros roles solo ven su propio nivel
   const usuariosFiltradosPorRol = useMemo(() => {
-    if (rolActual === Rol.ADMIN) return usuarios;
-    return usuarios.filter((u) => u.rol === Rol.CLIENTE);
+    if (rolActual === Rol.SUPER_USUARIO) return usuarios;
+    return usuarios.filter((u) => u.rol === Rol.ADMINISTRADOR);
   }, [usuarios, rolActual]);
 
   return (

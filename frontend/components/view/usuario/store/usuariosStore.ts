@@ -38,7 +38,7 @@ interface UsuariosState {
 
 const useUsuariosStore = create<UsuariosState>((set) => ({
   usuarios: [],
-  rolActual: Rol.ADMIN,
+  rolActual: Rol.ADMINISTRADOR,
   filtro: "",
   cargando: false,
   error: null,

@@ -45,10 +45,10 @@ const ModalEditarUsuario: React.FC<ModalEditarUsuarioProps> = React.memo(
 
     const rolesDisponibles = useMemo(() => {
       switch (rolActual) {
-        case Rol.ADMIN:
+        case Rol.SUPER_USUARIO:
           return Object.values(Rol);
-        case Rol.ASISTENTE:
-          return [Rol.ASISTENTE, Rol.CLIENTE];
+        case Rol.ADMINISTRADOR:
+          return [Rol.ADMINISTRADOR, Rol.PROFESOR, Rol.ESTUDIANTE, Rol.VISITANTE];
         default:
           return [];
       }

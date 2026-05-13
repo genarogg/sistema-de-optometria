@@ -12,14 +12,14 @@ export interface Usuario {
   email: string
   password: string
   rol: Rol
-  Autoridad?: Autoridad[]
+  autoridad?: Autoridad[]
   Gremio?: Gremio[]
-  Bitacora?: Bitacora[]
-  Evento?: Evento[]
-  Ponente_Evento?: Ponente_Evento[]
+  bitacora?: Bitacora[]
+  evento?: Evento[]
+  ponente_Evento?: Ponente_Evento[]
   suscripcionEventos?: Suscripcion_Evento[]
-  PlanSuscripcion?: PlanSuscripcion[]
-  Suscripcion?: Suscripcion[]
+  planSuscripcion?: PlanSuscripcion[]
+  suscripcion?: Suscripcion[]
   createdAt: Date
   updatedAt: Date
 }
@@ -29,7 +29,7 @@ export interface Autoridad {
   firma: string
   tipoAutoridad: TipoAutoridad
   usuarioId: number
-  Usuario?: Usuario
+  usuario?: Usuario
   createdAt: Date
   updatedAt: Date
 }
@@ -39,7 +39,7 @@ export interface Gremio {
   numeroGremio: number
   nivelAcademico: NivelAcademico
   usuarioId: number
-  Usuario?: Usuario
+  usuario?: Usuario
   createdAt: Date
   updatedAt: Date
 }
@@ -73,7 +73,7 @@ export interface Ponente_Evento {
   id: number
   usuarioId: number
   eventoId: number
-  Usuario?: Usuario
+  usuario?: Usuario
   Evento?: Evento
   createdAt: Date
   updatedAt: Date
@@ -109,7 +109,7 @@ export interface Suscripcion {
   comprobanteImg: string
   contodesuscripcion: number
   usuarioId: number
-  Usuario?: Usuario
+  usuario?: Usuario
   suscripcionId: number
   planSuscripcion?: PlanSuscripcion
   isActivo: boolean

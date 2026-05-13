@@ -40,14 +40,12 @@ const getSuscripciones = async (_: unknown, args: GetSuscripcionesArgs) => {
         const suscripciones = await prisma.suscripcion.findMany({
             where: whereClause,
             include: {
-                Usuario: true,
-                planSuscripcion: {
-                    include: {
-                        Usuario: true,
-                    },
-                },
+                usuario: true,
+                planSuscripcion: true,
             },
         });
+
+        console.log(suscripciones)
 
         return successResponse({
             message: "Suscripciones obtenidas correctamente",

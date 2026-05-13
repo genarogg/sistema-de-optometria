@@ -98,17 +98,18 @@ model Usuario {
   password        String
   rol             Rol     @default(VISITANTE)
 
-  Autoridad          Autoridad[]
+  autoridad          Autoridad[]
   Gremio             Gremio[]
-  Bitacora           Bitacora[]
-  Evento             Evento[]
-  Ponente_Evento     Ponente_Evento[]
+  bitacora           Bitacora[]
+  evento             Evento[]
+  ponente_Evento     Ponente_Evento[]
   suscripcionEventos Suscripcion_Evento[]
-  PlanSuscripcion    PlanSuscripcion[]
-  Suscripcion        Suscripcion[]
+  planSuscripcion    PlanSuscripcion[]
+  suscripcion        Suscripcion[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
 }
 
 // ─── Nivel 2: dependen de Usuario ─────────────────────────────────────────────
@@ -118,7 +119,7 @@ model Autoridad {
   firma         String
   tipoAutoridad TipoAutoridad
   usuarioId     Int
-  Usuario       Usuario       @relation(fields: [usuarioId], references: [id])
+  usuario       Usuario       @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -130,7 +131,7 @@ model Gremio {
   nivelAcademico NivelAcademico
 
   usuarioId Int
-  Usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -169,7 +170,7 @@ model Ponente_Evento {
   id        Int     @id @default(autoincrement())
   usuarioId Int
   eventoId  Int
-  Usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
   Evento    Evento  @relation(fields: [eventoId], references: [id])
 
   createdAt DateTime @default(now())
@@ -213,7 +214,7 @@ model Suscripcion {
   comprobanteImg     String
   contodesuscripcion Int
   usuarioId          Int
-  Usuario            Usuario            @relation(fields: [usuarioId], references: [id])
+  usuario            Usuario            @relation(fields: [usuarioId], references: [id])
   suscripcionId      Int
   planSuscripcion    PlanSuscripcion    @relation(fields: [suscripcionId], references: [id])
   isActivo           Boolean            @default(true)

@@ -33,7 +33,7 @@ const getBitacora = async (
             return errorResponse({ message: "Token inválido o expirado" });
         }
 
-        if (usuario.rol !== Rol.ADMIN) {
+        if (usuario.rol !== Rol.SUPER_USUARIO) {
             return errorResponse({ message: "Usuario no autorizado" });
         }
 
@@ -47,9 +47,8 @@ const getBitacora = async (
         ========================== */
 
         const rolesAdmin = [
-            Rol.ADMIN,
-            Rol.ASISTENTE,
-            Rol.CLIENTE,
+            Rol.ADMINISTRADOR,
+            Rol.SUPER_USUARIO,
         ];
 
         let usuarioFilter: any = {};

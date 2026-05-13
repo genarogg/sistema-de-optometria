@@ -1,5 +1,5 @@
 import { Rol } from "@/global/enums";
-import type { Usuario } from "../store/usuariosStore";
+import type { Usuario } from "./usuariosStore";
 
 const USUARIOS_MOCK: Usuario[] = [
   {
@@ -10,9 +10,6 @@ const USUARIOS_MOCK: Usuario[] = [
     cedula: "V-12345678",
     telefono: "4121234567",
     rol: Rol.ADMINISTRADOR,
-    segundoNombre: null,
-    segundoApellido: null,
-    numeroGremino: null
   },
   {
     id: "2",
@@ -22,9 +19,6 @@ const USUARIOS_MOCK: Usuario[] = [
     cedula: "V-23456789",
     telefono: "4149876543",
     rol: Rol.VISITANTE,
-    segundoNombre: null,
-    segundoApellido: null,
-    numeroGremino: null
   },
   {
     id: "3",
@@ -34,9 +28,6 @@ const USUARIOS_MOCK: Usuario[] = [
     cedula: "V-34567890",
     telefono: "4261112233",
     rol: Rol.PROFESOR,
-    segundoNombre: null,
-    segundoApellido: null,
-    numeroGremino: null
   },
   {
     id: "4",
@@ -46,9 +37,6 @@ const USUARIOS_MOCK: Usuario[] = [
     cedula: "V-45678901",
     telefono: "4162223344",
     rol: Rol.ESTUDIANTE,
-    segundoNombre: null,
-    segundoApellido: null,
-    numeroGremino: null
   },
   {
     id: "5",
@@ -58,9 +46,6 @@ const USUARIOS_MOCK: Usuario[] = [
     cedula: "V-56789012",
     telefono: "4123334455",
     rol: Rol.AGREMIADO_SOLVENTE,
-    segundoNombre: null,
-    segundoApellido: null,
-    numeroGremino: null
   },
   {
     id: "6",
@@ -70,9 +55,6 @@ const USUARIOS_MOCK: Usuario[] = [
     cedula: "V-67890123",
     telefono: "4144445566",
     rol: Rol.AGREMIADO_INSOLVENTE,
-    segundoNombre: null,
-    segundoApellido: null,
-    numeroGremino: null
   },
 ];
 
