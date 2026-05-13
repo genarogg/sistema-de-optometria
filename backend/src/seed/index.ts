@@ -56,6 +56,7 @@ const seed = async () => {
         return "recien plantada";
     } catch (error) {
         console.error("Error al sembrar la base de datos:", error);
+        return "error al plantar";
     }
 };
 

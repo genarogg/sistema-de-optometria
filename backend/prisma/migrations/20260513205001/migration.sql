@@ -1,23 +1,23 @@
 -- CreateEnum
-CREATE TYPE "AccionesBitacora" AS ENUM ('LOGIN', 'CREATE_ADMIN', 'CREATE_USER', 'UPDATE_ADMIN', 'UPDATE_USER', 'DELETE_ADMIN', 'DELETE_USER', 'VIEW', 'ERROR', 'GET_USUARIOS');
+CREATE TYPE "AccionesBitacora" AS ENUM ('LOGIN', 'CREATE_ADMIN', 'CREATE_USER', 'UPDATE_ADMIN', 'UPDATE_USER', 'DELETE_ADMIN', 'DELETE_USER', 'VIEW', 'ERROR', 'GET_USUARIOS', 'CREAR_PLAN_SUSCRIPCION', 'UPDATE_PLAN_SUSCRIPCION', 'CREAR_SUSCRIPCION', 'VALIDAR_SUSCRIPCION', 'RECHAZAR_SUSCRIPCION', 'VENCIADA_SUSCRIPCION');
 
 -- CreateEnum
-CREATE TYPE "Rol" AS ENUM ('SUPER_USUARIO', 'ADMINISTRADOR', 'AGREMIADO', 'PROFESOR', 'ESTUDIANTE', 'VISITANTE');
+CREATE TYPE "Rol" AS ENUM ('SUPER_USUARIO', 'ADMINISTRADOR', 'AGREMIADO_SOLVENTE', 'AGREMIADO_INSOLVENTE', 'PROFESOR', 'ESTUDIANTE', 'VISITANTE');
 
 -- CreateEnum
-CREATE TYPE "TipoAutoridad" AS ENUM ('presidente', 'vicepresidente');
+CREATE TYPE "TipoAutoridad" AS ENUM ('PRESIDENTE', 'VICEPRESIDENTE');
 
 -- CreateEnum
-CREATE TYPE "TipoEvento" AS ENUM ('taller', 'diplomado', 'congreso');
+CREATE TYPE "TipoEvento" AS ENUM ('TALLER', 'DIPLOMADO', 'CONGRESO');
 
 -- CreateEnum
-CREATE TYPE "TipoSuscripcion" AS ENUM ('agremiado_solvente', 'agremiado_insolvente', 'estudiante', 'profesor');
+CREATE TYPE "TipoSuscripcion" AS ENUM ('AGREMIADO', 'ESTUDIANTE', 'PROFESOR');
 
 -- CreateEnum
-CREATE TYPE "EstatusSuscripcion" AS ENUM ('pendiente', 'validado', 'vencido');
+CREATE TYPE "EstatusSuscripcion" AS ENUM ('PENDIENTE', 'VALIDADO', 'VENCIDO', 'RECHAZADA');
 
 -- CreateEnum
-CREATE TYPE "NivelAcademico" AS ENUM ('licenciado', 'tsu');
+CREATE TYPE "NivelAcademico" AS ENUM ('LICENCIADO', 'TSU');
 
 -- CreateTable
 CREATE TABLE "Usuario" (
@@ -154,9 +154,6 @@ CREATE UNIQUE INDEX "Ponente_Evento_usuarioId_eventoId_key" ON "Ponente_Evento"(
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Suscripcion_Evento_usuarioId_eventoId_key" ON "Suscripcion_Evento"("usuarioId", "eventoId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Suscripcion_suscripcionId_key" ON "Suscripcion"("suscripcionId");
 
 -- AddForeignKey
 ALTER TABLE "Autoridad" ADD CONSTRAINT "Autoridad_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -46,7 +46,9 @@ enum AccionesBitacora {
 enum Rol {
   SUPER_USUARIO
   ADMINISTRADOR
-  AGREMIADO
+
+  AGREMIADO_SOLVENTE
+  AGREMIADO_INSOLVENTE
   PROFESOR
   ESTUDIANTE
   VISITANTE
@@ -64,8 +66,7 @@ enum TipoEvento {
 }
 
 enum TipoSuscripcion {
-  AGREMIADO_SOLVENTE
-  AGREMIADO_INSOLVENTE
+  AGREMIADO
   ESTUDIANTE
   PROFESOR
 }
@@ -198,9 +199,10 @@ model PlanSuscripcion {
   usuarioId Int
   Usuario   Usuario         @relation(fields: [usuarioId], references: [id])
 
+  suscripciones Suscripcion[]
+
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
-  suscripcion Suscripcion?
 }
 
 model Suscripcion {
@@ -211,8 +213,8 @@ model Suscripcion {
   contodesuscripcion Int
   usuarioId          Int
   Usuario            Usuario            @relation(fields: [usuarioId], references: [id])
-  suscripcionId      Int                @unique
-  Suscripcion        PlanSuscripcion    @relation(fields: [suscripcionId], references: [id])
+  suscripcionId      Int
+  planSuscripcion    PlanSuscripcion    @relation(fields: [suscripcionId], references: [id])
   isActivo           Boolean            @default(true)
 
   createdAt DateTime @default(now())

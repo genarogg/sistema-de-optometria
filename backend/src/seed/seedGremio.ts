@@ -6,17 +6,17 @@ const seedGremio = async () => {
         {
             emailUsuario: "ana.perez@optometria.com",
             numeroGremio: 1001,
-            nivelAcademico: NivelAcademico.licenciado,
+            nivelAcademico: NivelAcademico.LICENCIADO,
         },
         {
             emailUsuario: "carlos.lopez@optometria.com",
             numeroGremio: 1002,
-            nivelAcademico: NivelAcademico.licenciado,
+            nivelAcademico: NivelAcademico.LICENCIADO,
         },
         {
             emailUsuario: "genarrogg@gmail.com",
             numeroGremio: 999,
-            nivelAcademico: NivelAcademico.licenciado,
+            nivelAcademico: NivelAcademico.LICENCIADO,
         },
     ];
 
@@ -44,7 +44,7 @@ const seedGremio = async () => {
             await prisma.gremio.create({
                 data: {
                     numeroGremio: gremio.numeroGremio,
-                    nivelAcademico: NivelAcademico.licenciado,
+                    nivelAcademico: NivelAcademico.LICENCIADO,
                     usuarioId,
                 },
             });

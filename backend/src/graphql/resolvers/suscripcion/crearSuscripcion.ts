@@ -27,16 +27,12 @@ const crearSuscripcion = async (_: unknown, args: CrearSuscripcionArgs) => {
         const plan = await prisma.planSuscripcion.findUnique({
             where: { id: planId },
             include: {
-                suscripcion: true,
+                suscripciones: true,
             },
         });
 
         if (!plan) {
             return errorResponse({ message: "Plan de suscripción no encontrado" });
-        }
-
-        if (plan.suscripcion) {
-            return errorResponse({ message: "Este plan ya tiene una suscripción asociada" });
         }
 
         const nuevaSuscripcion = await prisma.suscripcion.create({

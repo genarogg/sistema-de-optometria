@@ -1,5 +1,4 @@
 import { prisma, verificarToken, successResponse, errorResponse, log } from "@fn";
-import { Rol } from "@prisma/client";
 
 interface GetPlanesArgs {
     token: string;
@@ -24,7 +23,7 @@ const getPlanes = async (_: unknown, args: GetPlanesArgs) => {
         const planSuscripciones = await prisma.planSuscripcion.findMany({
             include: {
                 Usuario: true,
-                suscripcion: true,
+                suscripciones: true,
             },
         });
 

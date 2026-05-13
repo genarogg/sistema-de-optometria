@@ -6,12 +6,12 @@ const seedAutoridad = async () => {
         {
             emailUsuario: "ana.perez@optometria.com",
             firma: "ana_perez_firma.png",
-            tipoAutoridad: TipoAutoridad.presidente,
+            tipoAutoridad: TipoAutoridad.PRESIDENTE,
         },
         {
             emailUsuario: "carlos.lopez@optometria.com",
             firma: "carlos_lopez_firma.png",
-            tipoAutoridad: TipoAutoridad.vicepresidente,
+            tipoAutoridad: TipoAutoridad.VICEPRESIDENTE,
         },
     ];
 

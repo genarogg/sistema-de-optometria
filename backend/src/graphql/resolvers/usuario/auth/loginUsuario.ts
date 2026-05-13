@@ -65,6 +65,8 @@ const loginUsuario = async (_: unknown, args: LoginUsuarioArgs) => {
             token
         }
 
+        console.log(data)
+
         return successResponse({
             message: "Inicio de sesión exitoso",
             data

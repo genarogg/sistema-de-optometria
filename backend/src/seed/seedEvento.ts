@@ -18,7 +18,7 @@ const seedEvento = async () => {
             lugar: "Centro de Convenciones, Caracas",
             precio: 50,
             descuento: 10,
-            tipo: TipoEvento.taller,
+            tipo: TipoEvento.TALLER,
         },
         {
             nombre: "Diplomado en Optometría Pediátrica",
@@ -26,7 +26,7 @@ const seedEvento = async () => {
             lugar: "Universidad Central de Venezuela",
             precio: 150,
             descuento: 0,
-            tipo: TipoEvento.diplomado,
+            tipo: TipoEvento.DIPLOMADO,
         },
         {
             nombre: "Congreso Venezolano de Optometría",
@@ -34,7 +34,7 @@ const seedEvento = async () => {
             lugar: "Hotel Hilton, Caracas",
             precio: 200,
             descuento: 15,
-            tipo: TipoEvento.congreso,
+            tipo: TipoEvento.CONGRESO,
         },
     ];
 
