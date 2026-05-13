@@ -25,34 +25,34 @@ interface UpdateUsuarioAdminArgs {
     token: string;
 }
 
-const updateUsuarioAdmin = async (_: any, { 
-    usuarioId, 
-    primerNombre, 
+const updateUsuarioAdmin = async (_: any, {
+    usuarioId,
+    primerNombre,
     segundoNombre,
-    primerApellido, 
+    primerApellido,
     segundoApellido,
     numeroGremino,
-    telefono, 
-    cedula, 
-    email, 
-    password, 
-    rol, 
-    token 
+    telefono,
+    cedula,
+    email,
+    password,
+    rol,
+    token
 }: UpdateUsuarioAdminArgs) => {
     try {
 
-        log.dev("updateUsuarioAdmin called with args:", { 
-            usuarioId, 
-            primerNombre, 
+        log.dev("updateUsuarioAdmin called with args:", {
+            usuarioId,
+            primerNombre,
             segundoNombre,
-            primerApellido, 
+            primerApellido,
             segundoApellido,
             numeroGremino,
-            telefono, 
-            cedula, 
-            email, 
-            password, 
-            rol 
+            telefono,
+            cedula,
+            email,
+            password,
+            rol
         });
 
         const usuario = await verificarToken(token);
@@ -63,9 +63,9 @@ const updateUsuarioAdmin = async (_: any, {
 
         const { rol: rolUsuario, id: userId } = usuario;
 
-        const { ADMIN, ASISTENTE, CLIENTE } = Rol;
+        const { SUPER_USUARIO, ADMINISTRADOR, } = Rol;
 
-        if (rolUsuario === CLIENTE) {
+        if (rolUsuario !== ADMINISTRADOR && rolUsuario !== SUPER_USUARIO) {
             return errorResponse({ message: 'Usuario no autorizado' });
         }
 
@@ -76,14 +76,10 @@ const updateUsuarioAdmin = async (_: any, {
         }
 
         // ASISTENTE solo puede actualizar usuarios con rol CLIENTE
-        if (rolUsuario === ASISTENTE && usuarioExistente.rol !== CLIENTE) {
+        if (rolUsuario === ADMINISTRADOR && usuarioExistente.rol !== SUPER_USUARIO) {
             return errorResponse({ message: 'Usuario no autorizado para actualizar este rol' });
         }
 
-        // Si se intenta cambiar el rol, validar que el solicitante tenga permisos
-        if (rol !== undefined && rolUsuario !== ADMIN) {
-            return errorResponse({ message: 'Solo un administrador puede cambiar el rol de un usuario' });
-        }
 
         const usuarioActualizado = await prisma.usuario.update({
             where: { id: Number(usuarioId) },
