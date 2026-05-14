@@ -7,6 +7,7 @@ import { useAuthStore } from '@/context/auth/AuthContext';
 import { CreditCard } from 'lucide-react';
 import PlanesSection from './planes/components/PlanesSection';
 import { Rol } from '@/global/enums';
+import SuscripcionSection from './suscripcion/components/SuscripcionSection';
 
 export default function SuscripcionView() {
   const { usuario } = useAuthStore();
@@ -32,12 +33,8 @@ export default function SuscripcionView() {
             )}
           </TabsList>
 
-          <TabsContent value="suscripciones" className="space-y-4 mt-4">
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">
-                Próximamente: Gestión de tus suscripciones
-              </p>
-            </div>
+         <TabsContent value="suscripciones" className="space-y-4 mt-4">
+            <SuscripcionSection />
           </TabsContent>
 
           {isSuperUsuarioOrAdmin && (

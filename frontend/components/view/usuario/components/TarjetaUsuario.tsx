@@ -96,34 +96,14 @@ const TarjetaUsuario: React.FC<TarjetaUsuarioProps> = React.memo(
           )}
         </div>
 
-        {/* Paginacion */}
-        {totalPaginas > 1 && (
-          <div className="flex items-center justify-between pt-2">
-            <span className="text-sm text-muted-foreground">
-              {paginaActual} / {totalPaginas} &mdash; {usuarios.length} usuarios
-            </span>
-            <div className="flex items-center gap-1">
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8"
-                onClick={() => onPaginaChange(paginaActual - 1)}
-                disabled={paginaActual === 1}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8"
-                onClick={() => onPaginaChange(paginaActual + 1)}
-                disabled={paginaActual === totalPaginas}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        )}
+        <Pagination
+          paginaActual={paginaActual}
+          totalPaginas={totalPaginas}
+          onPaginaChange={onPaginaChange}
+          totalItems={usuarios.length}
+          itemsPorPagina={itemsPorPagina}
+          className="pt-2"
+        />
 
         {/* Modales */}
         {usuarioEditar && (

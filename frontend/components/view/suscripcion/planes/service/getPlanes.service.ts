@@ -26,9 +26,9 @@ export async function getPlanesService() {
     const planes: any[] = data?.getPlanes?.data ?? [];
     setPlanes(planes);
 
-    if (data?.getPlanes?.type && data?.getPlanes?.message) {
-      notify({ type: data.getPlanes.type, message: data.getPlanes.message });
-    }
+    // if (data?.getPlanes?.type && data?.getPlanes?.message) {
+    //   notify({ type: data.getPlanes.type, message: data.getPlanes.message });
+    // }
   } catch (err: any) {
     if (!isProd) {
       console.warn("Fallo la query, cargando datos mock:", err);
