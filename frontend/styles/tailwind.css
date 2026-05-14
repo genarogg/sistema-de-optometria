@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Sociedad Venezolana de Optometría — Design System
+ * Colegio de Optometristas de Venezuela — Design System
  * Inspirado en salud ocular: deep teal + soft sand.
  * Tokens en HSL (compatibles con la sintaxis original `hsl(var(--token))`)
  * para preservar el diseño tal cual del proyecto importado.

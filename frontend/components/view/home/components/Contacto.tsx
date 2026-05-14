@@ -59,7 +59,7 @@ const Contacto = () => {
 
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-elegant min-h-[400px]">
             <iframe
-              title="Ubicación Sociedad Venezolana de Optometría"
+              title="Ubicación Colegio de Optometristas de Venezuela"
               src={mapsSrc}
               width="100%"
               height="100%"

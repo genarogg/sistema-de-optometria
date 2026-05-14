@@ -22,7 +22,7 @@ const Autoridades = () => {
             Junta Directiva Interina Actual
           </h2>
           <p className="mt-5 text-muted-foreground text-lg leading-relaxed">
-            Profesionales comprometidos que lideran el rumbo de la Sociedad Venezolana de Optometría.
+            Profesionales comprometidos que lideran el rumbo de la Colegio de Optometristas de Venezuela.
           </p>
         </div>
 
@@ -36,7 +36,7 @@ const Autoridades = () => {
                 <Image
                   src={m.foto}
                   blurDataURL={m.foto.blurDataURL}
-                  alt={`Retrato de ${m.nombre}, ${m.cargo} de la Sociedad Venezolana de Optometría`}
+                  alt={`Retrato de ${m.nombre}, ${m.cargo} de la Colegio de Optometristas de Venezuela`}
                   loading="lazy"
                   width={512}
                   height={512}

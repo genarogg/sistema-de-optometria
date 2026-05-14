@@ -9,7 +9,7 @@ const Footer = () => {
             <span className="grid place-items-center w-9 h-9 rounded-lg bg-primary-foreground/10 backdrop-blur">
               <Eye className="w-5 h-5" />
             </span>
-            Sociedad Venezolana de Optometría
+            Colegio de Optometristas de Venezuela
           </div>
           <p className="mt-4 text-sm text-primary-foreground/80 max-w-xs">
             Promoviendo la excelencia profesional y el cuidado visual en Venezuela.
@@ -38,7 +38,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="border-t border-primary-foreground/15 py-5 text-center text-xs text-primary-foreground/70">
-        © {new Date().getFullYear()} Sociedad Venezolana de Optometría. Todos los derechos reservados.
+        © {new Date().getFullYear()} Colegio de Optometristas de Venezuela. Todos los derechos reservados.
       </div>
     </footer>
   );

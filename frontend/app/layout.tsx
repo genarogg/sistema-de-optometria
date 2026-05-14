@@ -8,13 +8,13 @@ import { Toaster } from 'sonner'
 const nunito = Nunito({ subsets: ["latin"], weight: ["400", "600", "800"] });
 
 // Variables del sitio
-const siteTitle = "Sociedad Venezolana de Optometría";
+const siteTitle = "Colegio de Optometristas de Venezuela";
 const siteDescription = "Organización gremial sin fines de lucro que impulsa la educación, el ejercicio profesional y el cuidado visual en Venezuela.";
 const siteUrl = "https://optometria.nimbux.cloud";
-const siteName = "Sociedad Venezolana de Optometría";
+const siteName = "Colegio de Optometristas de Venezuela";
 const logoImage = `${siteUrl}/iconos/logo-isotipo.png`;
 const author = {
-  name: "Sociedad Venezolana de Optometría",
+  name: "Colegio de Optometristas de Venezuela",
   contact: "",
 };
 const keywords = "optometría, salud visual, gremio, educación, Venezuela, ejercicio profesional";
@@ -25,7 +25,7 @@ const imageConfig = {
   url: logoImage,
   width: 1200,
   height: 630,
-  alt: "Sociedad Venezolana de Optometría - Cuidado visual en Venezuela",
+  alt: "Colegio de Optometristas de Venezuela - Cuidado visual en Venezuela",
 };
 
 // Configuración de iconos

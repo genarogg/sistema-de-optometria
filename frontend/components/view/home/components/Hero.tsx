@@ -8,7 +8,7 @@ const Hero = () => {
       <div className="container grid lg:grid-cols-2 gap-12 items-center">
         <div className="animate-fade-in">
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide bg-secondary text-secondary-foreground uppercase">
-            Sociedad Venezolana de Optometría
+            Colegio de Optometristas de Venezuela
           </span>
           <h1 className="mt-5 font-display text-4xl md:text-6xl font-extrabold leading-[1.05] text-foreground">
             Velando por la <span className="text-gradient">salud visual</span> de Venezuela

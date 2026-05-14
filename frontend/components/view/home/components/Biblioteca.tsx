@@ -14,7 +14,7 @@ const Biblioteca = () => {
             <div className="relative rounded-2xl overflow-hidden shadow-elegant border border-border/60">
               <Image
                 src={bibliotecaImg}
-                alt="Biblioteca de la Sociedad Venezolana de Optometría con libros académicos especializados"
+                alt="Biblioteca de la Colegio de Optometristas de Venezuela con libros académicos especializados"
                 width={1280}
                 height={896}
                 loading="lazy"

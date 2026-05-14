@@ -5,6 +5,7 @@ import Image from "next/image";
 const universidades = [
   "Universidad de las Ciencias de la Salud",
   "Universidad Nacional Experimental Rómulo Gallegos",
+  "Universidad Nacional Experimental Francisco de Miranda"
 ];
 
 const DondeEstudiar = () => {
