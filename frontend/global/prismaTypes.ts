@@ -113,6 +113,6 @@ export interface Suscripcion {
   suscripcionId: number
   planSuscripcion?: PlanSuscripcion
   isActivo: boolean
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }

@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
-, "query/suscripciones/s"  ],
+, "query/suscripciones/UPDATE_SUSCRIPCION_ESTATUS.ts"  ],
   "exclude": [
     "node_modules"
   ]

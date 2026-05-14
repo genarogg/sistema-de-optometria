@@ -32,6 +32,7 @@ const Header: React.FC<HeaderProps> = () => {
 
     const menuItems = [
         { href: "/", label: "Inicio", visible: !isAuthenticated },
+        { href: "/dashboard/suscripcion", label: "Suscripción", visible: isAuthenticated },
         { href: "/dashboard/perfil", label: "Perfil", visible: isAuthenticated },
         { href: "/dashboard/usuarios", label: "Usuarios", visible: isAuthenticated },
         { href: "/dashboard/bitacora", label: "bitacora", visible: isAuthenticated },
