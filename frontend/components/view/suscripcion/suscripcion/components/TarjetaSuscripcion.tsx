@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Select,
@@ -10,12 +10,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Eye, Download } from "lucide-react";
+
 import { EstatusSuscripcion, Rol } from "@/global/enums";
 import Pagination from "./Pagination";
+import ImageModal from "./ImageModal";
+import AccionesSuscripcion from "./AccionesSuscripcion";
+import SuscripcionDetailsModal from "./SuscripcionDetailsModal";
 import { updateEstatusSuscripcionService } from "../service/updateEstatusSuscripcion.service";
-import WhatsAppButton from "@/components/ux/btn/whatsapp";
 import type { Suscripcion } from "../store/suscripcionStore";
 
 interface TarjetaSuscripcionProps {
@@ -47,6 +48,8 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
     cargando = false,
     meta,
   }) => {
+    const [comprobanteImage, setComprobanteImage] = useState<string | null>(null);
+    const [suscripcionDetalleId, setSuscripcionDetalleId] = useState<number | null>(null);
     const esAdminOSuperUsuario =
       rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
 
@@ -65,8 +68,12 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
       []
     );
 
-    const formatearFecha = useCallback((fecha: string) => {
-      return new Date(fecha).toLocaleDateString("es-ES", {
+    const formatearFecha = useCallback((fecha: string | number) => {
+      if (!fecha) return "";
+      const timestamp = typeof fecha === "string" ? parseInt(fecha, 10) : fecha;
+      const date = new Date(timestamp);
+      if (isNaN(date.getTime())) return String(fecha);
+      return date.toLocaleDateString("es-ES", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -161,61 +168,13 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
 
                   {/* Acciones */}
                   <div className="pt-2 border-t flex flex-wrap gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-8 text-xs flex-1"
-                    >
-                      <Eye className="h-3.5 w-3.5 mr-1" />
-                      Detalles
-                    </Button>
-
-                    {esAdminOSuperUsuario && (
-                      <WhatsAppButton
-                        phoneNumber={suscripcion.usuario.telefono}
-                      />
-                    )}
-
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-8 text-xs flex-1"
-                    >
-                      <Download className="h-3.5 w-3.5 mr-1" />
-                      Comprobante
-                    </Button>
-
-                    {suscripcion.estatus === EstatusSuscripcion.VALIDADO && (
-                      <>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-8 text-xs flex-1"
-                        >
-                          <Download className="h-3.5 w-3.5 mr-1" />
-                          Carnet
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-8 text-xs flex-1"
-                        >
-                          <Download className="h-3.5 w-3.5 mr-1" />
-                          Solvencia
-                        </Button>
-                      </>
-                    )}
-
-                    {suscripcion.estatus === EstatusSuscripcion.PENDIENTE && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 text-xs flex-1"
-                      >
-                        <Download className="h-3.5 w-3.5 mr-1" />
-                        Recibo
-                      </Button>
-                    )}
+                    <AccionesSuscripcion
+                      suscripcion={suscripcion}
+                      rolActual={rolActual}
+                      onVerDetalles={setSuscripcionDetalleId}
+                      onVerComprobante={setComprobanteImage}
+                      variant="text"
+                    />
                   </div>
                 </CardContent>
               </Card>
@@ -232,6 +191,20 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
           itemsPorPagina={itemsPorPagina}
           className="pt-4"
         />
+
+        {comprobanteImage && (
+          <ImageModal
+            open={true}
+            imageUrl={comprobanteImage}
+            onClose={() => setComprobanteImage(null)}
+          />
+        )}
+        {suscripcionDetalleId && (
+          <SuscripcionDetailsModal
+            suscripcion={suscripciones.find(s => s.id === suscripcionDetalleId)}
+            onClose={() => setSuscripcionDetalleId(null)}
+          />
+        )}
       </>
     );
   }

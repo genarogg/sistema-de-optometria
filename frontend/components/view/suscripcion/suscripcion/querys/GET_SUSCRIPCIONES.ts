@@ -21,6 +21,9 @@ const GET_SUSCRIPCIONES = gql`
           rol
           primerNombre
           primerApellido
+          segundoApellido
+          segundoNombre
+          correo
           telefono
         }
       }

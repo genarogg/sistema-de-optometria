@@ -16,7 +16,7 @@ export default function SuscripcionView() {
     usuario?.rol === Rol.SUPER_USUARIO || usuario?.rol === Rol.ADMINISTRADOR;
 
   return (
-    <Card className="w-full shadow-sm max-w-[1200] m-auto mt-4">
+    <Card className="w-full shadow-sm max-w-[1500] m-auto mt-4">
       <CardHeader className="border-b" style={{ paddingBottom: "0px" }}>
         <div className="flex items-center gap-2 text-primary">
           <CreditCard className="h-5 w-5" />

@@ -16,13 +16,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+
 import { Badge } from "@/components/ui/badge";
-import { Eye, Download } from "lucide-react";
+
 import { EstatusSuscripcion, Rol } from "@/global/enums";
 import { updateEstatusSuscripcionService } from "../service/updateEstatusSuscripcion.service";
-import WhatsappButton  from "@/components/ux/btn/whatsapp";
+
 import Pagination from "./Pagination";
+import ImageModal from "./ImageModal";
+import AccionesSuscripcion from "./AccionesSuscripcion";
+import SuscripcionDetailsModal from "./SuscripcionDetailsModal";
 import type { Suscripcion } from "../store/suscripcionStore";
 
 export interface SuscripcionMeta {
@@ -61,6 +64,7 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
     const [suscripcionDetalleId, setSuscripcionDetalleId] = useState<
       number | null
     >(null);
+    const [comprobanteImage, setComprobanteImage] = useState<string | null>(null);
 
     const esAdminOSuperUsuario =
       rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
@@ -81,8 +85,12 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
       []
     );
 
-    const formatearFecha = useCallback((fecha: string) => {
-      return new Date(fecha).toLocaleDateString("es-ES", {
+    const formatearFecha = useCallback((fecha: string | number) => {
+      if (!fecha) return "";
+      const timestamp = typeof fecha === "string" ? parseInt(fecha, 10) : fecha;
+      const date = new Date(timestamp);
+      if (isNaN(date.getTime())) return String(fecha);
+      return date.toLocaleDateString("es-ES", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
@@ -116,8 +124,8 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
                 suscripcionesPaginadas.map((suscripcion, index) => (
                   <TableRow
                     key={suscripcion.id}
-                    className={`transition-colors hover:bg-primary/20 ${
-                      index % 2 === 0 ? "bg-background" : "bg-muted/80"
+                    className={`transition-colors hover:bg-primary/10 ${
+                      index % 2 === 0 ? "bg-background" : "bg-muted/90"
                     }`}
                   >
                     <TableCell className="text-xs font-mono text-muted-foreground truncate max-w-[80px] border-r">
@@ -163,74 +171,13 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
                         </Badge>
                       )}
                     </TableCell>
-                    <TableCell className="flex items-center justify-center gap-1">
-                      {/* Botón Ver detalles */}
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-10 w-10"
-                        onClick={() => setSuscripcionDetalleId(suscripcion.id)}
-                        title="Ver detalles"
-                      >
-                        <Eye className="h-3.5 w-3.5" />
-                      </Button>
-
-                      {/* Botón WhatsApp - solo admin */}
-                      {esAdminOSuperUsuario && (
-                        <WhatsappButton
-                          phoneNumber={suscripcion.usuario.cedula}
-                         
-                        />
-                      )}
-
-                      {/* Botón Ver comprobante */}
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="h-10 w-10"
-                        onClick={() => {
-                          // Aqui van acciones para ver comprobante
-                        }}
-                        title="Ver comprobante"
-                      >
-                        <Download className="h-3.5 w-3.5" />
-                      </Button>
-
-                      {/* Botón Descargar carnet - solo VALIDADO */}
-                      {suscripcion.estatus === EstatusSuscripcion.VALIDADO && (
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-10 w-10"
-                          title="Descargar carnet"
-                        >
-                          <Download className="h-3.5 w-3.5" />
-                        </Button>
-                      )}
-
-                      {/* Botón Descargar solvencia - solo VALIDADO */}
-                      {suscripcion.estatus === EstatusSuscripcion.VALIDADO && (
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-10 w-10"
-                          title="Descargar solvencia"
-                        >
-                          <Download className="h-3.5 w-3.5" />
-                        </Button>
-                      )}
-
-                      {/* Botón Descargar recibo - solo PENDIENTE */}
-                      {suscripcion.estatus === EstatusSuscripcion.PENDIENTE && (
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="h-10 w-10"
-                          title="Descargar recibo"
-                        >
-                          <Download className="h-3.5 w-3.5" />
-                        </Button>
-                      )}
+                    <TableCell className="flex  gap-1">
+                      <AccionesSuscripcion
+                        suscripcion={suscripcion}
+                        rolActual={rolActual}
+                        onVerDetalles={setSuscripcionDetalleId}
+                        onVerComprobante={setComprobanteImage}
+                      />
                     </TableCell>
                   </TableRow>
                 ))
@@ -249,6 +196,20 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
           showPageNumbers
           className="pt-4"
         />
+
+        {comprobanteImage && (
+          <ImageModal
+            open={true}
+            imageUrl={comprobanteImage}
+            onClose={() => setComprobanteImage(null)}
+          />
+        )}
+        {suscripcionDetalleId && (
+          <SuscripcionDetailsModal
+            suscripcion={suscripciones.find(s => s.id === suscripcionDetalleId)}
+            onClose={() => setSuscripcionDetalleId(null)}
+          />
+        )}
       </>
     );
   }

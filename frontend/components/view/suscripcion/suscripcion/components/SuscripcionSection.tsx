@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useCallback, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle, FileText } from "lucide-react";
@@ -48,20 +47,10 @@ const SuscripcionSection: React.FC = () => {
   const totalPaginas = getTotalPaginas();
 
   return (
-    <Card className="w-full shadow-sm max-w-[1200] m-auto">
-      <CardHeader className="border-b" style={{ paddingBottom: "0px" }}>
-        <div className="flex items-center gap-2 text-primary">
-          <FileText className="h-5 w-5" />
-          <CardTitle className="text-xl">Suscripciones</CardTitle>
-          {!cargando && meta && (
-            <span className="text-sm font-normal">
-              ({meta.total})
-            </span>
-          )}
-        </div>
-      </CardHeader>
+    <div className="flex flex-col gap-4">
+     
 
-      <CardContent className="flex flex-col gap-4 pt-4">
+      <div className="flex flex-col gap-4">
         <div className="pt-2">
           <BuscadorSuscripcion />
         </div>
@@ -108,8 +97,8 @@ const SuscripcionSection: React.FC = () => {
             cargando={cargando}
           />
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

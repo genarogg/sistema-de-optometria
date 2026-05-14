@@ -7,7 +7,7 @@ export interface Suscripcion {
   comprobanteImg: string;
   contodesuscripcion: number;
   estatus: EstatusSuscripcion;
-  createdAt: string;
+  createdAt: string | number;
   planSuscripcion: {
     tipo: string;
     costo: number;
@@ -17,8 +17,9 @@ export interface Suscripcion {
     rol: Rol;
     primerNombre: string;
     primerApellido: string;
-    segundoNombre?: string;
     segundoApellido?: string;
+    segundoNombre?: string;
+    correo: string;
     telefono: string;
   };
 }
