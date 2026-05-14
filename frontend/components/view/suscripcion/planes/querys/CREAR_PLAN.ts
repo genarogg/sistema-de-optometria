@@ -4,7 +4,7 @@ const CREAR_PLAN = gql`
   mutation CrearPlan(
     $token: String!
     $costo: Int!
-    $tipo: String!
+    $tipo: TipoSuscripcion!
   ) {
     crearPlan(
       token: $token

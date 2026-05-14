@@ -70,6 +70,8 @@ const updatePlan = async (_: unknown, args: UpdatePlanArgs) => {
             mensaje: `Se actualizó el plan de suscripción ID ${planId}`,
         });
 
+        console.log("Plan de suscripción actualizado:", planActualizado);
+
         return successResponse({
             message: "Plan de suscripción actualizado exitosamente",
             data: planActualizado,

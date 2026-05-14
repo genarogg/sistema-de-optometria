@@ -96,7 +96,6 @@ export default function PlanesSection() {
         }}
         plan={selectedPlan}
         onSuccess={() => {
-          handleRefresh();
           setSelectedPlan(null);
         }}
       />

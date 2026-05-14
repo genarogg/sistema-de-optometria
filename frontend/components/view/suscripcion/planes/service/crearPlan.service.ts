@@ -4,6 +4,7 @@ import usePlanesStore from '../store/planesStore';
 import { TipoSuscripcion } from '@/global/enums';
 import { PlanSuscripcion } from '@/global/prismaTypes';
 import { isProd } from "@/env";
+import notify from "@/components/nano/notify";
 
 interface CrearPlanParams {
   tipo: TipoSuscripcion;
@@ -32,13 +33,19 @@ export async function crearPlanService({ tipo, costo, isActivo }: CrearPlanParam
 
   try {
     const client = clientApollo;
-    await client.mutate({
+    const { data } = await client.mutate({
       mutation: CREAR_PLAN,
       variables: { token, tipo, costo },
     });
-  } catch (err) {
+
+    const response = data as any;
+    if (response?.crearPlan) {
+      const { type, message } = response.crearPlan;
+      notify({ type, message });
+    }
+  } catch (err: any) {
     console.error("Error al crear el plan:", err);
-    setError("Error al crear el plan. Intenta nuevamente.");
+    notify({ type: "error", message: err.message || "Error al crear el plan. Intenta nuevamente." });
     // No revertir cambio optimista por ahora
   }
 }

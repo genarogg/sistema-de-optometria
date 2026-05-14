@@ -2,6 +2,7 @@ import { clientApollo } from "@/functions";
 import UPDATE_PLAN from "../querys/UPDATE_PLAN";
 import usePlanesStore from "../store/planesStore";
 import { TipoSuscripcion } from "@/global/enums";
+import notify from "@/components/nano/notify";
 
 interface ActualizarPlanParams {
   planId: number;
@@ -32,7 +33,7 @@ export async function actualizarPlanService({
 
   try {
     const client = clientApollo;
-    await client.mutate({
+    const { data } = await client.mutate({
       mutation: UPDATE_PLAN,
       variables: {
         token,
@@ -42,8 +43,14 @@ export async function actualizarPlanService({
         isActivo,
       },
     });
-  } catch (err) {
+
+    const response = data as any;
+    if (response?.updatePlan) {
+      const { type, message } = response.updatePlan;
+      notify({ type, message });
+    }
+  } catch (err: any) {
     console.error("Error al actualizar el plan:", err);
-    setError("Error al actualizar el plan. Intenta nuevamente.");
+    notify({ type: "error", message: err.message || "Error al actualizar el plan. Intenta nuevamente." });
   }
 }

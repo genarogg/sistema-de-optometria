@@ -48,6 +48,8 @@ const crearPlan = async (_: unknown, args: CrearPlanArgs) => {
             mensaje: `Se creó un plan de suscripción para el usuario ${usuario.email}`,
         });
 
+        console.log("Plan de suscripción creado:", nuevoPlan);
+
         return successResponse({
             message: "Plan de suscripción creado exitosamente",
             data: nuevoPlan,

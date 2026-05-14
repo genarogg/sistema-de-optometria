@@ -3,7 +3,8 @@ import GET_PLANES from "../querys/GET_PLANES";
 import usePlanesStore from "../store/planesStore";
 import PLANES_MOCK from "../fake/planes.mock";
 import { isProd } from "@/env";
-import type { Plan } from "../store/planesStore";
+
+import notify from "@/components/nano/notify";
 
 export async function getPlanesService() {
   const { setPlanes, setCargando, setError } = usePlanesStore.getState();
@@ -22,14 +23,18 @@ export async function getPlanesService() {
     });
 
     const data = result.data as any;
-    const planes: Plan[] = data?.getPlanes?.data ?? [];
+    const planes: any[] = data?.getPlanes?.data ?? [];
     setPlanes(planes);
-  } catch (err) {
+
+    if (data?.getPlanes?.type && data?.getPlanes?.message) {
+      notify({ type: data.getPlanes.type, message: data.getPlanes.message });
+    }
+  } catch (err: any) {
     if (!isProd) {
       console.warn("Fallo la query, cargando datos mock:", err);
-      setPlanes(PLANES_MOCK);
+      setPlanes(PLANES_MOCK as any);
     } else {
-      setError("Error al obtener los planes. Intenta nuevamente.");
+      notify({ type: "error", message: err.message || "Error al obtener los planes. Intenta nuevamente." });
     }
   } finally {
     setCargando(false);

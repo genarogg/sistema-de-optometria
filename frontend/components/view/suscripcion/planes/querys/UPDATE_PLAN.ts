@@ -5,7 +5,7 @@ const UPDATE_PLAN = gql`
     $token: String!
     $planId: Int!
     $costo: Int
-    $tipo: String
+    $tipo: TipoSuscripcion
     $isActivo: Boolean
   ) {
     updatePlan(

@@ -19,7 +19,8 @@ import {
 import { Label } from '@/components/ui/label';
 import { actualizarPlanService } from '../service/actualizarPlan.service';
 import { crearPlanService } from '../service/crearPlan.service';
-import { useToast } from '@/hooks/use-toast';
+import { TipoSuscripcion } from '@/global/enums';
+import notify from '@/components/nano/notify';
 
 
 interface ModalCrearPlanProps {
@@ -35,11 +36,10 @@ export default function ModalCrearPlan({
   plan,
   onSuccess,
 }: ModalCrearPlanProps) {
-  const [tipo, setTipo] = useState('');
+  const [tipo, setTipo] = useState<TipoSuscripcion | ''>('');
   const [costo, setCosto] = useState('');
   const [isActivo, setIsActivo] = useState('activo');
   const [isLoading, setIsLoading] = useState(false);
-  const { toast } = useToast();
 
   const isEditMode = Boolean(plan);
 
@@ -59,11 +59,7 @@ export default function ModalCrearPlan({
     e.preventDefault();
 
     if (!tipo || !costo) {
-      toast({
-        title: 'Error',
-        description: 'Por favor completa todos los campos',
-        variant: 'destructive',
-      });
+      notify({ type: 'error', message: 'Por favor completa todos los campos' });
       return;
     }
 
@@ -72,24 +68,17 @@ export default function ModalCrearPlan({
       if (isEditMode && plan?.id) {
         await actualizarPlanService({
           planId: plan.id,
-          tipo: tipo as any,
+          tipo: tipo as TipoSuscripcion,
           costo: parseFloat(costo),
           isActivo: isActivo === 'activo',
         });
       } else {
         await crearPlanService({
-          tipo: tipo as any,
+          tipo: tipo as TipoSuscripcion,
           costo: parseFloat(costo),
           isActivo: isActivo === 'activo',
         });
       }
-
-      toast({
-        title: 'Éxito',
-        description: isEditMode
-          ? 'Plan actualizado correctamente'
-          : 'Plan creado correctamente',
-      });
 
       setTipo('');
       setCosto('');
@@ -98,13 +87,6 @@ export default function ModalCrearPlan({
       onSuccess?.();
     } catch (error) {
       console.error('[v0] Error saving plan:', error);
-      toast({
-        title: 'Error',
-        description: isEditMode
-          ? 'No se pudo actualizar el plan'
-          : 'No se pudo crear el plan',
-        variant: 'destructive',
-      });
     } finally {
       setIsLoading(false);
     }
@@ -123,13 +105,22 @@ export default function ModalCrearPlan({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="tipo">Tipo de Plan</Label>
-            <Input
-              id="tipo"
-              placeholder="Ej: Plan Premium"
+            <Select
               value={tipo}
-              onChange={(e) => setTipo(e.target.value)}
+              onValueChange={(value) => setTipo(value as TipoSuscripcion)}
               disabled={isLoading}
-            />
+            >
+              <SelectTrigger id="tipo">
+                <SelectValue placeholder="Selecciona un tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.values(TipoSuscripcion).map((tipo) => (
+                  <SelectItem key={tipo} value={tipo}>
+                    {tipo}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-2">
