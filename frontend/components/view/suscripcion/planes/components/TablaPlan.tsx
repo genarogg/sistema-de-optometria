@@ -16,7 +16,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
 
 import { MoreHorizontal, Edit, Trash2 } from 'lucide-react';
 
@@ -32,72 +31,72 @@ export default function TablaPlan({
   onEdit,
 }: TablaPlanProps) {
 
-  const getStatusColor = (isActivo: boolean | undefined) => {
-    return isActivo ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
-  };
-
   if (planes.length === 0) {
     return (
-      <div className="text-center py-8">
-        <p className="text-gray-500">No hay planes disponibles</p>
+      <div className="text-center py-10 text-muted-foreground">
+        No hay planes disponibles
       </div>
     );
   }
 
   return (
-    <>
-      <div className="rounded-md border overflow-hidden">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-gray-50">
-              <TableHead className="w-16">ID</TableHead>
-              <TableHead>Tipo</TableHead>
-              <TableHead>Costo</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {planes.map((plan) => (
-              <TableRow key={plan.id} className="hover:bg-gray-50">
-                <TableCell className="font-medium text-sm">{plan.id}</TableCell>
-                <TableCell className="font-medium">{plan.tipo}</TableCell>
-                <TableCell>${plan.costo?.toFixed(2) || '0.00'}</TableCell>
-                <TableCell>
-                  <Badge className={getStatusColor(plan.isActivo)}>
-                    {plan.isActivo ? 'Activo' : 'Inactivo'}
-                  </Badge>
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => onEdit?.(plan)}>
-                        <Edit className="h-4 w-4 mr-2" />
-                        Editar
+    <div className="rounded-md border overflow-x-auto">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-muted">
+            <TableHead className="w-[80px] text-sm font-semibold">ID</TableHead>
+            <TableHead className="text-sm font-semibold">Tipo</TableHead>
+            <TableHead className="text-sm font-semibold">Costo</TableHead>
+            <TableHead className="text-sm font-semibold">Estado</TableHead>
+            <TableHead className="text-sm font-semibold text-center">Acciones</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {planes.map((plan, index) => (
+            <TableRow
+              key={plan.id}
+              className={`transition-colors hover:bg-primary/20 ${
+                index % 2 === 0 ? "bg-background" : "bg-muted/80"
+              }`}
+            >
+              <TableCell className="text-xs font-mono text-muted-foreground truncate max-w-[80px]">
+                {plan.id}
+              </TableCell>
+              <TableCell className="font-medium">{plan.tipo}</TableCell>
+              <TableCell className="text-sm">${plan.costo?.toFixed(2) || '0.00'}</TableCell>
+              <TableCell>
+                <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
+                  {plan.isActivo ? 'Activo' : 'Inactivo'}
+                </span>
+              </TableCell>
+              <TableCell className="flex items-center justify-center">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => onEdit?.(plan)}>
+                      <Edit className="h-4 w-4 mr-2" />
+                      Editar
+                    </DropdownMenuItem>
+                    {onDelete && (
+                      <DropdownMenuItem
+                        onClick={() => onDelete(plan.id)}
+                        className="text-red-600"
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Eliminar
                       </DropdownMenuItem>
-                      {onDelete && (
-                        <DropdownMenuItem
-                          onClick={() => onDelete(plan.id)}
-                          className="text-red-600"
-                        >
-                          <Trash2 className="h-4 w-4 mr-2" />
-                          Eliminar
-                        </DropdownMenuItem>
-                      )}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-
-    </>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

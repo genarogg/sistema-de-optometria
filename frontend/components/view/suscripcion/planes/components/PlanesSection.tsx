@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { CreditCard } from 'lucide-react';
 import TablaPlan from './TablaPlan';
 import TarjetaPlan from './TarjetaPlan';
 import ModalCrearPlan from './ModalCrearPlan';
@@ -29,8 +31,6 @@ export default function PlanesSection() {
     filteredPlanes,
     searchTerm,
     setSearchTerm,
-    statusFilter,
-    setStatusFilter,
   } = usePlaneFilters(planes);
 
   useEffect(() => {
@@ -60,37 +60,51 @@ export default function PlanesSection() {
   };
 
   return (
-    <div className="space-y-6">
-      <PlanesBuscador
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        statusFilter={statusFilter}
-        onStatusChange={setStatusFilter}
-        onCreateClick={() => {
-          setSelectedPlan(null);
-          setIsPlanModalOpen(true);
-        }}
-      />
+    <Card className="w-full shadow-sm max-w-[1200] m-auto">
+      <CardHeader className="border-b" style={{ paddingBottom: "0px" }}>
+        <div className="flex items-center gap-2 text-primary">
+          <CreditCard className="h-5 w-5" />
+          <CardTitle className="text-xl">Planes</CardTitle>
+          {!isLoading && (
+            <span className="text-sm font-normal">
+              ({filteredPlanes.length})
+            </span>
+          )}
+        </div>
+      </CardHeader>
 
-      {isMobile ? (
-        <TarjetaPlan
-          planes={filteredPlanes}
-          onEdit={(plan) => {
-            setSelectedPlan(plan);
-            setIsPlanModalOpen(true);
-          }}
-          onDelete={() => handleRefresh()}
-        />
-      ) : (
-        <TablaPlan
-          planes={filteredPlanes}
-          onEdit={(plan) => {
-            setSelectedPlan(plan);
-            setIsPlanModalOpen(true);
-          }}
-          onDelete={() => handleRefresh()}
-        />
-      )}
+      <CardContent className="flex flex-col gap-4">
+        <div className="pt-2">
+          <PlanesBuscador
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            onCreateClick={() => {
+              setSelectedPlan(null);
+              setIsPlanModalOpen(true);
+            }}
+          />
+        </div>
+
+        {isMobile ? (
+          <TarjetaPlan
+            planes={filteredPlanes}
+            onEdit={(plan) => {
+              setSelectedPlan(plan);
+              setIsPlanModalOpen(true);
+            }}
+            onDelete={() => handleRefresh()}
+          />
+        ) : (
+          <TablaPlan
+            planes={filteredPlanes}
+            onEdit={(plan) => {
+              setSelectedPlan(plan);
+              setIsPlanModalOpen(true);
+            }}
+            onDelete={() => handleRefresh()}
+          />
+        )}
+      </CardContent>
 
       <ModalCrearPlan
         isOpen={isPlanModalOpen}
@@ -104,6 +118,6 @@ export default function PlanesSection() {
           setSelectedPlan(null);
         }}
       />
-    </div>
+    </Card>
   );
 }
