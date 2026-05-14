@@ -217,7 +217,6 @@ model Suscripcion {
   usuario            Usuario            @relation(fields: [usuarioId], references: [id])
   suscripcionId      Int
   planSuscripcion    PlanSuscripcion    @relation(fields: [suscripcionId], references: [id])
-  isActivo           Boolean            @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -21,6 +21,7 @@ type Suscripcion {
   suscripcionId: Int!
   planSuscripcion: PlanSuscripcion
   isActivo: Boolean!
+  createdAt: String!
 }
 
 type PlanSuscripcionResponse {

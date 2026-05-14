@@ -11,7 +11,7 @@ const GET_SUSCRIPCIONES = gql`
         comprobanteImg
         contodesuscripcion
         estatus
-        isActivo
+        createdAt
         planSuscripcion {
           tipo
         }
