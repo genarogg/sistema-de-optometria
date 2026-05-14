@@ -48,9 +48,17 @@ type SuscripcionesResponse {
   data: [Suscripcion]
 }
 
+
+type SuscripcionesResponsePaginado {
+  type: String
+  message: String
+  data: [Suscripcion]
+  meta: Meta
+}
+
 extend type Query {
   getPlanes(token: String!): PlanSuscripcionesResponse!
-  getSuscripciones(token: String!, filtro: String): SuscripcionesResponse!
+  getSuscripciones(token: String!, filtro: String, pagina: Int): SuscripcionesResponsePaginado!
 }
 
 extend type Mutation {

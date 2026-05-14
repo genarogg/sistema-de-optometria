@@ -4,12 +4,15 @@ import { Rol } from "@prisma/client";
 interface GetSuscripcionesArgs {
     token: string;
     filtro?: string;
+    pagina?: number;
 }
 
 const getSuscripciones = async (_: unknown, args: GetSuscripcionesArgs) => {
     log.dev("getSuscripciones called with args:", args);
 
-    const { token, filtro } = args;
+    const { token, filtro, pagina = 1 } = args;
+    const itemsPorPagina = 20;
+    const skip = (pagina - 1) * itemsPorPagina;
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
@@ -31,11 +34,18 @@ const getSuscripciones = async (_: unknown, args: GetSuscripcionesArgs) => {
 
         // Aplicar filtro solo por CI si se proporciona
         if (filtro) {
-            whereClause.Usuario = {
-                ...whereClause.Usuario,
-                cedula: filtro,
+            whereClause.usuario = {
+                cedula: {
+                    contains: filtro,
+                    mode: "insensitive",
+                },
             };
         }
+
+        // Obtener el total de suscripciones
+        const total = await prisma.suscripcion.count({
+            where: whereClause,
+        });
 
         const suscripciones = await prisma.suscripcion.findMany({
             where: whereClause,
@@ -43,13 +53,23 @@ const getSuscripciones = async (_: unknown, args: GetSuscripcionesArgs) => {
                 usuario: true,
                 planSuscripcion: true,
             },
+            skip,
+            take: itemsPorPagina,
+            orderBy: {
+                createdAt: "desc",
+            },
         });
 
-        console.log(suscripciones)
+        const totalPaginas = Math.ceil(total / itemsPorPagina);
 
         return successResponse({
             message: "Suscripciones obtenidas correctamente",
             data: suscripciones,
+            meta: {
+                total,
+                page: pagina,
+                limit: itemsPorPagina,
+            },
         });
     } catch (error: any) {
         log.error("Error en getSuscripciones:", error);

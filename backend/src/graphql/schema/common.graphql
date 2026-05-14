@@ -11,6 +11,7 @@ type Meta {
   limit: Int
 }
 
+
 type NotificacionResponse {
   type: String
   message: String
