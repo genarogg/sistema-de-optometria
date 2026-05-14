@@ -25,7 +25,7 @@ export default function SuscripcionView() {
 
       <CardContent className="flex flex-col gap-4 pt-4">
         <Tabs defaultValue="suscripciones" className="w-full">
-          <TabsList className="grid w-full md:w-fit">
+          <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="suscripciones">Mis Suscripciones</TabsTrigger>
             {isSuperUsuarioOrAdmin && (
               <TabsTrigger value="planes">Planes</TabsTrigger>
