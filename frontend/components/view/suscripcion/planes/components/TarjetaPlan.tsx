@@ -3,8 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { MoreHorizontal, Edit, Trash2 } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 
 interface TarjetaPlanProps {
   planes: any[];
@@ -40,28 +39,15 @@ export default function TarjetaPlan({
                   {plan.isActivo ? 'Activo' : 'Inactivo'}
                 </div>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => onEdit?.(plan)}>
-                    <Edit className="h-4 w-4 mr-2" />
-                    Editar
-                  </DropdownMenuItem>
-                  {onDelete && (
-                    <DropdownMenuItem
-                      onClick={() => onDelete(plan.id)}
-                      className="text-red-600"
-                    >
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Eliminar
-                    </DropdownMenuItem>
-                  )}
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <Button
+                variant="outline"
+                size="icon"
+                className="h-10 w-10"
+                onClick={() => onEdit?.(plan)}
+                title="Editar plan"
+              >
+                <Pencil className="h-3.5 w-3.5" />
+              </Button>
             </div>
           </CardHeader>
           <CardContent className="px-3 pb-3">

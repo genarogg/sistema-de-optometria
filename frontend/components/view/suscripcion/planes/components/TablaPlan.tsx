@@ -10,14 +10,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { Switch } from '@/components/ui/switch';
 
-import { MoreHorizontal, Edit, Trash2 } from 'lucide-react';
+import { Pencil } from 'lucide-react';
+import { actualizarPlanService } from '../service/actualizarPlan.service';
 
 interface TablaPlanProps {
   planes: any[];
@@ -30,6 +26,13 @@ export default function TablaPlan({
   onDelete,
   onEdit,
 }: TablaPlanProps) {
+
+  const handleToggleStatus = async (plan: any) => {
+    await actualizarPlanService({
+      planId: plan.id,
+      isActivo: !plan.isActivo,
+    });
+  };
 
   if (planes.length === 0) {
     return (
@@ -65,33 +68,21 @@ export default function TablaPlan({
               <TableCell className="font-medium">{plan.tipo}</TableCell>
               <TableCell className="text-sm">${plan.costo?.toFixed(2) || '0.00'}</TableCell>
               <TableCell>
-                <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
-                  {plan.isActivo ? 'Activo' : 'Inactivo'}
-                </span>
+                <Switch
+                  checked={plan.isActivo}
+                  onCheckedChange={() => handleToggleStatus(plan)}
+                />
               </TableCell>
               <TableCell className="flex items-center justify-center">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onEdit?.(plan)}>
-                      <Edit className="h-4 w-4 mr-2" />
-                      Editar
-                    </DropdownMenuItem>
-                    {onDelete && (
-                      <DropdownMenuItem
-                        onClick={() => onDelete(plan.id)}
-                        className="text-red-600"
-                      >
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Eliminar
-                      </DropdownMenuItem>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-10 w-10"
+                  onClick={() => onEdit?.(plan)}
+                  title="Editar plan"
+                >
+                  <Pencil className="h-3.5 w-3.5" />
+                </Button>
               </TableCell>
             </TableRow>
           ))}
