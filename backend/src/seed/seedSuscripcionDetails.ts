@@ -37,7 +37,7 @@ const seedSuscripcionDetails = async () => {
                         comprobante: Math.floor(Math.random() * 100000),
                         comprobanteImg: `comprobante_${Math.floor(Math.random() * 100000)}.png`,
                         contodesuscripcion: 2026,
-                        isActivo: true,
+                
                     },
                 });
                 console.log(`✅ Suscripción creada para ${usuario.email} (${tipo})`);

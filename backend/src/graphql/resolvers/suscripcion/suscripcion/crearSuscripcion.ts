@@ -44,7 +44,6 @@ const crearSuscripcion = async (_: unknown, args: CrearSuscripcionArgs) => {
                 contodesuscripcion: plan.costo,
                 usuarioId: usuario.id,
                 suscripcionId: planId,
-                isActivo: isActivo,
             },
         });
 
