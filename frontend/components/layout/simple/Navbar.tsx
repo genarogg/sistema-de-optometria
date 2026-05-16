@@ -75,7 +75,7 @@ const Navbar = () => {
             <span className="grid place-items-center w-8 h-8 rounded-lg bg-gradient-hero text-primary-foreground shadow-soft shrink-0">
               <Eye className="w-4 h-4" />
             </span>
-            <span className="text-foreground text-base">CVO</span>
+            <span className="text-foreground text-base">COV</span>
           </a>
         </div>
 

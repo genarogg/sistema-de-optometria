@@ -34,6 +34,8 @@ export async function getSuscripcionesService({
       },
     });
 
+    console.log("Resultado de getSuscripciones:", result);
+
     const data = result.data as any;
     const suscripciones: Suscripcion[] = data?.getSuscripciones?.data ?? [];
     const meta: SuscripcionMeta = data?.getSuscripciones?.meta ?? {
@@ -47,7 +49,7 @@ export async function getSuscripcionesService({
   } catch (err) {
     if (!isProd) {
       console.warn("Fallo la query, cargando datos mock:", err);
-      setSuscripciones(SUSCRIPCIONES_MOCK);
+      // setSuscripciones(SUSCRIPCIONES_MOCK);
       setMeta({
         total: SUSCRIPCIONES_MOCK.length,
         page: 1,

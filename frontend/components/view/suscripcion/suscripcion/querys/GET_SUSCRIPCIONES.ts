@@ -23,7 +23,7 @@ const GET_SUSCRIPCIONES = gql`
           primerApellido
           segundoApellido
           segundoNombre
-          correo
+          email
           telefono
         }
       }
