@@ -109,7 +109,6 @@ model Usuario {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 }
 
 // ─── Nivel 2: dependen de Usuario ─────────────────────────────────────────────
@@ -210,7 +209,7 @@ model PlanSuscripcion {
 model Suscripcion {
   id                 Int                @id @default(autoincrement())
   estatus            EstatusSuscripcion
-  comprobante        Int
+  comprobante        Int?               @default(0)
   comprobanteImg     String
   contodesuscripcion Int
   usuarioId          Int

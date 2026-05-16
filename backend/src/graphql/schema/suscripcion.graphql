@@ -80,7 +80,7 @@ extend type Mutation {
   crearSuscripcion(
     token: String!
     planId: Int!
-    comprobante: Int!
+    comprobante: Int
     comprobanteImg: String!
     isActivo: Boolean
   ): SuscripcionResponse!

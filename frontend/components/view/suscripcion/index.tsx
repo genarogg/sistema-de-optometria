@@ -8,12 +8,15 @@ import { CreditCard } from 'lucide-react';
 import PlanesSection from './planes/components/PlanesSection';
 import { Rol } from '@/global/enums';
 import SuscripcionSection from './suscripcion/components/SuscripcionSection';
+import SuscribirmeSection from './suscribirme/components/SuscribirmeSection';
 
 export default function SuscripcionView() {
   const { usuario } = useAuthStore();
 
   const isSuperUsuarioOrAdmin =
     usuario?.rol === Rol.SUPER_USUARIO || usuario?.rol === Rol.ADMINISTRADOR;
+
+  const tabCount = isSuperUsuarioOrAdmin ? 3 : 2;
 
   return (
     <Card className="w-full shadow-sm max-w-[1500] m-auto mt-4">
@@ -25,13 +28,18 @@ export default function SuscripcionView() {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-4 pt-4">
-        <Tabs defaultValue="suscripciones" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+        <Tabs defaultValue="suscribirme" className="w-full">
+          <TabsList className="flex w-full">
+            <TabsTrigger value="suscribirme">Suscribirme</TabsTrigger>
             <TabsTrigger value="suscripciones">Suscripciones</TabsTrigger>
             {isSuperUsuarioOrAdmin && (
               <TabsTrigger value="planes">Planes</TabsTrigger>
             )}
           </TabsList>
+
+          <TabsContent value="suscribirme" className="space-y-4 mt-4">
+            <SuscribirmeSection />
+          </TabsContent>
 
          <TabsContent value="suscripciones" className="space-y-4 mt-4">
             <SuscripcionSection />

@@ -4,7 +4,7 @@ const CREAR_SUSCRIPCION = gql`
   mutation CrearSuscripcion(
     $token: String!
     $planId: Int!
-    $comprobante: Int!
+    $comprobante: Int
     $comprobanteImg: String!
   ) {
     crearSuscripcion(
