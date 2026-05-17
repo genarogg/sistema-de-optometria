@@ -56,7 +56,7 @@ export default function TarjetaPlan({
                 <span className="font-medium">ID:</span> {plan.id}
               </div>
               <div>
-                <span className="font-medium">Costo:</span> ${plan.costo?.toFixed(2) || '0.00'}
+                <span className="font-medium">Costo:</span> Bs {plan.costo?.toFixed(2) || '0.00'}
               </div>
             </div>
           </CardContent>

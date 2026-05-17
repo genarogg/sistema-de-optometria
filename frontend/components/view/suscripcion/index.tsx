@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuthStore } from '@/context/auth/AuthContext';
@@ -12,11 +12,27 @@ import SuscribirmeSection from './suscribirme/components/SuscribirmeSection';
 
 export default function SuscripcionView() {
   const { usuario } = useAuthStore();
+  const [activeTab, setActiveTab] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('suscripcionActiveTab') || 'suscribirme';
+    }
+    return 'suscribirme';
+  });
 
   const isSuperUsuarioOrAdmin =
     usuario?.rol === Rol.SUPER_USUARIO || usuario?.rol === Rol.ADMINISTRADOR;
 
   const tabCount = isSuperUsuarioOrAdmin ? 3 : 2;
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('suscripcionActiveTab', activeTab);
+    }
+  }, [activeTab]);
+
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+  };
 
   return (
     <Card className="w-full shadow-sm max-w-[1500] m-auto mt-4">
@@ -28,7 +44,7 @@ export default function SuscripcionView() {
       </CardHeader>
 
       <CardContent className="flex flex-col gap-4 pt-4">
-        <Tabs defaultValue="suscribirme" className="w-full">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <TabsList className="flex w-full">
             <TabsTrigger value="suscribirme">Suscribirme</TabsTrigger>
             <TabsTrigger value="suscripciones">Suscripciones</TabsTrigger>

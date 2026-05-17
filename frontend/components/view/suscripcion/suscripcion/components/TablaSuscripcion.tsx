@@ -141,7 +141,7 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
                       {suscripcion.comprobante}
                     </TableCell>
                     <TableCell className="text-sm border-r">
-                      ${suscripcion.planSuscripcion.costo}
+                      Bs {suscripcion.planSuscripcion.costo}
                     </TableCell>
                     <TableCell className="text-sm capitalize border-r">
                       {suscripcion.planSuscripcion.tipo}

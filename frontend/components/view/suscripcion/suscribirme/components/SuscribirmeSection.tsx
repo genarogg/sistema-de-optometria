@@ -54,10 +54,10 @@ export default function SuscribirmeSection() {
 
   return (
     <div className="space-y-6">
-      <div className="text-center space-y-2">
+      {/* <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold">Selecciona un Plan de Suscripción</h2>
         <p className="text-muted-foreground">Elige el plan que mejor se adapte a tus necesidades</p>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {activePlanes.map((plan: any) => (
@@ -69,7 +69,7 @@ export default function SuscribirmeSection() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-3xl font-bold">{plan.costo > 0 ? `$${plan.costo.toFixed(2)}` : 'Sin Costo'}</div>
+              <div className="text-3xl font-bold">{plan.costo > 0 ? `Bs ${plan.costo.toFixed(2)}` : 'Sin Costo'}</div>
               <Button 
                 className="w-full" 
                 onClick={() => handleSelectPlan(plan)}

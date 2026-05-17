@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,6 +16,13 @@ import { crearSuscripcionService } from '../service/crearSuscripcion.service';
 import notify from '@/components/nano/notify';
 import { Upload, X } from 'lucide-react';
 import imageCompression from 'browser-image-compression';
+
+const bankInfo = {
+  banco: "Banco de Venezuela",
+  rif: "J-306668098",
+  telefono: "04127554970",
+  beneficiario: "Centro de Optometria",
+}
 
 interface ModalSuscribirmeProps {
   isOpen: boolean;
@@ -119,35 +127,52 @@ export default function ModalSuscribirme({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Suscribirse a Plan {plan?.tipo}</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label>Tipo de Plan</Label>
-            <div className="p-3 bg-muted rounded-md font-medium">
-              {plan?.tipo}
-            </div>
-          </div>
-          {plan?.costo > 0 && (
-            <div className="space-y-2">
-              <Label>Costo</Label>
-              <div className="p-3 bg-muted rounded-md font-medium">
-                {plan?.costo?.toFixed(2)}
-              </div>
-            </div>
-          )}
-          {plan?.costo > 0 && plan?.tipo === TipoSuscripcion.AGREMIADO && (
-            <div className="space-y-2">
-              <Label>Datos de Pago</Label>
-              <div className="p-3 bg-muted rounded-md text-sm">
-                25074591/0102/04127554970
-              </div>
-            </div>
-          )}
 
+
+        {plan?.costo > 0 && (
+          <div className="overflow-x-auto mb-6 rounded-lg border">
+            <Table className="w-full">
+              <TableBody>
+                <TableRow className="hover:bg-muted/30">
+                  <TableCell className="font-medium text-[14px] p-3 bg-muted/50 w-1/3">Banco</TableCell>
+                  <TableCell className="text-[14px] p-3">{bankInfo.banco}</TableCell>
+                </TableRow>
+                <TableRow className="hover:bg-muted/30">
+                  <TableCell className="font-medium text-[14px] p-3 bg-muted/50">RIF:</TableCell>
+                  <TableCell className="text-[14px] p-3">{bankInfo.rif}</TableCell>
+                </TableRow>
+                <TableRow className="hover:bg-muted/30">
+                  <TableCell className="font-medium text-[14px] p-3 bg-muted/50">Telefono:</TableCell>
+                  <TableCell className="text-[14px] p-3">{bankInfo.telefono}</TableCell>
+                </TableRow>
+                <TableRow className="hover:bg-muted/30">
+                  <TableCell className="font-medium text-[14px] p-3 bg-muted/50">A Nombre de:</TableCell>
+                  <TableCell className="text-[14px] p-3">{bankInfo.beneficiario}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+        )}
+        <div className="overflow-x-auto mb-4 rounded-lg border">
+          <Table className="w-full">
+            <TableBody>
+              <TableRow className="hover:bg-muted/30">
+                <TableCell className="font-medium text-[14px] p-3 bg-muted/50 w-1/3">Tipo de Plan</TableCell>
+                <TableCell className="text-[14px] p-3">{plan?.tipo}</TableCell>
+              </TableRow>
+              <TableRow className="hover:bg-muted/30">
+                <TableCell className="font-medium text-[14px] p-3 bg-muted/50">Costo</TableCell>
+                <TableCell className="text-[14px] p-3">{plan?.costo > 0 ? `Bs ${plan?.costo?.toFixed(2)}` : 'Sin Costo'}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
           {plan?.costo > 0 && (
             <div className="space-y-2">
               <Label htmlFor="comprobante">Número de Comprobante</Label>
@@ -221,10 +246,11 @@ export default function ModalSuscribirme({
               variant="outline"
               onClick={onClose}
               disabled={isLoading}
+              className="flex-1"
             >
               Cancelar
             </Button>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} className="flex-1">
               {isLoading ? 'Suscribiéndose...' : 'Suscribirse'}
             </Button>
           </div>
