@@ -1,0 +1,17 @@
+##############################################
+# Tipos de Documentos
+##############################################
+
+type DocumentoResponse {
+  type: String!
+  message: String!
+  data: String
+}
+
+extend type Query {
+  getDocumento(
+    token: String!
+    tipoDeDocumento: TipoDeDocumento!
+    eventoid: Int
+  ): DocumentoResponse!
+}

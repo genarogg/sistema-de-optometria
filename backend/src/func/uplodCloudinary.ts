@@ -99,12 +99,15 @@ export const guardarArchivo = async (file: any, folder = 'uploads'): Promise<Arc
             const result = await cloudinary.uploader.upload(file, {
                 folder: folder,
                 resource_type: 'image',
+                format: 'png',
                 quality: 'auto',
-                fetch_format: 'webp'
+                transformation: [
+                    { width: 500, height: 500, crop: 'limit', fetch_format: 'png' }
+                ]
             });
 
             const publicId = result.public_id.split('/').pop() || result.public_id;
-            const format = result.format || 'webp';
+            const format = result.format || 'png';
             const fileName = `${publicId}.${format}`;
 
             return {
@@ -137,8 +140,11 @@ export const guardarArchivo = async (file: any, folder = 'uploads'): Promise<Arc
 
         // Aplicar optimizaciones específicas para imágenes
         if (esImagen(mimetype)) {
-            uploadOptions.format = 'webp'; // Convertir a WebP para optimización
+            uploadOptions.format = 'png'; // Convertir a PNG y mantener formato de imagen
             uploadOptions.quality = 'auto'; // Calidad automática para optimización
+            uploadOptions.transformation = [
+                { width: 500, height: 500, crop: 'limit', fetch_format: 'png' }
+            ];
         }
 
         // Subir a Cloudinary usando una promesa

@@ -1,4 +1,4 @@
-import { AccionesBitacora, Rol, TipoAutoridad, TipoEvento, TipoSuscripcion, EstatusSuscripcion, NivelAcademico } from "./enums"
+import { AccionesBitacora, Rol, TipoAutoridad, TipoEvento, TipoSuscripcion, EstatusSuscripcion, NivelAcademico, TipoDeDocumento } from "./enums"
 
 export interface Usuario {
   id: number
@@ -20,6 +20,7 @@ export interface Usuario {
   suscripcionEventos?: Suscripcion_Evento[]
   planSuscripcion?: PlanSuscripcion[]
   suscripcion?: Suscripcion[]
+  documentoSolicitados?: DocumentoSolicitado[]
   createdAt: Date
   updatedAt: Date
 }
@@ -30,6 +31,7 @@ export interface Autoridad {
   tipoAutoridad: TipoAutoridad
   usuarioId: number
   usuario?: Usuario
+  DocumentosSolicitados?: DocumentoSolicitado[]
   createdAt: Date
   updatedAt: Date
 }
@@ -112,7 +114,17 @@ export interface Suscripcion {
   usuario?: Usuario
   suscripcionId: number
   planSuscripcion?: PlanSuscripcion
-  isActivo: boolean
-  createdAt?: Date
-  updatedAt?: Date
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface DocumentoSolicitado {
+  id: number
+  usuarioId: number
+  autoridadId: number
+  tipo: TipoDeDocumento
+  autoridad?: Autoridad
+  usuario?: Usuario
+  createdAt: Date
+  updatedAt: Date
 }

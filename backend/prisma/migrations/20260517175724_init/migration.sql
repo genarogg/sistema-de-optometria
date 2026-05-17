@@ -19,6 +19,9 @@ CREATE TYPE "EstatusSuscripcion" AS ENUM ('PENDIENTE', 'VALIDADO', 'VENCIDO', 'R
 -- CreateEnum
 CREATE TYPE "NivelAcademico" AS ENUM ('LICENCIADO', 'TSU');
 
+-- CreateEnum
+CREATE TYPE "TipoDeDocumento" AS ENUM ('CARNET', 'CARNET_PONENTE', 'SOLVENCIA_PAGO', 'COMPROBANTE_PAGO', 'CERTIFICADO_TALLER', 'CERTIFICADO_DIPLOMADO', 'CERTIFICADO_CONGRESO');
+
 -- CreateTable
 CREATE TABLE "Usuario" (
     "id" SERIAL NOT NULL,
@@ -129,16 +132,27 @@ CREATE TABLE "PlanSuscripcion" (
 CREATE TABLE "Suscripcion" (
     "id" SERIAL NOT NULL,
     "estatus" "EstatusSuscripcion" NOT NULL,
-    "comprobante" INTEGER NOT NULL,
+    "comprobante" INTEGER DEFAULT 0,
     "comprobanteImg" TEXT NOT NULL,
     "contodesuscripcion" INTEGER NOT NULL,
     "usuarioId" INTEGER NOT NULL,
     "suscripcionId" INTEGER NOT NULL,
-    "isActivo" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Suscripcion_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "DocumentoSolicitado" (
+    "id" SERIAL NOT NULL,
+    "usuarioId" INTEGER NOT NULL,
+    "autoridadId" INTEGER NOT NULL,
+    "tipo" "TipoDeDocumento" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "DocumentoSolicitado_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -188,3 +202,9 @@ ALTER TABLE "Suscripcion" ADD CONSTRAINT "Suscripcion_usuarioId_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "Suscripcion" ADD CONSTRAINT "Suscripcion_suscripcionId_fkey" FOREIGN KEY ("suscripcionId") REFERENCES "PlanSuscripcion"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DocumentoSolicitado" ADD CONSTRAINT "DocumentoSolicitado_autoridadId_fkey" FOREIGN KEY ("autoridadId") REFERENCES "Autoridad"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "DocumentoSolicitado" ADD CONSTRAINT "DocumentoSolicitado_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

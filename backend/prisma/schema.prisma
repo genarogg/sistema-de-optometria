@@ -41,6 +41,14 @@ enum AccionesBitacora {
   VALIDAR_SUSCRIPCION
   RECHAZAR_SUSCRIPCION
   VENCIADA_SUSCRIPCION
+
+  GENERACION_CARNET
+  GENERACION_CARNET_PONENTE
+  GENERACION_SOLVENCIA_PAGO
+  GENERACION_COMPROBANTE_PAGO
+  GENERACION_CERTIFICADO_TALLER
+  GENERACION_CERTIFICADO_DIPLOMADO
+  GENERACION_CERTIFICADO_CONGRESO
 }
 
 enum Rol {
@@ -83,6 +91,16 @@ enum NivelAcademico {
   TSU
 }
 
+enum TipoDeDocumento {
+  CARNET
+  CARNET_PONENTE
+  SOLVENCIA_PAGO
+  COMPROBANTE_PAGO
+  CERTIFICADO_TALLER
+  CERTIFICADO_DIPLOMADO
+  CERTIFICADO_CONGRESO
+}
+
 // ─── Nivel 1: sin dependencias ────────────────────────────────────────────────
 
 model Usuario {
@@ -98,14 +116,15 @@ model Usuario {
   password        String
   rol             Rol     @default(VISITANTE)
 
-  autoridad          Autoridad[]
-  Gremio             Gremio[]
-  bitacora           Bitacora[]
-  evento             Evento[]
-  ponente_Evento     Ponente_Evento[]
-  suscripcionEventos Suscripcion_Evento[]
-  planSuscripcion    PlanSuscripcion[]
-  suscripcion        Suscripcion[]
+  autoridad            Autoridad[]
+  gremio               Gremio?
+  bitacora             Bitacora[]
+  evento               Evento[]
+  ponente_Evento       Ponente_Evento[]
+  suscripcionEventos   Suscripcion_Evento[]
+  planSuscripcion      PlanSuscripcion[]
+  suscripcion          Suscripcion[]
+  documentoSolicitados DocumentoSolicitado[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -118,7 +137,10 @@ model Autoridad {
   firma         String
   tipoAutoridad TipoAutoridad
   usuarioId     Int
-  usuario       Usuario       @relation(fields: [usuarioId], references: [id])
+  vigente       Boolean       @default(true)
+
+  usuario               Usuario               @relation(fields: [usuarioId], references: [id])
+  DocumentosSolicitados DocumentoSolicitado[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -129,7 +151,7 @@ model Gremio {
   numeroGremio   Int            @unique
   nivelAcademico NivelAcademico
 
-  usuarioId Int
+  usuarioId Int     @unique
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
@@ -216,6 +238,19 @@ model Suscripcion {
   usuario            Usuario            @relation(fields: [usuarioId], references: [id])
   suscripcionId      Int
   planSuscripcion    PlanSuscripcion    @relation(fields: [suscripcionId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model DocumentoSolicitado {
+  id          Int             @id @default(autoincrement())
+  usuarioId   Int
+  autoridadId Int
+  tipo        TipoDeDocumento
+
+  autoridad Autoridad @relation(fields: [autoridadId], references: [id])
+  usuario   Usuario   @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
