@@ -6,12 +6,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuthStore } from '@/context/auth/AuthContext';
 import { CreditCard } from 'lucide-react';
 import PlanesSection from './planes/components/PlanesSection';
-import { Rol } from '@/global/enums';
+import { Rol, EstatusSuscripcion } from '@/global/enums';
 import SuscripcionSection from './suscripcion/components/SuscripcionSection';
 import SuscribirmeSection from './suscribirme/components/SuscribirmeSection';
+import useSuscripcionStore from './suscripcion/store/suscripcionStore';
+import notify from '@/components/nano/notify';
+import { getSuscripcionesService } from './suscripcion/service/getSuscripciones.service';
 
 export default function SuscripcionView() {
   const { usuario } = useAuthStore();
+  const suscripciones = useSuscripcionStore((s) => s.suscripciones);
+  const cargando = useSuscripcionStore((s) => s.cargando);
+  
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('suscripcionActiveTab') || 'suscribirme';
@@ -30,8 +36,17 @@ export default function SuscripcionView() {
     }
   }, [activeTab]);
 
+  useEffect(() => {
+    if (!isSuperUsuarioOrAdmin) {
+      getSuscripcionesService();
+    }
+  }, [isSuperUsuarioOrAdmin]);
+
   const handleTabChange = (value: string) => {
     setActiveTab(value);
+    if (value === 'suscripciones' && !isSuperUsuarioOrAdmin) {
+      getSuscripcionesService();
+    }
   };
 
   return (
@@ -58,7 +73,7 @@ export default function SuscripcionView() {
           </TabsContent>
 
           <TabsContent value="suscribirme" className="space-y-4 mt-4">
-            <SuscribirmeSection />
+            <SuscribirmeSection onSubscriptionSuccess={() => setActiveTab('suscripciones')} />
           </TabsContent>
 
           {isSuperUsuarioOrAdmin && (

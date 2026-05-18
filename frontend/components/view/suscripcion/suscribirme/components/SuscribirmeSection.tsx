@@ -11,7 +11,11 @@ import { CreditCard } from 'lucide-react';
 import ModalSuscribirme from './ModalSuscribirme';
 import { TipoSuscripcion } from '@/global/enums';
 
-export default function SuscribirmeSection() {
+interface SuscribirmeSectionProps {
+  onSubscriptionSuccess?: () => void;
+}
+
+export default function SuscribirmeSection({ onSubscriptionSuccess }: SuscribirmeSectionProps) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
 
@@ -89,6 +93,7 @@ export default function SuscribirmeSection() {
           setSelectedPlan(null);
         }}
         plan={selectedPlan}
+        onSubscriptionSuccess={onSubscriptionSuccess}
       />
     </div>
   );

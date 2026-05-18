@@ -30,12 +30,14 @@ interface ModalSuscribirmeProps {
   isOpen: boolean;
   onClose: () => void;
   plan: any;
+  onSubscriptionSuccess?: () => void;
 }
 
 export default function ModalSuscribirme({
   isOpen,
   onClose,
   plan,
+  onSubscriptionSuccess,
 }: ModalSuscribirmeProps) {
   const [comprobante, setComprobante] = useState('');
   const [comprobanteImg, setComprobanteImg] = useState('');
@@ -132,7 +134,7 @@ export default function ModalSuscribirme({
       {isSuccess ? (
         <DialogContent className="sm:max-w-[500px] p-0 border-0 overflow-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <motion.div
-            className="relative w-full h-full bg-gradient-to-br from-green-600 to-emerald-500 rounded-lg overflow-hidden"
+            className="relative w-full h-full bg-gradient-hero rounded-lg overflow-hidden"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
@@ -198,7 +200,7 @@ export default function ModalSuscribirme({
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.5, type: "spring" }}
                   >
-                    <Check className="h-12 w-12 text-green-600" strokeWidth={3} />
+                    <Check className="h-12 w-12 text-primary" strokeWidth={3} />
                   </motion.div>
                 </div>
 
@@ -260,12 +262,16 @@ export default function ModalSuscribirme({
                 transition={{ delay: 1.4 }}
                 className="mt-8"
               >
-                <Link
-                  href="/dashboard"
-                  className="inline-block bg-white text-green-600 hover:bg-white/90 hover:text-green-700 transition-all px-8 py-2 rounded-full font-medium text-center"
+                <Button
+                  onClick={() => {
+                    localStorage.setItem('suscripcionActiveTab', 'suscripciones');
+                    onClose();
+                    onSubscriptionSuccess?.();
+                  }}
+                  className="bg-white text-primary hover:bg-white/90 hover:text-primary-foreground transition-all px-8 py-2 rounded-full font-medium"
                 >
-                  Ir al Dashboard
-                </Link>
+                  Ir a Suscripciones
+                </Button>
               </motion.div>
             </div>
           </motion.div>
