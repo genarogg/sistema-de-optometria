@@ -32,8 +32,8 @@ const ConstanciaSolvencia = ({ data }: any) => {
         apellidosCompletos: data?.apellidosCompletos || "Gonzalez Gonzalez",
         nivelAcademico: data?.nivelAcademico || "Ing Informatico",
         cargo: data?.cargo || "Presidente",
-        cedula: data?.cedula || "25074591",
         numeroGremio: data?.numeroGremio || "00000",
+        cedula: data?.cedula || "25074591",
         fechaVencimiento: data?.fechaVencimiento || "23/12/28",
         urlQR: data?.urlQR || "https://www.photoroom.com/",
         autoridad: {

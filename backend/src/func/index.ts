@@ -6,7 +6,6 @@ import verificarToken from "./verificarToken";
 import { encriptarContrasena, compararContrasena } from "./encriptarContrasena";
 import { createResponse, successResponse, errorResponse, warningResponse } from "./response";
 import crearBitacora from "./crearBitacora";
-import crearDocumentoSolicitado from "./crearDocumentoSolicitado";
 import prisma from "./prisma";
 import { getPaginacionParams, getPaginacionMeta } from "./paginar";
 
@@ -28,7 +27,6 @@ export {
     warningResponse,
     prisma,
     crearBitacora,
-    crearDocumentoSolicitado,
     getPaginacionParams,
     getPaginacionMeta,
 

@@ -111,12 +111,10 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
                 }
             }
 
-            console.log(data)
-
             documento = await generatePDF({ template: Carnet, data })
+        }
 
-
-
+        if (tipoDeDocumento === TipoDeDocumento.SOLVENCIA_PAGO) {
 
         }
 
