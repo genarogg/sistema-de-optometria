@@ -1,23 +1,18 @@
-import { prisma, verificarToken, successResponse, errorResponse, log } from "@fn";
-import { TipoDeDocumento, TipoAutoridad } from "@prisma/client"
-import crearDocumentoSolicitado from "./crearDocumentoSolicitado";
+import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
+import { TipoDeDocumento, TipoAutoridad, EstatusSuscripcion, AccionesBitacora, TipoSuscripcion } from "@prisma/client"
+import crearDocumentoSolicitado from "./fn/crearDocumentoSolicitado";
 import { generatePDF } from "@react-pdf-levelup/core"
 import Carnet from "@/pdf/Carnet"
 import SolvenciaPago from "@/pdf/SolvenciaPago"
 
 
-const formatFechaCorto = (fecha: Date) => {
-    const dia = fecha.getDate().toString().padStart(2, "0");
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, "0");
-    const anio = fecha.getFullYear().toString().slice(-2);
-    return `${dia}/${mes}/${anio}`;
-};
 
+
+import formatFechaCorto from "./fn/formatFechaCorto";
 interface GetDocumentoArgs {
     token: string;
     tipoDeDocumento: TipoDeDocumento;
-    eventoid?: number;
-    suscripcionId?: number;
+    suscripcionId: number;
 }
 
 const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
@@ -25,7 +20,7 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
 
     const { CORS_URL } = process.env
 
-    const { token, tipoDeDocumento, eventoid } = args;
+    const { token, tipoDeDocumento, suscripcionId } = args;
 
 
     if (!token) {
@@ -43,17 +38,33 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
             return errorResponse({ message: "Token inválido o expirado" });
         }
 
-        const usuario = await prisma.usuario.findUnique({
-            where: { id: usuarioVerificado.id },
-            include: {
-                gremio: true,
-                autoridad: {
-                    where: { vigente: true },
-                    orderBy: { id: 'desc' },
-                    take: 1,
-                }
+        const suscripcion = await prisma.suscripcion.findUnique({
+            where: {
+                id: suscripcionId,
+                estatus: EstatusSuscripcion.VALIDADO,
+                planSuscripcion: {
+                    tipo: TipoSuscripcion.AGREMIADO,
+                },
             },
+            include: {
+                usuario: {
+                    include: {
+                        gremio: true,
+                        autoridad: {
+                            where: { vigente: true },
+                            orderBy: { id: 'desc' },
+                            take: 1,
+                        }
+                    }
+                }
+            }
         });
+
+        if (!suscripcion) {
+            return errorResponse({ message: "Suscripción no encontrada" });
+        }
+
+        const usuario = suscripcion.usuario;
 
         if (!usuario) {
             return errorResponse({ message: "Usuario no encontrado" });
@@ -120,9 +131,17 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
 
             if (tipoDeDocumento === TipoDeDocumento.CARNET) {
                 documento = await generatePDF({ template: Carnet, data })
-            } 
+            }
         }
 
+        crearBitacora({
+            usuarioId: usuario.id,
+            type: tipoDeDocumento === TipoDeDocumento.CARNET ?
+                AccionesBitacora.GENERACION_CARNET : AccionesBitacora.GENERACION_SOLVENCIA_PAGO
+
+        })
+
+        console.log("Documento generado:", documento);
 
         return successResponse({
             message: `Documento ${tipoDeDocumento} obtenido correctamente`,

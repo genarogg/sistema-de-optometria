@@ -1,8 +1,8 @@
-import getDocumento from "./getDocumento"
+import getCarnetSolvencia from "./getCarnetSolvencia"
 
 const resolvers = {
     Query: {
-        getDocumento
+        getCarnetSolvencia
     },
     Mutation: {},
 };

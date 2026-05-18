@@ -173,7 +173,7 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
                       rolActual={rolActual}
                       onVerDetalles={setSuscripcionDetalleId}
                       onVerComprobante={setComprobanteImage}
-                      variant="text"
+        
                     />
                   </div>
                 </CardContent>

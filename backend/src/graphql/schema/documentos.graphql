@@ -9,9 +9,9 @@ type DocumentoResponse {
 }
 
 extend type Query {
-  getDocumento(
+  getCarnetSolvencia(
     token: String!
     tipoDeDocumento: TipoDeDocumento!
-    eventoid: Int
+    suscripcionId: Int
   ): DocumentoResponse!
 }
