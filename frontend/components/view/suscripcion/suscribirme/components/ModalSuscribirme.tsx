@@ -242,8 +242,8 @@ export default function ModalSuscribirme({
                 transition={{ delay: 1 }}
               >
                 <strong>
-                  Nota: Su trámite ya está siendo procesado, no es
-                  necesario ir a las instalaciones hasta que esté listo. puede consultar el estatus en <span className="font-semibold">Suscripciones</span>.
+                  Nota: Su suscripción ya está siendo procesada, no es
+                  necesario ir a las instalaciones. puede consultar el estatus en <span className="font-semibold">Suscripciones</span>.
                 </strong>
               </motion.p>
 

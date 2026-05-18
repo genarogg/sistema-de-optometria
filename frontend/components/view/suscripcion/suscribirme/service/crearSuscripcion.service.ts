@@ -9,14 +9,13 @@ interface CrearSuscripcionParams {
 }
 
 export async function crearSuscripcionService(params: CrearSuscripcionParams) {
-  const token =
-    typeof window !== "undefined" ? localStorage.getItem("token") ?? "" : "";
+  const token = localStorage.getItem("token")
 
   try {
     const client = clientApollo;
     const result = await client.mutate({
       mutation: CREAR_SUSCRIPCION,
-      variables: { 
+      variables: {
         token,
         planId: params.planId,
         comprobante: params.comprobante,
