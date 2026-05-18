@@ -1,15 +1,15 @@
 import Image from "next/image";
 
-import directiva1 from "@/public/directiva-1.jpg";
-import directiva2 from "@/public/directiva-2.jpg";
-import directiva3 from "@/public/directiva-3.jpg";
-import directiva4 from "@/public/directiva-4.jpg";
+import actas from "@/public/junta/directiva-1_resultado.webp";
+import academico from "@/public/junta/directiva-2_resultado.webp";
+import presidente from "@/public/junta/directiva-3_resultado.webp";
+import finanzas from "@/public/junta/directiva-4_resultado.webp";
 
 const miembros = [
-  { nombre: "Lcda. Maulin Milano", cargo: "Presidenta interina", foto: directiva1 },
-  { nombre: "Lcdo. Edgar Pérez", cargo: "Vicepresidente interino", foto: directiva2 },
-  { nombre: "Lcdo. José Otto Rodríguez", cargo: "Tesorero", foto: directiva3 },
-  { nombre: "Lcda. Zuleyma Gómez", cargo: "Secretaria de Actas", foto: directiva4 },
+  { nombre: "Lcda. Maulin Milano", cargo: "Presidente (a)", foto: presidente },
+  { nombre: "Lcdo. Edgar Pérez", cargo: "Secretario (a) de actas", foto: actas },
+  { nombre: "Lcdo. José Otto Rodríguez", cargo: "Director (a) academico", foto: academico },
+  { nombre: "Lcda. Zuleyma Gómez", cargo: "Director (a) de finanzas", foto: finanzas },
 ];
 
 const Autoridades = () => {
