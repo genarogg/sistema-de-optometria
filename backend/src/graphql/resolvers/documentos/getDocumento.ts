@@ -17,6 +17,7 @@ interface GetDocumentoArgs {
     token: string;
     tipoDeDocumento: TipoDeDocumento;
     eventoid?: number;
+    suscripcionId?: number;
 }
 
 const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {

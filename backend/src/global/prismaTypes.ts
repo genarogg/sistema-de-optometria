@@ -13,7 +13,7 @@ export interface Usuario {
   password: string
   rol: Rol
   autoridad?: Autoridad[]
-  Gremio?: Gremio[]
+  gremio?: Gremio
   bitacora?: Bitacora[]
   evento?: Evento[]
   ponente_Evento?: Ponente_Evento[]
@@ -30,6 +30,7 @@ export interface Autoridad {
   firma: string
   tipoAutoridad: TipoAutoridad
   usuarioId: number
+  vigente: boolean
   usuario?: Usuario
   DocumentosSolicitados?: DocumentoSolicitado[]
   createdAt: Date
