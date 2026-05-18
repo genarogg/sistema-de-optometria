@@ -44,7 +44,17 @@ const downloadDocumentoService = async ({
 
             console.log("result", result);
 
-            const data = result.data?.getCarnetSolvencia as any;
+            interface GetCarnetSolvenciaResponse {
+                type: 'success' | 'error';
+                message: string;
+                data: string;
+            }
+
+            interface ApolloQueryResult {
+                getCarnetSolvencia: GetCarnetSolvenciaResponse;
+            }
+
+            const data = (result.data as ApolloQueryResult)?.getCarnetSolvencia;
 
             if (data.type === "error") {
                 notify({
@@ -71,7 +81,7 @@ const downloadDocumentoService = async ({
     toast.promise(downloadPromise, {
         loading: "Generando documento...",
         success: (data) => {
-            return `Descarga de ${data.tipo} iniciada con éxito.`;
+            return `Descarga de iniciada con éxito.`;
         },
         error: (err) => {
             return err?.message || "Error al descargar el documento. Por favor, intenta de nuevo.";

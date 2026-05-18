@@ -1,41 +1,30 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getPlanesService } from '../../planes/service/getPlanes.service';
-import planesStore from '../../planes/store/planesStore';
+import usePlanesStore from '../../planes/store/planesStore';
 import { useShallow } from 'zustand/react/shallow';
 import { CreditCard } from 'lucide-react';
 import ModalSuscribirme from './ModalSuscribirme';
 import { TipoSuscripcion } from '@/global/enums';
 
 export default function SuscribirmeSection() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [selectedPlan, setSelectedPlan] = React.useState<any>(null);
 
-  const { planes, setPlanes } = planesStore(
+  const { planes, cargando } = usePlanesStore(
     useShallow((state) => ({
       planes: state.planes,
-      setPlanes: state.setPlanes,
+      cargando: state.cargando,
     }))
   );
 
   useEffect(() => {
-    const loadPlanes = async () => {
-      setIsLoading(true);
-      try {
-        await getPlanesService();
-      } catch (error) {
-        console.error('[v0] Error loading planes:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadPlanes();
-  }, [setPlanes]);
+    getPlanesService();
+  }, []);
 
   const activePlanes = planes.filter((plan: any) => plan.isActivo);
 
@@ -44,10 +33,22 @@ export default function SuscribirmeSection() {
     setIsModalOpen(true);
   };
 
-  if (isLoading) {
+  if (cargando) {
     return (
-      <div className="flex items-center justify-center py-8">
-        <p>Cargando planes...</p>
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <Card key={i}>
+              <CardHeader>
+                <Skeleton className="h-6 w-32" />
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-full" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     );
   }
