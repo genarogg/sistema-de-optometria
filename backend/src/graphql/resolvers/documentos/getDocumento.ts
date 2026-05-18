@@ -3,6 +3,7 @@ import { TipoDeDocumento, TipoAutoridad } from "@prisma/client"
 import crearDocumentoSolicitado from "./crearDocumentoSolicitado";
 import { generatePDF } from "@react-pdf-levelup/core"
 import Carnet from "@/pdf/Carnet"
+import SolvenciaPago from "@/pdf/SolvenciaPago"
 
 
 const formatFechaCorto = (fecha: Date) => {
@@ -70,7 +71,8 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
             return errorResponse({ message: "No se encontró la autoridad" });
         }
 
-        if (tipoDeDocumento === TipoDeDocumento.CARNET) {
+        if (tipoDeDocumento === TipoDeDocumento.CARNET ||
+            tipoDeDocumento === TipoDeDocumento.SOLVENCIA_PAGO) {
 
             if (usuario.avatar === null) {
                 return errorResponse({ message: "No tiene foto de perfil, cargue una primero" });
@@ -111,13 +113,14 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
                 }
             }
 
-            documento = await generatePDF({ template: Carnet, data })
+            if (tipoDeDocumento === TipoDeDocumento.SOLVENCIA_PAGO) {
+                documento = await generatePDF({ template: SolvenciaPago, data })
+            }
+
+            if (tipoDeDocumento === TipoDeDocumento.CARNET) {
+                documento = await generatePDF({ template: Carnet, data })
+            } 
         }
-
-        if (tipoDeDocumento === TipoDeDocumento.SOLVENCIA_PAGO) {
-
-        }
-
 
 
         return successResponse({
