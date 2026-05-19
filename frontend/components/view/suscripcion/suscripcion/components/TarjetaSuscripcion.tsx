@@ -15,9 +15,10 @@ import { EstatusSuscripcion, Rol } from "@/global/enums";
 import Pagination from "./Pagination";
 import ImageModal from "./ImageModal";
 import AccionesSuscripcion from "./AccionesSuscripcion";
-import SuscripcionDetailsModal from "./SuscripcionDetailsModal";
+import SuscripcionDetailsModal from "./modalDetails/SuscripcionDetailsModal";
 import { updateEstatusSuscripcionService } from "../service/updateEstatusSuscripcion.service";
 import type { Suscripcion } from "../store/suscripcionStore";
+import getStatusColor from "../utils/getStatusColor";
 
 interface TarjetaSuscripcionProps {
   suscripciones: Suscripcion[];
@@ -30,12 +31,7 @@ interface TarjetaSuscripcionProps {
   meta?: any;
 }
 
-const estatusColorMap: Record<EstatusSuscripcion, string> = {
-  [EstatusSuscripcion.PENDIENTE]: "bg-yellow-100 text-yellow-800",
-  [EstatusSuscripcion.VALIDADO]: "bg-green-100 text-green-800",
-  [EstatusSuscripcion.RECHAZADA]: "bg-red-100 text-red-800",
-  [EstatusSuscripcion.VENCIDO]: "bg-gray-100 text-gray-800",
-};
+
 
 const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
   ({
@@ -105,9 +101,9 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
                         CI: {suscripcion.usuario.cedula}
                       </p>
                     </div>
-                    <Badge className={estatusColorMap[suscripcion.estatus]}>
+                    <div className={getStatusColor(suscripcion.estatus)}>
                       {suscripcion.estatus}
-                    </Badge>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">

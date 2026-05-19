@@ -25,8 +25,9 @@ import { updateEstatusSuscripcionService } from "../service/updateEstatusSuscrip
 import Pagination from "./Pagination";
 import ImageModal from "./ImageModal";
 import AccionesSuscripcion from "./AccionesSuscripcion";
-import SuscripcionDetailsModal from "./SuscripcionDetailsModal";
+import SuscripcionDetailsModal from "./modalDetails/SuscripcionDetailsModal";
 import type { Suscripcion } from "../store/suscripcionStore";
+import getStatusColor from "../utils/getStatusColor";
 
 export interface SuscripcionMeta {
   total: number;
@@ -44,12 +45,7 @@ interface TablaSuscripcionProps {
   cargando?: boolean;
 }
 
-const estatusColorMap: Record<EstatusSuscripcion, string> = {
-  [EstatusSuscripcion.PENDIENTE]: "bg-yellow-100 text-yellow-800",
-  [EstatusSuscripcion.VALIDADO]: "bg-green-100 text-green-800",
-  [EstatusSuscripcion.RECHAZADA]: "bg-red-100 text-red-800",
-  [EstatusSuscripcion.VENCIDO]: "bg-gray-100 text-gray-800",
-};
+
 
 const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
   ({
@@ -109,7 +105,7 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
                 <TableHead className="text-sm font-semibold border-r">Comprobante</TableHead>
                 <TableHead className="text-sm font-semibold border-r">Costo</TableHead>
                 <TableHead className="text-sm font-semibold border-r">Tipo de Plan</TableHead>
-                <TableHead className="text-sm font-semibold border-r">Estatus</TableHead>
+                <TableHead className="text-sm font-semibold border-r text-center">Estatus</TableHead>
                 <TableHead className="text-sm font-semibold text-center">Acciones</TableHead>
               </TableRow>
             </TableHeader>
@@ -147,29 +143,31 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
                       {suscripcion.planSuscripcion.tipo}
                     </TableCell>
                     <TableCell className="border-r">
-                      {esAdminOSuperUsuario ? (
-                        <Select
-                          defaultValue={suscripcion.estatus}
-                          onValueChange={(value) =>
-                            handleEstatusChange(suscripcion.id, value)
-                          }
-                        >
-                          <SelectTrigger className="w-[140px] h-8 text-xs">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {Object.values(EstatusSuscripcion).map((estatus) => (
-                              <SelectItem key={estatus} value={estatus}>
-                                {estatus}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      ) : (
-                        <Badge className={estatusColorMap[suscripcion.estatus]}>
-                          {suscripcion.estatus}
-                        </Badge>
-                      )}
+                      <div className="flex items-center justify-center w-full h-full">
+                        {esAdminOSuperUsuario ? (
+                          <Select
+                            defaultValue={suscripcion.estatus}
+                            onValueChange={(value) =>
+                              handleEstatusChange(suscripcion.id, value)
+                            }
+                          >
+                            <SelectTrigger className="w-[140px] h-8 text-xs">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.values(EstatusSuscripcion).map((estatus) => (
+                                <SelectItem key={estatus} value={estatus}>
+                                  {estatus}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <div className={getStatusColor(suscripcion.estatus)}>
+                            {suscripcion.estatus}
+                          </div>
+                        )}
+                      </div>
                     </TableCell>
                     <TableCell className="flex  gap-1">
                       <AccionesSuscripcion

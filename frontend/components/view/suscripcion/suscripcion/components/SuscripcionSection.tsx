@@ -3,7 +3,7 @@
 import React, { useEffect, useCallback, useMemo } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
-import { AlertCircle, FileText } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 import useSuscripcionStore from "../store/suscripcionStore";
 import { getSuscripcionesService } from "../service/getSuscripciones.service";
 import { Rol } from "@/global/enums";
@@ -12,7 +12,7 @@ import TablaSuscripcion from "./TablaSuscripcion";
 import TarjetaSuscripcion from "./TarjetaSuscripcion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuthStore } from "@/context/auth/AuthContext";
-import { isProd } from "@/env";
+
 
 const SuscripcionSection: React.FC = () => {
   const suscripciones = useSuscripcionStore((s) => s.suscripciones);

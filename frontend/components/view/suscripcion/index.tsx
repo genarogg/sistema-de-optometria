@@ -6,17 +6,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuthStore } from '@/context/auth/AuthContext';
 import { CreditCard } from 'lucide-react';
 import PlanesSection from './planes/components/PlanesSection';
-import { Rol, EstatusSuscripcion } from '@/global/enums';
+import { Rol } from '@/global/enums';
 import SuscripcionSection from './suscripcion/components/SuscripcionSection';
 import SuscribirmeSection from './suscribirme/components/SuscribirmeSection';
-import useSuscripcionStore from './suscripcion/store/suscripcionStore';
-import notify from '@/components/nano/notify';
 import { getSuscripcionesService } from './suscripcion/service/getSuscripciones.service';
 
 export default function SuscripcionView() {
   const { usuario } = useAuthStore();
-  const suscripciones = useSuscripcionStore((s) => s.suscripciones);
-  const cargando = useSuscripcionStore((s) => s.cargando);
   
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -27,8 +23,6 @@ export default function SuscripcionView() {
 
   const isSuperUsuarioOrAdmin =
     usuario?.rol === Rol.SUPER_USUARIO || usuario?.rol === Rol.ADMINISTRADOR;
-
-  const tabCount = isSuperUsuarioOrAdmin ? 3 : 2;
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

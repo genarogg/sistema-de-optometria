@@ -9,6 +9,7 @@ import SideBar from "./sidebar";
 import Nav from "../nav";
 import { useAuthStore } from "@/context/auth/AuthContext";
 import { useRouter } from 'next/navigation';
+import { Rol } from "@/global/enums";
 
 interface HeaderProps {
     children?: React.ReactNode;
@@ -17,7 +18,9 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = () => {
 
-    const { isAuthenticated, logout } = useAuthStore((state) => state);
+    const { isAuthenticated, logout, usuario } = useAuthStore((state) => state);
+
+    const isSuperUsuarioOrAdmin = usuario?.rol === Rol.SUPER_USUARIO || usuario?.rol === Rol.ADMINISTRADOR;
     const router = useRouter();
     const btnRemove = () => {
         console.log("btnRemove");
@@ -34,8 +37,8 @@ const Header: React.FC<HeaderProps> = () => {
         { href: "/", label: "Inicio", visible: !isAuthenticated },
         { href: "/dashboard/suscripcion", label: "Suscripción", visible: isAuthenticated },
         { href: "/dashboard/perfil", label: "Perfil", visible: isAuthenticated },
-        { href: "/dashboard/usuarios", label: "Usuarios", visible: isAuthenticated },
-        { href: "/dashboard/bitacora", label: "bitacora", visible: isAuthenticated },
+        { href: "/dashboard/usuarios", label: "Usuarios",  role: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] },
+        { href: "/dashboard/bitacora", label: "bitacora",  role: [Rol.SUPER_USUARIO] },
         {
             href: "/dashboard/login",
             label: "Salir",
