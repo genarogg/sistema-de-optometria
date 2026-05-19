@@ -1,37 +1,26 @@
 "use client";
 
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Rol } from "@/global/enums";
 import ModalEditarUsuario from "./ModalEditarUsuario";
 import ModalCambiarPassword from "./ModalCambiarPassword";
+import ModalEditarGremio from "./ModalEditarGremio";
+import ModalEditarAutoridad from "./ModalEditarAutoridad";
 import type { Usuario } from "../store/usuariosStore";
 import AccionesUsuario from "./AccionesUsuario";
 
 interface TarjetaUsuarioProps {
   usuarios: Usuario[];
   rolActual: Rol;
-  paginaActual: number;
-  itemsPorPagina: number;
-  onPaginaChange: (pagina: number) => void;
 }
 
 const TarjetaUsuario: React.FC<TarjetaUsuarioProps> = React.memo(
-  ({ usuarios, rolActual, paginaActual, itemsPorPagina, onPaginaChange }) => {
+  ({ usuarios, rolActual }) => {
     const [usuarioEditar, setUsuarioEditar] = useState<Usuario | null>(null);
     const [usuarioPassword, setUsuarioPassword] = useState<Usuario | null>(null);
-
-    const usuariosPaginados = useMemo(() => {
-      const inicio = (paginaActual - 1) * itemsPorPagina;
-      return usuarios.slice(inicio, inicio + itemsPorPagina);
-    }, [usuarios, paginaActual, itemsPorPagina]);
-
-    const totalPaginas = useMemo(
-      () => Math.max(1, Math.ceil(usuarios.length / itemsPorPagina)),
-      [usuarios.length, itemsPorPagina]
-    );
+    const [usuarioEditarGremio, setUsuarioEditarGremio] = useState<Usuario | null>(null);
+    const [usuarioEditarAutoridad, setUsuarioEditarAutoridad] = useState<Usuario | null>(null);
 
     const handleAbrirEditar = useCallback((usuario: Usuario) => {
       setUsuarioEditar(usuario);
@@ -41,18 +30,28 @@ const TarjetaUsuario: React.FC<TarjetaUsuarioProps> = React.memo(
       setUsuarioPassword(usuario);
     }, []);
 
+    const handleAbrirEditarGremio = useCallback((usuario: Usuario) => {
+      setUsuarioEditarGremio(usuario);
+    }, []);
+
+    const handleAbrirEditarAutoridad = useCallback((usuario: Usuario) => {
+      setUsuarioEditarAutoridad(usuario);
+    }, []);
+
     const handleCerrarEditar = useCallback(() => setUsuarioEditar(null), []);
     const handleCerrarPassword = useCallback(() => setUsuarioPassword(null), []);
+    const handleCerrarEditarGremio = useCallback(() => setUsuarioEditarGremio(null), []);
+    const handleCerrarEditarAutoridad = useCallback(() => setUsuarioEditarAutoridad(null), []);
 
     return (
       <>
         <div className="flex flex-col gap-3">
-          {usuariosPaginados.length === 0 ? (
+          {usuarios.length === 0 ? (
             <p className="text-center py-10 text-muted-foreground text-sm">
               No se encontraron usuarios.
             </p>
           ) : (
-            usuariosPaginados.map((usuario) => (
+            usuarios.map((usuario) => (
               <Card key={usuario.id} className="shadow-sm gap-0">
                 <CardHeader className="py-2 px-3">
                   <div className="flex justify-between items-start">
@@ -68,6 +67,8 @@ const TarjetaUsuario: React.FC<TarjetaUsuarioProps> = React.memo(
                       usuario={usuario}
                       onEditar={handleAbrirEditar}
                       onPassword={handleAbrirPassword}
+                      onEditarGremio={handleAbrirEditarGremio}
+                      onEditarAutoridad={handleAbrirEditarAutoridad}
                     />
                   </div>
                 </CardHeader>
@@ -92,18 +93,8 @@ const TarjetaUsuario: React.FC<TarjetaUsuarioProps> = React.memo(
                   </div>
                 </CardContent>
               </Card>
-            ))
-          )}
+            )))}
         </div>
-
-        <Pagination
-          paginaActual={paginaActual}
-          totalPaginas={totalPaginas}
-          onPaginaChange={onPaginaChange}
-          totalItems={usuarios.length}
-          itemsPorPagina={itemsPorPagina}
-          className="pt-2"
-        />
 
         {/* Modales */}
         {usuarioEditar && (
@@ -119,6 +110,20 @@ const TarjetaUsuario: React.FC<TarjetaUsuarioProps> = React.memo(
             usuario={usuarioPassword}
             open={!!usuarioPassword}
             onClose={handleCerrarPassword}
+          />
+        )}
+        {usuarioEditarGremio && (
+          <ModalEditarGremio
+            usuario={usuarioEditarGremio}
+            open={!!usuarioEditarGremio}
+            onClose={handleCerrarEditarGremio}
+          />
+        )}
+        {usuarioEditarAutoridad && (
+          <ModalEditarAutoridad
+            usuario={usuarioEditarAutoridad}
+            open={!!usuarioEditarAutoridad}
+            onClose={handleCerrarEditarAutoridad}
           />
         )}
       </>

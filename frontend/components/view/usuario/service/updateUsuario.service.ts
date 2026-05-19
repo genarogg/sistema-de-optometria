@@ -1,7 +1,7 @@
 import { clientApollo } from "@/functions";
 import UPDATE_USUARIO_ADMIN from "../querys/UPDATE_USUARIO_ADMIN";
 import useUsuariosStore from "../store/usuariosStore";
-import { Rol } from "@/global/enums";
+import { Rol, NivelAcademico, TipoAutoridad } from "@/global/enums";
 import { notify } from "@/components/nano";
 
 interface UpdateUsuarioParams {
@@ -13,9 +13,13 @@ interface UpdateUsuarioParams {
   telefono?: string;
   cedula?: string;
   email?: string;
-
   password?: string;
   rol?: Rol;
+  numeroGremio?: number;
+  nivelAcademico?: NivelAcademico;
+  firma?: string;
+  tipoAutoridad?: TipoAutoridad;
+  vigente?: boolean;
 }
 
 export async function updateUsuarioService(params: UpdateUsuarioParams) {
@@ -39,7 +43,7 @@ export async function updateUsuarioService(params: UpdateUsuarioParams) {
       variables: { usuarioId: parseInt(id), token, password, ...camposDeUsuario },
     });
 
-    if (data?.updateUsuarioAdmin) {
+    if (data?.updateUsuarioAdmin && typeof data.updateUsuarioAdmin === 'object') {
       const { type, message } = data.updateUsuarioAdmin;
       notify({ type, message });
     }

@@ -26,10 +26,7 @@ const UsuariosView: React.FC = () => {
   const rolActual = useUsuariosStore((s) => s.rolActual);
   const cargando = useUsuariosStore((s) => s.cargando);
   const error = useUsuariosStore((s) => s.error);
-  const paginaActual = useUsuariosStore((s) => s.paginaActual);
-  const itemsPorPagina = useUsuariosStore((s) => s.itemsPorPagina);
   const setRolActual = useUsuariosStore((s) => s.setRolActual);
-  const setPaginaActual = useUsuariosStore((s) => s.setPaginaActual);
 
   const isMobile = useIsMobile();
 
@@ -43,16 +40,8 @@ const UsuariosView: React.FC = () => {
   const handleRolChange = useCallback(
     (value: string) => {
       setRolActual(value as Rol);
-      setPaginaActual(1);
     },
-    [setRolActual, setPaginaActual]
-  );
-
-  const handlePaginaChange = useCallback(
-    (pagina: number) => {
-      setPaginaActual(pagina);
-    },
-    [setPaginaActual]
+    [setRolActual]
   );
 
   // Roles que el usuario actual puede ver/seleccionar
@@ -136,17 +125,11 @@ const UsuariosView: React.FC = () => {
           <TarjetaUsuario
             usuarios={usuariosFiltradosPorRol}
             rolActual={rolActual}
-            paginaActual={paginaActual}
-            itemsPorPagina={itemsPorPagina}
-            onPaginaChange={handlePaginaChange}
           />
         ) : (
           <TablaUsuarios
             usuarios={usuariosFiltradosPorRol}
             rolActual={rolActual}
-            paginaActual={paginaActual}
-            itemsPorPagina={itemsPorPagina}
-            onPaginaChange={handlePaginaChange}
           />
         )}
       </CardContent>

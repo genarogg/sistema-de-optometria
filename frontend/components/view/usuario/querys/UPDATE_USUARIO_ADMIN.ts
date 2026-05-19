@@ -11,9 +11,13 @@ const UPDATE_USUARIO_ADMIN = gql`
     $telefono: String
     $cedula: String
     $email: String
-
     $password: String
     $rol: Rol
+    $numeroGremio: Int
+    $nivelAcademico: NivelAcademico
+    $firma: String
+    $tipoAutoridad: TipoAutoridad
+    $vigente: Boolean
   ) {
     updateUsuarioAdmin(
       usuarioId: $usuarioId
@@ -25,9 +29,13 @@ const UPDATE_USUARIO_ADMIN = gql`
       telefono: $telefono
       cedula: $cedula
       email: $email
-
       password: $password
       rol: $rol
+      numeroGremio: $numeroGremio
+      nivelAcademico: $nivelAcademico
+      firma: $firma
+      tipoAutoridad: $tipoAutoridad
+      vigente: $vigente
     ) {
       type
       message

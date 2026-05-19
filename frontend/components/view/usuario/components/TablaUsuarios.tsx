@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import {
   Table,
   TableBody,
@@ -9,37 +9,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Rol } from "@/global/enums";
 import ModalEditarUsuario from "./ModalEditarUsuario";
 import ModalCambiarPassword from "./ModalCambiarPassword";
+import ModalEditarGremio from "./ModalEditarGremio";
+import ModalEditarAutoridad from "./ModalEditarAutoridad";
 import type { Usuario } from "../store/usuariosStore";
 import AccionesUsuario from "./AccionesUsuario";
 
 interface TablaUsuariosProps {
   usuarios: Usuario[];
   rolActual: Rol;
-  paginaActual: number;
-  itemsPorPagina: number;
-  onPaginaChange: (pagina: number) => void;
 }
 
 const TablaUsuarios: React.FC<TablaUsuariosProps> = React.memo(
-  ({ usuarios, rolActual, paginaActual, itemsPorPagina, onPaginaChange }) => {
+  ({ usuarios, rolActual }) => {
     const [usuarioEditar, setUsuarioEditar] = useState<Usuario | null>(null);
     const [usuarioPassword, setUsuarioPassword] = useState<Usuario | null>(null);
-
-    const usuariosPaginados = useMemo(() => {
-      const inicio = (paginaActual - 1) * itemsPorPagina;
-      return usuarios.slice(inicio, inicio + itemsPorPagina);
-    }, [usuarios, paginaActual, itemsPorPagina]);
-
-    const totalPaginas = useMemo(
-      () => Math.max(1, Math.ceil(usuarios.length / itemsPorPagina)),
-      [usuarios.length, itemsPorPagina]
-    );
+    const [usuarioEditarGremio, setUsuarioEditarGremio] = useState<Usuario | null>(null);
+    const [usuarioEditarAutoridad, setUsuarioEditarAutoridad] = useState<Usuario | null>(null);
 
     const handleAbrirEditar = useCallback((usuario: Usuario) => {
       setUsuarioEditar(usuario);
@@ -49,8 +38,18 @@ const TablaUsuarios: React.FC<TablaUsuariosProps> = React.memo(
       setUsuarioPassword(usuario);
     }, []);
 
+    const handleAbrirEditarGremio = useCallback((usuario: Usuario) => {
+      setUsuarioEditarGremio(usuario);
+    }, []);
+
+    const handleAbrirEditarAutoridad = useCallback((usuario: Usuario) => {
+      setUsuarioEditarAutoridad(usuario);
+    }, []);
+
     const handleCerrarEditar = useCallback(() => setUsuarioEditar(null), []);
     const handleCerrarPassword = useCallback(() => setUsuarioPassword(null), []);
+    const handleCerrarEditarGremio = useCallback(() => setUsuarioEditarGremio(null), []);
+    const handleCerrarEditarAutoridad = useCallback(() => setUsuarioEditarAutoridad(null), []);
 
     return (
       <>
@@ -67,14 +66,14 @@ const TablaUsuarios: React.FC<TablaUsuariosProps> = React.memo(
               </TableRow>
             </TableHeader>
             <TableBody>
-              {usuariosPaginados.length === 0 ? (
+              {usuarios.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="text-center py-10 text-muted-foreground">
                     No se encontraron usuarios.
                   </TableCell>
                 </TableRow>
               ) : (
-                usuariosPaginados.map((usuario, index) => (
+                usuarios.map((usuario, index) => (
                   <TableRow
                     key={usuario.id}
                     className={`transition-colors hover:bg-primary/20 ${
@@ -101,6 +100,8 @@ const TablaUsuarios: React.FC<TablaUsuariosProps> = React.memo(
                         usuario={usuario}
                         onEditar={handleAbrirEditar}
                         onPassword={handleAbrirPassword}
+                        onEditarGremio={handleAbrirEditarGremio}
+                        onEditarAutoridad={handleAbrirEditarAutoridad}
                       />
                     </TableCell>
                   </TableRow>
@@ -109,15 +110,6 @@ const TablaUsuarios: React.FC<TablaUsuariosProps> = React.memo(
             </TableBody>
           </Table>
         </div>
-
-        <Pagination
-          paginaActual={paginaActual}
-          totalPaginas={totalPaginas}
-          onPaginaChange={onPaginaChange}
-          totalItems={usuarios.length}
-          itemsPorPagina={itemsPorPagina}
-          className="pt-2"
-        />
 
         {/* Modales */}
         {usuarioEditar && (
@@ -133,6 +125,20 @@ const TablaUsuarios: React.FC<TablaUsuariosProps> = React.memo(
             usuario={usuarioPassword}
             open={!!usuarioPassword}
             onClose={handleCerrarPassword}
+          />
+        )}
+        {usuarioEditarGremio && (
+          <ModalEditarGremio
+            usuario={usuarioEditarGremio}
+            open={!!usuarioEditarGremio}
+            onClose={handleCerrarEditarGremio}
+          />
+        )}
+        {usuarioEditarAutoridad && (
+          <ModalEditarAutoridad
+            usuario={usuarioEditarAutoridad}
+            open={!!usuarioEditarAutoridad}
+            onClose={handleCerrarEditarAutoridad}
           />
         )}
       </>

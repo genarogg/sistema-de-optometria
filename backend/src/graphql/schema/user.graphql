@@ -115,5 +115,13 @@ extend type Mutation {
     password: String
     rol: Rol
     usuarioId: Int!
+    # gremio
+    numeroGremio: Int
+    nivelAcademico: NivelAcademico
+
+    # autoridad
+    firma: String
+    tipoAutoridad: TipoAutoridad
+    vigente: Boolean
   ): UsuarioResponse!
 }

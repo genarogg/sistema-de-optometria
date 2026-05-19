@@ -24,6 +24,7 @@ const GET_USUARIOS = gql`
           id
           tipoAutoridad
           vigente
+          firma
         }
       }
       meta {
