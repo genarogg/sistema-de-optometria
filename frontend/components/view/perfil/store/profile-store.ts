@@ -12,6 +12,10 @@ interface ProfileData {
   segundoNombre: string
   primerApellido: string
   segundoApellido: string
+  numeroGremio: string | null
+  nivelAcademico: string | null
+  tipoAutoridad: string | null
+  vigente: boolean | null
 
   nombreCompleto: string // generado
 }
@@ -36,6 +40,10 @@ const initialState: ProfileData = {
   segundoNombre: "",
   primerApellido: "",
   segundoApellido: "",
+  numeroGremio: null,
+  nivelAcademico: null,
+  tipoAutoridad: null,
+  vigente: null,
 
   nombreCompleto: "",
 }

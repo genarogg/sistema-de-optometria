@@ -14,9 +14,18 @@ const GET_MY_USUARIO = gql`
         segundoApellido
         segundoNombre
         primerNombre
-        
         rol
         telefono
+        gremio {
+          id
+          nivelAcademico
+          numeroGremio
+        }
+        autoridad {
+          id
+          tipoAutoridad
+          vigente
+        }
       }
     }
   }

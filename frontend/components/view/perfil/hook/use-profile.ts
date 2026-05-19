@@ -64,6 +64,10 @@ export function useProfile() {
         segundoNombre: data.segundoNombre || "",
         primerApellido: data.primerApellido || "",
         segundoApellido: data.segundoApellido || "",
+        numeroGremio: data.gremio?.numeroGremio || null,
+        nivelAcademico: data.gremio?.nivelAcademico || null,
+        tipoAutoridad: data.autoridad?.tipoAutoridad || null,
+        vigente: data.autoridad?.vigente || null,
 
         // nombreCompleto NO hace falta: lo genera automáticamente el store
       })

@@ -24,6 +24,10 @@ function ProfileForm() {
     telefono,
     rol,
     cedula,
+    numeroGremio,
+    nivelAcademico,
+    tipoAutoridad,
+    vigente,
 
     set
   } = useProfileStore()
@@ -216,6 +220,42 @@ function ProfileForm() {
                 </div>
 
                 {/* Número de Gremio */}
+                <div className="space-y-2">
+                  <Label htmlFor="numeroGremio">Número de Gremio</Label>
+                  <Input
+                    id="numeroGremio"
+                    type="text"
+                    value={numeroGremio || ""}
+                    disabled
+                    className="h-[41px] bg-muted cursor-not-allowed"
+                  />
+                </div>
+
+                {/* Nivel Académico */}
+                <div className="space-y-2">
+                  <Label htmlFor="nivelAcademico">Nivel Académico</Label>
+                  <Input
+                    id="nivelAcademico"
+                    type="text"
+                    value={nivelAcademico || ""}
+                    disabled
+                    className="h-[41px] bg-muted cursor-not-allowed"
+                  />
+                </div>
+
+                {/* Autoridad */}
+                {tipoAutoridad && vigente && (
+                  <div className="space-y-2">
+                    <Label htmlFor="tipoAutoridad">Cargo de Autoridad</Label>
+                    <Input
+                      id="tipoAutoridad"
+                      type="text"
+                      value={tipoAutoridad}
+                      disabled
+                      className="h-[41px] bg-muted cursor-not-allowed"
+                    />
+                  </div>
+                )}
               
               </div>
 

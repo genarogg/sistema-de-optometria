@@ -17,15 +17,23 @@ type Usuario {
 
   planSuscripciones: [PlanSuscripcion]
   suscripciones: [Suscripcion]
-  gremios: [Gremio]
+  gremio: Gremio
+  autoridad: Autoridad
 }
 
 type Gremio {
   id: Int!
   numeroGremio: Int!
   nivelAcademico: NivelAcademico!
-  usuarioId: Int!
   usuario: Usuario
+}
+
+type Autoridad {
+  id: Int!
+  firma: String!
+  tipoAutoridad: TipoAutoridad!
+  usuario: Usuario
+  vigente: Boolean!
 }
 
 ##############################################

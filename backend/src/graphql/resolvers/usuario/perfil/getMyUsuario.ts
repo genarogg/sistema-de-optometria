@@ -2,7 +2,8 @@ import {
     successResponse,
     errorResponse,
     verificarToken,
-    log
+    log,
+    prisma
 } from "@fn";
 
 
@@ -21,11 +22,19 @@ const getMyUsuario = async (_: unknown, args: ArgsObtenerUsuarioToken) => {
 
     try {
         // Verificar y decodificar token
-        const usuario = await verificarToken(token);
+        const usuarioAuth = await verificarToken(token);
 
-        if (!usuario) {
+        if (!usuarioAuth) {
             return errorResponse({ message: "Usuario no encontrado" });
         }
+
+        const usuario = await prisma.usuario.findUnique({
+            where: { id: usuarioAuth.id },
+            include: {
+               gremio: true,
+               autoridad: true
+            }
+        });
 
         return successResponse({
             message: "Usuario obtenido correctamente",

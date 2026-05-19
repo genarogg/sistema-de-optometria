@@ -89,6 +89,7 @@ enum EstatusSuscripcion {
 enum NivelAcademico {
   LICENCIADO
   TSU
+  NO_ASIGNADO
 }
 
 enum TipoDeDocumento {
@@ -149,7 +150,7 @@ model Autoridad {
 model Gremio {
   id             Int            @id @default(autoincrement())
   numeroGremio   Int            @unique
-  nivelAcademico NivelAcademico
+  nivelAcademico NivelAcademico @default(NO_ASIGNADO)
 
   usuarioId Int     @unique
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
