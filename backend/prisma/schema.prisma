@@ -117,7 +117,7 @@ model Usuario {
   password        String
   rol             Rol     @default(VISITANTE)
 
-  autoridad            Autoridad[]
+  autoridad            Autoridad?
   gremio               Gremio?
   bitacora             Bitacora[]
   evento               Evento[]
@@ -137,7 +137,7 @@ model Autoridad {
   id            Int           @id @default(autoincrement())
   firma         String
   tipoAutoridad TipoAutoridad
-  usuarioId     Int
+  usuarioId     Int           @unique
   vigente       Boolean       @default(true)
 
   usuario               Usuario               @relation(fields: [usuarioId], references: [id])

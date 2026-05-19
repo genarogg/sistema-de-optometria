@@ -14,8 +14,17 @@ const GET_USUARIOS = gql`
         segundoApellido
         primerNombre
         segundoNombre
-        
         rol
+         gremio {
+          id
+          nivelAcademico
+          numeroGremio
+        }
+        autoridad {
+          id
+          tipoAutoridad
+          vigente
+        }
       }
       meta {
         total

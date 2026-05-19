@@ -53,9 +53,15 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
 
         const usuarios = await prisma.usuario.findMany({
             where: whereClause,
+            include: {
+                gremio: true,
+                autoridad: true
+            },
             orderBy: { createdAt: "desc" },
             omit: { password: true }
         });
+
+        console.log(usuarios);
 
         const total = await prisma.usuario.count({ where: whereClause });
 

@@ -12,6 +12,16 @@ export interface Usuario {
   cedula: string;
   telefono: string | null;
   rol: Rol;
+  gremio?: {
+    id: string;
+    nivelAcademico: string;
+    numeroGremio: string;
+  } | null;
+  autoridad?: {
+    id: string;
+    tipoAutoridad: string;
+    vigente: boolean;
+  } | null;
 }
 
 interface UsuariosState {
