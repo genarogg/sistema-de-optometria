@@ -12,7 +12,7 @@ export interface Usuario {
   email: string
   password: string
   rol: Rol
-  autoridad?: Autoridad[]
+  autoridad?: Autoridad
   gremio?: Gremio
   bitacora?: Bitacora[]
   evento?: Evento[]

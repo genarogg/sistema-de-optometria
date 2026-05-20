@@ -51,6 +51,8 @@ const useValidarSesion = () => {
 
                 const datos = data.validarSesion.data;
 
+                console.log("datos: ", datos)
+
                 const usuario = {
                     ...datos
                 }

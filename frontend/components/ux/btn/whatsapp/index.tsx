@@ -32,7 +32,7 @@ function WhatsAppButton({ phoneNumber, text }: WhatsAppButtonProps) {
 
   return (
     <>
-      <Button variant="outline" size="icon" onClick={handleClick}>
+      <Button variant="outline" size="icon" onClick={handleClick} className="bg-[#F0F0F0] text-[#333] rounded-md">
         <FaWhatsapp className="h-4 w-4" />
       </Button>
 

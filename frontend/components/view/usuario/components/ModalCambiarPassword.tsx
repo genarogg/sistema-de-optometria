@@ -21,32 +21,32 @@ interface ModalCambiarPasswordProps {
 
 const ModalCambiarPassword: React.FC<ModalCambiarPasswordProps> = React.memo(
   ({ usuario, open, onClose }) => {
-    const [password, setPassword] = useState("");
     const [nuevaPassword, setNuevaPassword] = useState("");
+    const [repetirNuevaPassword, setRepetirNuevaPassword] = useState("");
     const [error, setError] = useState<string | undefined>();
     const [guardando, setGuardando] = useState(false);
 
     const handleGuardar = useCallback(async () => {
-      if (!password || !nuevaPassword) {
+      if (!nuevaPassword || !repetirNuevaPassword) {
         setError("Ambos campos son requeridos.");
         return;
       }
-      if (password === nuevaPassword) {
-        setError("La nueva contrasena debe ser diferente a la actual.");
+      if (nuevaPassword !== repetirNuevaPassword) {
+        setError("Las contraseñas no coinciden.");
         return;
       }
       setError(undefined);
       setGuardando(true);
       await updateUsuarioService({ id: usuario.id, password: nuevaPassword });
       setGuardando(false);
-      setPassword("");
       setNuevaPassword("");
+      setRepetirNuevaPassword("");
       onClose();
-    }, [usuario.id, password, nuevaPassword, onClose]);
+    }, [usuario.id, nuevaPassword, repetirNuevaPassword, onClose]);
 
     const handleClose = useCallback(() => {
-      setPassword("");
       setNuevaPassword("");
+      setRepetirNuevaPassword("");
       setError(undefined);
       onClose();
     }, [onClose]);
@@ -60,20 +60,20 @@ const ModalCambiarPassword: React.FC<ModalCambiarPasswordProps> = React.memo(
 
           <div className="flex flex-col gap-4 py-2 pt-6">
             <Input
-              name="password-actual"
-              type="password"
-              placeholder="Contraseña actual"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              hasContentState={true}
-              error={error}
-            />
-            <Input
               name="password-nueva"
               type="password"
               placeholder="Nueva Contraseña"
               value={nuevaPassword}
               onChange={(e) => setNuevaPassword(e.target.value)}
+              error={error}
+              hasContentState={true}
+            />
+            <Input
+              name="password-repetir"
+              type="password"
+              placeholder="Repetir Nueva Contraseña"
+              value={repetirNuevaPassword}
+              onChange={(e) => setRepetirNuevaPassword(e.target.value)}
               error={error}
               hasContentState={true}
             />

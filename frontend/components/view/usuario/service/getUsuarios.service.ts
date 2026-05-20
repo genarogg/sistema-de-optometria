@@ -28,6 +28,7 @@ interface UsuarioRaw {
     id: string;
     tipoAutoridad: string;
     vigente: boolean;
+    firma?: string;
   } | null;
 }
 
@@ -48,6 +49,7 @@ export async function getUsuariosService({ filtro = "" }: GetUsuariosParams = {}
 
     const data = result.data as any;
     const usuarios: UsuarioRaw[] = data?.getUsuarios?.data ?? [];
+    console.log("usuarios que se trajo: ", usuarios)
     setUsuarios(usuarios);
   } catch (err) {
     if (!isProd) {

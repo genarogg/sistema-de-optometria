@@ -33,6 +33,7 @@ export enum EstatusSuscripcion {
 
 export enum NivelAcademico {
   LICENCIADO = 'LICENCIADO',
+  NO_ASIGNADO = 'NO_ASIGNADO',
   TSU = 'TSU'
 }
 

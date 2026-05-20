@@ -9,7 +9,7 @@ import { getUsuariosService } from "../service/getUsuarios.service";
 const BuscadorUsuarios: React.FC = React.memo(() => {
   const filtro = useUsuariosStore((s) => s.filtro);
   const setFiltro = useUsuariosStore((s) => s.setFiltro);
-  const setPaginaActual = useUsuariosStore((s) => s.setPaginaActual);
+
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -17,14 +17,14 @@ const BuscadorUsuarios: React.FC = React.memo(() => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const valor = e.target.value;
       setFiltro(valor);
-      setPaginaActual(1);
+
 
       if (debounceRef.current) clearTimeout(debounceRef.current);
       debounceRef.current = setTimeout(() => {
         getUsuariosService({ filtro: valor });
       }, 1500);
     },
-    [setFiltro, setPaginaActual]
+    [setFiltro]
   );
 
   return (

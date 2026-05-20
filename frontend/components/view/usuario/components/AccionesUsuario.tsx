@@ -26,7 +26,7 @@ const AccionesUsuario: React.FC<AccionesUsuarioProps> = ({
       <Button
         variant="outline"
         size="icon"
-        className="h-10 w-10"
+        className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
         onClick={() => onEditar(usuario)}
         title="Editar usuario"
       >
@@ -35,7 +35,7 @@ const AccionesUsuario: React.FC<AccionesUsuarioProps> = ({
       <Button
         variant="outline"
         size="icon"
-        className="h-10 w-10"
+        className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
         onClick={() => onPassword(usuario)}
         title="Cambiar contrasena"
       >
@@ -44,7 +44,7 @@ const AccionesUsuario: React.FC<AccionesUsuarioProps> = ({
       <Button
         variant="outline"
         size="icon"
-        className="h-10 w-10"
+        className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
         onClick={() => onEditarGremio(usuario)}
         title="Editar gremio"
       >
@@ -53,7 +53,7 @@ const AccionesUsuario: React.FC<AccionesUsuarioProps> = ({
       <Button
         variant="outline"
         size="icon"
-        className="h-10 w-10"
+        className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
         onClick={() => onEditarAutoridad(usuario)}
         title="Editar autoridad"
       >

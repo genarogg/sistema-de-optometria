@@ -26,41 +26,15 @@ const UsuariosView: React.FC = () => {
   const rolActual = useUsuariosStore((s) => s.rolActual);
   const cargando = useUsuariosStore((s) => s.cargando);
   const error = useUsuariosStore((s) => s.error);
-  const setRolActual = useUsuariosStore((s) => s.setRolActual);
 
   const isMobile = useIsMobile();
-
-  // Mostrar selector de rol: en produccion solo ADMIN, en desarrollo siempre
-  const mostrarSelectorRol = !isProd || rolActual === Rol.SUPER_USUARIO;
 
   useEffect(() => {
     getUsuariosService({});
   }, []);
 
-  const handleRolChange = useCallback(
-    (value: string) => {
-      setRolActual(value as Rol);
-    },
-    [setRolActual]
-  );
-
-  // Roles que el usuario actual puede ver/seleccionar
-  const rolesSeleccionables = useMemo(() => {
-    switch (rolActual) {
-      case Rol.SUPER_USUARIO:
-        return Object.values(Rol);
-      case Rol.ADMINISTRADOR:
-        return Object.values(Rol).filter(rol => rol !== Rol.SUPER_USUARIO);
-      default:
-        return [rolActual];
-    }
-  }, [rolActual]);
-
-  // Filtrado por rol en el cliente: el ADMIN ve todos, otros roles solo ven su propio nivel
-  const usuariosFiltradosPorRol = useMemo(() => {
-    if (rolActual === Rol.SUPER_USUARIO) return usuarios;
-    return usuarios.filter((u) => u.rol === Rol.ADMINISTRADOR);
-  }, [usuarios, rolActual]);
+  // No hay filtrado, se muestran todos los usuarios que vienen del backend
+  const usuariosFiltradosPorRol = usuarios;
 
   return (
     <Card className="w-full shadow-sm max-w-[1200] m-auto mt-4">
@@ -78,7 +52,7 @@ const UsuariosView: React.FC = () => {
           </div>
 
           {/* Selector de rol */}
-          {mostrarSelectorRol && (
+          {/* {mostrarSelectorRol && (
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground shrink-0">Ver como:</span>
               <Select value={rolActual} onValueChange={handleRolChange}>
@@ -94,7 +68,7 @@ const UsuariosView: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Buscador */}

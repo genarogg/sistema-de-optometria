@@ -21,6 +21,7 @@ export interface Usuario {
     id: string;
     tipoAutoridad: string;
     vigente: boolean;
+    firma?: string;
   } | null;
 }
 

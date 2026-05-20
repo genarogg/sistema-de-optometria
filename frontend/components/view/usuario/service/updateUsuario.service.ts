@@ -43,8 +43,8 @@ export async function updateUsuarioService(params: UpdateUsuarioParams) {
       variables: { usuarioId: parseInt(id), token, password, ...camposDeUsuario },
     });
 
-    if (data?.updateUsuarioAdmin && typeof data.updateUsuarioAdmin === 'object') {
-      const { type, message } = data.updateUsuarioAdmin;
+    if ((data as any).updateUsuarioAdmin) {
+      const { type, message } = (data as any).updateUsuarioAdmin;
       notify({ type, message });
     }
   } catch (err: any) {

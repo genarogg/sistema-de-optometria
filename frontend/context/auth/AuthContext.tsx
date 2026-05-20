@@ -18,6 +18,7 @@ interface AuthState {
 
 // Creamos el store con soporte para Redux DevTools
 export const useAuthStore = create<AuthState>()(
+
     devtools((set) => ({
         usuario: null,
         token: null,
