@@ -52,8 +52,6 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
                         gremio: true,
                         autoridad: {
                             where: { vigente: true },
-                            orderBy: { id: 'desc' },
-                            take: 1,
                         }
                     }
                 }
@@ -111,7 +109,7 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
                 nombreCompleto: usuario.primerNombre + " " + (usuario.segundoNombre || ""),
                 apellidosCompletos: usuario.primerApellido + " " + (usuario.segundoApellido || ""),
                 nivelAcademico: gremio.nivelAcademico,
-                cargo: usuario.autoridad.length > 0 ? usuario.autoridad[0].tipoAutoridad : null,
+                cargo: usuario.autoridad ? usuario.autoridad.tipoAutoridad : null,
                 cedula: usuario.cedula,
 
 
