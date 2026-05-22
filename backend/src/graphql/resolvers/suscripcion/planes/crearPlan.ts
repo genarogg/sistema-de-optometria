@@ -29,6 +29,7 @@ const crearPlan = async (_: unknown, args: CrearPlanArgs) => {
         }
 
         const montoValidation = montoNoNegativo(costo);
+
         if (!montoValidation.isValido) {
             return errorResponse({ message: montoValidation.message });
         }

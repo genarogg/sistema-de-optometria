@@ -17,14 +17,11 @@ const intToDecimal = (value: bigint | number | string): string => {
         throw new Error("Value must be bigint, number, or string");
     }
 
-    const isInteger = raw.isInt();
-    const isLikelyCents = isInteger && raw.abs().gte(100);
-
-    const decimalValue = isLikelyCents
+    const decimalValue = raw.isInt()
         ? raw.div(100)
         : raw;
 
-    return formatNumber(Number(decimalValue.toFixed(2)));
+    return formatNumber(decimalValue.toDecimalPlaces(2).toNumber());
 };
 
 export default intToDecimal;

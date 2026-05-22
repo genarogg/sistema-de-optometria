@@ -4,7 +4,7 @@
 
 type PlanSuscripcion {
   id: Int!
-  costo: Int!
+  costo: Number!
   tipo: TipoSuscripcion!
   isActivo: Boolean!
   usuario: Usuario
@@ -16,7 +16,7 @@ type Suscripcion {
   estatus: EstatusSuscripcion!
   comprobante: Int!
   comprobanteImg: String!
-  contodesuscripcion: Int!
+  contodesuscripcion: Number!
   usuario: Usuario
   suscripcionId: Int!
   planSuscripcion: PlanSuscripcion
@@ -48,7 +48,6 @@ type SuscripcionesResponse {
   data: [Suscripcion]
 }
 
-
 type SuscripcionesResponsePaginado {
   type: String
   message: String
@@ -58,21 +57,24 @@ type SuscripcionesResponsePaginado {
 
 extend type Query {
   getPlanes(token: String!): PlanSuscripcionesResponse!
-  getSuscripciones(token: String!, filtro: String, pagina: Int): SuscripcionesResponsePaginado!
+  getSuscripciones(
+    token: String!
+    filtro: String
+    pagina: Int
+  ): SuscripcionesResponsePaginado!
 }
 
 extend type Mutation {
   crearPlan(
     token: String!
-
-    costo: Int!
+    costo: Number!
     tipo: TipoSuscripcion!
   ): PlanSuscripcionResponse!
 
   updatePlan(
     token: String!
     planId: Int!
-    costo: Int
+    costo: Number
     tipo: TipoSuscripcion
     isActivo: Boolean
   ): PlanSuscripcionResponse!

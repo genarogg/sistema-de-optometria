@@ -4,6 +4,7 @@
 
 scalar Upload
 scalar Date
+scalar Number
 
 type Meta {
   total: Int
