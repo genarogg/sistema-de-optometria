@@ -1,9 +1,5 @@
 import { create } from "zustand";
-import { TipoSuscripcion } from "@/global/enums";
 import { PlanSuscripcion } from "@/global/prismaTypes";
-
-
-
 
 
 interface PlanesState {

@@ -39,18 +39,18 @@ const seed = async () => {
         console.log("");
 
         // Nivel 3: Dependen de Usuario + Evento
-        await seedPonenteEvento();
-        await delay(200);
-        await seedSuscripcionEvento();
-        await delay(200);
-        console.log("");
+        // await seedPonenteEvento();
+        // await delay(200);
+        // await seedSuscripcionEvento();
+        // await delay(200);
+        // console.log("");
 
         // Nivel 4: Dependen de Usuario
-        await seedSuscripcion();
-        await delay(200);
-        await seedSuscripcionDetails();
-        await delay(200);
-        console.log("");
+        // await seedSuscripcion();
+        // await delay(200);
+        // await seedSuscripcionDetails();
+        // await delay(200);
+        // console.log("");
 
         console.log("✅ Siembra completada exitosamente!");
         return "recien plantada";

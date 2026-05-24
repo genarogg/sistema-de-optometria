@@ -4,6 +4,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
+import { showMoney } from '@/functions/super-money';
 
 interface TarjetaPlanProps {
   planes: any[];
@@ -56,7 +57,7 @@ export default function TarjetaPlan({
                 <span className="font-medium">ID:</span> {plan.id}
               </div>
               <div>
-                <span className="font-medium">Costo:</span> Bs {plan.costo?.toFixed(2) || '0.00'}
+                <span className="font-medium">Costo:</span> Bs {showMoney(plan.costo || 0)}
               </div>
             </div>
           </CardContent>

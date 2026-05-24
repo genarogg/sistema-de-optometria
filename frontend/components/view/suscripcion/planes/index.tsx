@@ -5,13 +5,13 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from 'lucide-react';
-import TablaPlan from './TablaPlan';
-import TarjetaPlan from './TarjetaPlan';
-import ModalCrearPlan from './ModalCrearPlan';
-import PlanesBuscador from './PlanesBuscador';
-import { usePlaneFilters } from '../hook/usePlaneFilters';
-import { getPlanesService } from '../service/getPlanes.service';
-import usePlanesStore from '../store/planesStore';
+import TablaPlan from './components/TablaPlan';
+import TarjetaPlan from './components/TarjetaPlan';
+import ModalCrearPlan from './components/ModalCrearPlan';
+import PlanesBuscador from './components/PlanesBuscador';
+import { usePlaneFilters } from './hook/usePlaneFilters';
+import { getPlanesService } from './service/getPlanes.service';
+import usePlanesStore from './store/planesStore';
 import { useShallow } from 'zustand/react/shallow';
 
 

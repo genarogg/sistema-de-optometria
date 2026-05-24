@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuthStore } from '@/context/auth/AuthContext';
 import { CreditCard } from 'lucide-react';
-import PlanesSection from './planes/components/PlanesSection';
+import PlanesSection from './planes';
 import { Rol } from '@/global/enums';
 import SuscripcionSection from './suscripcion/components/SuscripcionSection';
 import SuscribirmeSection from './suscribirme/components/SuscribirmeSection';

@@ -27,6 +27,8 @@ const getPlanes = async (_: unknown, args: GetPlanesArgs) => {
             },
         });
 
+        console.log("Planes de suscripción obtenidos:", planSuscripciones);
+
         return successResponse({
             message: "Planes de suscripción obtenidos correctamente",
             data: planSuscripciones,

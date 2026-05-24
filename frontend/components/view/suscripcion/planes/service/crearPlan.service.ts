@@ -19,6 +19,7 @@ export async function crearPlanService({ tipo, costo, isActivo }: CrearPlanParam
     typeof window !== "undefined" ? localStorage.getItem("token") ?? "" : "";
 
   // Generar ID optimista (mayor ID + 1)
+  console.log("crear, costo:", costo);
   const nuevoId = Math.max(...planes.map((p) => p.id), 0) + 1;
   const nuevoPlan = {
     id: nuevoId,

@@ -14,6 +14,7 @@ import { Switch } from '@/components/ui/switch';
 
 import { Pencil } from 'lucide-react';
 import { actualizarPlanService } from '../service/actualizarPlan.service';
+import { showMoney } from '@/functions/super-money';
 
 interface TablaPlanProps {
   planes: any[];
@@ -66,7 +67,7 @@ export default function TablaPlan({
                 {plan.id}
               </TableCell>
               <TableCell className="font-medium">{plan.tipo}</TableCell>
-              <TableCell className="text-sm">Bs {plan.costo?.toFixed(2) || '0.00'}</TableCell>
+              <TableCell className="text-sm">Bs {showMoney(plan.costo || 0)}</TableCell>
               <TableCell>
                 <Switch
                   checked={plan.isActivo}

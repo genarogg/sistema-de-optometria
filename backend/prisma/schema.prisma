@@ -17,7 +17,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
 // ─── Enums ────────────────────────────────────────────────────────────────────
@@ -173,7 +173,7 @@ model Evento {
   nombre    String
   fecha     DateTime
   lugar     String
-  consto    BigInt
+  consto    Int
   descuento Float      @default(0)
   tipo      TipoEvento
   usuarioId Int
@@ -217,7 +217,7 @@ model Suscripcion_Evento {
 
 model PlanSuscripcion {
   id        Int             @id @default(autoincrement())
-  costo     BigInt
+  costo     Int
   tipo      TipoSuscripcion
   isActivo  Boolean         @default(true)
   usuarioId Int
@@ -234,7 +234,7 @@ model Suscripcion {
   estatus            EstatusSuscripcion
   comprobante        Int?               @default(0)
   comprobanteImg     String
-  contodesuscripcion BigInt
+  contodesuscripcion Int
   usuarioId          Int
   usuario            Usuario            @relation(fields: [usuarioId], references: [id])
   suscripcionId      Int

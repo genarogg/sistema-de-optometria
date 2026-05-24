@@ -33,6 +33,8 @@ export async function actualizarPlanService({
 
   try {
     const client = clientApollo;
+
+    console.log(costo)
     const { data } = await client.mutate({
       mutation: UPDATE_PLAN,
       variables: {

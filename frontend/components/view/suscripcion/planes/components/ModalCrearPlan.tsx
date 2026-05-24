@@ -37,28 +37,48 @@ export default function ModalCrearPlan({
   onSuccess,
 }: ModalCrearPlanProps) {
   const [tipo, setTipo] = useState<TipoSuscripcion | ''>('');
-  const [costo, setCosto] = useState('');
+  const [costo, setCosto] = useState(0);
   const [isActivo, setIsActivo] = useState('activo');
   const [isLoading, setIsLoading] = useState(false);
+  const [costoInput, setCostoInput] = useState<HTMLInputElement | null>(null);
 
   const isEditMode = Boolean(plan);
 
+  // Inicializar money inputs y escuchar eventos
   useEffect(() => {
+    if (!costoInput) return;
+
+    const handleMoneyInput = (e: CustomEvent<{ value: number }>) => {
+      setCosto(e.detail.value);
+    };
+
+    costoInput.addEventListener('money-input', handleMoneyInput as EventListener);
+    return () => costoInput.removeEventListener('money-input', handleMoneyInput as EventListener);
+  }, [costoInput]);
+
+  // Sincronizar valores al abrir el modal
+  useEffect(() => {
+    if (!costoInput) return;
+
     if (plan) {
       setTipo(plan.tipo);
-      setCosto(plan.costo?.toString() || '');
       setIsActivo(plan.isActivo ? 'activo' : 'inactivo');
+
+      const cents = plan.costo ?? 0;
+      setCosto(cents);
+      setTimeout(() => (costoInput as any).setCents?.(cents, false), 0);
     } else {
       setTipo('');
-      setCosto('');
       setIsActivo('activo');
+      setCosto(0);
+      setTimeout(() => (costoInput as any).setCents?.(0, false), 0);
     }
-  }, [plan, isOpen]);
+  }, [plan, isOpen, costoInput]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!tipo || !costo) {
+    console.log(costo)
+    if (!tipo || costo <= 0) {
       notify({ type: 'error', message: 'Por favor completa todos los campos' });
       return;
     }
@@ -69,19 +89,19 @@ export default function ModalCrearPlan({
         await actualizarPlanService({
           planId: plan.id,
           tipo: tipo as TipoSuscripcion,
-          costo: parseFloat(costo),
+          costo: costo,
           isActivo: isActivo === 'activo',
         });
       } else {
         await crearPlanService({
           tipo: tipo as TipoSuscripcion,
-          costo: parseFloat(costo),
+          costo: costo,
           isActivo: isActivo === 'activo',
         });
       }
 
       setTipo('');
-      setCosto('');
+      setCosto(0);
       setIsActivo('activo');
       onClose();
       onSuccess?.();
@@ -126,12 +146,9 @@ export default function ModalCrearPlan({
           <div className="space-y-2">
             <Label htmlFor="costo">Costo</Label>
             <Input
+              ref={(el) => setCostoInput(el)}
               id="costo"
-              type="number"
-              step="0.01"
-              placeholder="Ej: 99.99"
-              value={costo}
-              onChange={(e) => setCosto(e.target.value)}
+              type="money"
               disabled={isLoading}
             />
           </div>
