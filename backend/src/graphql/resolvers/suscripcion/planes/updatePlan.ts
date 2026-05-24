@@ -44,7 +44,7 @@ const updatePlan = async (_: unknown, args: UpdatePlanArgs) => {
             if (!montoValidation.isValido) {
                 return errorResponse({ message: montoValidation.message });
             }
-            dataToUpdate.costo = decimalToInt(costo);
+            dataToUpdate.costo = costo;
         }
 
         dataToUpdate.tipo = tipo;

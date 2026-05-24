@@ -4,6 +4,7 @@ import intToDecimal from "./intToDecimal";
 import moneyToString from "./moneyToString";
 import montoNoNegativo from "./montoNoNegativo";
 import normalizeMoney from "./normalizeMoney";
+import { intToDecimalNumber } from "./intToDecimalNumber";
 
 
 export {
@@ -12,5 +13,6 @@ export {
     intToDecimal,
     moneyToString,
     montoNoNegativo,
-    normalizeMoney
+    normalizeMoney,
+    intToDecimalNumber
 }

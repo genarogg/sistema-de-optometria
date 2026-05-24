@@ -4,10 +4,12 @@ import usuarioResolver from "./usuario";
 import bitacoraResolver from "./bitacora";
 import suscripcionResolver from "./suscripcion";
 import documentoResolver from "./documentos";
-import NumberScalar from "./scalar/numberScalar";
+import { numberScalar, MoneyScalar } from "../scalar";
 
 const resolvers = {
-    Number: NumberScalar,
+    Number: numberScalar,
+    Money: MoneyScalar,
+    // 
     Query: {
         ...demoResolvers.Query,
         ...usuarioResolver.Query,

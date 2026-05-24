@@ -1,5 +1,5 @@
 import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
-import { decimalToInt, montoNoNegativo } from "@fn/money";
+import {  montoNoNegativo } from "@fn/money";
 import { Rol, AccionesBitacora, TipoSuscripcion } from "@prisma/client";
 
 interface CrearPlanArgs {
@@ -12,6 +12,8 @@ const crearPlan = async (_: unknown, args: CrearPlanArgs) => {
     log.dev("crearPlan called with args:", args);
 
     const { token, costo, tipo } = args;
+
+    
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
@@ -37,7 +39,7 @@ const crearPlan = async (_: unknown, args: CrearPlanArgs) => {
         const nuevoPlan = await prisma.planSuscripcion.create({
             data: {
                 usuarioId: usuario.id,
-                costo: decimalToInt(costo),
+                costo,
                 tipo: tipo,
             },
         });

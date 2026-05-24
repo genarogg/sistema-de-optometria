@@ -34,7 +34,7 @@ const seed = async () => {
         await delay(200);
         await seedEvento();
         await delay(200);
-        await seedBitacora();
+        // await seedBitacora();
         await delay(200);
         console.log("");
 

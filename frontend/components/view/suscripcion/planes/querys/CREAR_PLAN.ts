@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 const CREAR_PLAN = gql`
   mutation CrearPlan(
     $token: String!
-    $costo: Number!
+    $costo: Money!
     $tipo: TipoSuscripcion!
   ) {
     crearPlan(

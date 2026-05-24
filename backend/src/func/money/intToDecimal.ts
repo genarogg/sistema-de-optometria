@@ -17,11 +17,9 @@ const intToDecimal = (value: bigint | number | string): string => {
         throw new Error("Value must be bigint, number, or string");
     }
 
-    const decimalValue = raw.isInt()
-        ? raw.div(100)
-        : raw;
+    // raw = 880000, siempre dividir entre 100
+    const decimalValue = raw.div(100);
 
     return formatNumber(decimalValue.toDecimalPlaces(2).toNumber());
 };
-
 export default intToDecimal;
