@@ -182,7 +182,7 @@ const AuthSubmitButton = ({
       })
 
       if (onSuccess) onSuccess();
-      router.push("/dashboard")
+      router.push("/dashboard/evento")
 
     } catch (error) {
       console.error("Error en el submit:", error)
