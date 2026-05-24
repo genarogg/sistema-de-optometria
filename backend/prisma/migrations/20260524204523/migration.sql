@@ -83,7 +83,7 @@ CREATE TABLE "Evento" (
     "nombre" TEXT NOT NULL,
     "fecha" TIMESTAMP(3) NOT NULL,
     "lugar" TEXT NOT NULL,
-    "consto" BIGINT NOT NULL,
+    "consto" INTEGER NOT NULL,
     "descuento" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "tipo" "TipoEvento" NOT NULL,
     "usuarioId" INTEGER NOT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE "Suscripcion_Evento" (
 -- CreateTable
 CREATE TABLE "PlanSuscripcion" (
     "id" SERIAL NOT NULL,
-    "costo" BIGINT NOT NULL,
+    "costo" INTEGER NOT NULL,
     "tipo" "TipoSuscripcion" NOT NULL,
     "isActivo" BOOLEAN NOT NULL DEFAULT true,
     "usuarioId" INTEGER NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE "Suscripcion" (
     "estatus" "EstatusSuscripcion" NOT NULL,
     "comprobante" INTEGER DEFAULT 0,
     "comprobanteImg" TEXT NOT NULL,
-    "contodesuscripcion" BIGINT NOT NULL,
+    "contodesuscripcion" INTEGER NOT NULL,
     "usuarioId" INTEGER NOT NULL,
     "suscripcionId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

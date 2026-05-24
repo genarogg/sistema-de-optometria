@@ -23,7 +23,7 @@ const seedSuscripcionEvento = async () => {
             });
 
             if (!existing) {
-                const precioFinal = evento.precio - (evento.precio * evento.descuento / 100);
+                const precioFinal = evento.consto - (evento.consto * evento.descuento / 100);
                 await prisma.suscripcion_Evento.create({
                     data: {
                         usuarioId: agremiado.id,
