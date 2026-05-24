@@ -13,8 +13,6 @@ const RECAPTCHA_KEY = "6LchANgsAAAAAARpGsiaoQccnqkuRJ2KHvP_aZIF"
 const NODE_ENV = process.env.NODE_ENV;
 const isProd = NODE_ENV === "production";
 
-
-
 const URL_BACKEND = isProd ? BACKEND_PROD : BACKEND_DEV;
 const URL_FRONTEND = isProd ? FRONTEND_PROD : FRONTEND_DEV;
 

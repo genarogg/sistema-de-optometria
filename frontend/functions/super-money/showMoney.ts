@@ -1,5 +1,5 @@
 // showMoney.ts
-import centsToDisplay from '../inputMoney/centsToDisplay';
+import centsToDisplay from './inputMoney/centsToDisplay';
 
 
 /**

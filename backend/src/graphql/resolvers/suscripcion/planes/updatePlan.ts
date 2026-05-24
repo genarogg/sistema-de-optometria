@@ -1,5 +1,5 @@
 import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
-import { decimalToInt, montoNoNegativo } from "@fn/money";
+import { montoNoNegativo } from "@fn/super-money";
 import { Rol, AccionesBitacora, TipoSuscripcion } from "@prisma/client";
 
 interface UpdatePlanArgs {
