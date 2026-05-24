@@ -84,7 +84,7 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
         if (tipoDeDocumento === TipoDeDocumento.CARNET ||
             tipoDeDocumento === TipoDeDocumento.SOLVENCIA_PAGO) {
 
-            if (usuario.avatar === null) {
+            if (usuario.avatar === null && tipoDeDocumento === TipoDeDocumento.CARNET) {
                 return errorResponse({ message: "No tiene foto de perfil, cargue una primero" });
             }
 

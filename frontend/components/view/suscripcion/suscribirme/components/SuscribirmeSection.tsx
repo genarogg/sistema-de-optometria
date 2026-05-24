@@ -10,6 +10,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { CreditCard } from 'lucide-react';
 import ModalSuscribirme from './ModalSuscribirme';
 import { TipoSuscripcion } from '@/global/enums';
+import { showMoney } from '@/functions/super-money';
 
 interface SuscribirmeSectionProps {
   onSubscriptionSuccess?: () => void;
@@ -74,9 +75,9 @@ export default function SuscribirmeSection({ onSubscriptionSuccess }: Suscribirm
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-3xl font-bold">{plan.costo > 0 ? `Bs ${plan.costo.toFixed(2)}` : 'Sin Costo'}</div>
-              <Button 
-                className="w-full" 
+              <div className="text-3xl font-bold">{plan.costo > 0 ? `Bs ${showMoney(plan.costo)}` : 'Sin Costo'}</div>
+              <Button
+                className="w-full"
                 onClick={() => handleSelectPlan(plan)}
               >
                 Seleccionar Plan

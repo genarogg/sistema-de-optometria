@@ -78,7 +78,7 @@ export default function ModalCrearPlan({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log(costo)
-    if (!tipo || costo <= 0) {
+    if (!tipo || costo < 0) {
       notify({ type: 'error', message: 'Por favor completa todos los campos' });
       return;
     }

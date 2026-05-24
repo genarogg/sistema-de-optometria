@@ -14,7 +14,6 @@ import { getPlanesService } from './service/getPlanes.service';
 import usePlanesStore from './store/planesStore';
 import { useShallow } from 'zustand/react/shallow';
 
-
 export default function PlanesSection() {
   const isMobile = useIsMobile()
   const [isPlanModalOpen, setIsPlanModalOpen] = React.useState(false);

@@ -11,6 +11,7 @@ interface CrearSuscripcionParams {
 export async function crearSuscripcionService(params: CrearSuscripcionParams) {
   const token = localStorage.getItem("token")
 
+  console.log(params)
   try {
     const client = clientApollo;
     const result = await client.mutate({

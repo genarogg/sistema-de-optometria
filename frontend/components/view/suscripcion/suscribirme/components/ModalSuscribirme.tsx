@@ -268,7 +268,7 @@ export default function ModalSuscribirme({
                     onClose();
                     onSubscriptionSuccess?.();
                   }}
-                  className="bg-white text-primary hover:bg-white/90 hover:text-primary-foreground transition-all px-8 py-2 rounded-full font-medium"
+                  className="bg-white text-primary hover:text-primary-foreground transition-all px-8 py-2 rounded-full font-medium"
                 >
                   Ir a Suscripciones
                 </Button>
