@@ -43,9 +43,10 @@ export default function TarjetaPlan({
               <Button
                 variant="outline"
                 size="icon"
-                className="h-10 w-10"
+           
                 onClick={() => onEdit?.(plan)}
                 title="Editar plan"
+                className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
               >
                 <Pencil className="h-3.5 w-3.5" />
               </Button>

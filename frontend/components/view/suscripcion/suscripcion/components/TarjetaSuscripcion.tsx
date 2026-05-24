@@ -19,6 +19,7 @@ import SuscripcionDetailsModal from "./modalDetails/SuscripcionDetailsModal";
 import { updateEstatusSuscripcionService } from "../service/updateEstatusSuscripcion.service";
 import type { Suscripcion } from "../store/suscripcionStore";
 import getStatusColor from "../utils/getStatusColor";
+import { showMoney } from "@/functions/super-money";
 
 interface TarjetaSuscripcionProps {
   suscripciones: Suscripcion[];
@@ -124,7 +125,7 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
                       <p className="text-xs font-semibold text-muted-foreground">
                         Costo
                       </p>
-                      <p>Bs {suscripcion.planSuscripcion.costo}</p>
+                      <p>Bs {showMoney(suscripcion.planSuscripcion.costo)}</p>
                     </div>
                     <div>
                       <p className="text-xs font-semibold text-muted-foreground">

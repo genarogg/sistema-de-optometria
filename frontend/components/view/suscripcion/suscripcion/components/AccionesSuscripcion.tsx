@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Eye, ImageIcon, CreditCard, ShieldCheck, Receipt } from 'lucide-react';
-import { EstatusSuscripcion, Rol, TipoDeDocumento } from '@/global/enums';
+import { EstatusSuscripcion, Rol, TipoDeDocumento, TipoSuscripcion } from '@/global/enums';
 import WhatsappButton from '@/components/ux/btn/whatsapp';
 import downloadDocumentoService  from '../service/downloadDocumento.service';
 
@@ -23,6 +23,7 @@ export default function AccionesSuscripcion({
   const [downloading, setDownloading] = useState<Partial<Record<TipoDeDocumento, boolean>>>({});
   const esAdminOSuperUsuario =
     rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
+  const esTipoAgremiado = suscripcion.planSuscripcion?.tipo === TipoSuscripcion.AGREMIADO;
 
   const handleDownloadDocumento = async (tipo: TipoDeDocumento) => {
     if (downloading[tipo]) return;
@@ -51,6 +52,7 @@ export default function AccionesSuscripcion({
           size="icon"
           onClick={() => onVerDetalles(suscripcion.id)}
           title="Ver detalles"
+          className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
         >
           <Eye className="h-3.5 w-3.5" />
         </Button>
@@ -65,18 +67,19 @@ export default function AccionesSuscripcion({
       <Button
         variant="outline"
         size="icon"
-        
+        className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
         onClick={() => onVerComprobante(suscripcion.comprobanteImg)}
         title="Ver comprobante"
       >
         <ImageIcon className="h-3.5 w-3.5" />
       </Button>
 
-      {/* Botón Descargar carnet - solo VALIDADO */}
-      {suscripcion.estatus === EstatusSuscripcion.VALIDADO && (
+      {/* Botón Descargar carnet - solo VALIDADO y tipo AGREMIADO */}
+      {suscripcion.estatus === EstatusSuscripcion.VALIDADO && esTipoAgremiado && (
         <Button
           variant="outline"
           size="icon"
+          className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
           disabled={downloading[TipoDeDocumento.CARNET]}
           onClick={() => handleDownloadDocumento(TipoDeDocumento.CARNET)}
           title="Descargar carnet"
@@ -85,11 +88,12 @@ export default function AccionesSuscripcion({
         </Button>
       )}
 
-      {/* Botón Descargar solvencia - solo VALIDADO */}
-      {suscripcion.estatus === EstatusSuscripcion.VALIDADO && (
+      {/* Botón Descargar solvencia - solo VALIDADO y tipo AGREMIADO */}
+      {suscripcion.estatus === EstatusSuscripcion.VALIDADO && esTipoAgremiado && (
         <Button
           variant="outline"
           size="icon"
+          className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
           disabled={downloading[TipoDeDocumento.SOLVENCIA_PAGO]}
           onClick={() => handleDownloadDocumento(TipoDeDocumento.SOLVENCIA_PAGO)}
           title="Descargar solvencia"

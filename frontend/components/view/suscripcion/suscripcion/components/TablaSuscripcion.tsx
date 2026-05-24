@@ -28,6 +28,7 @@ import AccionesSuscripcion from "./AccionesSuscripcion";
 import SuscripcionDetailsModal from "./modalDetails/SuscripcionDetailsModal";
 import type { Suscripcion } from "../store/suscripcionStore";
 import getStatusColor from "../utils/getStatusColor";
+import { showMoney } from "@/functions/super-money";
 
 export interface SuscripcionMeta {
   total: number;
@@ -137,7 +138,7 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
                       {suscripcion.comprobante}
                     </TableCell>
                     <TableCell className="text-sm border-r">
-                      Bs {suscripcion.planSuscripcion.costo}
+                      Bs {showMoney(suscripcion.planSuscripcion.costo)}
                     </TableCell>
                     <TableCell className="text-sm capitalize border-r">
                       {suscripcion.planSuscripcion.tipo}

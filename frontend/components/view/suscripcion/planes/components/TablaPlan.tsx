@@ -78,7 +78,8 @@ export default function TablaPlan({
                 <Button
                   variant="outline"
                   size="icon"
-                  className="h-10 w-10"
+           
+                  className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
                   onClick={() => onEdit?.(plan)}
                   title="Editar plan"
                 >
