@@ -4,7 +4,6 @@
       "dom",
       "dom.iterable",
       "esnext",
-      
     ],
     "allowJs": true,
     "target": "ES6",
