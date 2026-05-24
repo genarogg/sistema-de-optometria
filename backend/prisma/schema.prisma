@@ -5,7 +5,7 @@
 // - Campos únicos (unique)
 // - Valores por defecto cuando sean relevantes
 // - Omite de las tablas los valores createdAt y updatedAt
-// - Los enums como tablas de referencia
+
 
 // -------------------------------------------
 // refactoriza el orden de las tablas para que la creacion
@@ -131,7 +131,7 @@ model Usuario {
   updatedAt DateTime @updatedAt
 }
 
-// ─── Nivel 2: dependen de Usuario ─────────────────────────────────────────────
+// ─── Nivel 2: dependen solo de Usuario ───────────────────────────────────────
 
 model Autoridad {
   id            Int           @id @default(autoincrement())
@@ -186,7 +186,21 @@ model Evento {
   updatedAt DateTime @updatedAt
 }
 
-// ─── Nivel 3: dependen de Usuario + Evento ────────────────────────────────────
+model PlanSuscripcion {
+  id        Int             @id @default(autoincrement())
+  costo     Int
+  tipo      TipoSuscripcion
+  isActivo  Boolean         @default(true)
+  usuarioId Int
+  Usuario   Usuario         @relation(fields: [usuarioId], references: [id])
+
+  suscripciones Suscripcion[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─── Nivel 3: dependen de Usuario + otro modelo del nivel 2 ──────────────────
 
 model Ponente_Evento {
   id        Int     @id @default(autoincrement())
@@ -213,20 +227,6 @@ model Suscripcion_Evento {
   updatedAt DateTime @updatedAt
 
   @@unique([usuarioId, eventoId])
-}
-
-model PlanSuscripcion {
-  id        Int             @id @default(autoincrement())
-  costo     Int
-  tipo      TipoSuscripcion
-  isActivo  Boolean         @default(true)
-  usuarioId Int
-  Usuario   Usuario         @relation(fields: [usuarioId], references: [id])
-
-  suscripciones Suscripcion[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Suscripcion {
