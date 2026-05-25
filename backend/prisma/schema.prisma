@@ -184,6 +184,7 @@ model Evento {
   fecha               DateTime
   lugar               String
   costo               Int
+  tipo                TipoEvento
   descuentoEstudiante Int            @default(0)
   descuentoProfesor   Int            @default(0)
   vigencia            VigenciaEvento @default(VIGENTE)

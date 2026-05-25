@@ -8,6 +8,7 @@ type Evento {
   fecha: Date!
   lugar: String!
   costo: Int!
+  tipo: TipoEvento!
   descuentoEstudiante: Int!
   descuentoProfesor: Int!
   vigencia: VigenciaEvento!
@@ -63,6 +64,7 @@ extend type Query {
     pageSize: Int
     filtro: String
     vigencia: VigenciaEvento
+    tipo: TipoEvento
   ): EventosResponse!
 }
 
@@ -73,6 +75,7 @@ extend type Mutation {
     fecha: Date!
     lugar: String!
     costo: Int!
+    tipo: TipoEvento!
     descuentoEstudiante: Int
     descuentoProfesor: Int
     vigencia: VigenciaEvento
@@ -86,6 +89,7 @@ extend type Mutation {
     fecha: Date
     lugar: String
     costo: Int
+    tipo: TipoEvento
     descuentoEstudiante: Int
     descuentoProfesor: Int
     vigencia: VigenciaEvento

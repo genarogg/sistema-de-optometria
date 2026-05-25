@@ -8,6 +8,7 @@ const ACTUALIZAR_EVENTO = gql`
     $fecha: Date
     $lugar: String
     $costo: Int
+    $tipo: TipoEvento
     $descuentoEstudiante: Int
     $descuentoProfesor: Int
     $vigencia: VigenciaEvento
@@ -20,6 +21,7 @@ const ACTUALIZAR_EVENTO = gql`
       fecha: $fecha
       lugar: $lugar
       costo: $costo
+      tipo: $tipo
       descuentoEstudiante: $descuentoEstudiante
       descuentoProfesor: $descuentoProfesor
       vigencia: $vigencia

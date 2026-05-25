@@ -1,5 +1,5 @@
 import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
-import { Rol, AccionesBitacora, VigenciaEvento } from "@prisma/client";
+import { Rol, AccionesBitacora, VigenciaEvento, TipoEvento } from "@prisma/client";
 
 interface CrearEventoArgs {
     token: string;
@@ -7,6 +7,7 @@ interface CrearEventoArgs {
     fecha: Date;
     lugar: string;
     costo: number;
+    tipo: TipoEvento;
     descuentoEstudiante?: number;
     descuentoProfesor?: number;
     vigencia?: VigenciaEvento;
@@ -16,23 +17,24 @@ interface CrearEventoArgs {
 const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
     log.dev("crearEvento called with args:", args);
 
-    const {
-        token,
-        nombre,
-        fecha,
-        lugar,
-        costo,
-        descuentoEstudiante = 0,
-        descuentoProfesor = 0,
-        vigencia = VigenciaEvento.VIGENTE,
-        ponentesIds = []
+    const { 
+        token, 
+        nombre, 
+        fecha, 
+        lugar, 
+        costo, 
+        tipo,
+        descuentoEstudiante = 0, 
+        descuentoProfesor = 0, 
+        vigencia = VigenciaEvento.VIGENTE, 
+        ponentesIds = [] 
     } = args;
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
     }
 
-    if (!nombre || !fecha || !lugar || !costo) {
+    if (!nombre || !fecha || !lugar || !costo || !tipo) {
         return errorResponse({ message: "Todos los campos obligatorios deben ser proporcionados" });
     }
 
@@ -53,6 +55,7 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
                 fecha,
                 lugar,
                 costo,
+                tipo,
                 descuentoEstudiante,
                 descuentoProfesor,
                 vigencia,
@@ -83,9 +86,9 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
         });
 
         await crearBitacora({
-            type: AccionesBitacora.CREAR_EVENTO,
+            type: AccionesBitacora.CREATE_USER,
             usuarioId: usuario.id,
-            mensaje: `Se creó el evento "${nombre}", con el ID ${nuevoEvento.id}`,
+            mensaje: `Se creó el evento "${nombre}"`,
         });
 
         return successResponse({

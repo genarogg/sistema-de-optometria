@@ -1,5 +1,5 @@
 import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
-import { Rol, AccionesBitacora, VigenciaEvento } from "@prisma/client";
+import { Rol, AccionesBitacora, VigenciaEvento, TipoEvento } from "@prisma/client";
 
 interface ActualizarEventoArgs {
     token: string;
@@ -7,7 +7,8 @@ interface ActualizarEventoArgs {
     nombre?: string;
     fecha?: Date;
     lugar?: string;
-    consto?: number;
+    costo?: number;
+    tipo?: TipoEvento;
     descuentoEstudiante?: number;
     descuentoProfesor?: number;
     vigencia?: VigenciaEvento;
@@ -23,7 +24,8 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         nombre, 
         fecha, 
         lugar, 
-        consto, 
+        costo, 
+        tipo,
         descuentoEstudiante, 
         descuentoProfesor, 
         vigencia, 
@@ -61,7 +63,8 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         if (nombre !== undefined) data.nombre = nombre;
         if (fecha !== undefined) data.fecha = fecha;
         if (lugar !== undefined) data.lugar = lugar;
-        if (consto !== undefined) data.consto = consto;
+        if (costo !== undefined) data.costo = costo;
+        if (tipo !== undefined) data.tipo = tipo;
         if (descuentoEstudiante !== undefined) data.descuentoEstudiante = descuentoEstudiante;
         if (descuentoProfesor !== undefined) data.descuentoProfesor = descuentoProfesor;
         if (vigencia !== undefined) data.vigencia = vigencia;
@@ -91,12 +94,16 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         const eventoConPonentes = await prisma.evento.findUnique({
             where: { id: eventoId },
             include: {
-                ponenteEvento: true,
+                ponenteEvento: {
+                    include: {
+                        usuario: true
+                    }
+                },
             },
         });
 
         await crearBitacora({
-            type: AccionesBitacora.UPDATE_EVENTO,
+            type: AccionesBitacora.UPDATE_USER,
             usuarioId: usuario.id,
             mensaje: `Se actualizó el evento "${eventoConPonentes?.nombre}"`,
         });

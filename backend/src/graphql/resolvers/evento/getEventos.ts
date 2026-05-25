@@ -8,7 +8,7 @@ import {
     getPaginacionParams,
     getPaginacionMeta
 } from "@fn";
-import { Prisma,  AccionesBitacora, VigenciaEvento } from "@prisma/client";
+import { Prisma, AccionesBitacora, VigenciaEvento, TipoEvento } from "@prisma/client";
 
 interface GetEventosArgs {
     token: string;
@@ -16,12 +16,13 @@ interface GetEventosArgs {
     pageSize?: number;
     filtro?: string;
     vigencia?: VigenciaEvento;
+    tipo?: TipoEvento;
 }
 
 const getEventos = async (_: unknown, args: GetEventosArgs) => {
     log.dev("getEventos called with args:", args);
     
-    const { token, page = 1, pageSize = 20, filtro, vigencia } = args;
+    const { token, page = 1, pageSize = 20, filtro, vigencia, tipo } = args;
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
@@ -48,12 +49,15 @@ const getEventos = async (_: unknown, args: GetEventosArgs) => {
             whereClause.vigencia = vigencia;
         }
 
+        if (tipo) {
+            whereClause.tipo = tipo;
+        }
+
         const { skip, take } = getPaginacionParams({ page, pageSize });
 
         const eventos = await prisma.evento.findMany({
             where: whereClause,
             include: {
-                Usuario: true,
                 ponenteEvento: {
                     include: {
                         usuario: true
