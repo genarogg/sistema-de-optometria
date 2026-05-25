@@ -4,7 +4,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Edit, Calendar, MapPin, Users } from 'lucide-react';
+import { Edit, Calendar, MapPin, Users, UsersRound } from 'lucide-react';
 import { TipoEvento, VigenciaEvento } from '@/global/enums';
 
 interface Evento {
@@ -23,9 +23,10 @@ interface Evento {
 interface TarjetaEventoProps {
   eventos: Evento[];
   onEdit: (evento: Evento) => void;
+  onVerPonentes: (evento: Evento) => void;
 }
 
-export default function TarjetaEvento({ eventos, onEdit }: TarjetaEventoProps) {
+export default function TarjetaEvento({ eventos, onEdit, onVerPonentes }: TarjetaEventoProps) {
   const getVigenciaColor = (vigencia: string) => {
     switch (vigencia) {
       case VigenciaEvento.VIGENTE:
@@ -62,9 +63,14 @@ export default function TarjetaEvento({ eventos, onEdit }: TarjetaEventoProps) {
                   <Badge variant="outline">{evento.tipo}</Badge>
                 </div>
               </div>
-              <Button variant="ghost" size="icon" onClick={() => onEdit(evento)}>
-                <Edit className="h-4 w-4" />
-              </Button>
+              <div className="flex gap-1">
+                <Button variant="ghost" size="icon" onClick={() => onVerPonentes(evento)}>
+                  <UsersRound className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="icon" onClick={() => onEdit(evento)}>
+                  <Edit className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>

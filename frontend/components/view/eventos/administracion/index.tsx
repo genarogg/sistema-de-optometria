@@ -7,6 +7,7 @@ import { AlertCircle } from 'lucide-react';
 import EventosBuscador from './components/EventosBuscador';
 import TarjetaEvento from './components/TarjetaEvento';
 import ModalCrearEvento from './components/ModalCrearEvento';
+import ModalPonentesEvento from './components/ModalPonentesEvento';
 import { useEventosFilters } from './hook/useEventosFilters';
 import { getEventosService } from './service/getEventos.service';
 import useEventosStore from './store/eventosStore';
@@ -14,6 +15,7 @@ import { useShallow } from 'zustand/react/shallow';
 
 export default function AdministrarEventosSection() {
   const [isEventoModalOpen, setIsEventoModalOpen] = React.useState(false);
+  const [isPonentesModalOpen, setIsPonentesModalOpen] = React.useState(false);
   const [selectedEvento, setSelectedEvento] = React.useState<any>(null);
 
   const { eventos, cargando, error } = useEventosStore(
@@ -80,6 +82,10 @@ export default function AdministrarEventosSection() {
               setSelectedEvento(evento);
               setIsEventoModalOpen(true);
             }}
+            onVerPonentes={(evento) => {
+              setSelectedEvento(evento);
+              setIsPonentesModalOpen(true);
+            }}
           />
         )}
       </div>
@@ -95,6 +101,16 @@ export default function AdministrarEventosSection() {
           setSelectedEvento(null);
         }}
       />
+
+      {selectedEvento && (
+        <ModalPonentesEvento
+          isOpen={isPonentesModalOpen}
+          onClose={() => {
+            setIsPonentesModalOpen(false);
+          }}
+          evento={selectedEvento}
+        />
+      )}
     </div>
   );
 }
