@@ -16,7 +16,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { CreditCard } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 import downloadCarnetPonenteService from '../service/downloadCarnetPonente.service';
 
 interface PonenteEvento {
@@ -48,6 +51,7 @@ export default function ModalPonentesEvento({
   evento,
 }: ModalPonentesEventoProps) {
   const [downloading, setDownloading] = useState<number | null>(null);
+  const isMobile = useIsMobile();
 
   const handleDownloadCarnet = async (ponente: PonenteEvento) => {
     await downloadCarnetPonenteService({
@@ -59,17 +63,86 @@ export default function ModalPonentesEvento({
     });
   };
 
+  const PonenteCard = ({ ponente }: { ponente: PonenteEvento }) => (
+    <Card key={ponente.id} className="mb-3">
+      <CardContent className="pt-4">
+        <div className="flex flex-col gap-3">
+          <div>
+            <p className="font-semibold text-lg">
+              {ponente.usuario.primerNombre} {ponente.usuario.primerApellido}
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              C.I: {ponente.usuario.cedula}
+            </p>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <Badge variant={ponente.isActivo ? 'default' : 'destructive'}>
+                {ponente.isActivo ? 'Activo' : 'Inactivo'}
+              </Badge>
+            </div>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleDownloadCarnet(ponente)}
+              disabled={downloading === ponente.usuarioId}
+              className="w-full sm:w-auto"
+            >
+              <CreditCard className="h-4 w-4 mr-2" />
+              {downloading === ponente.usuarioId ? 'Descargando...' : 'Descargar Carnet'}
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  const PonenteTableRow = ({ ponente }: { ponente: PonenteEvento }) => (
+    <TableRow key={ponente.id}>
+      <TableCell className="font-medium">
+        {ponente.usuario.primerNombre} {ponente.usuario.primerApellido}
+      </TableCell>
+      <TableCell>{ponente.usuario.cedula}</TableCell>
+      <TableCell>
+        <Badge variant={ponente.isActivo ? 'default' : 'destructive'}>
+          {ponente.isActivo ? 'Activo' : 'Inactivo'}
+        </Badge>
+      </TableCell>
+      <TableCell className="text-right">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => handleDownloadCarnet(ponente)}
+          disabled={downloading === ponente.usuarioId}
+        >
+          <CreditCard className="h-4 w-4 mr-2" />
+          {downloading === ponente.usuarioId ? 'Descargando...' : 'Descargar Carnet'}
+        </Button>
+      </TableCell>
+    </TableRow>
+  );
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-4xl">
+      <DialogContent className={`sm:max-w-4xl ${isMobile ? 'max-w-[95vw] p-4' : ''}`}>
         <DialogHeader>
-          <DialogTitle>Ponentes del evento: {evento.nombre}</DialogTitle>
+          <DialogTitle className={isMobile ? 'text-lg' : ''}>
+            Ponentes del evento: {evento.nombre}
+          </DialogTitle>
         </DialogHeader>
 
         <div className="mt-4">
           {evento.ponenteEvento.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               No hay ponentes asignados a este evento.
+            </div>
+          ) : isMobile ? (
+            <div className="space-y-2">
+              {evento.ponenteEvento.map((ponente) => (
+                <PonenteCard key={ponente.id} ponente={ponente} />
+              ))}
             </div>
           ) : (
             <Table>
@@ -83,30 +156,7 @@ export default function ModalPonentesEvento({
               </TableHeader>
               <TableBody>
                 {evento.ponenteEvento.map((ponente) => (
-                  <TableRow key={ponente.id}>
-                    <TableCell className="font-medium">
-                      {ponente.usuario.primerNombre} {ponente.usuario.primerApellido}
-                    </TableCell>
-                    <TableCell>{ponente.usuario.cedula}</TableCell>
-                    <TableCell>
-                      {ponente.isActivo ? (
-                        <span className="text-green-600 font-medium">Activo</span>
-                      ) : (
-                        <span className="text-red-600 font-medium">Inactivo</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDownloadCarnet(ponente)}
-                        disabled={downloading === ponente.usuarioId}
-                      >
-                        <CreditCard className="h-4 w-4 mr-2" />
-                        {downloading === ponente.usuarioId ? 'Descargando...' : 'Descargar Carnet'}
-                      </Button>
-                    </TableCell>
-                  </TableRow>
+                  <PonenteTableRow key={ponente.id} ponente={ponente} />
                 ))}
               </TableBody>
             </Table>
