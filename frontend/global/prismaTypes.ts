@@ -1,4 +1,4 @@
-import { AccionesBitacora, Rol, TipoAutoridad, TipoEvento, TipoSuscripcion, EstatusSuscripcion, NivelAcademico, TipoDeDocumento } from "./enums"
+import { AccionesBitacora, Rol, TipoAutoridad, TipoEvento, TipoSuscripcion, EstatusSuscripcion, NivelAcademico, TipoDeDocumento, VigenciaEvento } from "./enums"
 
 export interface Usuario {
   id: number
@@ -32,7 +32,7 @@ export interface Autoridad {
   usuarioId: number
   vigente: boolean
   usuario?: Usuario
-  DocumentosSolicitados?: DocumentoSolicitado[]
+  documentosSolicitados?: DocumentoSolicitado[]
   createdAt: Date
   updatedAt: Date
 }
@@ -61,34 +61,14 @@ export interface Evento {
   nombre: string
   fecha: Date
   lugar: string
-  precio: number
-  descuento: number
-  tipo: TipoEvento
+  consto: number
+  descuentoEstudiante: number
+  descuentoProfesor: number
+  vigencia: VigenciaEvento
   usuarioId: number
   Usuario?: Usuario
-  Ponente_Evento?: Ponente_Evento[]
-  Suscripcion_Evento?: Suscripcion_Evento[]
-  createdAt: Date
-  updatedAt: Date
-}
-
-export interface Ponente_Evento {
-  id: number
-  usuarioId: number
-  eventoId: number
-  usuario?: Usuario
-  Evento?: Evento
-  createdAt: Date
-  updatedAt: Date
-}
-
-export interface Suscripcion_Evento {
-  id: number
-  precioAlSuscripcion: number
-  eventoId: number
-  Evento?: Evento
-  usuarioId: number
-  Usuario?: Usuario
+  ponente_Evento?: Ponente_Evento[]
+  suscripcion_Evento?: Suscripcion_Evento[]
   createdAt: Date
   updatedAt: Date
 }
@@ -101,6 +81,28 @@ export interface PlanSuscripcion {
   usuarioId: number
   Usuario?: Usuario
   suscripciones?: Suscripcion[]
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface Ponente_Evento {
+  id: number
+  usuarioId: number
+  eventoId: number
+  usuario?: Usuario
+  Evento?: Evento
+  isActivo: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface Suscripcion_Evento {
+  id: number
+  precioAlSuscripcion: number
+  eventoId: number
+  evento?: Evento
+  usuarioId: number
+  usuario?: Usuario
   createdAt: Date
   updatedAt: Date
 }

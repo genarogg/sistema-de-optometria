@@ -6,7 +6,6 @@
 // - Valores por defecto cuando sean relevantes
 // - Omite de las tablas los valores createdAt y updatedAt
 
-
 // -------------------------------------------
 // refactoriza el orden de las tablas para que la creacion
 // de las tablas se hagan en el orden correcto
@@ -49,6 +48,11 @@ enum AccionesBitacora {
   GENERACION_CERTIFICADO_TALLER
   GENERACION_CERTIFICADO_DIPLOMADO
   GENERACION_CERTIFICADO_CONGRESO
+
+  CREAR_EVENTO
+  UPDATE_EVENTO
+
+  USUARIO_AGG_AL_EVENTO
 }
 
 enum Rol {
@@ -102,6 +106,12 @@ enum TipoDeDocumento {
   CERTIFICADO_CONGRESO
 }
 
+enum VigenciaEvento {
+  VIGENTE
+  CANCELADO
+  CONCLUIDO
+}
+
 // ─── Nivel 1: sin dependencias ────────────────────────────────────────────────
 
 model Usuario {
@@ -141,7 +151,7 @@ model Autoridad {
   vigente       Boolean       @default(true)
 
   usuario               Usuario               @relation(fields: [usuarioId], references: [id])
-  DocumentosSolicitados DocumentoSolicitado[]
+  documentosSolicitados DocumentoSolicitado[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -169,18 +179,19 @@ model Bitacora {
 }
 
 model Evento {
-  id        Int        @id @default(autoincrement())
-  nombre    String
-  fecha     DateTime
-  lugar     String
-  consto    Int
-  descuento Float      @default(0)
-  tipo      TipoEvento
-  usuarioId Int
-  Usuario   Usuario    @relation(fields: [usuarioId], references: [id])
+  id                  Int            @id @default(autoincrement())
+  nombre              String
+  fecha               DateTime
+  lugar               String
+  costo               Int
+  descuentoEstudiante Int            @default(0)
+  descuentoProfesor   Int            @default(0)
+  vigencia            VigenciaEvento @default(VIGENTE)
+  usuarioId           Int
+  Usuario             Usuario        @relation(fields: [usuarioId], references: [id])
 
-  Ponente_Evento     Ponente_Evento[]
-  Suscripcion_Evento Suscripcion_Evento[]
+  ponente_Evento     Ponente_Evento[]
+  suscripcion_Evento Suscripcion_Evento[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -208,6 +219,7 @@ model Ponente_Evento {
   eventoId  Int
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
   Evento    Evento  @relation(fields: [eventoId], references: [id])
+  isActivo  Boolean @default(true)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -219,9 +231,9 @@ model Suscripcion_Evento {
   id                  Int     @id @default(autoincrement())
   precioAlSuscripcion Int
   eventoId            Int
-  Evento              Evento  @relation(fields: [eventoId], references: [id])
+  evento              Evento  @relation(fields: [eventoId], references: [id])
   usuarioId           Int
-  Usuario             Usuario @relation(fields: [usuarioId], references: [id])
+  usuario             Usuario @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

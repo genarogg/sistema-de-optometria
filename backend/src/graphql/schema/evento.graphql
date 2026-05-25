@@ -1,0 +1,94 @@
+##############################################
+# Tipos de Evento
+##############################################
+
+type Evento {
+  id: Int!
+  nombre: String!
+  fecha: Date!
+  lugar: String!
+  costo: Int!
+  descuentoEstudiante: Int!
+  descuentoProfesor: Int!
+  vigencia: VigenciaEvento!
+  usuarioId: Int!
+  usuario: Usuario
+  ponente_Evento: [Ponente_Evento]
+  suscripcion_Evento: [Suscripcion_Evento]
+}
+
+type Ponente_Evento {
+  id: Int!
+  usuarioId: Int!
+  eventoId: Int!
+  usuario: Usuario
+  evento: Evento
+  isActivo: Boolean!
+}
+
+type Suscripcion_Evento {
+  id: Int!
+  precioAlSuscripcion: Int!
+  eventoId: Int!
+  evento: Evento
+  usuarioId: Int!
+  usuario: Usuario
+}
+
+##############################################
+# Responses de Evento
+##############################################
+
+type EventoResponse {
+  type: String
+  message: String
+  data: Evento
+}
+
+type EventosResponse {
+  type: String
+  message: String
+  data: [Evento]
+  meta: Meta
+}
+
+##############################################
+# Extensiones de Query y Mutation
+##############################################
+
+extend type Query {
+  getEventos(
+    token: String!
+    page: Int
+    pageSize: Int
+    filtro: String
+    vigencia: VigenciaEvento
+  ): EventosResponse!
+}
+
+extend type Mutation {
+  crearEvento(
+    token: String!
+    nombre: String!
+    fecha: Date!
+    lugar: String!
+    costo: Int!
+    descuentoEstudiante: Int
+    descuentoProfesor: Int
+    vigencia: VigenciaEvento
+    ponentesIds: [Int!]
+  ): EventoResponse!
+  
+  actualizarEvento(
+    token: String!
+    eventoId: Int!
+    nombre: String
+    fecha: Date
+    lugar: String
+    costo: Int
+    descuentoEstudiante: Float
+    descuentoProfesor: Float
+    vigencia: VigenciaEvento
+    ponentesIds: [Int!]
+  ): EventoResponse!
+}
