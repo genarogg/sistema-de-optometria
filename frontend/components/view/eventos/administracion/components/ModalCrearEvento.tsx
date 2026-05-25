@@ -69,13 +69,26 @@ export default function ModalCrearEvento({
   const [tipo, setTipo] = useState<TipoEvento | ''>('');
   const [descuentoEstudiante, setDescuentoEstudiante] = useState(0);
   const [descuentoProfesor, setDescuentoProfesor] = useState(0);
-  const [vigencia, setVigencia] = useState<VigenciaEvento | ''>('');
+  const [vigencia, setVigencia] = useState<VigenciaEvento | ''>(VigenciaEvento.VIGENTE);
   const [ponentes, setPonentes] = useState<Ponente[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [busquedaCedula, setBusquedaCedula] = useState('');
   const [usuariosEncontrados, setUsuariosEncontrados] = useState<Usuario[]>([]);
   const [buscandoUsuarios, setBuscandoUsuarios] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [costoInput, setCostoInput] = useState<HTMLInputElement | null>(null);
+
+  // Inicializar money inputs y escuchar eventos
+  useEffect(() => {
+    if (!costoInput) return;
+
+    const handleMoneyInput = (e: CustomEvent<{ value: number }>) => {
+      setCosto(e.detail.value);
+    };
+
+    costoInput.addEventListener('money-input', handleMoneyInput as EventListener);
+    return () => costoInput.removeEventListener('money-input', handleMoneyInput as EventListener);
+  }, [costoInput]);
 
   const isEditMode = Boolean(evento);
 
@@ -145,11 +158,15 @@ export default function ModalCrearEvento({
   };
 
   useEffect(() => {
+    if (!costoInput) return;
+
     if (evento) {
       setNombre(evento.nombre);
       setFecha(new Date(evento.fecha));
       setLugar(evento.lugar);
-      setCosto(evento.costo);
+      const cents = evento.costo ?? 0;
+      setCosto(cents);
+      setTimeout(() => (costoInput as any).setCents?.(cents, false), 0);
       setTipo(evento.tipo);
       setDescuentoEstudiante(evento.descuentoEstudiante);
       setDescuentoProfesor(evento.descuentoProfesor);
@@ -171,6 +188,7 @@ export default function ModalCrearEvento({
       setFecha(undefined);
       setLugar('');
       setCosto(0);
+      setTimeout(() => (costoInput as any).setCents?.(0, false), 0);
       setTipo('');
       setDescuentoEstudiante(0);
       setDescuentoProfesor(0);
@@ -179,7 +197,7 @@ export default function ModalCrearEvento({
       setBusquedaCedula('');
       setUsuariosEncontrados([]);
     }
-  }, [evento, isOpen]);
+  }, [evento, isOpen, costoInput]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -322,13 +340,10 @@ export default function ModalCrearEvento({
             <div className="space-y-2">
               <Label htmlFor="costo">Costo *</Label>
               <Input
+                ref={(el) => setCostoInput(el)}
                 id="costo"
-                type="number"
-                value={costo}
-                onChange={(e) => setCosto(Number(e.target.value))}
+                type="money"
                 disabled={isLoading}
-                placeholder="0"
-                min="0"
               />
             </div>
 
@@ -380,25 +395,27 @@ export default function ModalCrearEvento({
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="vigencia">Vigencia</Label>
-              <Select
-                value={vigencia}
-                onValueChange={(value) => setVigencia(value as VigenciaEvento)}
-                disabled={isLoading}
-              >
-                <SelectTrigger id="vigencia">
-                  <SelectValue placeholder="Selecciona una vigencia" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.values(VigenciaEvento).map((v) => (
-                    <SelectItem key={v} value={v}>
-                      {v}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            {isEditMode && (
+              <div className="space-y-2">
+                <Label htmlFor="vigencia">Vigencia</Label>
+                <Select
+                  value={vigencia}
+                  onValueChange={(value) => setVigencia(value as VigenciaEvento)}
+                  disabled={isLoading}
+                >
+                  <SelectTrigger id="vigencia">
+                    <SelectValue placeholder="Selecciona una vigencia" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.values(VigenciaEvento).map((v) => (
+                      <SelectItem key={v} value={v}>
+                        {v}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </div>
 
           <div className="space-y-4 pt-4 border-t">
