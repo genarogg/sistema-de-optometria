@@ -54,12 +54,12 @@ const getEventos = async (_: unknown, args: GetEventosArgs) => {
             where: whereClause,
             include: {
                 Usuario: true,
-                ponente_Evento: {
+                ponenteEvento: {
                     include: {
                         usuario: true
                     }
                 },
-                suscripcion_Evento: true,
+                suscripcionEvento: true,
             },
             orderBy: { createdAt: "desc" },
             skip,

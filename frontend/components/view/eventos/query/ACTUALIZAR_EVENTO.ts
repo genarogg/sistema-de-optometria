@@ -1,0 +1,34 @@
+import { gql } from "@apollo/client";
+
+const ACTUALIZAR_EVENTO = gql`
+  mutation ActualizarEvento(
+    $token: String!
+    $eventoId: Int!
+    $nombre: String
+    $fecha: Date
+    $lugar: String
+    $costo: Int
+    $descuentoEstudiante: Int
+    $descuentoProfesor: Int
+    $vigencia: VigenciaEvento
+    $ponentesIds: [Int!]
+  ) {
+    actualizarEvento(
+      token: $token
+      eventoId: $eventoId
+      nombre: $nombre
+      fecha: $fecha
+      lugar: $lugar
+      costo: $costo
+      descuentoEstudiante: $descuentoEstudiante
+      descuentoProfesor: $descuentoProfesor
+      vigencia: $vigencia
+      ponentesIds: $ponentesIds
+    ) {
+      message
+      type
+    }
+  }
+`;
+
+export default ACTUALIZAR_EVENTO;

@@ -13,11 +13,11 @@ type Evento {
   vigencia: VigenciaEvento!
   usuarioId: Int!
   usuario: Usuario
-  ponente_Evento: [Ponente_Evento]
-  suscripcion_Evento: [Suscripcion_Evento]
+  ponenteEvento: [PonenteEvento]
+  suscripcionEvento: [SuscripcionEvento]
 }
 
-type Ponente_Evento {
+type PonenteEvento {
   id: Int!
   usuarioId: Int!
   eventoId: Int!
@@ -26,7 +26,7 @@ type Ponente_Evento {
   isActivo: Boolean!
 }
 
-type Suscripcion_Evento {
+type SuscripcionEvento {
   id: Int!
   precioAlSuscripcion: Int!
   eventoId: Int!
@@ -86,8 +86,8 @@ extend type Mutation {
     fecha: Date
     lugar: String
     costo: Int
-    descuentoEstudiante: Float
-    descuentoProfesor: Float
+    descuentoEstudiante: Int
+    descuentoProfesor: Int
     vigencia: VigenciaEvento
     ponentesIds: [Int!]
   ): EventoResponse!

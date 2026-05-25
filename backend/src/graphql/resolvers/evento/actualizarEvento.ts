@@ -72,7 +72,7 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         });
 
         if (ponentesIds !== undefined) {
-            await prisma.ponente_Evento.deleteMany({
+            await prisma.ponenteEvento.deleteMany({
                 where: { eventoId }
             });
 
@@ -82,7 +82,7 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
                     eventoId: eventoId,
                 }));
 
-                await prisma.ponente_Evento.createMany({
+                await prisma.ponenteEvento.createMany({
                     data: ponenteEventosData,
                 });
             }
@@ -91,7 +91,7 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         const eventoConPonentes = await prisma.evento.findUnique({
             where: { id: eventoId },
             include: {
-                ponente_Evento: true,
+                ponenteEvento: true,
             },
         });
 

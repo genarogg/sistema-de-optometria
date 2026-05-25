@@ -74,7 +74,11 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
         const eventoConPonentes = await prisma.evento.findUnique({
             where: { id: nuevoEvento.id },
             include: {
-                ponenteEvento: true,
+                ponenteEvento: {
+                    include: {
+                        usuario: true
+                    }
+                },
             },
         });
 
