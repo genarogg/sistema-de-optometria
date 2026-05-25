@@ -155,12 +155,16 @@ export default function ModalCrearEvento({
       setDescuentoProfesor(evento.descuentoProfesor);
       setVigencia(evento.vigencia);
 
+      console.log('evento.ponenteEvento:', evento.ponenteEvento);
+      
       const ponentesEvento = evento.ponenteEvento?.map((p: any) => ({
         usuarioId: p.usuarioId,
         nombreCompleto: `${p.usuario?.primerNombre} ${p.usuario?.primerApellido}`,
         cedula: p.usuario?.cedula || '',
         isActivo: p.isActivo,
       })) || [];
+      
+      console.log('ponentesEvento:', ponentesEvento);
       setPonentes(ponentesEvento);
     } else {
       setNombre('');
@@ -185,10 +189,20 @@ export default function ModalCrearEvento({
       return;
     }
 
-    const ponentesData = ponentes.map((p) => ({
-      id: p.usuarioId,
-      isActivo: p.isActivo,
-    }));
+    const ponentesData = ponentes
+      .filter((p) => {
+        if (!p || typeof p !== 'object') return false;
+        if (!p.usuarioId) return false;
+        if (typeof p.isActivo !== 'boolean') return false;
+        return true;
+      })
+      .map((p) => ({
+        id: Number(p.usuarioId),
+        isActivo: Boolean(p.isActivo),
+      }));
+    
+    console.log('Ponentes originales:', ponentes);
+    console.log('Ponentes data a enviar:', ponentesData);
 
     setIsLoading(true);
     try {
@@ -203,7 +217,7 @@ export default function ModalCrearEvento({
           descuentoEstudiante,
           descuentoProfesor,
           vigencia: vigencia || undefined,
-          ponentes: ponentesData.length > 0 ? ponentesData : undefined,
+          ponentes: ponentesData,
         });
       } else {
         await crearEventoService({
@@ -215,7 +229,7 @@ export default function ModalCrearEvento({
           descuentoEstudiante,
           descuentoProfesor,
           vigencia: vigencia || undefined,
-          ponentes: ponentesData.length > 0 ? ponentesData : undefined,
+          ponentes: ponentesData,
         });
       }
 
@@ -435,8 +449,11 @@ export default function ModalCrearEvento({
                 <div className="space-y-2">
                   <Label className="text-sm font-medium">Ponentes agregados ({ponentes.length})</Label>
                   <div className="border rounded-md p-2 space-y-2">
-                    {ponentes.map((ponente) => (
-                      <div key={ponente.usuarioId} className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                    {ponentes.map((ponente, index) => {
+                    console.log(`Ponente ${index}:`, ponente);
+                    const key = ponente.usuarioId ? `ponente-${ponente.usuarioId}` : `ponente-${index}`;
+                    return (
+                      <div key={key} className="flex items-center justify-between p-2 bg-gray-50 rounded">
                         <div>
                           <div className="font-medium">{ponente.nombreCompleto}</div>
                           <div className="text-sm text-muted-foreground">C.I: {ponente.cedula}</div>
@@ -453,7 +470,8 @@ export default function ModalCrearEvento({
                           />
                         </div>
                       </div>
-                    ))}
+                    );
+                  })}
                   </div>
                 </div>
               )}

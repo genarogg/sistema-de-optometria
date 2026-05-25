@@ -14,4 +14,10 @@ extend type Query {
     tipoDeDocumento: TipoDeDocumento!
     suscripcionId: Int
   ): DocumentoResponse!
+
+  getCarnetEvento(
+    token: String!
+    usuarioId: Int!
+    eventoId: Int!
+  ): DocumentoResponse!
 }

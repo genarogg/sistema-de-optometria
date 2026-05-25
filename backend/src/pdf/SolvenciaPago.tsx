@@ -18,9 +18,6 @@ import {
 
 import { QRstyle } from "@react-pdf-levelup/qr";
 
-
-
-
 const Component = ({ data }: any) => {
     const colorFull = "#019a9d"
 

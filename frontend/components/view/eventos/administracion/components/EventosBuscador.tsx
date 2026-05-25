@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Plus, RefreshCw } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { TipoEvento, VigenciaEvento } from '@/global/enums';
 
 interface EventosBuscadorProps {
@@ -21,7 +21,6 @@ interface EventosBuscadorProps {
   tipoFilter: string | null;
   onTipoChange: (tipo: string | null) => void;
   onCreateClick: () => void;
-  onRefresh: () => void;
 }
 
 export default function EventosBuscador({
@@ -32,7 +31,6 @@ export default function EventosBuscador({
   tipoFilter,
   onTipoChange,
   onCreateClick,
-  onRefresh,
 }: EventosBuscadorProps) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -80,9 +78,6 @@ export default function EventosBuscador({
       </div>
 
       <div className="flex gap-2">
-        <Button variant="outline" size="icon" onClick={onRefresh}>
-          <RefreshCw className="h-4 w-4" />
-        </Button>
         <Button onClick={onCreateClick}>
           <Plus className="h-4 w-4 mr-2" />
           Crear Evento

@@ -29,10 +29,12 @@ const GET_EVENTOS = gql`
         vigencia
         ponenteEvento {
           id
+          usuarioId
           isActivo
           usuario {
             primerNombre
             primerApellido
+            cedula
           }
         }
       }

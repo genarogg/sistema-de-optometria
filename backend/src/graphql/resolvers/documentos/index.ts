@@ -1,8 +1,10 @@
 import getCarnetSolvencia from "./getCarnetSolvencia"
+import getCarnetEvento from "./getCarnetEvento"
 
 const resolvers = {
     Query: {
-        getCarnetSolvencia
+        getCarnetSolvencia,
+        getCarnetEvento,
     },
     Mutation: {},
 };

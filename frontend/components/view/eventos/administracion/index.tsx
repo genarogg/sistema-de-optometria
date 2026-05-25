@@ -38,10 +38,6 @@ export default function AdministrarEventosSection() {
     getEventosService();
   }, []);
 
-  const handleRefresh = async () => {
-    await getEventosService();
-  };
-
   return (
     <div className="flex flex-col gap-4">
       <EventosBuscador
@@ -55,7 +51,6 @@ export default function AdministrarEventosSection() {
           setSelectedEvento(null);
           setIsEventoModalOpen(true);
         }}
-        onRefresh={handleRefresh}
       />
 
       <div className="flex flex-col gap-4">

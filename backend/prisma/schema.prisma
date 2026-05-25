@@ -219,7 +219,7 @@ model PonenteEvento {
   usuarioId Int
   eventoId  Int
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
-  Evento    Evento  @relation(fields: [eventoId], references: [id])
+  evento    Evento  @relation(fields: [eventoId], references: [id])
   isActivo  Boolean @default(true)
 
   createdAt DateTime @default(now())
