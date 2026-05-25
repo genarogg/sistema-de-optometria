@@ -30,10 +30,15 @@ type PonenteEvento {
 type SuscripcionEvento {
   id: Int!
   precioAlSuscripcion: Int!
+  estatus: EstatusPagoEvento!
+  comprobante: String!
+  comprobanteImg: String!
   eventoId: Int!
   evento: Evento
   usuarioId: Int!
   usuario: Usuario
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 ##############################################
@@ -53,6 +58,13 @@ type EventosResponse {
   meta: Meta
 }
 
+type SuscripcionesEventoResponse {
+  type: String
+  message: String
+  data: [SuscripcionEvento]
+  meta: Meta
+}
+
 ##############################################
 # Extensiones de Query y Mutation
 ##############################################
@@ -66,11 +78,26 @@ extend type Query {
     vigencia: VigenciaEvento
     tipo: TipoEvento
   ): EventosResponse!
+  
+  getSuscripcionesEvento(
+    token: String!
+    page: Int
+    pageSize: Int
+    filtro: String
+    eventoId: Int
+    estatus: EstatusPagoEvento
+  ): SuscripcionesEventoResponse!
 }
 
 input PonenteInput {
   id: Int!
   isActivo: Boolean!
+}
+
+type SuscripcionEventoResponse {
+  type: String
+  message: String
+  data: SuscripcionEvento
 }
 
 extend type Mutation {
@@ -100,4 +127,10 @@ extend type Mutation {
     vigencia: VigenciaEvento
     ponentes: [PonenteInput!]
   ): EventoResponse!
+  
+  actualizarSuscripcionEventoEstatus(
+    token: String!
+    suscripcionEventoId: Int!
+    estatus: EstatusPagoEvento!
+  ): SuscripcionEventoResponse!
 }

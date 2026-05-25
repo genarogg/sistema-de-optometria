@@ -1,0 +1,94 @@
+"use client";
+
+import React, { useCallback, useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Search } from "lucide-react";
+import useSuscripcionEventoStore from "../store/suscripcionEventoStore";
+import { EstatusPagoEvento } from "@/global/enums";
+import getSuscripcionesEventoService from "../service/getSuscripcionesEvento.service";
+
+const BuscadorSuscripcionEvento: React.FC = () => {
+  const filtro = useSuscripcionEventoStore((s) => s.filtro);
+  const estatusFiltro = useSuscripcionEventoStore((s) => s.estatusFiltro);
+  const setFiltro = useSuscripcionEventoStore((s) => s.setFiltro);
+  const setEstatusFiltro = useSuscripcionEventoStore((s) => s.setEstatusFiltro);
+  const setPaginaActual = useSuscripcionEventoStore((s) => s.setPaginaActual);
+
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+
+  const handleFiltroChange = useCallback(
+    (value: string) => {
+      setFiltro(value);
+      setPaginaActual(1);
+
+      if (timeoutId) clearTimeout(timeoutId);
+
+      const newTimeoutId = setTimeout(() => {
+        getSuscripcionesEventoService({ filtro: value });
+      }, 600);
+
+      setTimeoutId(newTimeoutId);
+    },
+    [setFiltro, setPaginaActual, timeoutId]
+  );
+
+  const handleEstatusChange = useCallback(
+    (value: string) => {
+      const estatus =
+        value === "todos" ? null : (value as EstatusPagoEvento);
+      setEstatusFiltro(estatus);
+      setPaginaActual(1);
+      getSuscripcionesEventoService({ filtro });
+    },
+    [setEstatusFiltro, setPaginaActual, filtro]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [timeoutId]);
+
+  return (
+    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="w-full md:max-w-[320px]">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          <Input
+            placeholder="Buscar por CI, nombre..."
+            value={filtro}
+            onChange={(e) => handleFiltroChange(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+      </div>
+      <div className="flex items-center gap-2">
+        <Select
+          value={estatusFiltro || "todos"}
+          onValueChange={handleEstatusChange}
+        >
+          <SelectTrigger className="w-[160px]">
+            <SelectValue placeholder="Todos" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="todos">Todos</SelectItem>
+            {Object.values(EstatusPagoEvento).map((estatus) => (
+              <SelectItem key={estatus} value={estatus}>
+                {estatus}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+  );
+};
+
+export default BuscadorSuscripcionEvento;

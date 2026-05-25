@@ -34,6 +34,12 @@ export enum EstatusSuscripcion {
   VENCIDO = 'VENCIDO'
 }
 
+export enum EstatusPagoEvento {
+  PENDIENTE = 'PENDIENTE',
+  PAGADO = 'PAGADO',
+  RECHAZADO = 'RECHAZADO'
+}
+
 export enum NivelAcademico {
   LICENCIADO = 'LICENCIADO',
   NO_ASIGNADO = 'NO_ASIGNADO',

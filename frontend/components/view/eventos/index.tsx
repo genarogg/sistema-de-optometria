@@ -7,10 +7,11 @@ import { useAuthStore } from '@/context/auth/AuthContext';
 import { Calendar } from 'lucide-react';
 import { Rol } from '@/global/enums';
 import AdministrarEventosSection from './administracion';
+import SuscripcionesEventoSection from './suscripciones';
 
 export default function EventosView() {
   const { usuario } = useAuthStore();
-  
+
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('eventosActiveTab') || 'seccion1';
@@ -44,7 +45,10 @@ export default function EventosView() {
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <TabsList className="flex w-full">
             <TabsTrigger value="seccion1">Sección 1</TabsTrigger>
-            <TabsTrigger value="seccion2">Sección 2</TabsTrigger>
+
+            {isSuperUsuarioOrAdmin && (
+              <TabsTrigger value="suscripciones">Suscripciones de Eventos</TabsTrigger>
+            )}
             {isSuperUsuarioOrAdmin && (
               <TabsTrigger value="administracion">Administrar Eventos</TabsTrigger>
             )}
@@ -54,15 +58,19 @@ export default function EventosView() {
             <p>Hola mundo</p>
           </TabsContent>
 
-          <TabsContent value="seccion2" className="space-y-4 mt-4">
-            <p>Hola mundo</p>
-          </TabsContent>
+          {isSuperUsuarioOrAdmin && (
+            <TabsContent value="suscripciones" className="mt-4">
+              <SuscripcionesEventoSection />
+            </TabsContent>
+          )}
 
           {isSuperUsuarioOrAdmin && (
             <TabsContent value="administracion" className="mt-4">
               <AdministrarEventosSection />
             </TabsContent>
           )}
+
+
         </Tabs>
       </CardContent>
     </Card>
