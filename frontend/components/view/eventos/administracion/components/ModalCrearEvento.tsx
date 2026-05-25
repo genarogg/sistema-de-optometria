@@ -17,9 +17,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-
+import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Switch } from '@/components/ui/switch';
 import { Calendar as CalendarIcon, Search, X, UserPlus, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -135,6 +136,12 @@ export default function ModalCrearEvento({
 
   const eliminarPonente = (usuarioId: number) => {
     setPonentes(ponentes.filter((p) => p.usuarioId !== usuarioId));
+  };
+
+  const togglePonenteActivo = (usuarioId: number) => {
+    setPonentes(ponentes.map((p) => 
+      p.usuarioId === usuarioId ? { ...p, isActivo: !p.isActivo } : p
+    ));
   };
 
   useEffect(() => {
@@ -434,14 +441,17 @@ export default function ModalCrearEvento({
                           <div className="font-medium">{ponente.nombreCompleto}</div>
                           <div className="text-sm text-muted-foreground">C.I: {ponente.cedula}</div>
                         </div>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => eliminarPonente(ponente.usuarioId)}
-                          disabled={isLoading}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor={`switch-${ponente.usuarioId}`} className="text-sm">
+                            {ponente.isActivo ? 'Activo' : 'Inactivo'}
+                          </Label>
+                          <Switch
+                            id={`switch-${ponente.usuarioId}`}
+                            checked={ponente.isActivo}
+                            onCheckedChange={() => togglePonenteActivo(ponente.usuarioId)}
+                            disabled={isLoading}
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>
