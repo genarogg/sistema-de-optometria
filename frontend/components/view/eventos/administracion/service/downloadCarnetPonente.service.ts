@@ -43,7 +43,7 @@ const downloadCarnetPonenteService = async ({
 
             console.log("result", result);
 
-            const data = result.data?.getCarnetEvento;
+            const data = (result.data as any).getCarnetEvento;
 
             if (data.type === "error") {
                 notify({
