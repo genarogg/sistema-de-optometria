@@ -2,10 +2,11 @@ import { clientApollo } from "@/functions";
 import { UPDATE_SUSCRIPCION_EVENTO_ESTATUS } from "../query";
 import useSuscripcionEventoStore from "../store/suscripcionEventoStore";
 import notify from "@/components/nano/notify";
+import { EstatusPagoEvento } from "@/global/enums";
 
 interface UpdateEstatusSuscripcionEventoParams {
   suscripcionEventoId: number;
-  estatus: string;
+  estatus: EstatusPagoEvento;
 }
 
 export const updateEstatusSuscripcionEventoService = async ({

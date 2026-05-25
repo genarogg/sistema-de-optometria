@@ -2,7 +2,6 @@
 
 import React, { useState, useMemo, useCallback } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Rol, EstatusPagoEvento } from "@/global/enums";
 import Pagination from "./Pagination";
 import ImageModal from "./ImageModal";
@@ -10,6 +9,7 @@ import AccionesSuscripcionEvento from "./AccionesSuscripcionEvento";
 import SuscripcionEventoDetailsModal from "./SuscripcionEventoDetailsModal";
 import type { SuscripcionEvento } from "../store/suscripcionEventoStore";
 import { updateEstatusSuscripcionEventoService } from "../service/updateEstatusSuscripcionEvento.service";
+import getStatusColor from "../utils/getStatusColor";
 
 interface TarjetaSuscripcionEventoProps {
   suscripciones: SuscripcionEvento[];
@@ -44,10 +44,10 @@ const TarjetaSuscripcionEvento: React.FC<TarjetaSuscripcionEventoProps> = React.
     }, [suscripciones, paginaActual, itemsPorPagina]);
 
     const handleEstatusChange = useCallback(
-      (suscripcionId: number, nuevoEstatus: string) => {
+      (suscripcionId: number, nuevoEstatus: EstatusPagoEvento) => {
         updateEstatusSuscripcionEventoService({
           suscripcionEventoId: suscripcionId,
-          estatus: nuevoEstatus as EstatusPagoEvento,
+          estatus: nuevoEstatus,
         });
       },
       []
@@ -90,12 +90,9 @@ const TarjetaSuscripcionEvento: React.FC<TarjetaSuscripcionEventoProps> = React.
                         CI: {suscripcion.usuario.cedula}
                       </p>
                     </div>
-                    <Badge variant={
-                      suscripcion.estatus === "PENDIENTE" ? "default" :
-                      suscripcion.estatus === "PAGADO" ? "default" : "destructive"
-                    }>
+                    <div className={getStatusColor(suscripcion.estatus)}>
                       {suscripcion.estatus}
-                    </Badge>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-3">
@@ -152,13 +149,15 @@ const TarjetaSuscripcionEvento: React.FC<TarjetaSuscripcionEventoProps> = React.
           className="pt-4"
         />
 
+     
         {comprobanteImage && (
           <ImageModal
-            open={true}
+            open={!!comprobanteImage}
             imageUrl={comprobanteImage}
             onClose={() => setComprobanteImage(null)}
           />
         )}
+
         {suscripcionDetalle && (
           <SuscripcionEventoDetailsModal
             suscripcion={suscripcionDetalle}

@@ -5,14 +5,12 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface ImageModalProps {
-  imageUrl: string;
+  imageUrl: string ;
   onClose: () => void;
   open: boolean;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, open }) => {
-  const hasImage = imageUrl && imageUrl.trim() !== "";
-  
+const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, open }) => {  
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="w-[448px] max-w-[95vw] h-[600px] p-0 z-[1000000]">
@@ -20,15 +18,11 @@ const ImageModal: React.FC<ImageModalProps> = ({ imageUrl, onClose, open }) => {
           <DialogTitle>Imagen del Comprobante</DialogTitle>
         </VisuallyHidden>
         <div className="relative w-full h-full flex items-center justify-center">
-          {hasImage ? (
-            <img
-              src={imageUrl}
-              alt="Comprobante"
-              className="w-full h-full object-contain"
-            />
-          ) : (
-            <p className="text-muted-foreground">No hay imagen de comprobante disponible</p>
-          )}
+          <img
+            src={imageUrl}
+            alt="Comprobante"
+            className="w-full h-full object-contain"
+          />
         </div>
       </DialogContent>
     </Dialog>

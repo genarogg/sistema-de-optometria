@@ -2,10 +2,11 @@ import { clientApollo } from "@/functions";
 import { GET_SUSCRIPCIONES_EVENTO } from "../query";
 import useSuscripcionEventoStore from "../store/suscripcionEventoStore";
 import notify from "@/components/nano/notify";
+import { EstatusPagoEvento } from "@/global/enums";
 
 interface GetSuscripcionesEventoParams {
   filtro?: string;
-  estatus?: string | null;
+  estatus?: EstatusPagoEvento | null;
   eventoId?: number | null;
   pagina?: number;
 }

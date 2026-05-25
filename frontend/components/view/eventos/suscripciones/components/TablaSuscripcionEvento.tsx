@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Rol, EstatusPagoEvento } from "@/global/enums";
 import Pagination from "./Pagination";
 import ImageModal from "./ImageModal";
@@ -17,6 +16,7 @@ import AccionesSuscripcionEvento from "./AccionesSuscripcionEvento";
 import SuscripcionEventoDetailsModal from "./SuscripcionEventoDetailsModal";
 import type { SuscripcionEvento } from "../store/suscripcionEventoStore";
 import { updateEstatusSuscripcionEventoService } from "../service/updateEstatusSuscripcionEvento.service";
+import getStatusColor from "../utils/getStatusColor";
 
 export interface SuscripcionEventoMeta {
   total: number;
@@ -57,10 +57,10 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
     }, [suscripciones, paginaActual, itemsPorPagina]);
 
     const handleEstatusChange = useCallback(
-      (suscripcionId: number, nuevoEstatus: string) => {
+      (suscripcionId: number, nuevoEstatus: EstatusPagoEvento) => {
         updateEstatusSuscripcionEventoService({
           suscripcionEventoId: suscripcionId,
-          estatus: nuevoEstatus as EstatusPagoEvento,
+          estatus: nuevoEstatus,
         });
       },
       []
@@ -125,12 +125,9 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
                     </TableCell>
                     <TableCell className="border-r">
                       <div className="flex items-center justify-center w-full h-full">
-                        <Badge variant={
-                          suscripcion.estatus === "PENDIENTE" ? "default" :
-                          suscripcion.estatus === "PAGADO" ? "default" : "destructive"
-                        }>
+                        <div className={getStatusColor(suscripcion.estatus)}>
                           {suscripcion.estatus}
-                        </Badge>
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -160,13 +157,15 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
           className="pt-4"
         />
 
+
         {comprobanteImage && (
           <ImageModal
-            open={true}
+            open={!!comprobanteImage}
             imageUrl={comprobanteImage}
             onClose={() => setComprobanteImage(null)}
           />
         )}
+  
         {suscripcionDetalle && (
           <SuscripcionEventoDetailsModal
             suscripcion={suscripcionDetalle}

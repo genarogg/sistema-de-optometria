@@ -17,7 +17,7 @@ interface AccionesSuscripcionEventoProps {
   rolActual: Rol;
   onVerDetalles?: (suscripcion: any) => void;
   onVerComprobante: (img: string) => void;
-  onEstatusChange?: (id: number, estatus: string) => void;
+  onEstatusChange?: (id: number, estatus: EstatusPagoEvento) => void;
 }
 
 export default function AccionesSuscripcionEvento({
@@ -36,7 +36,7 @@ export default function AccionesSuscripcionEvento({
         <Select
           defaultValue={suscripcion.estatus}
           onValueChange={(value) =>
-            onEstatusChange(suscripcion.id, value)
+            onEstatusChange(suscripcion.id, value as EstatusPagoEvento)
           }
         >
           <SelectTrigger className="w-[140px] h-8 text-xs">

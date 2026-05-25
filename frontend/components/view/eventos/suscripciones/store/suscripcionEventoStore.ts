@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { Rol } from "@/global/enums";
+import { Rol, EstatusPagoEvento } from "@/global/enums";
 
 export interface SuscripcionEvento {
   id: number;
   comprobante: string;
   comprobanteImg: string;
-  estatus: string;
+  estatus: EstatusPagoEvento;
   precioAlSuscripcion: number;
   createdAt: string | number;
   evento: {
@@ -37,7 +37,7 @@ export interface SuscripcionEventoMeta {
 interface SuscripcionEventoState {
   suscripciones: SuscripcionEvento[];
   filtro: string;
-  estatusFiltro: string | null;
+  estatusFiltro: EstatusPagoEvento | null;
   eventoIdFiltro: number | null;
   cargando: boolean;
   error: string | null;
@@ -48,7 +48,7 @@ interface SuscripcionEventoState {
   setSuscripciones: (suscripciones: SuscripcionEvento[]) => void;
   setMeta: (meta: SuscripcionEventoMeta) => void;
   setFiltro: (filtro: string) => void;
-  setEstatusFiltro: (estatus: string | null) => void;
+  setEstatusFiltro: (estatus: EstatusPagoEvento | null) => void;
   setEventoIdFiltro: (eventoId: number | null) => void;
   setCargando: (cargando: boolean) => void;
   setError: (error: string | null) => void;
@@ -57,7 +57,7 @@ interface SuscripcionEventoState {
   // Acciones optimistas
   actualizarEstatusSuscripcion: (
     id: number,
-    nuevoEstatus: string
+    nuevoEstatus: EstatusPagoEvento
   ) => void;
 
   // Utilidades
