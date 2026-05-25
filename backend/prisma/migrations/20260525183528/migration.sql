@@ -17,6 +17,9 @@ CREATE TYPE "TipoSuscripcion" AS ENUM ('AGREMIADO', 'ESTUDIANTE', 'PROFESOR');
 CREATE TYPE "EstatusSuscripcion" AS ENUM ('PENDIENTE', 'VALIDADO', 'VENCIDO', 'RECHAZADA');
 
 -- CreateEnum
+CREATE TYPE "EstatusPagoEvento" AS ENUM ('PENDIENTE', 'PAGADO', 'RECHAZADO');
+
+-- CreateEnum
 CREATE TYPE "NivelAcademico" AS ENUM ('LICENCIADO', 'TSU', 'NO_ASIGNADO');
 
 -- CreateEnum
@@ -87,6 +90,7 @@ CREATE TABLE "Evento" (
     "fecha" TIMESTAMP(3) NOT NULL,
     "lugar" TEXT NOT NULL,
     "costo" INTEGER NOT NULL,
+    "tipo" "TipoEvento" NOT NULL,
     "descuentoEstudiante" INTEGER NOT NULL DEFAULT 0,
     "descuentoProfesor" INTEGER NOT NULL DEFAULT 0,
     "vigencia" "VigenciaEvento" NOT NULL DEFAULT 'VIGENTE',
@@ -126,6 +130,9 @@ CREATE TABLE "PonenteEvento" (
 CREATE TABLE "SuscripcionEvento" (
     "id" SERIAL NOT NULL,
     "precioAlSuscripcion" INTEGER NOT NULL,
+    "estatus" "EstatusPagoEvento" NOT NULL DEFAULT 'PENDIENTE',
+    "comprobante" TEXT NOT NULL,
+    "comprobanteImg" TEXT NOT NULL,
     "eventoId" INTEGER NOT NULL,
     "usuarioId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -1,5 +1,5 @@
 import { prisma } from "@fn";
-import { Rol } from "@prisma/client";
+import { Rol, EstatusPagoEvento } from "@prisma/client";
 
 const seedSuscripcionEvento = async () => {
     const usuarios = await prisma.usuario.findMany({
@@ -41,6 +41,9 @@ const seedSuscripcionEvento = async () => {
                         usuarioId: usuario.id,
                         eventoId: evento.id,
                         precioAlSuscripcion: Math.round(precioFinal),
+                        estatus: EstatusPagoEvento.PENDIENTE,
+                        comprobante: "",
+                        comprobanteImg: "",
                     },
                 });
                 console.log(`✅ Suscripcion_Evento creada: ${usuario.email} (${usuario.rol}) en "${evento.nombre}"`);

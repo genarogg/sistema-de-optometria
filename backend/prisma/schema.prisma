@@ -90,6 +90,12 @@ enum EstatusSuscripcion {
   RECHAZADA
 }
 
+enum EstatusPagoEvento {
+  PENDIENTE
+  PAGADO
+  RECHAZADO
+}
+
 enum NivelAcademico {
   LICENCIADO
   TSU
@@ -229,12 +235,16 @@ model PonenteEvento {
 }
 
 model SuscripcionEvento {
-  id                  Int     @id @default(autoincrement())
+  id                  Int               @id @default(autoincrement())
   precioAlSuscripcion Int
+  estatus             EstatusPagoEvento @default(PENDIENTE)
+  comprobante         String
+  comprobanteImg      String
+  
   eventoId            Int
-  evento              Evento  @relation(fields: [eventoId], references: [id])
+  evento              Evento            @relation(fields: [eventoId], references: [id])
   usuarioId           Int
-  usuario             Usuario @relation(fields: [usuarioId], references: [id])
+  usuario             Usuario           @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
