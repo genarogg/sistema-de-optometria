@@ -12,7 +12,7 @@ const seedPonenteEvento = async () => {
         return;
     }
 
-    const existing = await prisma.ponente_Evento.findFirst({
+    const existing = await prisma.ponenteEvento.findFirst({
         where: {
             usuarioId: profesor.id,
             eventoId: evento.id,
@@ -20,7 +20,7 @@ const seedPonenteEvento = async () => {
     });
 
     if (!existing) {
-        await prisma.ponente_Evento.create({
+        await prisma.ponenteEvento.create({
             data: {
                 usuarioId: profesor.id,
                 eventoId: evento.id,

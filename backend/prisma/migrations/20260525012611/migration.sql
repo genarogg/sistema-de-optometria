@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "AccionesBitacora" AS ENUM ('LOGIN', 'CREATE_ADMIN', 'CREATE_USER', 'UPDATE_ADMIN', 'UPDATE_USER', 'DELETE_ADMIN', 'DELETE_USER', 'VIEW', 'ERROR', 'GET_USUARIOS', 'CREAR_PLAN_SUSCRIPCION', 'UPDATE_PLAN_SUSCRIPCION', 'CREAR_SUSCRIPCION', 'VALIDAR_SUSCRIPCION', 'RECHAZAR_SUSCRIPCION', 'VENCIADA_SUSCRIPCION', 'GENERACION_CARNET', 'GENERACION_CARNET_PONENTE', 'GENERACION_SOLVENCIA_PAGO', 'GENERACION_COMPROBANTE_PAGO', 'GENERACION_CERTIFICADO_TALLER', 'GENERACION_CERTIFICADO_DIPLOMADO', 'GENERACION_CERTIFICADO_CONGRESO');
+CREATE TYPE "AccionesBitacora" AS ENUM ('LOGIN', 'CREATE_ADMIN', 'CREATE_USER', 'UPDATE_ADMIN', 'UPDATE_USER', 'DELETE_ADMIN', 'DELETE_USER', 'VIEW', 'ERROR', 'GET_USUARIOS', 'CREAR_PLAN_SUSCRIPCION', 'UPDATE_PLAN_SUSCRIPCION', 'CREAR_SUSCRIPCION', 'VALIDAR_SUSCRIPCION', 'RECHAZAR_SUSCRIPCION', 'VENCIADA_SUSCRIPCION', 'GENERACION_CARNET', 'GENERACION_CARNET_PONENTE', 'GENERACION_SOLVENCIA_PAGO', 'GENERACION_COMPROBANTE_PAGO', 'GENERACION_CERTIFICADO_TALLER', 'GENERACION_CERTIFICADO_DIPLOMADO', 'GENERACION_CERTIFICADO_CONGRESO', 'CREAR_EVENTO', 'UPDATE_EVENTO', 'USUARIO_AGG_AL_EVENTO');
 
 -- CreateEnum
 CREATE TYPE "Rol" AS ENUM ('SUPER_USUARIO', 'ADMINISTRADOR', 'AGREMIADO_SOLVENTE', 'AGREMIADO_INSOLVENTE', 'PROFESOR', 'ESTUDIANTE', 'VISITANTE');
@@ -21,6 +21,9 @@ CREATE TYPE "NivelAcademico" AS ENUM ('LICENCIADO', 'TSU', 'NO_ASIGNADO');
 
 -- CreateEnum
 CREATE TYPE "TipoDeDocumento" AS ENUM ('CARNET', 'CARNET_PONENTE', 'SOLVENCIA_PAGO', 'COMPROBANTE_PAGO', 'CERTIFICADO_TALLER', 'CERTIFICADO_DIPLOMADO', 'CERTIFICADO_CONGRESO');
+
+-- CreateEnum
+CREATE TYPE "VigenciaEvento" AS ENUM ('VIGENTE', 'CANCELADO', 'CONCLUIDO');
 
 -- CreateTable
 CREATE TABLE "Usuario" (
@@ -83,37 +86,15 @@ CREATE TABLE "Evento" (
     "nombre" TEXT NOT NULL,
     "fecha" TIMESTAMP(3) NOT NULL,
     "lugar" TEXT NOT NULL,
-    "consto" INTEGER NOT NULL,
-    "descuento" DOUBLE PRECISION NOT NULL DEFAULT 0,
-    "tipo" "TipoEvento" NOT NULL,
+    "costo" INTEGER NOT NULL,
+    "descuentoEstudiante" INTEGER NOT NULL DEFAULT 0,
+    "descuentoProfesor" INTEGER NOT NULL DEFAULT 0,
+    "vigencia" "VigenciaEvento" NOT NULL DEFAULT 'VIGENTE',
     "usuarioId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Evento_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Ponente_Evento" (
-    "id" SERIAL NOT NULL,
-    "usuarioId" INTEGER NOT NULL,
-    "eventoId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Ponente_Evento_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Suscripcion_Evento" (
-    "id" SERIAL NOT NULL,
-    "precioAlSuscripcion" INTEGER NOT NULL,
-    "eventoId" INTEGER NOT NULL,
-    "usuarioId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Suscripcion_Evento_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -127,6 +108,30 @@ CREATE TABLE "PlanSuscripcion" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "PlanSuscripcion_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PonenteEvento" (
+    "id" SERIAL NOT NULL,
+    "usuarioId" INTEGER NOT NULL,
+    "eventoId" INTEGER NOT NULL,
+    "isActivo" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "PonenteEvento_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "SuscripcionEvento" (
+    "id" SERIAL NOT NULL,
+    "precioAlSuscripcion" INTEGER NOT NULL,
+    "eventoId" INTEGER NOT NULL,
+    "usuarioId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "SuscripcionEvento_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -172,10 +177,10 @@ CREATE UNIQUE INDEX "Gremio_numeroGremio_key" ON "Gremio"("numeroGremio");
 CREATE UNIQUE INDEX "Gremio_usuarioId_key" ON "Gremio"("usuarioId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Ponente_Evento_usuarioId_eventoId_key" ON "Ponente_Evento"("usuarioId", "eventoId");
+CREATE UNIQUE INDEX "PonenteEvento_usuarioId_eventoId_key" ON "PonenteEvento"("usuarioId", "eventoId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Suscripcion_Evento_usuarioId_eventoId_key" ON "Suscripcion_Evento"("usuarioId", "eventoId");
+CREATE UNIQUE INDEX "SuscripcionEvento_usuarioId_eventoId_key" ON "SuscripcionEvento"("usuarioId", "eventoId");
 
 -- AddForeignKey
 ALTER TABLE "Autoridad" ADD CONSTRAINT "Autoridad_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -190,19 +195,19 @@ ALTER TABLE "Bitacora" ADD CONSTRAINT "Bitacora_usuarioId_fkey" FOREIGN KEY ("us
 ALTER TABLE "Evento" ADD CONSTRAINT "Evento_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Ponente_Evento" ADD CONSTRAINT "Ponente_Evento_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Ponente_Evento" ADD CONSTRAINT "Ponente_Evento_eventoId_fkey" FOREIGN KEY ("eventoId") REFERENCES "Evento"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Suscripcion_Evento" ADD CONSTRAINT "Suscripcion_Evento_eventoId_fkey" FOREIGN KEY ("eventoId") REFERENCES "Evento"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Suscripcion_Evento" ADD CONSTRAINT "Suscripcion_Evento_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "PlanSuscripcion" ADD CONSTRAINT "PlanSuscripcion_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PonenteEvento" ADD CONSTRAINT "PonenteEvento_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PonenteEvento" ADD CONSTRAINT "PonenteEvento_eventoId_fkey" FOREIGN KEY ("eventoId") REFERENCES "Evento"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "SuscripcionEvento" ADD CONSTRAINT "SuscripcionEvento_eventoId_fkey" FOREIGN KEY ("eventoId") REFERENCES "Evento"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "SuscripcionEvento" ADD CONSTRAINT "SuscripcionEvento_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Suscripcion" ADD CONSTRAINT "Suscripcion_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

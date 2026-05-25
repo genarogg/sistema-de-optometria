@@ -1,5 +1,4 @@
 import { prisma } from "@fn";
-import { TipoEvento } from "@prisma/client";
 
 const seedEvento = async () => {
     const admin = await prisma.usuario.findFirst({
@@ -16,26 +15,25 @@ const seedEvento = async () => {
             nombre: "Taller de Contactología Avanzada",
             fecha: new Date("2026-06-15"),
             lugar: "Centro de Convenciones, Caracas",
-            costo: 50,
+            costo: 5000,
             descuentoEstudiante: 10,
-            descuentoProfesor: 10,  
-            tipo: TipoEvento.TALLER,
+            descuentoProfesor: 10,
         },
         {
             nombre: "Diplomado en Optometría Pediátrica",
             fecha: new Date("2026-07-20"),
             lugar: "Universidad Central de Venezuela",
-            costo: 150,
-            descuento: 0,
-            tipo: TipoEvento.DIPLOMADO,
+            costo: 15000,
+            descuentoEstudiante: 0,
+            descuentoProfesor: 0,
         },
         {
             nombre: "Congreso Venezolano de Optometría",
             fecha: new Date("2026-09-10"),
             lugar: "Hotel Hilton, Caracas",
-            costo: 200,
-            descuento: 15,
-            tipo: TipoEvento.CONGRESO,
+            costo: 20000,
+            descuentoEstudiante: 15,
+            descuentoProfesor: 15,
         },
     ];
 

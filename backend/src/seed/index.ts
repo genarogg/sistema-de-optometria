@@ -22,12 +22,12 @@ const seed = async () => {
         }
 
         console.log("🌱 Iniciando siembra de la base de datos...\n");
-        // // Nivel 1: Usuarios (sin dependencias)
+        // Nivel 1: Usuarios (sin dependencias)
         await seedUsers();
         await delay(200);
         console.log("");
 
-        // // Nivel 2: Dependen de Usuario
+        // Nivel 2: Dependen de Usuario
         await seedGremio();
         await delay(200);
         await seedAutoridad();
@@ -38,14 +38,14 @@ const seed = async () => {
         await delay(200);
         console.log("");
 
-        // Nivel 3: Dependen de Usuario + Evento
+        // // Nivel 3: Dependen de Usuario + Evento
         await seedPonenteEvento();
-        await delay(200);
+        // await delay(200);
         await seedSuscripcionEvento();
         await delay(200);
         console.log("");
 
-        // Nivel 4: Dependen de Usuario
+        // // Nivel 4: Dependen de Usuario
         await seedSuscripcion();
         await delay(200);
         await seedSuscripcionDetails();

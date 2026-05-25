@@ -66,7 +66,7 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
                 eventoId: nuevoEvento.id,
             }));
 
-            await prisma.ponente_Evento.createMany({
+            await prisma.ponenteEvento.createMany({
                 data: ponenteEventosData,
             });
         }
@@ -74,7 +74,7 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
         const eventoConPonentes = await prisma.evento.findUnique({
             where: { id: nuevoEvento.id },
             include: {
-                ponente_Evento: true,
+                ponenteEvento: true,
             },
         });
 

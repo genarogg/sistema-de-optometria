@@ -131,8 +131,8 @@ model Usuario {
   gremio               Gremio?
   bitacora             Bitacora[]
   evento               Evento[]
-  ponente_Evento       Ponente_Evento[]
-  suscripcionEventos   Suscripcion_Evento[]
+  ponente_Evento       PonenteEvento[]
+  suscripcionEventos   SuscripcionEvento[]
   planSuscripcion      PlanSuscripcion[]
   suscripcion          Suscripcion[]
   documentoSolicitados DocumentoSolicitado[]
@@ -190,8 +190,8 @@ model Evento {
   usuarioId           Int
   Usuario             Usuario        @relation(fields: [usuarioId], references: [id])
 
-  ponente_Evento     Ponente_Evento[]
-  suscripcion_Evento Suscripcion_Evento[]
+  ponenteEvento     PonenteEvento[]
+  suscripcionEvento SuscripcionEvento[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -213,7 +213,7 @@ model PlanSuscripcion {
 
 // ─── Nivel 3: dependen de Usuario + otro modelo del nivel 2 ──────────────────
 
-model Ponente_Evento {
+model PonenteEvento {
   id        Int     @id @default(autoincrement())
   usuarioId Int
   eventoId  Int
@@ -227,7 +227,7 @@ model Ponente_Evento {
   @@unique([usuarioId, eventoId])
 }
 
-model Suscripcion_Evento {
+model SuscripcionEvento {
   id                  Int     @id @default(autoincrement())
   precioAlSuscripcion Int
   eventoId            Int

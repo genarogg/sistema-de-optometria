@@ -19,7 +19,7 @@ const seedSuscripcionEvento = async () => {
 
     for (const usuario of usuarios) {
         for (const evento of eventos) {
-            const existing = await prisma.suscripcion_Evento.findFirst({
+            const existing = await prisma.suscripcionEvento.findFirst({
                 where: {
                     usuarioId: usuario.id,
                     eventoId: evento.id,
@@ -35,8 +35,8 @@ const seedSuscripcionEvento = async () => {
                     descuento = evento.descuentoProfesor;
                 }
                 
-                const precioFinal = evento.consto - (evento.consto * descuento / 100);
-                await prisma.suscripcion_Evento.create({
+                const precioFinal = evento.costo;
+                await prisma.suscripcionEvento.create({
                     data: {
                         usuarioId: usuario.id,
                         eventoId: evento.id,
