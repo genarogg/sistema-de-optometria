@@ -68,6 +68,11 @@ extend type Query {
   ): EventosResponse!
 }
 
+input PonenteInput {
+  id: Int!
+  isActivo: Boolean!
+}
+
 extend type Mutation {
   crearEvento(
     token: String!
@@ -79,7 +84,7 @@ extend type Mutation {
     descuentoEstudiante: Int
     descuentoProfesor: Int
     vigencia: VigenciaEvento
-    ponentesIds: [Int!]
+    ponentes: [PonenteInput!]
   ): EventoResponse!
   
   actualizarEvento(
@@ -93,6 +98,6 @@ extend type Mutation {
     descuentoEstudiante: Int
     descuentoProfesor: Int
     vigencia: VigenciaEvento
-    ponentesIds: [Int!]
+    ponentes: [PonenteInput!]
   ): EventoResponse!
 }

@@ -12,7 +12,7 @@ const ACTUALIZAR_EVENTO = gql`
     $descuentoEstudiante: Int
     $descuentoProfesor: Int
     $vigencia: VigenciaEvento
-    $ponentesIds: [Int!]
+    $ponentes: [PonenteInput!]
   ) {
     actualizarEvento(
       token: $token
@@ -25,7 +25,7 @@ const ACTUALIZAR_EVENTO = gql`
       descuentoEstudiante: $descuentoEstudiante
       descuentoProfesor: $descuentoProfesor
       vigencia: $vigencia
-      ponentesIds: $ponentesIds
+      ponentes: $ponentes
     ) {
       message
       type

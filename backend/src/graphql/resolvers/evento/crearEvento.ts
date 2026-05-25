@@ -1,6 +1,11 @@
 import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
 import { Rol, AccionesBitacora, VigenciaEvento, TipoEvento } from "@prisma/client";
 
+interface PonenteInput {
+    id: number;
+    isActivo: boolean;
+}
+
 interface CrearEventoArgs {
     token: string;
     nombre: string;
@@ -11,7 +16,7 @@ interface CrearEventoArgs {
     descuentoEstudiante?: number;
     descuentoProfesor?: number;
     vigencia?: VigenciaEvento;
-    ponentesIds?: number[];
+    ponentes?: PonenteInput[];
 }
 
 const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
@@ -27,7 +32,7 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
         descuentoEstudiante = 0, 
         descuentoProfesor = 0, 
         vigencia = VigenciaEvento.VIGENTE, 
-        ponentesIds = [] 
+        ponentes = [] 
     } = args;
 
     if (!token) {
@@ -63,10 +68,11 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
             },
         });
 
-        if (ponentesIds.length > 0) {
-            const ponenteEventosData = ponentesIds.map(ponenteId => ({
-                usuarioId: ponenteId,
+        if (ponentes.length > 0) {
+            const ponenteEventosData = ponentes.map(ponente => ({
+                usuarioId: ponente.id,
                 eventoId: nuevoEvento.id,
+                isActivo: ponente.isActivo,
             }));
 
             await prisma.ponenteEvento.createMany({

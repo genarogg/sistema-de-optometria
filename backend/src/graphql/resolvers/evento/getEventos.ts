@@ -4,9 +4,7 @@ import {
     prisma, 
     verificarToken, 
     crearBitacora, 
-    log,
-    getPaginacionParams,
-    getPaginacionMeta
+    log
 } from "@fn";
 import { Prisma, AccionesBitacora, VigenciaEvento, TipoEvento } from "@prisma/client";
 
@@ -53,7 +51,10 @@ const getEventos = async (_: unknown, args: GetEventosArgs) => {
             whereClause.tipo = tipo;
         }
 
-        const { skip, take } = getPaginacionParams({ page, pageSize });
+        const p = Math.max(1, page);
+        const ps = Math.max(1, pageSize);
+        const skip = (p - 1) * ps;
+        const take = ps;
 
         const eventos = await prisma.evento.findMany({
             where: whereClause,
@@ -71,7 +72,11 @@ const getEventos = async (_: unknown, args: GetEventosArgs) => {
         });
 
         const total = await prisma.evento.count({ where: whereClause });
-        const meta = getPaginacionMeta(total, { page, pageSize });
+        const meta = {
+            total,
+            page: p,
+            limit: ps
+        };
 
         await crearBitacora({
             type: AccionesBitacora.VIEW,

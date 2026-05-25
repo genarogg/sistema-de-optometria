@@ -8,7 +8,7 @@ const CREAR_EVENTO = gql`
     $lugar: String!
     $costo: Int!
     $tipo: TipoEvento!
-    $ponentesIds: [Int!]
+    $ponentes: [PonenteInput!]
     $descuentoEstudiante: Int
     $descuentoProfesor: Int
     $vigencia: VigenciaEvento
@@ -20,7 +20,7 @@ const CREAR_EVENTO = gql`
       lugar: $lugar
       costo: $costo
       tipo: $tipo
-      ponentesIds: $ponentesIds
+      ponentes: $ponentes
       descuentoEstudiante: $descuentoEstudiante
       descuentoProfesor: $descuentoProfesor
       vigencia: $vigencia
