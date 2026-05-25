@@ -42,7 +42,7 @@ const GET_SUSCRIPCIONES_EVENTO = gql`
           segundoApellido
           rol
           telefono
-          correo
+          email
         }
       }
       meta {

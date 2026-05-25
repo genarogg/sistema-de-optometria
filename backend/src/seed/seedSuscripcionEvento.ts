@@ -42,8 +42,8 @@ const seedSuscripcionEvento = async () => {
                         eventoId: evento.id,
                         precioAlSuscripcion: Math.round(precioFinal),
                         estatus: EstatusPagoEvento.PENDIENTE,
-                        comprobante: "",
-                        comprobanteImg: "",
+                        comprobante: `COM-${usuario.id}-${evento.id}`,
+                        comprobanteImg: "https://picsum.photos/800/600",
                     },
                 });
                 console.log(`✅ Suscripcion_Evento creada: ${usuario.email} (${usuario.rol}) en "${evento.nombre}"`);

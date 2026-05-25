@@ -23,7 +23,7 @@ export interface SuscripcionEvento {
     segundoNombre?: string;
     primerApellido: string;
     segundoApellido?: string;
-    correo: string;
+    email: string;
     telefono: string;
   };
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   Table,
   TableBody,
@@ -10,13 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Rol } from "@/global/enums";
+import { Rol, EstatusPagoEvento } from "@/global/enums";
 import Pagination from "./Pagination";
 import ImageModal from "./ImageModal";
 import AccionesSuscripcionEvento from "./AccionesSuscripcionEvento";
 import SuscripcionEventoDetailsModal from "./SuscripcionEventoDetailsModal";
 import type { SuscripcionEvento } from "../store/suscripcionEventoStore";
-import getStatusColor from "../utils/getStatusColor";
+import { updateEstatusSuscripcionEventoService } from "../service/updateEstatusSuscripcionEvento.service";
 
 export interface SuscripcionEventoMeta {
   total: number;
@@ -55,6 +55,16 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
       const inicio = (paginaActual - 1) * itemsPorPagina;
       return suscripciones.slice(inicio, inicio + itemsPorPagina);
     }, [suscripciones, paginaActual, itemsPorPagina]);
+
+    const handleEstatusChange = useCallback(
+      (suscripcionId: number, nuevoEstatus: string) => {
+        updateEstatusSuscripcionEventoService({
+          suscripcionEventoId: suscripcionId,
+          estatus: nuevoEstatus as EstatusPagoEvento,
+        });
+      },
+      []
+    );
 
     const formatearFecha = (fecha: string | number) => {
       if (!fecha) return "";
@@ -123,12 +133,13 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
                         </Badge>
                       </div>
                     </TableCell>
-                    <TableCell className="flex gap-1">
+                    <TableCell>
                       <AccionesSuscripcionEvento
                         suscripcion={suscripcion}
                         rolActual={rolActual}
                         onVerDetalles={setSuscripcionDetalle}
                         onVerComprobante={setComprobanteImage}
+                        onEstatusChange={handleEstatusChange}
                       />
                     </TableCell>
                   </TableRow>

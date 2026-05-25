@@ -1,21 +1,12 @@
 'use client';
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { useAuthStore } from "@/context/auth/AuthContext";
 import { EstatusPagoEvento, Rol } from "@/global/enums";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -32,7 +23,6 @@ import {
   ShieldCheck,
   CalendarDays,
 } from "lucide-react";
-import updateEstatusSuscripcionEventoService from "../service/updateEstatusSuscripcionEvento.service";
 
 interface SuscripcionEventoDetailsModalProps {
   suscripcion: any;
@@ -222,35 +212,13 @@ const SuscripcionEventoDetailsModal: React.FC<SuscripcionEventoDetailsModalProps
 }) => {
   const isMobile = useIsMobile();
   const { usuario } = useAuthStore();
-  const [localEstatus, setLocalEstatus] = useState(suscripcion.estatus);
-  const [actualizandoEstatus, setActualizandoEstatus] = useState(false);
-
-  const esAdminOSuperUsuario =
-    usuario?.rol === Rol.ADMINISTRADOR || usuario?.rol === Rol.SUPER_USUARIO;
 
   const cfg =
-    ESTATUS_CONFIG[localEstatus as EstatusPagoEvento] ??
+    ESTATUS_CONFIG[suscripcion.estatus as EstatusPagoEvento] ??
     ESTATUS_CONFIG[EstatusPagoEvento.PENDIENTE];
 
   const nombreCompleto = buildNombre(suscripcion.usuario);
   const iniciales = buildIniciales(suscripcion.usuario);
-
-  const handleActualizarEstatus = async () => {
-    if (actualizandoEstatus) return;
-    setActualizandoEstatus(true);
-
-    try {
-      await updateEstatusSuscripcionEventoService({
-        suscripcionEventoId: suscripcion.id,
-        estatus: localEstatus,
-      });
-      onClose();
-    } catch (error) {
-      console.error("Error al actualizar estatus:", error);
-    } finally {
-      setActualizandoEstatus(false);
-    }
-  };
 
   const metricasEvento = [
     { icon: <Hash size={11} />, label: "N° Suscripción", value: `#${suscripcion.id}` },
@@ -268,7 +236,7 @@ const SuscripcionEventoDetailsModal: React.FC<SuscripcionEventoDetailsModalProps
   const camposUsuario = [
     { icon: <BadgeInfo size={11} />, label: "Cédula", value: suscripcion.usuario.cedula },
     { icon: <User size={11} />, label: "Nombre completo", value: nombreCompleto },
-    { icon: <Mail size={11} />, label: "Correo electrónico", value: suscripcion.usuario.correo },
+    { icon: <Mail size={11} />, label: "Correo electrónico", value: suscripcion.usuario.email },
     { icon: <Phone size={11} />, label: "Teléfono", value: suscripcion.usuario.telefono },
     { icon: <ShieldCheck size={11} />, label: "Rol en el sistema", value: suscripcion.usuario.rol },
     { icon: <CalendarDays size={11} />, label: "Fecha de registro", value: formatearFecha(suscripcion.createdAt) },
@@ -493,39 +461,6 @@ const SuscripcionEventoDetailsModal: React.FC<SuscripcionEventoDetailsModalProps
                 </React.Fragment>
               ))}
             </div>
-          )}
-
-          {esAdminOSuperUsuario && (
-            <>
-              {DIVIDER("Cambiar Estatus")}
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="estatus">Nuevo Estatus</Label>
-                  <Select
-                    value={localEstatus}
-                    onValueChange={setLocalEstatus}
-                  >
-                    <SelectTrigger id="estatus">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.values(EstatusPagoEvento).map((estatus) => (
-                        <SelectItem key={estatus} value={estatus}>
-                          {estatus}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button
-                  className="w-full"
-                  onClick={handleActualizarEstatus}
-                  disabled={actualizandoEstatus || localEstatus === suscripcion.estatus}
-                >
-                  {actualizandoEstatus ? "Actualizando..." : "Actualizar Estatus"}
-                </Button>
-              </div>
-            </>
           )}
 
           {FOOTER}
