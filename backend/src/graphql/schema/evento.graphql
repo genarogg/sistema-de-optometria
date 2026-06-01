@@ -79,6 +79,12 @@ extend type Query {
     tipo: TipoEvento
   ): EventosResponse!
   
+  getEventosActivos(
+    token: String!
+    filtro: String
+    tipo: TipoEvento
+  ): EventosResponse!
+  
   getSuscripcionesEvento(
     token: String!
     page: Int
@@ -132,5 +138,12 @@ extend type Mutation {
     token: String!
     suscripcionEventoId: Int!
     estatus: EstatusPagoEvento!
+  ): SuscripcionEventoResponse!
+  
+  suscribirseEvento(
+    token: String!
+    eventoId: Int!
+    comprobante: String!
+    comprobanteImg: String!
   ): SuscripcionEventoResponse!
 }
