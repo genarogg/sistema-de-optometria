@@ -61,7 +61,7 @@ const downloadDocumentoService = async ({
                     type: data.type,
                     message: data.message,
                 });
-                return;
+                return data.message;
             }
 
             const filename = `${usuario.primerNombre}_${usuario.primerApellido}_${tipo.toLowerCase()}.pdf`;

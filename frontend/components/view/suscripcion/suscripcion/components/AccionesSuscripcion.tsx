@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Eye, ImageIcon, CreditCard, ShieldCheck, Receipt } from 'lucide-react';
 import { EstatusSuscripcion, Rol, TipoDeDocumento, TipoSuscripcion } from '@/global/enums';
@@ -20,6 +21,7 @@ export default function AccionesSuscripcion({
   onVerDetalles,
   onVerComprobante,
 }: AccionesSuscripcionProps) {
+  const router = useRouter();
   const [downloading, setDownloading] = useState<Partial<Record<TipoDeDocumento, boolean>>>({});
   const esAdminOSuperUsuario =
     rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
@@ -35,12 +37,16 @@ export default function AccionesSuscripcion({
       }));
     };
 
-    downloadDocumentoService({
+    const result = await downloadDocumentoService({
       tipo,
       suscripcionId: suscripcion.id,
       usuario: suscripcion.usuario,
       setDownloading: setDownloadingType,
     });
+
+    if (result === "No tiene foto de perfil, cargue una primero") {
+      router.push('/dashboard/perfil');
+    }
   };
 
   return (

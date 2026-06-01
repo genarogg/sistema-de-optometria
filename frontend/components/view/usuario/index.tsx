@@ -37,7 +37,7 @@ const UsuariosView: React.FC = () => {
   const usuariosFiltradosPorRol = usuarios;
 
   return (
-    <Card className="w-full shadow-sm max-w-[1200] m-auto mt-4">
+    <Card className="w-full shadow-sm max-w-[1200] m-auto mt-4 mb-4">
       <CardHeader className="border-b" style={{ paddingBottom: "0px" }} >
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           {/* Titulo */}
