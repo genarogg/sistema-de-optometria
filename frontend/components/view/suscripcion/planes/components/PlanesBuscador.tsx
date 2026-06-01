@@ -30,7 +30,7 @@ export default function PlanesBuscador({
         </div>
       </div>
       {onCreateClick && (
-        <Button onClick={onCreateClick} className="w-full md:w-auto">
+        <Button onClick={onCreateClick} className="w-full md:w-auto" variant="outline">
           Crear Plan
         </Button>
       )}

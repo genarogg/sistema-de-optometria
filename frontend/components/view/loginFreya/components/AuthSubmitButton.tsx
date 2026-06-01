@@ -196,6 +196,7 @@ const AuthSubmitButton = ({
   return (
     <Button
       type="submit"
+      variant="outline"
       className={`w-full ${className}`}
       id={id}
       disabled={loading || disabled}
