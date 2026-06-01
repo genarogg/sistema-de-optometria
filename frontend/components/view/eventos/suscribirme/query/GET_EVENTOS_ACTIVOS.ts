@@ -6,23 +6,28 @@ const GET_EVENTOS_ACTIVOS = gql`
       type
       message
       data {
+        id
+        nombre
+        fecha
+        lugar
         costo
         descuentoEstudiante
         descuentoProfesor
-        fecha
-        id
-        lugar
-        nombre
         tipo
         vigencia
         ponenteEvento {
+          id
+          usuarioId
+          isActivo
           usuario {
-            primerApellido
             primerNombre
-            gremio {
-              nivelAcademico
-            }
+            primerApellido
+            cedula
           }
+        }
+        suscripcionEvento {
+          id
+          usuarioId
         }
       }
     }
