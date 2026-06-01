@@ -17,8 +17,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { Badge } from "@/components/ui/badge";
-
 import { EstatusSuscripcion, Rol } from "@/global/enums";
 import { updateEstatusSuscripcionService } from "../service/updateEstatusSuscripcion.service";
 
@@ -138,7 +136,7 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
                       {suscripcion.comprobante}
                     </TableCell>
                     <TableCell className="text-sm border-r">
-                      Bs {showMoney(suscripcion.planSuscripcion.costo)}
+                      {suscripcion.planSuscripcion.costo === 0 ? "sin costo" : `Bs ${showMoney(suscripcion.planSuscripcion.costo)}`}
                     </TableCell>
                     <TableCell className="text-sm capitalize border-r">
                       {suscripcion.planSuscripcion.tipo}

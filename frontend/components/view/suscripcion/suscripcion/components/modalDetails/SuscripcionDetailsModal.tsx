@@ -18,6 +18,8 @@ import {
   CalendarDays,
 } from "lucide-react";
 
+import { showMoney } from "@/functions/super-money";
+
 interface SuscripcionDetailsModalProps {
   suscripcion: any;
   onClose: () => void;
@@ -228,7 +230,7 @@ const SuscripcionDetailsModal: React.FC<SuscripcionDetailsModalProps> = ({
   const metricas = [
     { icon: <Hash size={11} />, label: "N° Suscripción", value: `#${suscripcion.id}` },
     { icon: <Receipt size={11} />, label: "Comprobante", value: suscripcion.comprobante },
-    { icon: <DollarSign size={11} />, label: "Costo", value: `$${suscripcion.planSuscripcion.costo}` },
+    { icon: <DollarSign size={11} />, label: "Costo", value: suscripcion.planSuscripcion.costo === 0 ? "sin costo" : showMoney(suscripcion.planSuscripcion.costo) },
     { icon: <ClipboardList size={11} />, label: "Tipo de Plan", value: suscripcion.planSuscripcion.tipo },
   ];
 

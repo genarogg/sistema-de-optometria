@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
 
 import { EstatusSuscripcion, Rol } from "@/global/enums";
 import Pagination from "./Pagination";
@@ -125,7 +124,7 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
                       <p className="text-xs font-semibold text-muted-foreground">
                         Costo
                       </p>
-                      <p>Bs {showMoney(suscripcion.planSuscripcion.costo)}</p>
+                      <p>{suscripcion.planSuscripcion.costo === 0 ? "sin costo" : `Bs ${showMoney(suscripcion.planSuscripcion.costo)}`}</p>
                     </div>
                     <div>
                       <p className="text-xs font-semibold text-muted-foreground">
