@@ -10,7 +10,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
-import { AccionesBitacora, FakeRol, Rol } from "./fake/enums";
+import { AccionesBitacora, Rol } from "@/global/enums";
+
 import { useBitacoraFilters } from "./hook/useBitacoraFilters";
 
 
@@ -20,11 +21,11 @@ const ALL_ACTIONS_VALUE = "__all_actions__";
 const BitacoraToolbar = memo(function BitacoraToolbar() {
   const {
     filters,
-    fakeRol,
+
     handleSearchChange,
     handleRolChange,
     handleAccionesChange,
-    handleFakeRolChange,
+
   } = useBitacoraFilters();
 
   const onSearch = useCallback(
@@ -50,12 +51,6 @@ const BitacoraToolbar = memo(function BitacoraToolbar() {
     [handleAccionesChange]
   );
 
-  const onFakeRolChange = useCallback(
-    (value: string) => {
-      handleFakeRolChange(value as FakeRol);
-    },
-    [handleFakeRolChange]
-  );
 
   return (
     <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 pt-4">

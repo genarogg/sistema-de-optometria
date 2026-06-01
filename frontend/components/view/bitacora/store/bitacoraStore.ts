@@ -1,12 +1,13 @@
 import { create } from "zustand";
-import { AccionesBitacora, FakeRol, Rol } from "../fake/enums";
+import { AccionesBitacora, Rol } from "@/global/enums";
+
 
 export interface BitacoraEntry {
   id: number;
   fecha: string;
   mensaje: string;
   type: AccionesBitacora;
-  usuario: { 
+  usuario: {
     email: string;
     cedula?: string;
     rol?: string;
@@ -36,14 +37,14 @@ interface BitacoraState {
   filters: BitacoraFilters;
 
   // UI – role selector for development/preview
-  fakeRol: FakeRol;
+
 
   // Actions
   setEntries: (entries: BitacoraEntry[], meta: BitacoraMeta) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
   setFilters: (filters: Partial<BitacoraFilters>) => void;
-  setFakeRol: (rol: FakeRol) => void;
+
 
   /** Optimistic add */
   addEntry: (entry: Omit<BitacoraEntry, "id">) => void;
@@ -68,7 +69,6 @@ export const useBitacoraStore = create<BitacoraState>((set, get) => ({
     page: 1,
   },
 
-  fakeRol: FakeRol.ADMIN,
 
   setEntries: (entries, meta) => set({ entries, meta }),
   setLoading: (loading) => set({ loading }),
@@ -79,7 +79,7 @@ export const useBitacoraStore = create<BitacoraState>((set, get) => ({
       filters: { ...state.filters, ...partial },
     })),
 
-  setFakeRol: (rol) => set({ fakeRol: rol }),
+
 
   addEntry: (entry) =>
     set((state) => {

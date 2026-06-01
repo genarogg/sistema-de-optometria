@@ -4,9 +4,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useLazyQuery } from "@apollo/client/react";
 import { useBitacoraStore } from "../store/bitacoraStore";
 import GET_BITACORA from "../querys/getBitacora";
-import { MOCK_BITACORA } from "../fake/mockData";
-import { isProd } from "@/env";
-import type { AccionesBitacora, Rol } from "../fake/enums";
+import type { AccionesBitacora, Rol } from "@/global/enums";
 
 interface GetBitacoraVars {
   token: string;
@@ -76,19 +74,13 @@ export function useGetBitacora() {
     }
   }, [data, setEntries, setError]);
 
-  // Handle errors (including mock data fallback in dev)
+  // Handle errors
   useEffect(() => {
     if (apolloError) {
       console.error("[v0] getBitacora error:", apolloError);
-      if (isProd) {
-        // Fallback to mock data in development when server is unreachable
-        setEntries(MOCK_BITACORA, { page: 1, total: MOCK_BITACORA.length });
-        setError(null);
-      } else {
-        setError(apolloError.message);
-      }
+      setError(apolloError.message);
     }
-  }, [apolloError, setEntries, setError]);
+  }, [apolloError, setError]);
 
   // Debounced re-fetch whenever filters change
   useEffect(() => {

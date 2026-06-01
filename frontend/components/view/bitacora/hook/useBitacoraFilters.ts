@@ -2,7 +2,8 @@
 
 import { useCallback } from "react";
 import { useBitacoraStore } from "../store/bitacoraStore";
-import type { AccionesBitacora, FakeRol, Rol } from "../fake/enums";
+import type { AccionesBitacora, Rol } from "@/global/enums";
+import type { FakeRol } from "../fake/enums";
 
 /**
  * Exposes filter setters used by the toolbar and selectors.

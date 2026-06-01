@@ -15,7 +15,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ClipboardList } from "lucide-react";
-import { FakeRol } from "./fake/enums";
 import { useBitacoraStore } from "./store/bitacoraStore";
 import { useBitacoraFilters } from "./hook/useBitacoraFilters";
 import { useGetBitacora } from "./hook/useGetBitacora";
@@ -23,38 +22,20 @@ import BitacoraTable from "./BitacoraTable";
 import BitacoraCardList from "./BitacoraCard";
 import BitacoraToolbar from "./BitacoraToolbar";
 import { BitacoraDetailModal } from "./BitacoraDetailModal";
-import { isProd } from "@/env";
+import BitacoraPagination from "./BitacoraPagination";
 import { useIsMobile } from "@/hooks/use-mobile";
 import type { BitacoraEntry } from "./store/bitacoraStore";
-
-/**
- * Determines which columns / data to show based on the active fake rol
- * (only relevant in dev; in production use the real user role).
- */
-function useFilteredEntries() {
-  const { entries, fakeRol } = useBitacoraStore();
-
-  return useMemo(() => {
-    if (isProd) return entries; // In prod, server already filters by role
-    // In dev, simulate role-based filtering
-    if (fakeRol === FakeRol.ESTANDAR) {
-      // Standard users see only LOGIN and VIEW entries
-      return entries.filter(
-        (e) => e.type === "LOGIN" || e.type === "VIEW"
-      );
-    }
-    return entries; // ADMIN and SUPER see everything
-  }, [entries, fakeRol]);
-}
 
 const BitacoraView = memo(function BitacoraView() {
   // Kick off data fetching (watches store filters automatically)
   useGetBitacora();
 
-  const { loading } = useBitacoraStore();
-  const { fakeRol, handleFakeRolChange } = useBitacoraFilters();
-  const filteredEntries = useFilteredEntries();
+  const { loading, meta, filters, setFilters, entries } = useBitacoraStore();
   const isMobile = useIsMobile();
+
+  const handlePageChange = (page: number) => {
+    setFilters({ page });
+  };
 
   const [selectedEntry, setSelectedEntry] = React.useState<BitacoraEntry | null>(null);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -69,13 +50,6 @@ const BitacoraView = memo(function BitacoraView() {
     setSelectedEntry(null);
   }, []);
 
-  const showRolSelector = isProd ? (fakeRol === FakeRol.ADMIN) : true; // In prod, only show if real user is ADMIN; in dev, always show
-  // In production the rol selector is only visible to ADMINs. For simplicity,
-  // we rely on fakeRol === FakeRol.ADMIN as the proxy here (wire to your real
-  // auth session in production).
-  const canSeeRolSelector =
-    isProd ? (fakeRol === FakeRol.ADMIN) : true;
-
   return (
     <Card className="w-full  max-w-[1200] m-auto my-4">
       <CardHeader className="pb-0 border-b" style={{
@@ -86,28 +60,6 @@ const BitacoraView = memo(function BitacoraView() {
             <ClipboardList className="h-5 w-5" aria-hidden="true" />
             Bitácora
           </CardTitle>
-
-          {/* Role selector: always in dev, ADMIN-only in prod */}
-          {showRolSelector && canSeeRolSelector && (
-            <Select
-              value={fakeRol}
-              onValueChange={(v) => handleFakeRolChange(v as FakeRol)}
-            >
-              <SelectTrigger
-                className="w-40"
-                aria-label="Cambiar rol de visualización"
-              >
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.values(FakeRol).map((rol) => (
-                  <SelectItem key={rol} value={rol}>
-                    {rol}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
         </div>
 
 
@@ -123,13 +75,13 @@ const BitacoraView = memo(function BitacoraView() {
 
         {isMobile ? (
           <BitacoraCardList
-            entries={filteredEntries}
+            entries={entries}
             loading={loading}
             onViewDetails={handleViewDetails}
           />
         ) : (
           <BitacoraTable
-            entries={filteredEntries}
+            entries={entries}
             loading={loading}
             onViewDetails={handleViewDetails}
           />
@@ -140,8 +92,16 @@ const BitacoraView = memo(function BitacoraView() {
           isOpen={isModalOpen}
           onClose={handleCloseModal}
         />
+        
+        {meta.total > 0 && (
+          <BitacoraPagination
+            currentPage={filters.page}
+            totalPages={meta.total}
+            setCurrentPage={handlePageChange}
+          />
+        )}
       </CardContent>
-    </Card >
+    </Card>
   );
 });
 
