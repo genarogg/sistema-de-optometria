@@ -35,11 +35,12 @@ const ModalEditarAutoridad: React.FC<ModalEditarAutoridadProps> = React.memo(
     const [form, setForm] = useState({
       firma: usuario.autoridad?.firma || "",
       tipoAutoridad: usuario.autoridad?.tipoAutoridad || "",
-      vigente: usuario.autoridad?.vigente || false,
+      vigente: usuario.autoridad?.vigente !== undefined ? usuario.autoridad.vigente : true,
     });
     const [guardando, setGuardando] = useState(false);
     const [showCropper, setShowCropper] = useState(false);
     const [tempImageSrc, setTempImageSrc] = useState<string | null>(null);
+    const [errors, setErrors] = useState<{ firma?: string; tipoAutoridad?: string }>({});
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,17 +63,39 @@ const ModalEditarAutoridad: React.FC<ModalEditarAutoridadProps> = React.memo(
       setForm((prev) => ({ ...prev, firma: croppedImage }));
       setShowCropper(false);
       setTempImageSrc(null);
-    }, []);
+      if (errors.firma) {
+        setErrors((prev) => ({ ...prev, firma: undefined }));
+      }
+    }, [errors.firma]);
 
     const handleTipoAutoridadChange = useCallback((value: string) => {
       setForm((prev) => ({ ...prev, tipoAutoridad: value as TipoAutoridad }));
-    }, []);
+      if (errors.tipoAutoridad) {
+        setErrors((prev) => ({ ...prev, tipoAutoridad: undefined }));
+      }
+    }, [errors.tipoAutoridad]);
 
     const handleVigenteChange = useCallback((checked: boolean) => {
       setForm((prev) => ({ ...prev, vigente: checked }));
     }, []);
 
     const handleGuardar = useCallback(async () => {
+      const newErrors: { firma?: string; tipoAutoridad?: string } = {};
+      
+      if (!form.firma) {
+        newErrors.firma = "Debe seleccionar una imagen de firma";
+      }
+      
+      if (!form.tipoAutoridad) {
+        newErrors.tipoAutoridad = "Debe seleccionar un tipo de autoridad";
+      }
+      
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
+      
+      setErrors({});
       setGuardando(true);
       await updateUsuarioService({
         id: usuario.id.toString(),
@@ -96,7 +119,7 @@ const ModalEditarAutoridad: React.FC<ModalEditarAutoridadProps> = React.memo(
               <div className="flex flex-col gap-1.5">
                 <Label>Firma</Label>
                 <div
-                  className="relative cursor-pointer group border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center gap-2 hover:border-primary hover:bg-primary/5 transition-colors"
+                  className={`relative cursor-pointer group border-2 border-dashed rounded-lg p-8 flex flex-col items-center justify-center gap-2 hover:border-primary hover:bg-primary/5 transition-colors ${errors.firma ? "border-red-500" : ""}`}
                   onClick={() => fileInputRef.current?.click()}
                 >
                   {form.firma ? (
@@ -129,12 +152,13 @@ const ModalEditarAutoridad: React.FC<ModalEditarAutoridadProps> = React.memo(
                     onChange={handleFileChange}
                   />
                 </div>
+                {errors.firma && <p className="text-sm text-red-500">{errors.firma}</p>}
               </div>
 
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="edit-tipo-autoridad">Tipo de Autoridad</Label>
                 <Select value={form.tipoAutoridad} onValueChange={handleTipoAutoridadChange}>
-                  <SelectTrigger id="edit-tipo-autoridad">
+                  <SelectTrigger id="edit-tipo-autoridad" className={errors.tipoAutoridad ? "border-red-500" : ""}>
                     <SelectValue placeholder="Selecciona tipo de autoridad" />
                   </SelectTrigger>
                   <SelectContent>
@@ -145,6 +169,7 @@ const ModalEditarAutoridad: React.FC<ModalEditarAutoridadProps> = React.memo(
                     ))}
                   </SelectContent>
                 </Select>
+                {errors.tipoAutoridad && <p className="text-sm text-red-500">{errors.tipoAutoridad}</p>}
               </div>
 
               <div className="flex items-center justify-between">

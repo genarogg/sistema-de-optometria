@@ -89,7 +89,7 @@ const BitacoraTable = memo(function BitacoraTable({
               return (
                 <TableRow
                   key={entry.id}
-                  className={`h-16 transition-colors hover:bg-[#bedcff] ${
+                  className={`h-16 transition-colors hover:bg-primary/20 ${
                     index % 2 === 0 ? "bg-background" : "bg-muted/80"
                   }`}
                 >

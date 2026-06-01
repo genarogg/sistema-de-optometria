@@ -26,7 +26,7 @@ const Home: React.FC<HomeProps> = () => {
             <DondeEstudiar />
             <Congresos />
             <Colegiarte />
-            <Biblioteca />
+            {/* <Biblioteca /> */}
             <Historia />
             <Autoridades />
             <Alianzas />
