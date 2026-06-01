@@ -38,11 +38,14 @@ const suscribirseEvento = async (_: unknown, args: SuscribirseEventoArgs) => {
             return errorResponse({ message: "El evento no está activo" });
         }
 
-        const suscripcionExistente = await prisma.suscripcionEvento.findUnique({
-            where: { usuarioId_eventoId: { usuarioId: usuario.id, eventoId } }
+        const suscripcionExistente = await prisma.suscripcionEvento.findFirst({
+            where: { 
+                usuarioId: usuario.id, 
+                eventoId,
+            }
         });
 
-        if (suscripcionExistente) {
+        if (suscripcionExistente && suscripcionExistente.estatus !== EstatusPagoEvento.RECHAZADO ) {
             return errorResponse({ message: "Ya estás suscrito a este evento" });
         }
 

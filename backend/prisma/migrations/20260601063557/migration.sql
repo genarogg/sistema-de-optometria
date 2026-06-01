@@ -186,9 +186,6 @@ CREATE UNIQUE INDEX "Gremio_usuarioId_key" ON "Gremio"("usuarioId");
 -- CreateIndex
 CREATE UNIQUE INDEX "PonenteEvento_usuarioId_eventoId_key" ON "PonenteEvento"("usuarioId", "eventoId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "SuscripcionEvento_usuarioId_eventoId_key" ON "SuscripcionEvento"("usuarioId", "eventoId");
-
 -- AddForeignKey
 ALTER TABLE "Autoridad" ADD CONSTRAINT "Autoridad_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 

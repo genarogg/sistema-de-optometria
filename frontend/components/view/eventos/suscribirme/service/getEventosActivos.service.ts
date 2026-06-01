@@ -6,7 +6,7 @@ import notify from "@/components/nano/notify";
 
 export async function getEventosActivosService() {
   console.log("getEventosActivosService");
-  const { setEventos, setEventosUsuario, setCargando, setError } = useEventosActivosStore.getState();
+  const { setEventos, setSuscripcionesEventoUsuario, setCargando, setError } = useEventosActivosStore.getState();
 
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") ?? "" : "";
@@ -26,13 +26,13 @@ export async function getEventosActivosService() {
     const data = result.data as any;
     const responseData = data?.getEventosActivos?.data;
     const eventos: any[] = responseData?.eventos ?? [];
-    const eventosUsuario: any = responseData?.eventosUsuario ?? null;
+    const suscripcionesEventoUsuario: any[] = responseData?.suscripcionesEventoUsuario ?? [];
     
     console.log("eventos activos:", eventos);
-    console.log("eventos usuario:", eventosUsuario);
+    console.log("suscripciones evento usuario:", suscripcionesEventoUsuario);
     
     setEventos(eventos);
-    setEventosUsuario(eventosUsuario);
+    setSuscripcionesEventoUsuario(suscripcionesEventoUsuario);
 
     if (data?.getEventosActivos?.type && data?.getEventosActivos?.message) {
       notify({ type: data.getEventosActivos.type, message: data.getEventosActivos.message });

@@ -248,8 +248,6 @@ model SuscripcionEvento {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([usuarioId, eventoId])
 }
 
 model Suscripcion {

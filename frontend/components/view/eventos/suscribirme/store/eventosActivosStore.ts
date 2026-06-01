@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { EstatusPagoEvento } from "@/global/enums";
 
 interface Evento {
   id: number;
@@ -16,24 +17,19 @@ interface Evento {
 interface SuscripcionEvento {
   id: number;
   eventoId: number;
-  estatus: string;
-}
-
-interface EventosUsuario {
-  id: number;
-  suscripcionEventos: SuscripcionEvento[];
+  estatus: EstatusPagoEvento;
 }
 
 interface EventosActivosState {
   eventos: Evento[];
-  eventosUsuario: EventosUsuario | null;
+  suscripcionesEventoUsuario: SuscripcionEvento[];
   cargando: boolean;
   error: string | null;
   filtro: string;
   tipoFiltro: string | null;
   
   setEventos: (eventos: Evento[]) => void;
-  setEventosUsuario: (eventosUsuario: EventosUsuario | null) => void;
+  setSuscripcionesEventoUsuario: (suscripciones: SuscripcionEvento[]) => void;
   setCargando: (cargando: boolean) => void;
   setError: (error: string | null) => void;
   setFiltro: (filtro: string) => void;
@@ -42,14 +38,14 @@ interface EventosActivosState {
 
 const useEventosActivosStore = create<EventosActivosState>((set) => ({
   eventos: [],
-  eventosUsuario: null,
+  suscripcionesEventoUsuario: [],
   cargando: false,
   error: null,
   filtro: "",
   tipoFiltro: null,
 
   setEventos: (eventos) => set({ eventos }),
-  setEventosUsuario: (eventosUsuario) => set({ eventosUsuario }),
+  setSuscripcionesEventoUsuario: (suscripciones) => set({ suscripcionesEventoUsuario: suscripciones }),
   setCargando: (cargando) => set({ cargando }),
   setError: (error) => set({ error }),
   setFiltro: (filtro) => set({ filtro }),

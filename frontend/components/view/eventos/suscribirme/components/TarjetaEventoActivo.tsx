@@ -4,8 +4,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, Users, UsersRound, CheckCircle } from 'lucide-react';
-import { TipoEvento, Rol } from '@/global/enums';
+import { Calendar, MapPin, Users, UsersRound, CheckCircle, RefreshCw } from 'lucide-react';
+import { TipoEvento, Rol, EstatusPagoEvento } from '@/global/enums';
 import { useAuthStore } from '@/context/auth/AuthContext';
 
 interface Evento {
@@ -24,10 +24,10 @@ interface Evento {
 interface TarjetaEventoActivoProps {
   eventos: Evento[];
   onSuscribirse: (evento: Evento) => void;
-  eventosSuscriptos: Set<number>;
+  suscripcionesMap: Map<number, EstatusPagoEvento>;
 }
 
-export default function TarjetaEventoActivo({ eventos, onSuscribirse, eventosSuscriptos }: TarjetaEventoActivoProps) {
+export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcionesMap }: TarjetaEventoActivoProps) {
   const { usuario } = useAuthStore();
 
   const formatDate = (date: Date) => {
@@ -62,12 +62,64 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, eventosSus
     return null;
   };
 
+  const getEstadoSuscripcion = (eventoId: number) => {
+    return suscripcionesMap.get(eventoId);
+  };
+
+  const getBotonConfig = (evento: Evento) => {
+    const estatus = getEstadoSuscripcion(evento.id);
+    
+    if (!estatus) {
+      return {
+        variant: "default" as const,
+        disabled: false,
+        texto: "Suscribirme",
+        icono: null
+      };
+    }
+
+    if (estatus === EstatusPagoEvento.RECHAZADO) {
+      return {
+        variant: "default" as const,
+        disabled: false,
+        texto: "Suscribirme de nuevo",
+        icono: <RefreshCw className="h-4 w-4 mr-2" />
+      };
+    }
+
+    if (estatus === EstatusPagoEvento.PENDIENTE) {
+      return {
+        variant: "secondary" as const,
+        disabled: true,
+        texto: "Pendiente",
+        icono: null
+      };
+    }
+
+    if (estatus === EstatusPagoEvento.PAGADO) {
+      return {
+        variant: "secondary" as const,
+        disabled: true,
+        texto: "Suscripto",
+        icono: <CheckCircle className="h-4 w-4 mr-2" />
+      };
+    }
+
+    return {
+      variant: "default" as const,
+      disabled: false,
+      texto: "Suscribirme",
+      icono: null
+    };
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {eventos.map((evento) => {
         const precio = calcularPrecio(evento);
         const descuentoTexto = getDescuentoTexto(evento);
-        const estaSuscripto = eventosSuscriptos.has(evento.id);
+        const botonConfig = getBotonConfig(evento);
+        const estatus = getEstadoSuscripcion(evento.id);
 
         return (
           <Card key={evento.id} className="w-full">
@@ -77,21 +129,28 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, eventosSus
                   <CardTitle className="text-lg">{evento.nombre}</CardTitle>
                   <div className="flex items-center gap-2 mt-2">
                     <Badge variant="outline">{evento.tipo}</Badge>
+                    {estatus && (
+                      <Badge variant={
+                        estatus === EstatusPagoEvento.PAGADO ? "secondary" :
+                        estatus === EstatusPagoEvento.PENDIENTE ? "default" :
+                        estatus === EstatusPagoEvento.RECHAZADO ? "destructive" : "outline"
+                      }>
+                        {estatus}
+                      </Badge>
+                    )}
                   </div>
                 </div>
                 <div className="flex gap-1">
                   <Button 
-                    variant={estaSuscripto ? "secondary" : "default"} 
+                    variant={botonConfig.variant} 
                     size="sm" 
-                    onClick={() => !estaSuscripto && onSuscribirse(evento)}
-                    disabled={estaSuscripto}
+                    onClick={() => botonConfig.disabled ? null : onSuscribirse(evento)}
+                    disabled={botonConfig.disabled}
                   >
-                    {estaSuscripto ? (
-                      <div className="flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4" />
-                        Suscripto
-                      </div>
-                    ) : "Suscribirme"}
+                    <div className="flex items-center gap-2">
+                      {botonConfig.icono}
+                      {botonConfig.texto}
+                    </div>
                   </Button>
                 </div>
               </div>
@@ -122,7 +181,7 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, eventosSus
               </div>
               {descuentoTexto && (
                 <div className="mt-3 pt-3 border-t">
-                  <Badge variant="default" className="text-xs">
+                  <Badge variant="secondary" className="text-xs">
                     {descuentoTexto}
                   </Badge>
                 </div>

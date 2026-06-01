@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 const GET_EVENTOS_ACTIVOS = gql`
-  query GetEventosActivos($token: String!) {
+ query GetEventosActivos($token: String!) {
     getEventosActivos(token: $token) {
       type
       message
@@ -27,13 +27,10 @@ const GET_EVENTOS_ACTIVOS = gql`
             }
           }
         }
-        eventosUsuario {
+        suscripcionesEventoUsuario {
           id
-          suscripcionEventos {
-            id
-            eventoId
-            estatus
-          }
+          eventoId
+          estatus
         }
       }
     }

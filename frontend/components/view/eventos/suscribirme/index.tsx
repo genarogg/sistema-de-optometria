@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle } from 'lucide-react';
@@ -9,16 +9,16 @@ import ModalSuscribirseEvento from './components/ModalSuscribirseEvento';
 import { getEventosActivosService } from './service/getEventosActivos.service';
 import useEventosActivosStore from './store/eventosActivosStore';
 import { useShallow } from 'zustand/react/shallow';
+import { EstatusPagoEvento } from '@/global/enums';
 
 export default function SuscribirmeEventosSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvento, setSelectedEvento] = useState<any>(null);
-  const [eventosSuscriptos, setEventosSuscriptos] = useState<Set<number>>(new Set());
 
-  const { eventos, eventosUsuario, cargando, error, filtro, tipoFiltro } = useEventosActivosStore(
+  const { eventos, suscripcionesEventoUsuario, cargando, error, filtro, tipoFiltro } = useEventosActivosStore(
     useShallow((state) => ({
       eventos: state.eventos,
-      eventosUsuario: state.eventosUsuario,
+      suscripcionesEventoUsuario: state.suscripcionesEventoUsuario,
       cargando: state.cargando,
       error: state.error,
       filtro: state.filtro,
@@ -30,12 +30,14 @@ export default function SuscribirmeEventosSection() {
     getEventosActivosService();
   }, []);
 
-  useEffect(() => {
-    if (eventosUsuario?.suscripcionEventos) {
-      const suscriptos = new Set(eventosUsuario.suscripcionEventos.map(s => s.eventoId));
-      setEventosSuscriptos(suscriptos);
-    }
-  }, [eventosUsuario]);
+  // Create a map of eventoId to estatus
+  const suscripcionesMap = useMemo(() => {
+    const map = new Map<number, EstatusPagoEvento>();
+    suscripcionesEventoUsuario.forEach(s => {
+      map.set(s.eventoId, s.estatus);
+    });
+    return map;
+  }, [suscripcionesEventoUsuario]);
 
   const filteredEventos = eventos.filter(evento => {
     const matchesFiltro = !filtro || 
@@ -74,7 +76,7 @@ export default function SuscribirmeEventosSection() {
               setSelectedEvento(evento);
               setIsModalOpen(true);
             }}
-            eventosSuscriptos={eventosSuscriptos}
+            suscripcionesMap={suscripcionesMap}
           />
         )}
       </div>
