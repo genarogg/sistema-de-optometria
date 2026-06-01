@@ -1,9 +1,9 @@
-import { 
-    successResponse, 
-    errorResponse, 
-    prisma, 
-    verificarToken, 
-    crearBitacora, 
+import {
+    successResponse,
+    errorResponse,
+    prisma,
+    verificarToken,
+    crearBitacora,
     log
 } from "@fn";
 import { Prisma, AccionesBitacora, VigenciaEvento } from "@prisma/client";
@@ -14,7 +14,7 @@ interface GetEventosActivosArgs {
 
 const getEventosActivos = async (_: unknown, args: GetEventosActivosArgs) => {
     log.dev("getEventosActivos called with args:", args);
-    
+
     const { token } = args;
 
     if (!token) {
@@ -39,10 +39,14 @@ const getEventosActivos = async (_: unknown, args: GetEventosActivosArgs) => {
                     include: {
                         usuario: true
                     }
-                },
-                suscripcionEvento: true,
+                }
             },
             orderBy: { createdAt: "desc" },
+        });
+
+        // busca al usuario con sus eventos
+        const suscripcionesEventoUsuario = await prisma.suscripcionEvento.findMany({
+            where: { usuarioId: usuario.id }
         });
 
         await crearBitacora({
@@ -51,9 +55,16 @@ const getEventosActivos = async (_: unknown, args: GetEventosActivosArgs) => {
             mensaje: "Se consultaron los eventos activos",
         });
 
+        const data = {
+            eventos,
+            suscripcionesEventoUsuario
+        }
+
+        console.log(data);
+
         return successResponse({
             message: "Eventos activos obtenidos correctamente",
-            data: eventos,
+            data,
         });
 
     } catch (error) {

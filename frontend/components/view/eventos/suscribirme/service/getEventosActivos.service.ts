@@ -6,7 +6,7 @@ import notify from "@/components/nano/notify";
 
 export async function getEventosActivosService() {
   console.log("getEventosActivosService");
-  const { setEventos, setCargando, setError } = useEventosActivosStore.getState();
+  const { setEventos, setEventosUsuario, setCargando, setError } = useEventosActivosStore.getState();
 
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") ?? "" : "";
@@ -24,16 +24,22 @@ export async function getEventosActivosService() {
     });
 
     const data = result.data as any;
-    const eventos: any[] = data?.getEventosActivos?.data ?? [];
+    const responseData = data?.getEventosActivos?.data;
+    const eventos: any[] = responseData?.eventos ?? [];
+    const eventosUsuario: any = responseData?.eventosUsuario ?? null;
+    
     console.log("eventos activos:", eventos);
+    console.log("eventos usuario:", eventosUsuario);
+    
     setEventos(eventos);
+    setEventosUsuario(eventosUsuario);
 
     if (data?.getEventosActivos?.type && data?.getEventosActivos?.message) {
       notify({ type: data.getEventosActivos.type, message: data.getEventosActivos.message });
     }
   } catch (err: any) {
     if (!isProd) {
-      console.warn("Fallo la query, cargando datos mock:", err);
+      console.warn("Fallo la query:", err);
     } else {
       notify({ type: "error", message: err.message || "Error al obtener los eventos activos. Intenta nuevamente." });
     }

@@ -8,18 +8,17 @@ import TarjetaEventoActivo from './components/TarjetaEventoActivo';
 import ModalSuscribirseEvento from './components/ModalSuscribirseEvento';
 import { getEventosActivosService } from './service/getEventosActivos.service';
 import useEventosActivosStore from './store/eventosActivosStore';
-import useSuscripcionEventoStore from '../suscripciones/store/suscripcionEventoStore';
 import { useShallow } from 'zustand/react/shallow';
-import { getSuscripcionesEventoService } from '../suscripciones/service/getSuscripcionesEvento.service';
 
 export default function SuscribirmeEventosSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvento, setSelectedEvento] = useState<any>(null);
   const [eventosSuscriptos, setEventosSuscriptos] = useState<Set<number>>(new Set());
 
-  const { eventos, cargando, error, filtro, tipoFiltro } = useEventosActivosStore(
+  const { eventos, eventosUsuario, cargando, error, filtro, tipoFiltro } = useEventosActivosStore(
     useShallow((state) => ({
       eventos: state.eventos,
+      eventosUsuario: state.eventosUsuario,
       cargando: state.cargando,
       error: state.error,
       filtro: state.filtro,
@@ -27,21 +26,16 @@ export default function SuscribirmeEventosSection() {
     }))
   );
 
-  const { suscripciones } = useSuscripcionEventoStore(
-    useShallow((state) => ({
-      suscripciones: state.suscripciones,
-    }))
-  );
-
   useEffect(() => {
     getEventosActivosService();
-    getSuscripcionesEventoService();
   }, []);
 
   useEffect(() => {
-    const suscriptos = new Set(suscripciones.map(s => s.evento.id));
-    setEventosSuscriptos(suscriptos);
-  }, [suscripciones]);
+    if (eventosUsuario?.suscripcionEventos) {
+      const suscriptos = new Set(eventosUsuario.suscripcionEventos.map(s => s.eventoId));
+      setEventosSuscriptos(suscriptos);
+    }
+  }, [eventosUsuario]);
 
   const filteredEventos = eventos.filter(evento => {
     const matchesFiltro = !filtro || 
@@ -94,7 +88,6 @@ export default function SuscribirmeEventosSection() {
         evento={selectedEvento}
         onSuccess={() => {
           getEventosActivosService();
-          getSuscripcionesEventoService();
         }}
       />
     </div>

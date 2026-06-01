@@ -19,6 +19,7 @@ type Usuario {
   suscripciones: [Suscripcion]
   gremio: Gremio
   autoridad: Autoridad
+  evento: Evento
 }
 
 type Gremio {

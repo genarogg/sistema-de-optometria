@@ -65,6 +65,17 @@ type SuscripcionesEventoResponse {
   meta: Meta
 }
 
+type EventosActivosResponse {
+  type: String
+  message: String
+  data: EventosActivosData
+}
+
+type EventosActivosData {
+  eventos: [Evento]
+  suscripcionesEventoUsuario: [SuscripcionEvento]
+}
+
 ##############################################
 # Extensiones de Query y Mutation
 ##############################################
@@ -78,12 +89,9 @@ extend type Query {
     vigencia: VigenciaEvento
     tipo: TipoEvento
   ): EventosResponse!
-  
-  getEventosActivos(
-    token: String!
-    
-  ): EventosResponse!
-  
+
+  getEventosActivos(token: String!): EventosActivosResponse!
+
   getSuscripcionesEvento(
     token: String!
     page: Int
@@ -118,7 +126,7 @@ extend type Mutation {
     vigencia: VigenciaEvento
     ponentes: [PonenteInput!]
   ): EventoResponse!
-  
+
   actualizarEvento(
     token: String!
     eventoId: Int!
@@ -132,13 +140,13 @@ extend type Mutation {
     vigencia: VigenciaEvento
     ponentes: [PonenteInput!]
   ): EventoResponse!
-  
+
   actualizarSuscripcionEventoEstatus(
     token: String!
     suscripcionEventoId: Int!
     estatus: EstatusPagoEvento!
   ): SuscripcionEventoResponse!
-  
+
   suscribirseEvento(
     token: String!
     eventoId: Int!
