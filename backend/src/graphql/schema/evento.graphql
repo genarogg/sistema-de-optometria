@@ -81,8 +81,7 @@ extend type Query {
   
   getEventosActivos(
     token: String!
-    filtro: String
-    tipo: TipoEvento
+    
   ): EventosResponse!
   
   getSuscripcionesEvento(
