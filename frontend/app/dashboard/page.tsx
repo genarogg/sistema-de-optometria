@@ -1,5 +1,6 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 // import LoginFreya from '@/components/view/'
 import LayoutAuth from '@/components/layout/auth'
 import "./css/style.scss"
@@ -8,7 +9,13 @@ interface pageProps {
 
 }
 
-const page: React.FC<pageProps> = () => {
+const Page: React.FC<pageProps> = () => {
+    const router = useRouter()
+
+    useEffect(() => {
+        router.push('/dashboard/evento')
+    }, [router])
+
     return (
         <LayoutAuth where='dashboard'>
             <p>hola</p>
@@ -16,4 +23,4 @@ const page: React.FC<pageProps> = () => {
     );
 }
 
-export default page;
+export default Page;

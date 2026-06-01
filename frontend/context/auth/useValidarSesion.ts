@@ -62,7 +62,7 @@ const useValidarSesion = () => {
 
                 // Si estamos en la página de inicio, redirigimos
                 if (location === "/dashboard/login") {
-                    navigate.push("/dashboard");
+                    navigate.push("/dashboard/evento");
                 }
 
                 else {
