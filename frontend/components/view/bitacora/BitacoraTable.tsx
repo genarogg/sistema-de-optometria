@@ -112,7 +112,7 @@ const BitacoraTable = memo(function BitacoraTable({
                       size="icon"
                       variant="outline"
                       onClick={() => onViewDetails(entry)}
-                      className="h-8 w-8 bg-white"
+                      className="h-8 w-8 bg-white text-foreground"
                     >
                       <Eye className="w-4 h-4" />
                     </Button>
