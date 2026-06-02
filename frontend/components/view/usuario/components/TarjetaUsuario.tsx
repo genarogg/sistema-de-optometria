@@ -3,6 +3,7 @@
 import React, { useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Rol } from "@/global/enums";
+import BadgeRol from "./BadgeRol";
 import ModalEditarUsuario from "./ModalEditarUsuario";
 import ModalCambiarPassword from "./ModalCambiarPassword";
 import ModalEditarGremio from "./ModalEditarGremio";
@@ -59,17 +60,11 @@ const TarjetaUsuario: React.FC<TarjetaUsuarioProps> = React.memo(
                       <CardTitle className="tracking-tight text-base font-medium capitalize">
                         {usuario.primerNombre} {usuario.primerApellido}
                       </CardTitle>
-                      <div className="text-xs text-muted-foreground mt-0.5">
-                        {usuario.rol}
+                      <div className="mt-0.5">
+                        <BadgeRol rol={usuario.rol as Rol} />
                       </div>
                     </div>
-                    <AccionesUsuario
-                      usuario={usuario}
-                      onEditar={handleAbrirEditar}
-                      onPassword={handleAbrirPassword}
-                      onEditarGremio={handleAbrirEditarGremio}
-                      onEditarAutoridad={handleAbrirEditarAutoridad}
-                    />
+
                   </div>
                 </CardHeader>
                 <CardContent className="px-3 pb-3">
@@ -90,6 +85,15 @@ const TarjetaUsuario: React.FC<TarjetaUsuarioProps> = React.memo(
                         <span className="font-medium">Cédula:</span> {usuario.cedula}
                       </div>
                     )}
+                  </div>
+                  <div className=" pt-3">
+                    <AccionesUsuario
+                      usuario={usuario}
+                      onEditar={handleAbrirEditar}
+                      onPassword={handleAbrirPassword}
+                      onEditarGremio={handleAbrirEditarGremio}
+                      onEditarAutoridad={handleAbrirEditarAutoridad}
+                    />
                   </div>
                 </CardContent>
               </Card>

@@ -9,8 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { Rol } from "@/global/enums";
+import BadgeRol from "./BadgeRol";
 import ModalEditarUsuario from "./ModalEditarUsuario";
 import ModalCambiarPassword from "./ModalCambiarPassword";
 import ModalEditarGremio from "./ModalEditarGremio";
@@ -91,9 +91,7 @@ const TablaUsuarios: React.FC<TablaUsuariosProps> = React.memo(
                     </TableCell>
                     <TableCell className="text-sm">{usuario.cedula}</TableCell>
                     <TableCell>
-                       <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
-                           {usuario.rol}
-                      </span>
+                        <BadgeRol rol={usuario.rol as Rol} />
                     </TableCell>
                     <TableCell className="flex items-center justify-center">
                       <AccionesUsuario

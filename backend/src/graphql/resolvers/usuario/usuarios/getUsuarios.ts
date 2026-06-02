@@ -30,22 +30,75 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
             return errorResponse({ message: "Token inválido o expirado" });
         }
 
-        const whereClause: Prisma.UsuarioWhereInput = {};
-
-        if (filtro) {
-            const filtroCleaned = filtro.trim();
-            whereClause.OR = [
-                { email: { contains: filtroCleaned } },
-                { cedula: { contains: filtroCleaned } },
-            ];
-        }
+        let whereClause: Prisma.UsuarioWhereInput = {};
+        const filtroCleaned = filtro?.trim();
 
         switch (usuario.rol) {
             case Rol.SUPER_USUARIO:
-                whereClause.rol = { in: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] };
+                if (filtroCleaned) {
+                    whereClause.AND = [
+                        {
+                            OR: [
+                                { rol: { in: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] } },
+                                { 
+                                    rol: Rol.AGREMIADO_SOLVENTE, 
+                                    gremio: { 
+                                        is: null 
+                                    } 
+                                }
+                            ]
+                        },
+                        {
+                            OR: [
+                                { email: { contains: filtroCleaned } },
+                                { cedula: { contains: filtroCleaned } },
+                            ]
+                        }
+                    ];
+                } else {
+                    whereClause.OR = [
+                        { rol: { in: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] } },
+                        { 
+                            rol: Rol.AGREMIADO_SOLVENTE, 
+                            gremio: { 
+                                is: null 
+                            } 
+                        }
+                    ];
+                }
                 break;
             case Rol.ADMINISTRADOR:
-                whereClause.rol = Rol.ADMINISTRADOR;
+                if (filtroCleaned) {
+                    whereClause.AND = [
+                        {
+                            OR: [
+                                { rol: Rol.ADMINISTRADOR },
+                                { 
+                                    rol: Rol.AGREMIADO_SOLVENTE, 
+                                    gremio: { 
+                                        is: null 
+                                    } 
+                                }
+                            ]
+                        },
+                        {
+                            OR: [
+                                { email: { contains: filtroCleaned } },
+                                { cedula: { contains: filtroCleaned } },
+                            ]
+                        }
+                    ];
+                } else {
+                    whereClause.OR = [
+                        { rol: Rol.ADMINISTRADOR },
+                        { 
+                            rol: Rol.AGREMIADO_SOLVENTE, 
+                            gremio: { 
+                                is: null 
+                            } 
+                        }
+                    ];
+                }
                 break;
             default:
                 return errorResponse({ message: "Rol no válido" });
