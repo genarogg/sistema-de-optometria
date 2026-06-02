@@ -157,20 +157,23 @@ export default function ModalCrearEvento({
     ));
   };
 
+  // Separamos useEffect para establecer valores iniciales (sin depender de costoInput)
   useEffect(() => {
-    if (!costoInput) return;
-
     if (evento) {
+      console.log('evento completo:', evento);
+      console.log('evento.tipo:', evento.tipo, '| tipo:', typeof evento.tipo);
       setNombre(evento.nombre);
       setFecha(new Date(evento.fecha));
       setLugar(evento.lugar);
-      const cents = evento.costo ?? 0;
-      setCosto(cents);
-      setTimeout(() => (costoInput as any).setCents?.(cents, false), 0);
-      setTipo(evento.tipo);
       setDescuentoEstudiante(evento.descuentoEstudiante);
       setDescuentoProfesor(evento.descuentoProfesor);
       setVigencia(evento.vigencia);
+      
+      // Establecemos el tipo después de un pequeño delay para asegurar que el componente Select esté listo
+      setTimeout(() => {
+        setTipo(evento.tipo);
+        console.log('Después de setTipo en timeout, valor en estado:', tipo);
+      }, 50);
 
       console.log('evento.ponenteEvento:', evento.ponenteEvento);
       
@@ -187,8 +190,6 @@ export default function ModalCrearEvento({
       setNombre('');
       setFecha(undefined);
       setLugar('');
-      setCosto(0);
-      setTimeout(() => (costoInput as any).setCents?.(0, false), 0);
       setTipo('');
       setDescuentoEstudiante(0);
       setDescuentoProfesor(0);
@@ -197,7 +198,21 @@ export default function ModalCrearEvento({
       setBusquedaCedula('');
       setUsuariosEncontrados([]);
     }
-  }, [evento, isOpen, costoInput]);
+  }, [evento, isOpen]);
+
+  // Separamos useEffect solo para el costoInput
+  useEffect(() => {
+    if (!costoInput) return;
+    
+    if (evento) {
+      const cents = evento.costo ?? 0;
+      setCosto(cents);
+      setTimeout(() => (costoInput as any).setCents?.(cents, false), 0);
+    } else {
+      setCosto(0);
+      setTimeout(() => (costoInput as any).setCents?.(0, false), 0);
+    }
+  }, [costoInput, evento]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -350,6 +365,7 @@ export default function ModalCrearEvento({
             <div className="space-y-2">
               <Label htmlFor="tipo">Tipo de Evento *</Label>
               <Select
+                key={evento?.id || 'new'}
                 value={tipo}
                 onValueChange={(value) => setTipo(value as TipoEvento)}
                 disabled={isLoading}
@@ -495,10 +511,10 @@ export default function ModalCrearEvento({
             </div>
           </div>
 
-          <div className="flex gap-2 pt-4">
+          <div className="flex gap-2 pt-4 justify-end">
             <Button
               type="button"
-              variant="outline"
+              variant="secondary"
               onClick={onClose}
               disabled={isLoading}
             >

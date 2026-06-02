@@ -41,7 +41,7 @@ export default function AdministrarEventosSection() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 ">
       <EventosBuscador
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
@@ -55,7 +55,7 @@ export default function AdministrarEventosSection() {
         }}
       />
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 ">
         {error && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />

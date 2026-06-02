@@ -34,7 +34,7 @@ export default function EventosView() {
   };
 
   return (
-    <Card className="w-full shadow-sm max-w-[1500] m-auto mt-4">
+    <Card className="w-full shadow-sm max-w-[1500] m-auto mt-4 my-4">
       <CardHeader className="border-b" style={{ paddingBottom: "0px" }}>
         <div className="flex items-center gap-2 text-primary">
           <Calendar className="h-5 w-5" />
