@@ -79,10 +79,10 @@ const AuthSubmitButton = ({
           notify({ type: "error", message: "Las contraseñas no coinciden" })
           return
         }
-        if (!isStrongPassword(data.password)) {
+        /* if (!isStrongPassword(data.password)) {
           notify({ type: "warning", message: "La contraseña debe tener al menos 8 caracteres, incluir letras, números y al menos un símbolo" })
           return
-        }
+        } */
       }
 
       if (context === "register") {

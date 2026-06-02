@@ -166,16 +166,16 @@ export default function ModalCrearPlan({
             </Select>
           </div>
 
-          <div className="flex gap-2 pt-4">
+          <div className="flex justify-end gap-2 pt-4">
             <Button
               type="button"
-              variant="outline"
+              variant="secondary"
               onClick={onClose}
               disabled={isLoading}
             >
               Cancelar
             </Button>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} variant="outline">
               {isLoading ? `${submitLabel}...` : submitLabel}
             </Button>
           </div>
