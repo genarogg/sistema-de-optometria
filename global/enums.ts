@@ -27,6 +27,14 @@ export enum AccionesBitacora {
   VIEW = 'VIEW'
 }
 
+export enum EstatusPagoEvento {
+  ASISTIO = 'ASISTIO',
+  NO_ASISTIO = 'NO_ASISTIO',
+  PAGADO = 'PAGADO',
+  PENDIENTE = 'PENDIENTE',
+  RECHAZADO = 'RECHAZADO'
+}
+
 export enum EstatusSuscripcion {
   PENDIENTE = 'PENDIENTE',
   RECHAZADA = 'RECHAZADA',

@@ -27,17 +27,19 @@ export enum AccionesBitacora {
   VIEW = 'VIEW'
 }
 
+export enum EstatusPagoEvento {
+  ASISTIO = 'ASISTIO',
+  NO_ASISTIO = 'NO_ASISTIO',
+  PAGADO = 'PAGADO',
+  PENDIENTE = 'PENDIENTE',
+  RECHAZADO = 'RECHAZADO'
+}
+
 export enum EstatusSuscripcion {
   PENDIENTE = 'PENDIENTE',
   RECHAZADA = 'RECHAZADA',
   VALIDADO = 'VALIDADO',
   VENCIDO = 'VENCIDO'
-}
-
-export enum EstatusPagoEvento {
-  PENDIENTE = 'PENDIENTE',
-  PAGADO = 'PAGADO',
-  RECHAZADO = 'RECHAZADO'
 }
 
 export enum NivelAcademico {

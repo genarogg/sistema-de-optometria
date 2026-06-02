@@ -1,4 +1,4 @@
-import { AccionesBitacora, Rol, TipoAutoridad, TipoEvento, TipoSuscripcion, EstatusSuscripcion, NivelAcademico, TipoDeDocumento, VigenciaEvento } from "./enums"
+import { AccionesBitacora, Rol, TipoAutoridad, TipoEvento, TipoSuscripcion, EstatusSuscripcion, EstatusPagoEvento, NivelAcademico, TipoDeDocumento, VigenciaEvento } from "./enums"
 
 export interface Usuario {
   id: number
@@ -16,8 +16,8 @@ export interface Usuario {
   gremio?: Gremio
   bitacora?: Bitacora[]
   evento?: Evento[]
-  ponente_Evento?: Ponente_Evento[]
-  suscripcionEventos?: Suscripcion_Evento[]
+  ponente_Evento?: PonenteEvento[]
+  suscripcionEventos?: SuscripcionEvento[]
   planSuscripcion?: PlanSuscripcion[]
   suscripcion?: Suscripcion[]
   documentoSolicitados?: DocumentoSolicitado[]
@@ -61,14 +61,17 @@ export interface Evento {
   nombre: string
   fecha: Date
   lugar: string
-  consto: number
+  costo: number
+  tipo: TipoEvento
   descuentoEstudiante: number
   descuentoProfesor: number
   vigencia: VigenciaEvento
   usuarioId: number
   Usuario?: Usuario
-  ponente_Evento?: Ponente_Evento[]
-  suscripcion_Evento?: Suscripcion_Evento[]
+  aliadoImg?: string
+  aliadoNombre?: string
+  ponenteEvento?: PonenteEvento[]
+  suscripcionEvento?: SuscripcionEvento[]
   createdAt: Date
   updatedAt: Date
 }
@@ -85,20 +88,23 @@ export interface PlanSuscripcion {
   updatedAt: Date
 }
 
-export interface Ponente_Evento {
+export interface PonenteEvento {
   id: number
   usuarioId: number
   eventoId: number
   usuario?: Usuario
-  Evento?: Evento
+  evento?: Evento
   isActivo: boolean
   createdAt: Date
   updatedAt: Date
 }
 
-export interface Suscripcion_Evento {
+export interface SuscripcionEvento {
   id: number
   precioAlSuscripcion: number
+  estatus: EstatusPagoEvento
+  comprobante: string
+  comprobanteImg: string
   eventoId: number
   evento?: Evento
   usuarioId: number

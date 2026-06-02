@@ -17,7 +17,7 @@ CREATE TYPE "TipoSuscripcion" AS ENUM ('AGREMIADO', 'ESTUDIANTE', 'PROFESOR');
 CREATE TYPE "EstatusSuscripcion" AS ENUM ('PENDIENTE', 'VALIDADO', 'VENCIDO', 'RECHAZADA');
 
 -- CreateEnum
-CREATE TYPE "EstatusPagoEvento" AS ENUM ('PENDIENTE', 'PAGADO', 'RECHAZADO');
+CREATE TYPE "EstatusPagoEvento" AS ENUM ('PENDIENTE', 'PAGADO', 'RECHAZADO', 'ASISTIO', 'NO_ASISTIO');
 
 -- CreateEnum
 CREATE TYPE "NivelAcademico" AS ENUM ('LICENCIADO', 'TSU', 'NO_ASIGNADO');
@@ -95,6 +95,8 @@ CREATE TABLE "Evento" (
     "descuentoProfesor" INTEGER NOT NULL DEFAULT 0,
     "vigencia" "VigenciaEvento" NOT NULL DEFAULT 'VIGENTE',
     "usuarioId" INTEGER NOT NULL,
+    "aliadoImg" TEXT,
+    "aliadoNombre" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

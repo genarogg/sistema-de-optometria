@@ -94,6 +94,8 @@ enum EstatusPagoEvento {
   PENDIENTE
   PAGADO
   RECHAZADO
+  ASISTIO
+  NO_ASISTIO
 }
 
 enum NivelAcademico {
@@ -197,6 +199,9 @@ model Evento {
   usuarioId           Int
   Usuario             Usuario        @relation(fields: [usuarioId], references: [id])
 
+  aliadoImg    String?
+  aliadoNombre String?
+
   ponenteEvento     PonenteEvento[]
   suscripcionEvento SuscripcionEvento[]
 
@@ -240,11 +245,11 @@ model SuscripcionEvento {
   estatus             EstatusPagoEvento @default(PENDIENTE)
   comprobante         String
   comprobanteImg      String
-  
-  eventoId            Int
-  evento              Evento            @relation(fields: [eventoId], references: [id])
-  usuarioId           Int
-  usuario             Usuario           @relation(fields: [usuarioId], references: [id])
+
+  eventoId  Int
+  evento    Evento  @relation(fields: [eventoId], references: [id])
+  usuarioId Int
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
