@@ -12,6 +12,8 @@ const CREAR_EVENTO = gql`
     $descuentoEstudiante: Int
     $descuentoProfesor: Int
     $vigencia: VigenciaEvento
+    $aliadoImg: String
+    $aliadoNombre: String
   ) {
     crearEvento(
       token: $token
@@ -24,6 +26,8 @@ const CREAR_EVENTO = gql`
       descuentoEstudiante: $descuentoEstudiante
       descuentoProfesor: $descuentoProfesor
       vigencia: $vigencia
+      aliadoImg: $aliadoImg
+      aliadoNombre: $aliadoNombre
     ) {
       message
       type

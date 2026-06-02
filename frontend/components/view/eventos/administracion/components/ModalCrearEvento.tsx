@@ -21,7 +21,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Switch } from '@/components/ui/switch';
-import { Calendar as CalendarIcon, Search, X, UserPlus, Trash2 } from 'lucide-react';
+import { Calendar as CalendarIcon, Search, X, UserPlus, Trash2, Upload, Image as ImageIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
@@ -32,6 +32,8 @@ import notify from '@/components/nano/notify';
 import { clientApollo } from '@/functions';
 import GET_USUARIOS from '../../../usuario/querys/GET_USUARIOS';
 import { isProd } from '@/env';
+import { ImageCropper } from './ImageCropper';
+import { handleImageSelect } from '../lib/image-utils';
 
 interface Usuario {
   id: number;
@@ -77,6 +79,12 @@ export default function ModalCrearEvento({
   const [buscandoUsuarios, setBuscandoUsuarios] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [costoInput, setCostoInput] = useState<HTMLInputElement | null>(null);
+  
+  // Campos de aliado
+  const [aliadoImg, setAliadoImg] = useState<string>('');
+  const [aliadoNombre, setAliadoNombre] = useState<string>('');
+  const [cropperOpen, setCropperOpen] = useState(false);
+  const [tempImage, setTempImage] = useState<string>('');
 
   // Inicializar money inputs y escuchar eventos
   useEffect(() => {
@@ -157,6 +165,23 @@ export default function ModalCrearEvento({
     ));
   };
 
+  // Handlers para la imagen del aliado
+  const handleAliadoImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const base64 = await handleImageSelect(e);
+    if (base64) {
+      setTempImage(base64);
+      setCropperOpen(true);
+    }
+  };
+
+  const handleCropComplete = (croppedImage: string) => {
+    setAliadoImg(croppedImage);
+  };
+
+  const clearAliadoImg = () => {
+    setAliadoImg('');
+  };
+
   // Separamos useEffect para establecer valores iniciales (sin depender de costoInput)
   useEffect(() => {
     if (evento) {
@@ -168,6 +193,8 @@ export default function ModalCrearEvento({
       setDescuentoEstudiante(evento.descuentoEstudiante);
       setDescuentoProfesor(evento.descuentoProfesor);
       setVigencia(evento.vigencia);
+      setAliadoImg(evento.aliadoImg || '');
+      setAliadoNombre(evento.aliadoNombre || '');
       
       // Establecemos el tipo después de un pequeño delay para asegurar que el componente Select esté listo
       setTimeout(() => {
@@ -197,6 +224,8 @@ export default function ModalCrearEvento({
       setPonentes([]);
       setBusquedaCedula('');
       setUsuariosEncontrados([]);
+      setAliadoImg('');
+      setAliadoNombre('');
     }
   }, [evento, isOpen]);
 
@@ -251,6 +280,8 @@ export default function ModalCrearEvento({
           descuentoProfesor,
           vigencia: vigencia || undefined,
           ponentes: ponentesData,
+          aliadoImg: aliadoImg || undefined,
+          aliadoNombre: aliadoNombre || undefined,
         });
       } else {
         await crearEventoService({
@@ -263,6 +294,8 @@ export default function ModalCrearEvento({
           descuentoProfesor,
           vigencia: vigencia || undefined,
           ponentes: ponentesData,
+          aliadoImg: aliadoImg || undefined,
+          aliadoNombre: aliadoNombre || undefined,
         });
       }
 
@@ -277,6 +310,8 @@ export default function ModalCrearEvento({
       setPonentes([]);
       setBusquedaCedula('');
       setUsuariosEncontrados([]);
+      setAliadoImg('');
+      setAliadoNombre('');
       onClose();
       onSuccess?.();
     } catch (error) {
@@ -291,7 +326,7 @@ export default function ModalCrearEvento({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
@@ -432,6 +467,73 @@ export default function ModalCrearEvento({
                 </Select>
               </div>
             )}
+
+            {/* Campos de aliado - solo para TALLER y DIPLOMADO */}
+            {(tipo === TipoEvento.TALLER || tipo === TipoEvento.DIPLOMADO) && (
+              <div className="col-span-2 space-y-4 pt-4 border-t">
+                <Label>Aliado del Evento</Label>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="aliadoNombre">Nombre del Aliado</Label>
+                  <Input
+                    id="aliadoNombre"
+                    value={aliadoNombre}
+                    onChange={(e) => setAliadoNombre(e.target.value)}
+                    disabled={isLoading}
+                    placeholder="Nombre del aliado"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Imagen del Aliado</Label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAliadoImageSelect}
+                      className="hidden"
+                      id="aliado-image-upload"
+                      disabled={isLoading}
+                    />
+                    
+                    <div
+                      className="w-full h-24 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer hover:border-gray-400 hover:bg-gray-50 transition-colors relative"
+                      onClick={() => document.getElementById('aliado-image-upload')?.click()}
+                    >
+                      {aliadoImg ? (
+                        <>
+                          <img
+                            src={aliadoImg}
+                            alt="Aliado"
+                            className="w-full h-full object-cover rounded-md"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="icon"
+                            className="absolute -top-2 -right-2 w-6 h-6 z-10"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              clearAliadoImg();
+                            }}
+                            disabled={isLoading}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </>
+                      ) : (
+                        <div className="flex flex-col items-center gap-2">
+                          <Upload className="w-8 h-8 text-gray-400" />
+                          <span className="text-sm text-gray-500">
+                            Haz clic para subir imagen
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="space-y-4 pt-4 border-t">
@@ -526,6 +628,14 @@ export default function ModalCrearEvento({
           </div>
         </form>
       </DialogContent>
+      
+      {/* Image Cropper Modal */}
+      <ImageCropper
+        open={cropperOpen}
+        onOpenChange={setCropperOpen}
+        imageSrc={tempImage}
+        onCropComplete={handleCropComplete}
+      />
     </Dialog>
   );
 }

@@ -20,6 +20,8 @@ interface CrearEventoParams {
   descuentoProfesor?: number;
   vigencia?: string;
   ponentes?: PonenteInput[];
+  aliadoImg?: string;
+  aliadoNombre?: string;
 }
 
 export async function crearEventoService(params: CrearEventoParams) {

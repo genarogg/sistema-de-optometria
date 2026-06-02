@@ -18,6 +18,8 @@ interface ActualizarEventoArgs {
     descuentoProfesor?: number;
     vigencia?: VigenciaEvento;
     ponentes?: PonenteInput[];
+    aliadoImg?: string;
+    aliadoNombre?: string;
 }
 
 const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
@@ -34,7 +36,9 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         descuentoEstudiante, 
         descuentoProfesor, 
         vigencia, 
-        ponentes 
+        ponentes,
+        aliadoImg,
+        aliadoNombre
     } = args;
 
     if (!token) {
@@ -73,6 +77,8 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         if (descuentoEstudiante !== undefined) data.descuentoEstudiante = descuentoEstudiante;
         if (descuentoProfesor !== undefined) data.descuentoProfesor = descuentoProfesor;
         if (vigencia !== undefined) data.vigencia = vigencia;
+        if (aliadoImg !== undefined) data.aliadoImg = aliadoImg;
+        if (aliadoNombre !== undefined) data.aliadoNombre = aliadoNombre;
 
         const eventoActualizado = await prisma.evento.update({
             where: { id: eventoId },

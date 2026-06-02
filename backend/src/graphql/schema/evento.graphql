@@ -16,6 +16,8 @@ type Evento {
   usuario: Usuario
   ponenteEvento: [PonenteEvento]
   suscripcionEvento: [SuscripcionEvento]
+  aliadoImg: String
+  aliadoNombre: String
 }
 
 type PonenteEvento {
@@ -125,6 +127,8 @@ extend type Mutation {
     descuentoProfesor: Int
     vigencia: VigenciaEvento
     ponentes: [PonenteInput!]
+    aliadoImg: String
+    aliadoNombre: String
   ): EventoResponse!
 
   actualizarEvento(
@@ -139,6 +143,8 @@ extend type Mutation {
     descuentoProfesor: Int
     vigencia: VigenciaEvento
     ponentes: [PonenteInput!]
+    aliadoImg: String
+    aliadoNombre: String
   ): EventoResponse!
 
   actualizarSuscripcionEventoEstatus(

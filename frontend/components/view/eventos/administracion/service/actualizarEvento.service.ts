@@ -21,6 +21,8 @@ interface ActualizarEventoParams {
   descuentoProfesor?: number;
   vigencia?: string;
   ponentes?: PonenteInput[];
+  aliadoImg?: string;
+  aliadoNombre?: string;
 }
 
 export async function actualizarEventoService(params: ActualizarEventoParams) {
