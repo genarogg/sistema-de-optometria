@@ -331,9 +331,14 @@ export default function ModalSuscribirme({
                   type="number"
                   placeholder="Ej: 123456"
                   value={comprobante}
-                  onChange={(e) => setComprobante(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length <= 8) {
+                      setComprobante(value);
+                    }
+                  }}
                   disabled={isLoading}
-                  maxLength={8}
+                  
                 />
               </div>
             )}

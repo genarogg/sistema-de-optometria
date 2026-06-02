@@ -114,7 +114,7 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
             omit: { password: true }
         });
 
-        console.log(usuarios);
+        // console.log(usuarios);
 
         const total = await prisma.usuario.count({ where: whereClause });
 
