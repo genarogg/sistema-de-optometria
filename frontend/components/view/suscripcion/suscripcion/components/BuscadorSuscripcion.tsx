@@ -50,7 +50,7 @@ const BuscadorSuscripcion: React.FC = () => {
   const handleEstatusChange = useCallback(
     (value: string) => {
       const estatus =
-        value === "todos" ? null : (value as EstatusSuscripcion);
+        value === "todos" ? "todos" : (value as EstatusSuscripcion);
       setEstatusFiltro(estatus);
       setPaginaActual(1);
 
@@ -82,7 +82,7 @@ const BuscadorSuscripcion: React.FC = () => {
       </div>
       <div className="flex items-center gap-2">
         <Select
-          value={estatusFiltro || "todos"}
+          value={estatusFiltro}
           onValueChange={handleEstatusChange}
         >
           <SelectTrigger className="w-[160px]">

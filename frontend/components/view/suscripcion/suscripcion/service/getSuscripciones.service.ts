@@ -4,15 +4,18 @@ import useSuscripcionStore from "../store/suscripcionStore";
 import SUSCRIPCIONES_MOCK from "../fake/suscripciones.mock";
 import { isProd } from "@/env";
 import type { Suscripcion, SuscripcionMeta } from "../store/suscripcionStore";
+import { EstatusSuscripcion } from "@/global/enums";
 
 interface GetSuscripcionesParams {
   filtro?: string;
   pagina?: number;
+  estatus?: EstatusSuscripcion | null | "todos";
 }
 
 export async function getSuscripcionesService({
   filtro = "",
   pagina = 1,
+  estatus,
 }: GetSuscripcionesParams = {}) {
   const { setSuscripciones, setMeta, setCargando, setError } =
     useSuscripcionStore.getState();
@@ -31,6 +34,7 @@ export async function getSuscripcionesService({
         token, 
         filtro: filtro || undefined,
         pagina: pagina || 1,
+        estatus: estatus === null ? undefined : estatus,
       },
     });
 

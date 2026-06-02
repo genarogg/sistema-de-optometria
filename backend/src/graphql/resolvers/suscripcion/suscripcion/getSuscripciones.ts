@@ -1,16 +1,17 @@
-import { prisma, verificarToken, successResponse, errorResponse, log } from "@fn";
-import { Rol } from "@prisma/client";
+import { prisma, verificarToken, successResponse, errorResponse, log,  } from "@fn";
+import { Rol, EstatusSuscripcion } from "@prisma/client";
 
 interface GetSuscripcionesArgs {
     token: string;
     filtro?: string;
     pagina?: number;
+    estatus?: EstatusSuscripcion | "todos";
 }
 
 const getSuscripciones = async (_: unknown, args: GetSuscripcionesArgs) => {
     log.dev("getSuscripciones called with args:", args);
 
-    const { token, filtro, pagina = 1 } = args;
+    const { token, filtro, pagina = 1, estatus } = args;
     const itemsPorPagina = 20;
     const skip = (pagina - 1) * itemsPorPagina;
 
@@ -32,14 +33,47 @@ const getSuscripciones = async (_: unknown, args: GetSuscripcionesArgs) => {
             whereClause.usuarioId = usuario.id;
         }
 
-        // Aplicar filtro solo por CI si se proporciona
+        // Aplicar filtro por CI, nombre o comprobante si se proporciona
         if (filtro) {
-            whereClause.usuario = {
-                cedula: {
-                    contains: filtro,
-                    mode: "insensitive",
+            whereClause.OR = [
+                {
+                    usuario: {
+                        cedula: {
+                            contains: filtro,
+                            mode: "insensitive",
+                        },
+                    },
                 },
-            };
+                {
+                    usuario: {
+                        primerNombre: {
+                            contains: filtro,
+                            mode: "insensitive",
+                        },
+                    },
+                },
+                {
+                    usuario: {
+                        primerApellido: {
+                            contains: filtro,
+                            mode: "insensitive",
+                        },
+                    },
+                },
+                {
+                    comprobante: {
+                        equals: parseInt(filtro) || undefined,
+                    },
+                },
+            ];
+        }
+
+        // Aplicar filtro por estatus
+        if (estatus && estatus !== "todos") {
+            whereClause.estatus = estatus;
+        } else if (!estatus && (usuario.rol === Rol.SUPER_USUARIO || usuario.rol === Rol.ADMINISTRADOR)) {
+            // Si no viene estatus y es admin/super usuario, solo mostrar pendientes
+            whereClause.estatus = EstatusSuscripcion.PENDIENTE;
         }
 
         // Obtener el total de suscripciones

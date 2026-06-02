@@ -1,6 +1,17 @@
 import { create } from "zustand";
 import { EstatusSuscripcion, Rol } from "@/global/enums";
 
+// Función para cargar el filtro de estatus desde localStorage
+const getInitialEstatusFiltro = () => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("suscripcionEstatusFiltro");
+    if (saved) {
+      return saved as EstatusSuscripcion | "todos";
+    }
+  }
+  return "todos";
+};
+
 export interface Suscripcion {
   id: number;
   comprobante: number;
@@ -33,7 +44,7 @@ export interface SuscripcionMeta {
 interface SuscripcionState {
   suscripciones: Suscripcion[] | undefined; // ✅ undefined = aún no cargado
   filtro: string;
-  estatusFiltro: EstatusSuscripcion | null;
+  estatusFiltro: EstatusSuscripcion | "todos";
   cargando: boolean;
   error: string | null;
   paginaActual: number;
@@ -43,10 +54,13 @@ interface SuscripcionState {
   setSuscripciones: (suscripciones: Suscripcion[]) => void;
   setMeta: (meta: SuscripcionMeta) => void;
   setFiltro: (filtro: string) => void;
-  setEstatusFiltro: (estatus: EstatusSuscripcion | null) => void;
+  setEstatusFiltro: (estatus: EstatusSuscripcion | "todos") => void;
   setCargando: (cargando: boolean) => void;
   setError: (error: string | null) => void;
   setPaginaActual: (pagina: number) => void;
+  
+  // Acción para inicializar el filtro según el rol
+  initializeEstatusFiltro: (userRole: Rol | undefined) => void;
 
   // Acciones optimistas
   actualizarEstatusSuscripcion: (
@@ -61,7 +75,7 @@ interface SuscripcionState {
 const useSuscripcionStore = create<SuscripcionState>((set, get) => ({
   suscripciones: undefined, // ✅ era [] — undefined evita falsos positivos antes de cargar
   filtro: "",
-  estatusFiltro: null,
+  estatusFiltro: getInitialEstatusFiltro(),
   cargando: false,
   error: null,
   paginaActual: 1,
@@ -70,10 +84,28 @@ const useSuscripcionStore = create<SuscripcionState>((set, get) => ({
   setSuscripciones: (suscripciones) => set({ suscripciones }),
   setMeta: (meta) => set({ meta }),
   setFiltro: (filtro) => set({ filtro }),
-  setEstatusFiltro: (estatusFiltro) => set({ estatusFiltro }),
+  setEstatusFiltro: (estatusFiltro) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("suscripcionEstatusFiltro", estatusFiltro);
+    }
+    set({ estatusFiltro });
+  },
   setCargando: (cargando) => set({ cargando }),
   setError: (error) => set({ error }),
   setPaginaActual: (paginaActual) => set({ paginaActual }),
+  
+  initializeEstatusFiltro: (userRole) => {
+    if (typeof window === "undefined") return;
+    
+    const saved = localStorage.getItem("suscripcionEstatusFiltro");
+    if (!saved) {
+      // Si no hay valor guardado, usar valor por defecto según rol
+      const isAdminOrSuper = userRole === Rol.SUPER_USUARIO || userRole === Rol.ADMINISTRADOR;
+      const initialStatus = isAdminOrSuper ? EstatusSuscripcion.PENDIENTE : "todos";
+      localStorage.setItem("suscripcionEstatusFiltro", initialStatus);
+      set({ estatusFiltro: initialStatus });
+    }
+  },
 
   actualizarEstatusSuscripcion: (id, nuevoEstatus) =>
     set((state) => ({

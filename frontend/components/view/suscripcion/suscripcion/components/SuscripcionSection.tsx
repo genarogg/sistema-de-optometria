@@ -26,10 +26,19 @@ const SuscripcionSection: React.FC<SuscripcionSectionProps> = ({ setActiveTab, a
   const paginaActual = useSuscripcionStore((s) => s.paginaActual);
   const meta = useSuscripcionStore((s) => s.meta);
   const filtro = useSuscripcionStore((s) => s.filtro);
+  const estatusFiltro = useSuscripcionStore((s) => s.estatusFiltro);
+  const initializeEstatusFiltro = useSuscripcionStore((s) => s.initializeEstatusFiltro);
   const setPaginaActual = useSuscripcionStore((s) => s.setPaginaActual);
   const getTotalPaginas = useSuscripcionStore((s) => s.getTotalPaginas);
 
   const { usuario } = useAuthStore();
+  
+  // Inicializar el filtro de estatus según el rol cuando el usuario esté disponible
+  useEffect(() => {
+    if (usuario) {
+      initializeEstatusFiltro(usuario.rol);
+    }
+  }, [usuario, initializeEstatusFiltro]);
   const isMobile = useIsMobile();
 
   // Refs para evitar notificaciones duplicadas
@@ -103,8 +112,8 @@ const SuscripcionSection: React.FC<SuscripcionSectionProps> = ({ setActiveTab, a
   }, [esAdminOSuperUsuario, cargando, suscripciones, setActiveTab, activeTab]);
 
   useEffect(() => {
-    getSuscripcionesService({ filtro, pagina: paginaActual });
-  }, [paginaActual]);
+    getSuscripcionesService({ filtro, pagina: paginaActual, estatus: estatusFiltro });
+  }, [filtro, paginaActual, estatusFiltro]);
 
   const handlePaginaChange = useCallback(
     (pagina: number) => {

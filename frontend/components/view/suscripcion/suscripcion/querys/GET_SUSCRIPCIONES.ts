@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 const GET_SUSCRIPCIONES = gql`
-  query GetSuscripciones($token: String!, $filtro: String, $pagina: Int) {
-    getSuscripciones(token: $token, filtro: $filtro, pagina: $pagina) {
+  query GetSuscripciones($token: String!, $filtro: String, $pagina: Int, $estatus: String) {
+    getSuscripciones(token: $token, filtro: $filtro, pagina: $pagina, estatus: $estatus) {
       type
       message
       data {
