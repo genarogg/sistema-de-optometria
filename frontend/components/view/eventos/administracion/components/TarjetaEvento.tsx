@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Edit, Calendar, MapPin, Users, UsersRound } from 'lucide-react';
 import { TipoEvento, VigenciaEvento } from '@/global/enums';
-
+import { showMoney } from '@/functions/super-money';
 interface Evento {
   id: number;
   nombre: string;
@@ -17,6 +17,8 @@ interface Evento {
   descuentoProfesor: number;
   tipo: string;
   vigencia: string;
+  aliadoImg?: string;
+  aliadoNombre?: string;
   ponenteEvento: any[];
 }
 
@@ -89,7 +91,7 @@ export default function TarjetaEvento({ eventos, onEdit, onVerPonentes }: Tarjet
               </div>
               <div className="text-sm">
                 <span className="text-muted-foreground">Costo: </span>
-                <span className="font-semibold">bs {evento.costo.toLocaleString()}</span>
+                <span className="font-semibold">bs {showMoney(evento.costo)}</span>
               </div>
             </div>
             {(evento.descuentoEstudiante > 0 || evento.descuentoProfesor > 0) && (
@@ -101,6 +103,23 @@ export default function TarjetaEvento({ eventos, onEdit, onVerPonentes }: Tarjet
                   )}
                   {evento.descuentoProfesor > 0 && (
                     <span>Profesores: {evento.descuentoProfesor}%</span>
+                  )}
+                </div>
+              </div>
+            )}
+            {(evento.aliadoNombre || evento.aliadoImg) && (
+              <div className="mt-3 pt-3 border-t">
+                <p className="text-sm font-medium mb-2">Alianza:</p>
+                <div className="flex items-center gap-3">
+                  {evento.aliadoImg && (
+                    <img 
+                      src={evento.aliadoImg} 
+                      alt={evento.aliadoNombre || 'Aliado'} 
+                      className="w-12 h-12 object-cover rounded-md border"
+                    />
+                  )}
+                  {evento.aliadoNombre && (
+                    <span className="text-sm font-medium">{evento.aliadoNombre}</span>
                   )}
                 </div>
               </div>

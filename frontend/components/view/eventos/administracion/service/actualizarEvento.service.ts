@@ -1,7 +1,6 @@
 import { clientApollo } from "@/functions";
 import ACTUALIZAR_EVENTO from "../query/ACTUALIZAR_EVENTO";
 import useEventosStore from "../store/eventosStore";
-import { getEventosService } from "./getEventos.service";
 import { isProd } from "@/env";
 import notify from "@/components/nano/notify";
 
@@ -51,8 +50,6 @@ export async function actualizarEventoService(params: ActualizarEventoParams) {
     if (data?.actualizarEvento?.type && data?.actualizarEvento?.message) {
       notify({ type: data.actualizarEvento.type, message: data.actualizarEvento.message });
     }
-
-    await getEventosService();
   } catch (err: any) {
     if (!isProd) {
       console.warn("Fallo la mutación:", err);

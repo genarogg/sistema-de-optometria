@@ -33,6 +33,29 @@ const ACTUALIZAR_EVENTO = gql`
     ) {
       message
       type
+      data {
+        id
+        nombre
+        fecha
+        lugar
+        costo
+        descuentoEstudiante
+        descuentoProfesor
+        tipo
+        vigencia
+        aliadoImg
+        aliadoNombre
+        ponenteEvento {
+          id
+          usuarioId
+          isActivo
+          usuario {
+            primerNombre
+            primerApellido
+            cedula
+          }
+        }
+      }
     }
   }
 `;
