@@ -333,6 +333,7 @@ export default function ModalSuscribirme({
                   value={comprobante}
                   onChange={(e) => setComprobante(e.target.value)}
                   disabled={isLoading}
+                  maxLength={8}
                 />
               </div>
             )}
@@ -393,7 +394,7 @@ export default function ModalSuscribirme({
             <div className="flex gap-2 pt-4">
               <Button
                 type="button"
-                variant="outline"
+                variant="secondary"
                 onClick={onClose}
                 disabled={isLoading}
                 className="flex-1"

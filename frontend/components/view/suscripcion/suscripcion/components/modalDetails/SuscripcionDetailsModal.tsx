@@ -20,8 +20,10 @@ import {
 
 import { showMoney } from "@/functions/super-money";
 
+import type { Suscripcion } from "../../store/suscripcionStore";
+
 interface SuscripcionDetailsModalProps {
-  suscripcion: any;
+  suscripcion: Suscripcion | undefined;
   onClose: () => void;
 }
 
@@ -80,7 +82,7 @@ const FieldRow = ({
 }: {
   icon: React.ReactNode;
   label: string;
-  value: string;
+  value: string | number;
   shaded: boolean;
 }) => (
   <div
@@ -134,7 +136,7 @@ const FieldCard = ({
 }: {
   icon: React.ReactNode;
   label: string;
-  value: string;
+  value: string | number;
 }) => (
   <div
     style={{
@@ -182,7 +184,7 @@ const MetricCard = ({
 }: {
   icon: React.ReactNode;
   label: string;
-  value: string;
+  value: string | number;
 }) => (
   <div
     style={{
@@ -219,6 +221,10 @@ const SuscripcionDetailsModal: React.FC<SuscripcionDetailsModalProps> = ({
 }) => {
   const isMobile = useIsMobile();
   const { usuario } = useAuthStore();
+
+  if (!suscripcion) {
+    return null;
+  }
 
   const cfg =
     ESTATUS_CONFIG[suscripcion.estatus as EstatusSuscripcion] ??

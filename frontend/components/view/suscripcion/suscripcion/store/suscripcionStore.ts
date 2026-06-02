@@ -31,7 +31,7 @@ export interface SuscripcionMeta {
 }
 
 interface SuscripcionState {
-  suscripciones: Suscripcion[];
+  suscripciones: Suscripcion[] | undefined; // ✅ undefined = aún no cargado
   filtro: string;
   estatusFiltro: EstatusSuscripcion | null;
   cargando: boolean;
@@ -59,7 +59,7 @@ interface SuscripcionState {
 }
 
 const useSuscripcionStore = create<SuscripcionState>((set, get) => ({
-  suscripciones: [],
+  suscripciones: undefined, // ✅ era [] — undefined evita falsos positivos antes de cargar
   filtro: "",
   estatusFiltro: null,
   cargando: false,
@@ -77,7 +77,7 @@ const useSuscripcionStore = create<SuscripcionState>((set, get) => ({
 
   actualizarEstatusSuscripcion: (id, nuevoEstatus) =>
     set((state) => ({
-      suscripciones: state.suscripciones.map((s) =>
+      suscripciones: state.suscripciones?.map((s) =>
         s.id === id ? { ...s, estatus: nuevoEstatus } : s
       ),
     })),
