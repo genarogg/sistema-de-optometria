@@ -63,7 +63,10 @@ export default function SuscripcionView() {
           </TabsList>
 
           <TabsContent value="suscripciones" className="space-y-4 mt-4">
-            <SuscripcionSection />
+            <SuscripcionSection 
+              setActiveTab={setActiveTab} 
+              activeTab={activeTab}
+            />
           </TabsContent>
 
           <TabsContent value="suscribirme" className="space-y-4 mt-4">
