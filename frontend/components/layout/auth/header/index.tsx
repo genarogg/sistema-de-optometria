@@ -38,8 +38,8 @@ const Header: React.FC<HeaderProps> = () => {
         { href: "/dashboard/evento", label: "Evento", visible: isAuthenticated },
         { href: "/dashboard/suscripcion", label: "Suscripción", visible: isAuthenticated },
         { href: "/dashboard/perfil", label: "Perfil", visible: isAuthenticated },
-        { href: "/dashboard/usuarios", label: "Usuarios", visible: isAuthenticated, role: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] },
-        { href: "/dashboard/bitacora", label: "bitacora", visible: isAuthenticated, role: [Rol.SUPER_USUARIO] },
+        { href: "/dashboard/usuarios", label: "Usuarios",  role: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] },
+        { href: "/dashboard/bitacora", label: "bitacora",  role: [Rol.SUPER_USUARIO] },
         {
             href: "/dashboard/login",
             label: "Salir",
