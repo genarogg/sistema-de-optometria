@@ -9,7 +9,6 @@ import PlanesSection from './planes';
 import { Rol } from '@/global/enums';
 import SuscripcionSection from './suscripcion/components/SuscripcionSection';
 import SuscribirmeSection from './suscribirme/components/SuscribirmeSection';
-import { getSuscripcionesService } from './suscripcion/service/getSuscripciones.service';
 
 export default function SuscripcionView() {
   const { usuario } = useAuthStore();
@@ -30,17 +29,8 @@ export default function SuscripcionView() {
     }
   }, [activeTab]);
 
-  useEffect(() => {
-    if (!isSuperUsuarioOrAdmin) {
-      getSuscripcionesService();
-    }
-  }, [isSuperUsuarioOrAdmin]);
-
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    if (value === 'suscripciones' && !isSuperUsuarioOrAdmin) {
-      getSuscripcionesService();
-    }
   };
 
   return (

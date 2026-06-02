@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useCallback, useMemo } from "react";
+import React, { useEffect, useCallback, useMemo, useRef } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from "lucide-react";
@@ -31,6 +31,9 @@ const SuscripcionSection: React.FC<SuscripcionSectionProps> = ({ setActiveTab, a
 
   const { usuario } = useAuthStore();
   const isMobile = useIsMobile();
+  
+  // Refs para evitar notificaciones duplicadas
+  const notificacionMostradaRef = useRef<string | null>(null);
 
   // Mostrar opciones solo si es admin o super usuario
   const esAdminOSuperUsuario =
@@ -38,46 +41,66 @@ const SuscripcionSection: React.FC<SuscripcionSectionProps> = ({ setActiveTab, a
 
   // Validar suscripciones y redirigir
   useEffect(() => {
-    console.log("toxis")
-    if (!esAdminOSuperUsuario && !cargando && suscripciones.length > 0) {
-      const tieneSuscripcionValida = suscripciones.some(
-        (s) => s.estatus === EstatusSuscripcion.PENDIENTE || s.estatus === EstatusSuscripcion.VALIDADO
-      );
+    if (!esAdminOSuperUsuario && !cargando) {
+      if (suscripciones.length > 0) {
+        const tieneSuscripcionValida = suscripciones.some(
+          (s) => s.estatus === EstatusSuscripcion.PENDIENTE || s.estatus === EstatusSuscripcion.VALIDADO
+        );
 
-      const suscripcionVencida = suscripciones.find(
-        (s) => s.estatus === EstatusSuscripcion.VENCIDO
-      );
+        const suscripcionVencida = suscripciones.find(
+          (s) => s.estatus === EstatusSuscripcion.VENCIDO
+        );
 
-      const suscripcionRechazada = suscripciones.find(
-        (s) => s.estatus === EstatusSuscripcion.RECHAZADA
-      );
+        const suscripcionRechazada = suscripciones.find(
+          (s) => s.estatus === EstatusSuscripcion.RECHAZADA
+        );
 
-      console.log("hola")
-
-      if (!tieneSuscripcionValida) {
-        setActiveTab('suscribirme');
-        if (suscripcionVencida) {
-          notify({
-            type: 'warning',
-            message: 'Tu plan de suscripción está vencido. Por favor renueva tu suscripción.'
-          });
-        } else if (suscripcionRechazada) {
-          notify({
-            type: 'error',
-            message: 'Tu plan de suscripción fue rechazado. Por favor renueva tu suscripción.'
-          });
+        if (!tieneSuscripcionValida) {
+          setActiveTab('suscribirme');
+          
+          // Determinar el tipo de notificación
+          let tipoNotificacion: string;
+          if (suscripcionVencida) {
+            tipoNotificacion = 'vencida';
+          } else if (suscripcionRechazada) {
+            tipoNotificacion = 'rechazada';
+          } else {
+            return;
+          }
+          
+          // Solo mostrar la notificación si no se ha mostrado antes este tipo
+          if (notificacionMostradaRef.current !== tipoNotificacion) {
+            notificacionMostradaRef.current = tipoNotificacion;
+            if (suscripcionVencida) {
+              notify({
+                type: 'warning',
+                message: 'Tu plan de suscripción está vencido. Por favor renueva tu suscripción.'
+              });
+            } else if (suscripcionRechazada) {
+              notify({
+                type: 'error',
+                message: 'Tu plan de suscripción fue rechazado. Por favor renueva tu suscripción.'
+              });
+            }
+          }
+        } else {
+          // Si tiene suscripción válida, limpiamos la bandera
+          notificacionMostradaRef.current = null;
         }
-      }
-    } else if (!esAdminOSuperUsuario && !cargando && suscripciones.length === 0) {
-      // No tiene ninguna suscripción
-      setActiveTab('suscribirme');
-
-       notify({
+      } else {
+        // No tiene ninguna suscripción
+        setActiveTab('suscribirme');
+        
+        if (notificacionMostradaRef.current !== 'ninguna') {
+          notificacionMostradaRef.current = 'ninguna';
+          notify({
             type: 'warning',
             message: 'No tienes ninguna suscripción activa. Por favor, suscribete para acceder a las funciones del sistema.'
           });
+        }
+      }
     }
-  }, [esAdminOSuperUsuario, cargando, suscripciones, setActiveTab, activeTab]);
+  }, [esAdminOSuperUsuario, cargando, suscripciones, setActiveTab]);
 
   useEffect(() => {
     getSuscripcionesService({ filtro, pagina: paginaActual });
