@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -21,24 +21,30 @@ const BuscadorSuscripcion: React.FC = () => {
   const setEstatusFiltro = useSuscripcionStore((s) => s.setEstatusFiltro);
   const setPaginaActual = useSuscripcionStore((s) => s.setPaginaActual);
 
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // ✅ Ref para siempre tener el estatusFiltro actualizado dentro del timeout
+  const estatusFiltroRef = useRef(estatusFiltro);
+  useEffect(() => {
+    estatusFiltroRef.current = estatusFiltro;
+  }, [estatusFiltro]);
 
   const handleFiltroChange = useCallback(
     (value: string) => {
       setFiltro(value);
       setPaginaActual(1);
 
-      // Limpiar timeout anterior
-      if (timeoutId) clearTimeout(timeoutId);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-      // Establecer nuevo timeout de 600ms
-      const newTimeoutId = setTimeout(() => {
-        getSuscripcionesService({ filtro: value });
+      // ✅ Se pasa `value` directo (no del store) y el estatus desde la ref
+      timeoutRef.current = setTimeout(() => {
+        getSuscripcionesService({
+          filtro: value,
+          estatus: estatusFiltroRef.current,
+        });
       }, 600);
-
-      setTimeoutId(newTimeoutId);
     },
-    [setFiltro, setPaginaActual, timeoutId]
+    [setFiltro, setPaginaActual]
   );
 
   const handleEstatusChange = useCallback(
@@ -47,16 +53,19 @@ const BuscadorSuscripcion: React.FC = () => {
         value === "todos" ? null : (value as EstatusSuscripcion);
       setEstatusFiltro(estatus);
       setPaginaActual(1);
-      getSuscripcionesService({ filtro });
+
+      // ✅ Se pasa `filtro` del store (no cambia con keystrokes aquí)
+      //    y el nuevo estatus directo (no del store, aún no actualizado)
+      getSuscripcionesService({ filtro, estatus });
     },
     [setEstatusFiltro, setPaginaActual, filtro]
   );
 
   useEffect(() => {
     return () => {
-      if (timeoutId) clearTimeout(timeoutId);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
-  }, [timeoutId]);
+  }, []);
 
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

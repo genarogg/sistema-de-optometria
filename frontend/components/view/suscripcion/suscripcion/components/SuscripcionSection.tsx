@@ -104,7 +104,7 @@ const SuscripcionSection: React.FC<SuscripcionSectionProps> = ({ setActiveTab, a
 
   useEffect(() => {
     getSuscripcionesService({ filtro, pagina: paginaActual });
-  }, [filtro, paginaActual]);
+  }, [paginaActual]);
 
   const handlePaginaChange = useCallback(
     (pagina: number) => {
