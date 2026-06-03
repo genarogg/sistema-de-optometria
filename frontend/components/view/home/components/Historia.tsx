@@ -29,7 +29,7 @@ const Historia = () => {
               marcaron cada gestión.
             </p>
 
-            <div className="mt-8">
+            {/* <div className="mt-8">
               <Link
                 href="/historia"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-semibold shadow-soft hover:shadow-glow hover:opacity-90 transition-all"
@@ -38,7 +38,7 @@ const Historia = () => {
                 Ver historia completa
                 <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </div> */}
           </div>
 
           {/* Imagen */}

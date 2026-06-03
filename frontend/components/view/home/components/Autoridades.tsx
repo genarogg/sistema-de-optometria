@@ -4,12 +4,16 @@ import actas from "@/public/junta/directiva-1_resultado.webp";
 import academico from "@/public/junta/directiva-2_resultado.webp";
 import presidente from "@/public/junta/directiva-3_resultado.webp";
 import finanzas from "@/public/junta/directiva-4_resultado.webp";
+import vicepresidente from "@/public/junta/directiva-6.webp";
+import Eventos from "@/public/junta/directiva-5.webp";
 
 const miembros = [
   { nombre: "Lcda. Maulin Milano", cargo: "Presidente (a)", foto: presidente },
-  { nombre: "Lcdo. Edgar Pérez", cargo: "Secretario (a) de actas", foto: actas },
-  { nombre: "Lcdo. José Otto Rodríguez", cargo: "Director (a) academico", foto: academico },
-  { nombre: "Lcda. Zuleyma Gómez", cargo: "Director (a) de finanzas", foto: finanzas },
+  { nombre: "Lcdo. Edgar Pérez", cargo: "Vicepresidente (a)", foto: vicepresidente },
+  { nombre: "Lcdo. José Otto Rodríguez", cargo: "Secretario (a) de actas", foto: actas },
+  { nombre: "Lcda. Zuleyma Gómez", cargo: "Director (a) academico", foto: academico },
+  { nombre: "Lcdo. Carlos Ramírez", cargo: "Director (a) de finanzas", foto: finanzas },
+  { nombre: "Lcda. loengri ricoberi", cargo: "Director (a) de eventos", foto: Eventos },
 ];
 
 const Autoridades = () => {
@@ -26,7 +30,7 @@ const Autoridades = () => {
           </p>
         </div>
 
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {miembros.map((m) => (
             <article
               key={m.nombre}

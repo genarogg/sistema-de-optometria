@@ -56,7 +56,7 @@ const Congresos = () => {
 
             <div className="mt-8 pt-6 border-t border-border/60">
               <Button asChild size="lg" className="group">
-                <Link href="/login">
+                <Link href="/dashboard/login">
                   Inscribirse en el próximo congreso
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>

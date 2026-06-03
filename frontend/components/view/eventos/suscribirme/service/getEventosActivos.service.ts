@@ -34,9 +34,9 @@ export async function getEventosActivosService() {
     setEventos(eventos);
     setSuscripcionesEventoUsuario(suscripcionesEventoUsuario);
 
-    if (data?.getEventosActivos?.type && data?.getEventosActivos?.message) {
-      notify({ type: data.getEventosActivos.type, message: data.getEventosActivos.message });
-    }
+    // if (data?.getEventosActivos?.type && data?.getEventosActivos?.message) {
+    //   notify({ type: data.getEventosActivos.type, message: data.getEventosActivos.message });
+    // }
   } catch (err: any) {
     if (!isProd) {
       console.warn("Fallo la query:", err);
