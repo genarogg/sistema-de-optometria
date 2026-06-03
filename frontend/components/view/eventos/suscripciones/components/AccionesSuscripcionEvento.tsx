@@ -30,6 +30,27 @@ export default function AccionesSuscripcionEvento({
   const esAdminOSuperUsuario =
     rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
 
+  // Verificar si la fecha del evento es <= fecha actual
+  const esFechaEventoPasada = () => {
+    if (!suscripcion.evento?.fecha) return false;
+    const fechaEvento = new Date(suscripcion.evento.fecha);
+    const fechaActual = new Date();
+    // Establecemos la hora a medianoche para comparar solo fechas
+    fechaActual.setHours(0, 0, 0, 0);
+    fechaEvento.setHours(0, 0, 0, 0);
+    return fechaEvento <= fechaActual;
+  };
+
+  // Obtener los estatus disponibles según la fecha del evento
+  const estatusDisponibles = Object.values(EstatusPagoEvento).filter((estatus) => {
+    // Si la fecha del evento no ha pasado, ocultamos ASISTIO y NO_ASISTIO
+    // if (!esFechaEventoPasada()) {
+    //   return estatus !== EstatusPagoEvento.ASISTIO && estatus !== EstatusPagoEvento.NO_ASISTIO;
+    // }
+    // Si la fecha ya pasó, mostramos todos los estatus
+    return true;
+  });
+
   return (
     <div className="flex items-center gap-2">
       {esAdminOSuperUsuario && onEstatusChange && (
@@ -43,7 +64,7 @@ export default function AccionesSuscripcionEvento({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {Object.values(EstatusPagoEvento).map((estatus) => (
+            {estatusDisponibles.map((estatus) => (
               <SelectItem key={estatus} value={estatus}>
                 {estatus}
               </SelectItem>

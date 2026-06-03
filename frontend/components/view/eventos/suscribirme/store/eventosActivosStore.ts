@@ -11,6 +11,8 @@ interface Evento {
   descuentoProfesor: number;
   tipo: string;
   vigencia: string;
+  aliadoNombre?: string;
+  aliadoImg?: string;
   ponenteEvento: any[];
 }
 

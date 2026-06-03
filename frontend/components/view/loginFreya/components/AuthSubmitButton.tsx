@@ -182,6 +182,10 @@ const AuthSubmitButton = ({
       })
 
       if (onSuccess) onSuccess();
+
+      if (context === "register") {
+        router.push("/dashboard/suscripcion")
+      }
       router.push("/dashboard/evento")
 
     } catch (error) {

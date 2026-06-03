@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, MapPin, Users, UsersRound, CheckCircle, RefreshCw } from 'lucide-react';
 import { TipoEvento, Rol, EstatusPagoEvento } from '@/global/enums';
 import { useAuthStore } from '@/context/auth/AuthContext';
-
+import { showMoney } from '@/functions/super-money';
 interface Evento {
   id: number;
   nombre: string;
@@ -18,6 +18,8 @@ interface Evento {
   descuentoProfesor: number;
   tipo: string;
   vigencia: string;
+  aliadoNombre?: string;
+  aliadoImg?: string;
   ponenteEvento: any[];
 }
 
@@ -29,6 +31,8 @@ interface TarjetaEventoActivoProps {
 
 export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcionesMap }: TarjetaEventoActivoProps) {
   const { usuario } = useAuthStore();
+
+  console.log(eventos)
 
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('es-ES', {
@@ -171,10 +175,10 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                 </div>
                 <div className="text-sm">
                   <span className="text-muted-foreground">Precio: </span>
-                  <span className="font-semibold text-lg text-primary">${precio.toLocaleString()}</span>
-                  {evento.costo !== precio && (
+                  <span className="font-semibold text-lg text-primary">${showMoney(precio)}</span>
+                  {!usuario?.rol && evento.costo !== precio && (
                     <span className="text-xs text-muted-foreground line-through ml-2">
-                      ${evento.costo.toLocaleString()}
+                      Bs {showMoney(evento.costo)}
                     </span>
                   )}
                 </div>
@@ -184,6 +188,23 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                   <Badge variant="secondary" className="text-xs">
                     {descuentoTexto}
                   </Badge>
+                </div>
+              )}
+              {(evento.aliadoNombre || evento.aliadoImg) && (
+                <div className="mt-3 pt-3 border-t">
+                  <p className="text-sm font-medium mb-2">Alianza:</p>
+                  <div className="flex items-center gap-3">
+                    {evento.aliadoImg && (
+                      <img 
+                        src={evento.aliadoImg} 
+                        alt={evento.aliadoNombre || 'Aliado'} 
+                        className="w-12 h-12 object-cover rounded-md border"
+                      />
+                    )}
+                    {evento.aliadoNombre && (
+                      <span className="text-sm font-medium">{evento.aliadoNombre}</span>
+                    )}
+                  </div>
                 </div>
               )}
             </CardContent>

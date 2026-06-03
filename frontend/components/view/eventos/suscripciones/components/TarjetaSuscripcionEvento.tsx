@@ -10,6 +10,7 @@ import SuscripcionEventoDetailsModal from "./SuscripcionEventoDetailsModal";
 import type { SuscripcionEvento } from "../store/suscripcionEventoStore";
 import { updateEstatusSuscripcionEventoService } from "../service/updateEstatusSuscripcionEvento.service";
 import getStatusColor from "../utils/getStatusColor";
+import { showMoney } from "@/functions/super-money";
 
 interface TarjetaSuscripcionEventoProps {
   suscripciones: SuscripcionEvento[];
@@ -113,7 +114,7 @@ const TarjetaSuscripcionEvento: React.FC<TarjetaSuscripcionEventoProps> = React.
                       <p className="text-xs font-semibold text-muted-foreground">
                         Precio
                       </p>
-                      <p>$ {suscripcion.precioAlSuscripcion}</p>
+                      <p>Bs {showMoney(suscripcion.precioAlSuscripcion)}</p>
                     </div>
                     <div>
                       <p className="text-xs font-semibold text-muted-foreground">

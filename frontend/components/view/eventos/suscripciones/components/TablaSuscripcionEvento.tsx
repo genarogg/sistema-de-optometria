@@ -17,6 +17,7 @@ import SuscripcionEventoDetailsModal from "./SuscripcionEventoDetailsModal";
 import type { SuscripcionEvento } from "../store/suscripcionEventoStore";
 import { updateEstatusSuscripcionEventoService } from "../service/updateEstatusSuscripcionEvento.service";
 import getStatusColor from "../utils/getStatusColor";
+import { showMoney } from "@/functions/super-money";
 
 export interface SuscripcionEventoMeta {
   total: number;
@@ -121,7 +122,7 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
                       {suscripcion.evento.nombre}
                     </TableCell>
                     <TableCell className="text-sm border-r">
-                      $ {suscripcion.precioAlSuscripcion}
+                      Bs {showMoney(suscripcion.precioAlSuscripcion)}
                     </TableCell>
                     <TableCell className="border-r">
                       <div className="flex items-center justify-center w-full h-full">

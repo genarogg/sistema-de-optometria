@@ -48,6 +48,16 @@ const ESTATUS_CONFIG: Record<
     dotColor: "#f43f5e",
     badgeStyle: { background: "#fff1f2", border: "1px solid #fecdd3", color: "#9f1239" },
   },
+  [EstatusPagoEvento.ASISTIO]: {
+    label: "Asistió",
+    dotColor: "#3b82f6",
+    badgeStyle: { background: "#eff6ff", border: "1px solid #bfdbfe", color: "#1e40af" },
+  },
+  [EstatusPagoEvento.NO_ASISTIO]: {
+    label: "No asistió",
+    dotColor: "#6b7280",
+    badgeStyle: { background: "#f3f4f6", border: "1px solid #d1d5db", color: "#374151" },
+  },
 };
 
 const formatearFecha = (fecha: string | number): string => {

@@ -16,6 +16,8 @@ const GET_EVENTOS_ACTIVOS = gql`
           descuentoProfesor
           tipo
           vigencia
+          aliadoNombre
+          aliadoImg
           ponenteEvento {
             id
             usuarioId

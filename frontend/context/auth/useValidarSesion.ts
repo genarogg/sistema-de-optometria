@@ -39,13 +39,17 @@ const useValidarSesion = () => {
                     fetchPolicy: 'no-cache',
                 });
 
-                console.log(response)
                 const data: any = response.data;
 
                 console.log("validacion data: ", data)
 
-                if (!data?.validarSesion) {
+                if (!data?.validarSesion?.data) {
+                    console.log("No hay datos de validación");
                     logout();
+
+                    if (location?.startsWith("/dashboard")) {
+                        navigate.push("/dashboard/login");
+                    }
                     return;
                 }
 
