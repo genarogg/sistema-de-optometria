@@ -84,6 +84,7 @@ const getEventos = async (_: unknown, args: GetEventosArgs) => {
             mensaje: "Se consultaron los eventos",
         });
 
+        console.log("eventos: ", eventos)
         return successResponse({
             message: "Eventos obtenidos correctamente",
             data: eventos,

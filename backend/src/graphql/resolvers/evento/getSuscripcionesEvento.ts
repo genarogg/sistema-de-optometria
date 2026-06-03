@@ -95,6 +95,7 @@ const getSuscripcionesEvento = async (_: unknown, args: GetSuscripcionesEventoAr
       usuarioId: usuario.id,
       mensaje: "Se consultaron las suscripciones de eventos",
     });
+    console.log("suscripciones: ", suscripciones)
 
     return successResponse({
       message: "Suscripciones de eventos obtenidas correctamente",

@@ -39,11 +39,6 @@ const TarjetaSuscripcionEvento: React.FC<TarjetaSuscripcionEventoProps> = React.
     const esAdminOSuperUsuario =
       rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
 
-    const suscripcionesPaginadas = useMemo(() => {
-      const inicio = (paginaActual - 1) * itemsPorPagina;
-      return suscripciones.slice(inicio, inicio + itemsPorPagina);
-    }, [suscripciones, paginaActual, itemsPorPagina]);
-
     const handleEstatusChange = useCallback(
       (suscripcionId: number, nuevoEstatus: EstatusPagoEvento) => {
         updateEstatusSuscripcionEventoService({
@@ -69,7 +64,7 @@ const TarjetaSuscripcionEvento: React.FC<TarjetaSuscripcionEventoProps> = React.
     return (
       <>
         <div className="space-y-4">
-          {suscripcionesPaginadas.length === 0 ? (
+          {suscripciones.length === 0 ? (
             <Card>
               <CardContent className="text-center py-10">
                 <p className="text-muted-foreground">
@@ -78,7 +73,7 @@ const TarjetaSuscripcionEvento: React.FC<TarjetaSuscripcionEventoProps> = React.
               </CardContent>
             </Card>
           ) : (
-            suscripcionesPaginadas.map((suscripcion) => (
+            suscripciones.map((suscripcion) => (
               <Card key={suscripcion.id} className="overflow-hidden">
                 <CardHeader className="pb-3 space-y-2">
                   <div className="flex items-start justify-between">

@@ -52,10 +52,6 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
       rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
 
     const itemsPorPagina = meta?.limit || 20;
-    const suscripcionesPaginadas = useMemo(() => {
-      const inicio = (paginaActual - 1) * itemsPorPagina;
-      return suscripciones.slice(inicio, inicio + itemsPorPagina);
-    }, [suscripciones, paginaActual, itemsPorPagina]);
 
     const handleEstatusChange = useCallback(
       (suscripcionId: number, nuevoEstatus: EstatusPagoEvento) => {
@@ -95,14 +91,14 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
               </TableRow>
             </TableHeader>
             <TableBody>
-              {suscripcionesPaginadas.length === 0 ? (
+              {suscripciones.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={7} className="text-center py-10 text-muted-foreground">
                     No se encontraron suscripciones.
                   </TableCell>
                 </TableRow>
               ) : (
-                suscripcionesPaginadas.map((suscripcion, index) => (
+                suscripciones.map((suscripcion, index) => (
                   <TableRow
                     key={suscripcion.id}
                     className={`transition-colors hover:bg-primary/10 ${
