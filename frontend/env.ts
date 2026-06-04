@@ -1,10 +1,10 @@
 const DEBUG = false
 
 const BACKEND_DEV = "http://localhost:4000"
-const BACKEND_PROD = "https://covoficial.org/"
+const BACKEND_PROD = "https://covoficial.org"
 
 const FRONTEND_DEV = "http://localhost:3000"
-const FRONTEND_PROD = "https://covoficial.org/"
+const FRONTEND_PROD = "https://covoficial.org"
 
 /* GOOGLE */
 const RECAPTCHA_KEY = "6LchANgsAAAAAARpGsiaoQccnqkuRJ2KHvP_aZIF"
