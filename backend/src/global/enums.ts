@@ -88,7 +88,8 @@ export enum TipoEvento {
 export enum TipoSuscripcion {
   AGREMIADO = 'AGREMIADO',
   ESTUDIANTE = 'ESTUDIANTE',
-  PROFESOR = 'PROFESOR'
+  PROFESOR = 'PROFESOR',
+  VISITANTE = 'VISITANTE'
 }
 
 export enum VigenciaEvento {

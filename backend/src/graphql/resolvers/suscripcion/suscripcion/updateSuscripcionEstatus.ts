@@ -1,5 +1,5 @@
 import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
-import { Rol, EstatusSuscripcion, AccionesBitacora } from "@prisma/client";
+import { Rol, EstatusSuscripcion, AccionesBitacora, TipoSuscripcion } from "@prisma/client";
 
 interface UpdateSuscripcionEstatusArgs {
     token: string;
@@ -29,7 +29,7 @@ const updateSuscripcionEstatus = async (_: unknown, args: UpdateSuscripcionEstat
 
         const suscripcion = await prisma.suscripcion.findUnique({
             where: { id: suscripcionId },
-            include: { usuario: true }
+            include: { usuario: true, planSuscripcion: true }
         });
 
         if (!suscripcion) {
@@ -47,11 +47,40 @@ const updateSuscripcionEstatus = async (_: unknown, args: UpdateSuscripcionEstat
         const suscripcionActualizada = await prisma.suscripcion.update({
             where: { id: suscripcionId },
             data: { estatus },
+            include: { usuario: true, planSuscripcion: true }
         });
 
-        const usuarioSuscripcion = suscripcion.usuario;
+        const usuarioSuscripcion = suscripcionActualizada.usuario;
 
-        
+        const esAutoridadVigente = await prisma.autoridad.findFirst({
+            where: { usuarioId: usuarioSuscripcion.id, vigente: true }
+        });
+
+        const noEsAdminNiSuper = usuarioSuscripcion.rol !== Rol.SUPER_USUARIO && usuarioSuscripcion.rol !== Rol.ADMINISTRADOR;
+
+        if (!esAutoridadVigente && noEsAdminNiSuper) {
+            let nuevoRol;
+
+            if (estatus === EstatusSuscripcion.VALIDADO) {
+                const tipoSuscripcion = suscripcionActualizada.planSuscripcion.tipo;
+                if (tipoSuscripcion === TipoSuscripcion.AGREMIADO) {
+                    nuevoRol = Rol.AGREMIADO_SOLVENTE;
+                } else if (tipoSuscripcion === TipoSuscripcion.ESTUDIANTE) {
+                    nuevoRol = Rol.ESTUDIANTE;
+                } else if (tipoSuscripcion === TipoSuscripcion.PROFESOR) {
+                    nuevoRol = Rol.PROFESOR;
+                }
+            } else {
+                nuevoRol = Rol.VISITANTE;
+            }
+
+            await prisma.usuario.update({
+                where: { id: usuarioSuscripcion.id },
+                data: { rol: nuevoRol }
+            });
+        }
+
+
 
         let bitacoraType;
 

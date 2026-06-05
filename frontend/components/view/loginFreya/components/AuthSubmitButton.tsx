@@ -185,6 +185,7 @@ const AuthSubmitButton = ({
 
       if (context === "register") {
         router.push("/dashboard/suscripcion")
+        return;
       }
       router.push("/dashboard/evento")
 

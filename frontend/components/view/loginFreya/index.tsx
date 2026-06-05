@@ -12,9 +12,9 @@ interface indexProps {
 const index: React.FC<indexProps> = () => {
     return (
         <div className=" flex items-center justify-center">
-            <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}>
+            {/* <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_KEY}> */}
                 <AuthForm />
-            </GoogleReCaptchaProvider>
+            {/* </GoogleReCaptchaProvider> */}
         </div>
     );
 }
