@@ -41,7 +41,7 @@ const downloadCertificadoService = async ({
                 query: GET_CERTIFICADO,
                 variables: {
                     token,
-                    usuarioId,
+                    usuarioId, // Para admins, enviamos el usuarioId
                     eventoId,
                 },
                 fetchPolicy: "no-cache",
@@ -76,7 +76,7 @@ const downloadCertificadoService = async ({
                 tipo: evento.tipo.toLowerCase(),
             };
         } catch (error) {
-            console.error("Error descargando certificado:", error);
+            console.error("Error al generar certificado:", error);
             throw error;
         } finally {
             setDownloading(false);
@@ -86,14 +86,14 @@ const downloadCertificadoService = async ({
     toast.promise(downloadPromise, {
         loading: "Generando certificado...",
         success: (data) => {
-            return `Descarga de certificado de ${evento.tipo.toLowerCase()} iniciada con éxito.`;
+            return `Descarga de certificado de ${evento.tipo.toLowerCase()} iniciada con éxito!`;
         },
         error: (err) => {
-            return err?.message || "Error al descargar el certificado. Por favor, intenta de nuevo.";
+            return err?.message || "Error al descargar el certificado. Por favor, intente de nuevo.";
         },
     });
 
     return downloadPromise;
-}
+};
 
 export default downloadCertificadoService;

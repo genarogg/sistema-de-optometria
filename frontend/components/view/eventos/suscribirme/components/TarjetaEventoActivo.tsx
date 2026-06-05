@@ -132,7 +132,6 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
     setDownloadingMap(prev => new Map(prev).set(evento.id, true));
     
     await downloadCertificadoService({
-      usuarioId: usuario.id,
       eventoId: evento.id,
       usuario: usuario,
       evento: {

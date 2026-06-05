@@ -23,7 +23,7 @@ extend type Query {
   
   getCertificado(
     token: String!
-    usuarioId: Int!
+    usuarioId: Int
     eventoId: Int!
   ): DocumentoResponse!
 }

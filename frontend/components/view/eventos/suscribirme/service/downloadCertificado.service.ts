@@ -6,7 +6,6 @@ import { notify } from "@/components/nano";
 import { TipoEvento } from "@/global/enums";
 
 interface DownloadCertificadoParams {
-    usuarioId: number;
     eventoId: number;
     usuario: {
         primerNombre: string;
@@ -20,7 +19,6 @@ interface DownloadCertificadoParams {
 }
 
 const downloadCertificadoService = async ({
-    usuarioId,
     eventoId,
     usuario,
     evento,
@@ -41,7 +39,6 @@ const downloadCertificadoService = async ({
                 query: GET_CERTIFICADO,
                 variables: {
                     token,
-                    usuarioId,
                     eventoId,
                 },
                 fetchPolicy: "no-cache",
@@ -94,6 +91,6 @@ const downloadCertificadoService = async ({
     });
 
     return downloadPromise;
-}
+};
 
 export default downloadCertificadoService;

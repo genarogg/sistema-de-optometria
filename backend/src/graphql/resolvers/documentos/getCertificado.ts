@@ -7,7 +7,7 @@ import formatFechaCorto from "./fn/formatFechaCorto";
 
 interface GetCertificadoArgs {
     token: string;
-    usuarioId: number;
+    usuarioId?: number;
     eventoId: number;
 }
 
@@ -18,10 +18,6 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
 
     if (!token) {
         return errorResponse({ message: "Token requerido" });
-    }
-
-    if (!usuarioId) {
-        return errorResponse({ message: "Usuario requerido" });
     }
 
     if (!eventoId) {
@@ -35,10 +31,12 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
             return errorResponse({ message: "Token inválido o expirado" });
         }
 
+        const usuarioIdToUse = usuarioId || usuarioVerificado.id;
+
         // Obtener la suscripción del usuario al evento
         const suscripcionEvento = await prisma.suscripcionEvento.findFirst({
             where: {
-                usuarioId,
+                usuarioId: usuarioIdToUse,
                 eventoId,
             },
             include: {
