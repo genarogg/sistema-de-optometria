@@ -1,13 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, Users, UsersRound, CheckCircle, RefreshCw } from 'lucide-react';
+import { Calendar, MapPin, Users, UsersRound, CheckCircle, RefreshCw, Award } from 'lucide-react';
 import { TipoEvento, Rol, EstatusPagoEvento } from '@/global/enums';
 import { useAuthStore } from '@/context/auth/AuthContext';
 import { showMoney } from '@/functions/super-money';
+import downloadCertificadoService from '../service/downloadCertificado.service';
+
 interface Evento {
   id: number;
   nombre: string;
@@ -31,6 +33,7 @@ interface TarjetaEventoActivoProps {
 
 export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcionesMap }: TarjetaEventoActivoProps) {
   const { usuario } = useAuthStore();
+  const [downloadingMap, setDownloadingMap] = useState<Map<number, boolean>>(new Map());
 
   console.log(eventos)
 
@@ -122,6 +125,26 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
     };
   };
 
+  const handleDownloadCertificado = async (evento: Evento) => {
+    if (!usuario) return;
+    if (downloadingMap.get(evento.id)) return;
+
+    setDownloadingMap(prev => new Map(prev).set(evento.id, true));
+    
+    await downloadCertificadoService({
+      usuarioId: usuario.id,
+      eventoId: evento.id,
+      usuario: usuario,
+      evento: {
+        tipo: evento.tipo as TipoEvento,
+        nombre: evento.nombre,
+      },
+      setDownloading: (val) => {
+        setDownloadingMap(prev => new Map(prev).set(evento.id, val));
+      },
+    });
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {eventos.map((evento) => {
@@ -150,6 +173,19 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                   </div>
                 </div>
                 <div className="flex gap-1">
+                  {/* Botón Descargar certificado - solo si el usuario asistió */}
+                  {estatus === EstatusPagoEvento.ASISTIO && usuario && (
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => handleDownloadCertificado(evento)}
+                      disabled={downloadingMap.get(evento.id)}
+                      title="Descargar certificado"
+                    >
+                      <Award className="h-4 w-4 mr-2" />
+                      Certificado
+                    </Button>
+                  )}
                   <Button 
                     variant={botonConfig.variant} 
                     size="sm" 
