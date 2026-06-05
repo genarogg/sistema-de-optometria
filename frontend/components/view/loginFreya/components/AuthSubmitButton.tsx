@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v4'
+
 import { isStrongPassword, isValidEmail } from "@/functions"
 import { RECAPTCHA_KEY } from "@/env"
 import { notify } from "@/components/nano"
@@ -39,7 +39,7 @@ const AuthSubmitButton = ({
   const { setLogin } = useAuthStore()
 // setIsLoading is not part of AuthState; remove this line
   const [loading, setLoading] = useState(false)
-  const { executeRecaptcha } = useGoogleReCaptcha()
+
 
   const [loginUsuario] = useMutation(LOGIN_USUARIO)
   const [registerUsuario] = useMutation(REGISTER_USUARIO)
@@ -52,9 +52,7 @@ const AuthSubmitButton = ({
     try {
       let tokenCaptcha = ''
 
-      if (RECAPTCHA_KEY && executeRecaptcha) {
-        tokenCaptcha = await executeRecaptcha(context)
-      }
+    
 
       const data = formData
       const rebootToken = localStorage.getItem("reboot-token") || null
