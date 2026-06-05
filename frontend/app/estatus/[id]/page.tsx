@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { URL_BACKEND } from '@/env';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CheckCircle, AlertCircle, User, FileText, Calendar, Award, ShieldCheck, CreditCard } from 'lucide-react';
 
-// Función para formatear tipo de documento
 const getDocumentoNombre = (tipo: string) => {
     switch (tipo) {
         case 'CERTIFICADO_TALLER': return 'Certificado de Taller';
@@ -20,7 +19,6 @@ const getDocumentoNombre = (tipo: string) => {
     }
 };
 
-// Función para obtener ícono según tipo de documento
 const getDocumentoIcono = (tipo: string) => {
     switch (tipo) {
         case 'CERTIFICADO_TALLER':
@@ -39,14 +37,25 @@ const getDocumentoIcono = (tipo: string) => {
     }
 };
 
-export default function EstatusDocumentoPage({ params }: { params: { id: string } }) {
-    const documentoId = parseInt(params.id);
+export default function EstatusDocumentoPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [documento, setDocumento] = useState<any>(null);
 
     useEffect(() => {
         const fetchDocumento = async () => {
+            const documentoId = parseInt(id);
+
+            console.log('documentoId', documentoId);
+
+            if (isNaN(documentoId)) {
+                setError('ID de documento inválido');
+                setLoading(false);
+                return;
+            }
+
             try {
                 const response = await fetch(`${URL_BACKEND}/graphql`, {
                     method: 'POST',
@@ -68,7 +77,7 @@ export default function EstatusDocumentoPage({ params }: { params: { id: string 
                 });
 
                 const result = await response.json();
-                
+
                 if (result.errors) {
                     setError(result.errors[0].message);
                     setLoading(false);
@@ -76,7 +85,7 @@ export default function EstatusDocumentoPage({ params }: { params: { id: string 
                 }
 
                 const validacionData = result.data.validacionDocumento;
-                
+
                 if (validacionData.type === 'error') {
                     setError(validacionData.message);
                     setLoading(false);
@@ -97,7 +106,7 @@ export default function EstatusDocumentoPage({ params }: { params: { id: string 
         };
 
         fetchDocumento();
-    }, [documentoId]);
+    }, [id]);
 
     if (loading) {
         return (
@@ -141,7 +150,6 @@ export default function EstatusDocumentoPage({ params }: { params: { id: string 
                     <CardHeader className="text-center pb-2 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
                         <div className="flex justify-center mb-4">
                             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-md">
-                                {/* Logo placeholder - puede reemplazarse con la imagen del colegio */}
                                 <div className="text-blue-600 font-bold text-xl">COV</div>
                             </div>
                         </div>
