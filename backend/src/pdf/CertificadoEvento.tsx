@@ -188,7 +188,7 @@ const Component = ({ data }: any) => {
 
               <QRstyle
 
-                url="https://example.com"
+                url={dataFull.urlQR}
                 size={100}
                 colorDark="#021849"
                 colorLight="#ffffff"
@@ -229,6 +229,8 @@ const Component = ({ data }: any) => {
     </Layout>
   );
 };
+
+export default Component
 
 
 

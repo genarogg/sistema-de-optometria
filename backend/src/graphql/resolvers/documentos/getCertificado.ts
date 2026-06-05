@@ -1,0 +1,151 @@
+import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
+import { TipoDeDocumento, TipoAutoridad, Rol, AccionesBitacora, TipoEvento } from "@prisma/client";
+import crearDocumentoSolicitado from "./fn/crearDocumentoSolicitado";
+import { generatePDF } from "@react-pdf-levelup/core";
+import CertificadoEvento from "../../../pdf/CertificadoEvento";
+import formatFechaCorto from "./fn/formatFechaCorto";
+
+interface GetCertificadoArgs {
+    token: string;
+    usuarioId: number;
+    eventoId: number;
+}
+
+const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
+    log.dev("getCertificado called with args:", args);
+
+    const { token, usuarioId, eventoId } = args;
+
+    if (!token) {
+        return errorResponse({ message: "Token requerido" });
+    }
+
+    if (!usuarioId) {
+        return errorResponse({ message: "Usuario requerido" });
+    }
+
+    if (!eventoId) {
+        return errorResponse({ message: "Evento requerido" });
+    }
+
+    try {
+        const usuarioVerificado = await verificarToken(token);
+
+        if (!usuarioVerificado) {
+            return errorResponse({ message: "Token inválido o expirado" });
+        }
+
+        // Obtener la suscripción del usuario al evento
+        const suscripcionEvento = await prisma.suscripcionEvento.findFirst({
+            where: {
+                usuarioId,
+                eventoId,
+            },
+            include: {
+                usuario: true,
+                evento: true,
+            },
+        });
+
+        if (!suscripcionEvento) {
+            return errorResponse({ message: "El usuario no está suscrito a este evento o el evento no existe" });
+        }
+
+        const usuario = suscripcionEvento.usuario;
+        const evento = suscripcionEvento.evento;
+
+        if (!usuario) {
+            return errorResponse({ message: "Usuario no encontrado" });
+        }
+
+        if (!evento) {
+            return errorResponse({ message: "Evento no encontrado" });
+        }
+
+        // Obtener autoridades: presidente, vicepresidente y director de eventos
+        const presidente = await prisma.autoridad.findFirst({
+            where: { tipoAutoridad: TipoAutoridad.PRESIDENTE, vigente: true },
+            orderBy: { id: 'desc' },
+            include: { usuario: true },
+        });
+
+        const vicepresidente = await prisma.autoridad.findFirst({
+            where: { tipoAutoridad: TipoAutoridad.VICEPRESIDENTE, vigente: true },
+            orderBy: { id: 'desc' },
+            include: { usuario: true },
+        });
+
+        const directorEventos = await prisma.autoridad.findFirst({
+            where: { tipoAutoridad: TipoAutoridad.DIRECTOR_EVENTOS, vigente: true },
+            orderBy: { id: 'desc' },
+            include: { usuario: true },
+        });
+
+        if (!presidente) {
+            return errorResponse({ message: "No se encontró la autoridad presidente" });
+        }
+
+        const documentoSolicitado = await crearDocumentoSolicitado({
+            usuarioId: usuario.id,
+            autoridadId: presidente.id,
+            tipo: evento.tipo === TipoEvento.TALLER 
+                ? TipoDeDocumento.CERTIFICADO_TALLER 
+                : evento.tipo === TipoEvento.DIPLOMADO 
+                    ? TipoDeDocumento.CERTIFICADO_DIPLOMADO 
+                    : TipoDeDocumento.CERTIFICADO_CONGRESO,
+        });
+
+        const CORS_URL = process.env.CORS_URL || "";
+
+        const data = {
+            imgAliada: evento.aliadoImg || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+            nombreYApellido: `${usuario.primerNombre} ${usuario.segundoNombre || ''} ${usuario.primerApellido} ${usuario.segundoApellido || ''}`.trim(),
+            cedula: usuario.cedula,
+            lugarEvento: evento.lugar,
+            fechaEvento: formatFechaCorto(evento.fecha),
+            urlQR: `${CORS_URL}/estatus/${documentoSolicitado.id}`,
+            nombreDelEvento: evento.nombre,
+            tipoEvento: evento.tipo,
+            rol: usuario.rol,
+            presidente: {
+                nombreYApellido: presidente.usuario 
+                    ? `${presidente.usuario.primerNombre} ${presidente.usuario.segundoNombre || ''} ${presidente.usuario.primerApellido} ${presidente.usuario.segundoApellido || ''}`.trim() 
+                    : "Genaro Gonzalez",
+                firmaUrl: presidente.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+            },
+            vicepresidente: {
+                nombreYApellido: vicepresidente?.usuario 
+                    ? `${vicepresidente.usuario.primerNombre} ${vicepresidente.usuario.segundoNombre || ''} ${vicepresidente.usuario.primerApellido} ${vicepresidente.usuario.segundoApellido || ''}`.trim() 
+                    : "Genaro Gonzalez",
+                firmaUrl: vicepresidente?.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+            },
+            directorEvento: {
+                nombreYApellido: directorEventos?.usuario 
+                    ? `${directorEventos.usuario.primerNombre} ${directorEventos.usuario.segundoNombre || ''} ${directorEventos.usuario.primerApellido} ${directorEventos.usuario.segundoApellido || ''}`.trim() 
+                    : "Genaro Gonzalez",
+                firmaUrl: directorEventos?.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+            },
+        };
+
+        const documento = await generatePDF({ template: CertificadoEvento, data });
+
+        await crearBitacora({
+            usuarioId: usuarioVerificado.id,
+            type: evento.tipo === TipoEvento.TALLER 
+                ? AccionesBitacora.GENERACION_CERTIFICADO_TALLER 
+                : evento.tipo === TipoEvento.DIPLOMADO 
+                    ? AccionesBitacora.GENERACION_CERTIFICADO_DIPLOMADO 
+                    : AccionesBitacora.GENERACION_CERTIFICADO_CONGRESO,
+        });
+
+        return successResponse({
+            message: "Certificado generado correctamente",
+            data: documento,
+        });
+    } catch (error) {
+        console.error("Error al generar certificado:", error);
+        return errorResponse({ message: "Error al generar el certificado" });
+    }
+};
+
+export default getCertificado;

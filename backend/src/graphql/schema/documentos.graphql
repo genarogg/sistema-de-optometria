@@ -20,4 +20,10 @@ extend type Query {
     usuarioId: Int!
     eventoId: Int!
   ): DocumentoResponse!
+  
+  getCertificado(
+    token: String!
+    usuarioId: Int!
+    eventoId: Int!
+  ): DocumentoResponse!
 }
