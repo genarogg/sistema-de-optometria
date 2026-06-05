@@ -99,29 +99,29 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
 
         const data = {
             imgAliada: evento.aliadoImg || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
-            nombreYApellido: `${usuario.primerNombre} ${usuario.segundoNombre || ''} ${usuario.primerApellido} ${usuario.segundoApellido || ''}`.trim(),
+            nombreYApellido: `${usuario.primerNombre} ${usuario.primerApellido}`.trim(),
             cedula: usuario.cedula,
             lugarEvento: evento.lugar,
             fechaEvento: formatFechaCorto(evento.fecha),
-            urlQR: `${CORS_URL}/estatus/${documentoSolicitado.id}`,
+            urlQR: `${CORS_URL}/documento/${documentoSolicitado.id}`,
             nombreDelEvento: evento.nombre,
             tipoEvento: evento.tipo,
             rol: usuario.rol,
             presidente: {
                 nombreYApellido: presidente.usuario 
-                    ? `${presidente.usuario.primerNombre} ${presidente.usuario.segundoNombre || ''} ${presidente.usuario.primerApellido} ${presidente.usuario.segundoApellido || ''}`.trim() 
+                    ? `${presidente.usuario.primerNombre} ${presidente.usuario.primerApellido}`.trim() 
                     : "Genaro Gonzalez",
                 firmaUrl: presidente.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
             },
             vicepresidente: {
                 nombreYApellido: vicepresidente?.usuario 
-                    ? `${vicepresidente.usuario.primerNombre} ${vicepresidente.usuario.segundoNombre || ''} ${vicepresidente.usuario.primerApellido} ${vicepresidente.usuario.segundoApellido || ''}`.trim() 
+                    ? `${vicepresidente.usuario.primerNombre} ${vicepresidente.usuario.primerApellido}`.trim() 
                     : "Genaro Gonzalez",
                 firmaUrl: vicepresidente?.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
             },
             directorEvento: {
                 nombreYApellido: directorEventos?.usuario 
-                    ? `${directorEventos.usuario.primerNombre} ${directorEventos.usuario.segundoNombre || ''} ${directorEventos.usuario.primerApellido} ${directorEventos.usuario.segundoApellido || ''}`.trim() 
+                    ? `${directorEventos.usuario.primerNombre} ${directorEventos.usuario.primerApellido}`.trim() 
                     : "Genaro Gonzalez",
                 firmaUrl: directorEventos?.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
             },

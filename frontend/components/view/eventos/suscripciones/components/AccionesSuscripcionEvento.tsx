@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -9,8 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Eye, ImageIcon } from 'lucide-react';
+import { Eye, ImageIcon, Award } from 'lucide-react';
 import { Rol, EstatusPagoEvento } from '@/global/enums';
+import downloadCertificadoService from '../service/downloadCertificado.service';
 
 interface AccionesSuscripcionEventoProps {
   suscripcion: any;
@@ -27,6 +28,7 @@ export default function AccionesSuscripcionEvento({
   onVerComprobante,
   onEstatusChange,
 }: AccionesSuscripcionEventoProps) {
+  const [downloading, setDownloading] = useState(false);
   const esAdminOSuperUsuario =
     rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
 
@@ -50,6 +52,18 @@ export default function AccionesSuscripcionEvento({
     // Si la fecha ya pasó, mostramos todos los estatus
     return true;
   });
+
+  const handleDownloadCertificado = async () => {
+    if (downloading) return;
+
+    await downloadCertificadoService({
+      usuarioId: suscripcion.usuario.id,
+      eventoId: suscripcion.evento.id,
+      usuario: suscripcion.usuario,
+      evento: suscripcion.evento,
+      setDownloading,
+    });
+  };
 
   return (
     <div className="flex items-center gap-2">
@@ -97,6 +111,20 @@ export default function AccionesSuscripcionEvento({
       >
         <ImageIcon className="h-3.5 w-3.5" />
       </Button>
+
+      {/* Botón Descargar certificado - solo si el usuario asistió y es admin/super usuario */}
+      {(suscripcion.estatus === EstatusPagoEvento.ASISTIO) && esAdminOSuperUsuario && (
+        <Button
+          variant="outline"
+          size="icon"
+          className="h-10 w-10 bg-[#F0F0F0] text-[#333] rounded-md"
+          disabled={downloading}
+          onClick={handleDownloadCertificado}
+          title="Descargar certificado"
+        >
+          <Award className="h-3.5 w-3.5" />
+        </Button>
+      )}
     </div>
   );
 }

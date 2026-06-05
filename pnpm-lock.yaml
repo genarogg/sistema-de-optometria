@@ -63,11 +63,11 @@ importers:
         specifier: ^7.6.0
         version: 7.8.0(prisma@7.8.0)(typescript@5.9.3)
       '@react-pdf-levelup/core':
-        specifier: ^5.0.2
-        version: 5.0.2
+        specifier: 5.0.4
+        version: 5.0.4
       '@react-pdf-levelup/qr':
-        specifier: ^1.1.40
-        version: 1.1.40
+        specifier: 2.1.3
+        version: 2.1.3
       accounting:
         specifier: ^0.4.1
         version: 0.4.1
@@ -4267,8 +4267,16 @@ packages:
       react-dom: 19.2.4(react@19.2.4)
     dev: false
 
-  /@react-pdf-levelup/qr@1.1.40:
-    resolution: {integrity: sha512-7QZKWm0R7oeaQRzEk18wn+z5W0Hp+ow7Y3Dxa1ONMJ/qB6WPRW89iDn87LnRftyaudaz7MePBZl2sihN8CJxyg==}
+  /@react-pdf-levelup/core@5.0.4:
+    resolution: {integrity: sha512-2v94tTar/fDwY+AAJGUS+3S16fvSPRI9w34BrH6vTQ1FXGKdqM5xXi0R9plklXz01pfw8bZn/NYiOBhIEHD5QQ==}
+    dependencies:
+      '@react-pdf/renderer': 4.5.1(react@19.2.4)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+    dev: false
+
+  /@react-pdf-levelup/qr@2.1.3:
+    resolution: {integrity: sha512-4pfqCLzkjNVnJWZ2u2w3CAxuRwsdOX9I4TmAtCWG5AKRdleWqoEUq9gOkp2HtxltOlT/YWvvOdDdsPd/eo5bJg==}
     dependencies:
       canvas: 3.2.3
       jsdom: 27.4.0(canvas@3.2.3)
