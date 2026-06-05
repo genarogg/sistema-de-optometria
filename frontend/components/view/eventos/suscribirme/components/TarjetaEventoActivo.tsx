@@ -49,6 +49,8 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
       descuento = evento.descuentoEstudiante;
     } else if (usuario?.rol === Rol.PROFESOR) {
       descuento = evento.descuentoProfesor;
+    } else if (usuario?.rol === Rol.AGREMIADO_SOLVENTE) {
+      descuento = 50;
     }
 
     return Math.round(evento.costo * (1 - descuento / 100));
@@ -62,6 +64,9 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
     }
     if (usuario.rol === Rol.PROFESOR && evento.descuentoProfesor > 0) {
       return `Descuento profesor: ${evento.descuentoProfesor}%`;
+    }
+    if (usuario.rol === Rol.AGREMIADO_SOLVENTE) {
+      return `Descuento agremiado solvente: 50%`;
     }
     return null;
   };

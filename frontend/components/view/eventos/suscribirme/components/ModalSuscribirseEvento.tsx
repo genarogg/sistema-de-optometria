@@ -70,6 +70,8 @@ export default function ModalSuscribirseEvento({ isOpen, onClose, evento, onSucc
       descuento = evento.descuentoEstudiante;
     } else if (usuario?.rol === Rol.PROFESOR) {
       descuento = evento.descuentoProfesor;
+    } else if (usuario?.rol === Rol.AGREMIADO_SOLVENTE) {
+      descuento = 50;
     }
 
     return Math.round(evento.costo * (1 - descuento / 100));
