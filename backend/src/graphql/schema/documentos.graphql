@@ -26,4 +26,8 @@ extend type Query {
     usuarioId: Int
     eventoId: Int!
   ): DocumentoResponse!
+
+  validacionDocumento(
+    id: Int!
+  ): DocumentoResponse!
 }

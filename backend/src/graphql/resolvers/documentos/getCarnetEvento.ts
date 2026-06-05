@@ -91,7 +91,7 @@ const getCarnetEvento = async (_: unknown, args: GetCarnetEventoArgs) => {
             cedula: usuario.cedula,
             fechaVencimiento: formatFechaCorto(evento.fecha),
             nombreDelEvento: evento.nombre,
-            urlQR: `${CORS_URL}/documento/${documentoSolicitado.id}`,
+            urlQR: `${CORS_URL}/estatus/${documentoSolicitado.id}`,
         };
 
         const documento = await generatePDF({ template: CarnetPonente, data });

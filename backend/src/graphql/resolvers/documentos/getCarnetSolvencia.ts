@@ -115,7 +115,7 @@ const getDocumento = async (_: unknown, args: GetDocumentoArgs) => {
 
                 numeroGremio: gremio.numeroGremio || "00000",
                 fechaVencimiento: formatFechaCorto(new Date()),
-                urlQR: CORS_URL + "/documento/" + documentoSolicitado.id,
+                urlQR: CORS_URL + "/estatus/" + documentoSolicitado.id,
                 autoridad: {
                     nombreCompletos: autoridad?.usuario.primerNombre + " " + (autoridad?.usuario.segundoNombre),
                     apellidosCompletos: autoridad?.usuario.primerApellido + " " + (autoridad?.usuario.segundoApellido),

@@ -101,7 +101,7 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
             cedula: usuario.cedula,
             lugarEvento: evento.lugar,
             fechaEvento: formatFechaCorto(evento.fecha),
-            urlQR: `${CORS_URL}/documento/${documentoSolicitado.id}`,
+            urlQR: `${CORS_URL}/estatus/${documentoSolicitado.id}`,
             nombreDelEvento: evento.nombre,
             tipoEvento: evento.tipo,
             rol: usuario.rol,
