@@ -27,7 +27,10 @@ const updateSuscripcionEstatus = async (_: unknown, args: UpdateSuscripcionEstat
             return errorResponse({ message: "No tienes permisos para actualizar el estatus de la suscripción" });
         }
 
-        const suscripcion = await prisma.suscripcion.findUnique({ where: { id: suscripcionId } });
+        const suscripcion = await prisma.suscripcion.findUnique({
+            where: { id: suscripcionId },
+            include: { usuario: true }
+        });
 
         if (!suscripcion) {
             return errorResponse({ message: "Suscripción no encontrada" });
@@ -45,6 +48,10 @@ const updateSuscripcionEstatus = async (_: unknown, args: UpdateSuscripcionEstat
             where: { id: suscripcionId },
             data: { estatus },
         });
+
+        const usuarioSuscripcion = suscripcion.usuario;
+
+        
 
         let bitacoraType;
 

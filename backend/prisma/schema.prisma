@@ -69,6 +69,12 @@ enum Rol {
 enum TipoAutoridad {
   PRESIDENTE
   VICEPRESIDENTE
+  DIRECTOR_EVENTOS
+  DIRECTOR_ACADEMICO
+  DIRECTOR_FINANSAS
+  SECRETARIO_GENERAL
+  SECRETARIO_ACTAS
+  SECRETARIO_PRENSA
 }
 
 enum TipoEvento {
@@ -81,6 +87,7 @@ enum TipoSuscripcion {
   AGREMIADO
   ESTUDIANTE
   PROFESOR
+  VISITANTE
 }
 
 enum EstatusSuscripcion {
