@@ -36,26 +36,13 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
         switch (usuario.rol) {
             case Rol.SUPER_USUARIO:
                 if (filtroCleaned) {
-                    whereClause.AND = [
-                        {
-                            OR: [
-                                { rol: { in: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] } },
-                                { 
-                                    rol: Rol.AGREMIADO_SOLVENTE, 
-                                    gremio: { 
-                                        is: null 
-                                    } 
-                                }
-                            ]
-                        },
-                        {
-                            OR: [
-                                { email: { contains: filtroCleaned } },
-                                { cedula: { contains: filtroCleaned } },
-                            ]
-                        }
+                    // Con filtro: buscar en todos los roles
+                    whereClause.OR = [
+                        { email: { contains: filtroCleaned } },
+                        { cedula: { contains: filtroCleaned } },
                     ];
                 } else {
+                    // Sin filtro: solo super usuario, administrador y agremiado solvente sin gremio
                     whereClause.OR = [
                         { rol: { in: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] } },
                         { 
@@ -69,17 +56,10 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
                 break;
             case Rol.ADMINISTRADOR:
                 if (filtroCleaned) {
+                    // Con filtro: buscar en todos los roles excepto super usuario
                     whereClause.AND = [
                         {
-                            OR: [
-                                { rol: Rol.ADMINISTRADOR },
-                                { 
-                                    rol: Rol.AGREMIADO_SOLVENTE, 
-                                    gremio: { 
-                                        is: null 
-                                    } 
-                                }
-                            ]
+                            rol: { not: Rol.SUPER_USUARIO }
                         },
                         {
                             OR: [
@@ -89,6 +69,7 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
                         }
                     ];
                 } else {
+                    // Sin filtro: solo administrador y agremiado solvente sin gremio
                     whereClause.OR = [
                         { rol: Rol.ADMINISTRADOR },
                         { 

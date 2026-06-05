@@ -48,7 +48,14 @@ const ModalEditarUsuario: React.FC<ModalEditarUsuarioProps> = React.memo(
         case Rol.SUPER_USUARIO:
           return Object.values(Rol);
         case Rol.ADMINISTRADOR:
-          return [Rol.ADMINISTRADOR, Rol.PROFESOR, Rol.ESTUDIANTE, Rol.VISITANTE];
+          return [
+            Rol.ADMINISTRADOR, 
+            Rol.PROFESOR, 
+            Rol.ESTUDIANTE, 
+            Rol.VISITANTE, 
+            Rol.AGREMIADO_SOLVENTE, 
+            Rol.AGREMIADO_INSOLVENTE
+          ];
         default:
           return [];
       }
