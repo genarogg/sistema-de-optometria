@@ -44,9 +44,9 @@ const Component = ({ data }: any) => {
                     <P style={{ marginBottom: "3", fontSize: "11px" }}>
                         <Strong>COLEGIO DE OPTOMETRISTAS DE VENEZUELA</Strong>
                     </P>
-                    <P style={{ fontSize: "11px" }}>
+                    {/* <P style={{ fontSize: "11px" }}>
                         <Strong>JUNTA DIRECTIVA INTERINA</Strong>
-                    </P>
+                    </P> */}
                 </Center>
                 <Img
                     src="https://genarogg.github.io/media/covzla/escudo-optometria.png"
