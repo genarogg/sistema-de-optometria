@@ -153,6 +153,16 @@ const updateUsuarioAdmin = async (_: any, {
                 },
             });
             cambios.push('autoridad');
+
+            // Si se establece vigente en true y el usuario no es super usuario ni administrador, cambiar rol a AGREMIADO_SOLVENTE
+            if (vigente === true && 
+                usuarioExistente.rol !== Rol.SUPER_USUARIO && 
+                usuarioExistente.rol !== Rol.ADMINISTRADOR) {
+                await prisma.usuario.update({
+                    where: { id: Number(usuarioId) },
+                    data: { rol: Rol.AGREMIADO_SOLVENTE }
+                });
+            }
         }
 
         // Build bitacora message
