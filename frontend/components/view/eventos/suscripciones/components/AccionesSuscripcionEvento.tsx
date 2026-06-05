@@ -44,9 +44,9 @@ export default function AccionesSuscripcionEvento({
   // Obtener los estatus disponibles según la fecha del evento
   const estatusDisponibles = Object.values(EstatusPagoEvento).filter((estatus) => {
     // Si la fecha del evento no ha pasado, ocultamos ASISTIO y NO_ASISTIO
-    // if (!esFechaEventoPasada()) {
-    //   return estatus !== EstatusPagoEvento.ASISTIO && estatus !== EstatusPagoEvento.NO_ASISTIO;
-    // }
+    if (!esFechaEventoPasada()) {
+      return estatus !== EstatusPagoEvento.ASISTIO && estatus !== EstatusPagoEvento.NO_ASISTIO;
+    }
     // Si la fecha ya pasó, mostramos todos los estatus
     return true;
   });
