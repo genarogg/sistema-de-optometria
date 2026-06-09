@@ -18,11 +18,12 @@ import notify from '@/components/nano/notify';
 import { Upload, X, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import imageCompression from 'browser-image-compression';
+import { showMoney } from 'supermoney';
 
 const bankInfo = {
-  banco: "Banco de Venezuela",
-  rif: "J-306668098",
-  telefono: "04127554970",
+  banco: "0114 - Bancaribe",
+  rif: "J-002107545",
+  telefono: "04122244055",
   beneficiario: "Centro de Optometria",
 }
 
@@ -310,7 +311,7 @@ export default function ModalSuscribirseEvento({ isOpen, onClose, evento, onSucc
                 </TableRow>
                 <TableRow className="hover:bg-muted/30">
                   <TableCell className="font-medium text-[14px] p-3 bg-muted/50">Precio</TableCell>
-                  <TableCell className="text-[14px] p-3 font-semibold text-primary">${precio.toLocaleString()}</TableCell>
+                  <TableCell className="text-[14px] p-3 font-semibold text-primary">$ {showMoney(precio)}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
