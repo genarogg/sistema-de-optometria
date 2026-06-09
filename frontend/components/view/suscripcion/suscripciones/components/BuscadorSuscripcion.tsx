@@ -80,12 +80,12 @@ const BuscadorSuscripcion: React.FC = () => {
           />
         </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full md:w-auto">
         <Select
           value={estatusFiltro}
           onValueChange={handleEstatusChange}
         >
-          <SelectTrigger className="w-[160px]">
+          <SelectTrigger className="w-full md:w-[160px]">
             <SelectValue placeholder="Todos" />
           </SelectTrigger>
           <SelectContent>

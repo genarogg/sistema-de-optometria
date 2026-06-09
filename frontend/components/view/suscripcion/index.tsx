@@ -7,7 +7,7 @@ import { useAuthStore } from '@/context/auth/AuthContext';
 import { CreditCard } from 'lucide-react';
 import PlanesSection from './planes';
 import { Rol } from '@/global/enums';
-import SuscripcionSection from './suscripcion/components/SuscripcionSection';
+import SuscripcionSection from './suscripciones/components';
 import SuscribirmeSection from './suscribirme/components/SuscribirmeSection';
 
 export default function SuscripcionView() {
@@ -44,7 +44,7 @@ export default function SuscripcionView() {
 
       <CardContent className="flex flex-col gap-4 pt-4">
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="flex w-full">
+          <TabsList className="flex w-full overflow-x-auto whitespace-nowrap justify-start">
             <TabsTrigger value="suscripciones">Suscripciones</TabsTrigger>
             <TabsTrigger value="suscribirme">Suscribirme</TabsTrigger>
             {isSuperUsuarioOrAdmin && (
