@@ -11,14 +11,14 @@ import autoridad8 from "@/public/junta/autoridad8.webp";
 
 
 const miembros = [
-  { nombre: "Lcda. Edgar Pérez", cargo: "Presidente (a)", foto: autoridad1 },
+  { nombre: "Lcdo. Edgar Pérez", cargo: "Presidente (a)", foto: autoridad1 },
   { nombre: "Lcdo. Carlos Hernández", cargo: "Vicepresidente (a)", foto: autoridad2 },
   { nombre: "Lcdo. Edward Valiente", cargo: "Tesorero (a)", foto: autoridad3 },
-  { nombre: "Lcda. Angel Polanco", cargo: "Sub tesorero (a)", foto: autoridad4 },
-  { nombre: "Lcdo. Florángel Alfonzo", cargo: "Secretaria (o) de Actas", foto: autoridad5 },
+  { nombre: "Lcdo. Angel Polanco", cargo: "Sub tesorero (a)", foto: autoridad4 },
+  { nombre: "Lcda. Florángel Alfonzo", cargo: "Secretaria (o) de Actas", foto: autoridad5 },
   { nombre: "Lcda. Maulin Milano", cargo: "Secretaria (o) Académica", foto: autoridad6 },
   { nombre: "Lcda. Loengry Ricoveri", cargo: "Secretaria (o) de Relaciones Públicas", foto: autoridad7 },
-  { nombre: "Lcda. Victor Calderon", cargo: "Secretaria (o) de Prensa", foto: autoridad8 },
+  { nombre: "Lcdo. Victor Calderon", cargo: "Secretaria (o) de Prensa", foto: autoridad8 },
 ];
 
 const Autoridades = () => {
