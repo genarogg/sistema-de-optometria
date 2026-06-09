@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useCallback, useMemo, useRef, useState } from "react";
+import React, { useEffect, useCallback, useMemo, useRef } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from "lucide-react";
@@ -10,7 +10,7 @@ import { Rol, EstatusSuscripcion } from "@/global/enums";
 import BuscadorSuscripcion from "./BuscadorSuscripcion";
 import TablaSuscripcion from "./TablaSuscripcion";
 import TarjetaSuscripcion from "./TarjetaSuscripcion";
-// import { useIsMobile } from "@/hooks/use-mobile"; // No longer directly used for rendering decision
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuthStore } from "@/context/auth/AuthContext";
 import notify from "@/components/nano/notify";
 
@@ -38,27 +38,10 @@ const SuscripcionSection: React.FC<SuscripcionSectionProps> = ({ setActiveTab, a
     if (usuario) {
       initializeEstatusFiltro(usuario.rol);
     }
-  }, [usuario, initializeEstatusFiltro]);
-  // Definir el breakpoint móvil localmente
-  const MOBILE_BREAKPOINT = 768;
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    // Evaluar el estado móvil cuando el componente se monta o cuando la pestaña de suscripciones se activa
-    if (typeof window !== 'undefined' && activeTab === 'suscripciones') {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-
-      const handleResize = () => {
-        setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-      };
-
-      window.addEventListener('resize', handleResize);
-      return () => {
-        window.removeEventListener('resize', handleResize);
-      };
-    }
-  }, [activeTab]);
+    console.log("estatusFiltro");
+  }, [usuario, initializeEstatusFiltro, activeTab]);
+  const isMobile = useIsMobile();
 
   // Refs para evitar notificaciones duplicadas
   const notificacionMostradaRef = useRef<string | null>(null);
