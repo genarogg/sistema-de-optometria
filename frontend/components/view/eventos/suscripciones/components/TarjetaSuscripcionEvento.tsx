@@ -109,7 +109,7 @@ const TarjetaSuscripcionEvento: React.FC<TarjetaSuscripcionEventoProps> = React.
                       <p className="text-xs font-semibold text-muted-foreground">
                         Precio
                       </p>
-                      <p>Bs {showMoney(suscripcion.precioAlSuscripcion)}</p>
+                      <p>$ {showMoney(suscripcion.precioAlSuscripcion)}</p>
                     </div>
                     <div>
                       <p className="text-xs font-semibold text-muted-foreground">

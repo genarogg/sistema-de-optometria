@@ -91,7 +91,7 @@ export default function TarjetaEvento({ eventos, onEdit, onVerPonentes }: Tarjet
               </div>
               <div className="text-sm">
                 <span className="text-muted-foreground">Costo: </span>
-                <span className="font-semibold">bs {showMoney(evento.costo)}</span>
+                <span className="font-semibold">$ {showMoney(evento.costo)}</span>
               </div>
             </div>
             {(evento.descuentoEstudiante > 0 || evento.descuentoProfesor > 0) && (

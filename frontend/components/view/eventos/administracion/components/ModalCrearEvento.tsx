@@ -374,7 +374,7 @@ export default function ModalCrearEvento({
                 value={costo}
                 onChange={setCosto}
                 disabled={isLoading}
-                symbol="Bs."
+                symbol="$."
               />
             </div>
 

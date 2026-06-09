@@ -67,7 +67,7 @@ export default function TablaPlan({
                 {plan.id}
               </TableCell>
               <TableCell className="font-medium">{plan.tipo}</TableCell>
-              <TableCell className="text-sm">Bs {showMoney(plan.costo || 0)}</TableCell>
+              <TableCell className="text-sm">$ {showMoney(plan.costo || 0)}</TableCell>
               <TableCell>
                 <Switch
                   checked={plan.isActivo}

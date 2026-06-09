@@ -124,7 +124,7 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
                       <p className="text-xs font-semibold text-muted-foreground">
                         Costo
                       </p>
-                      <p>{suscripcion.planSuscripcion.costo === 0 ? "sin costo" : `Bs ${showMoney(suscripcion.planSuscripcion.costo)}`}</p>
+                      <p>{suscripcion.planSuscripcion.costo === 0 ? "sin costo" : `$ ${showMoney(suscripcion.planSuscripcion.costo)}`}</p>
                     </div>
                     <div>
                       <p className="text-xs font-semibold text-muted-foreground">

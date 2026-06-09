@@ -136,7 +136,7 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
                       {suscripcion.comprobante}
                     </TableCell>
                     <TableCell className="text-sm border-r">
-                      {suscripcion.planSuscripcion.costo === 0 ? "sin costo" : `Bs ${showMoney(suscripcion.planSuscripcion.costo)}`}
+                      {suscripcion.planSuscripcion.costo === 0 ? "sin costo" : `$ ${showMoney(suscripcion.planSuscripcion.costo)}`}
                     </TableCell>
                     <TableCell className="text-sm capitalize border-r">
                       {suscripcion.planSuscripcion.tipo}

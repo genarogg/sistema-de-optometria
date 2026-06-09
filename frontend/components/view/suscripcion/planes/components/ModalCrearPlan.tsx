@@ -135,7 +135,7 @@ export default function ModalCrearPlan({
               value={costo}
               onChange={setCosto}
               disabled={isLoading}
-              symbol="Bs."
+              symbol="$. "
             />
           </div>
 

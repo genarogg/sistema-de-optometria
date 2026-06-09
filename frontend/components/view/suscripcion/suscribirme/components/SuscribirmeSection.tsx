@@ -105,7 +105,7 @@ export default function SuscribirmeSection({ onSubscriptionSuccess }: Suscribirm
                 )}
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="text-3xl font-bold text-primary">{plan.costo > 0 ? `Bs ${showMoney(plan.costo)}` : 'Sin Costo'}</div>
+                <div className="text-3xl font-bold text-primary">{plan.costo > 0 ? `$ ${showMoney(plan.costo)}` : 'Sin Costo'}</div>
                 <Button
                   className="w-full"
                   onClick={() => handleSelectPlan(plan)}

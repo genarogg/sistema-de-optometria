@@ -291,7 +291,7 @@ export default function ModalSuscribirme({
                 </TableRow>
                 <TableRow className="hover:bg-muted/30">
                   <TableCell className="font-medium text-[14px] p-3 bg-muted/50">Costo</TableCell>
-                  <TableCell className="text-[14px] p-3">{plan?.costo > 0 ? `Bs ${plan?.costo?.toFixed(2)}` : 'Sin Costo'}</TableCell>
+                  <TableCell className="text-[14px] p-3">{plan?.costo > 0 ? `$ ${plan?.costo?.toFixed(2)}` : 'Sin Costo'}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

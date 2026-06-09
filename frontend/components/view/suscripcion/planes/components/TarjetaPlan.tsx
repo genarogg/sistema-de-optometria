@@ -58,7 +58,7 @@ export default function TarjetaPlan({
                 <span className="font-medium">ID:</span> {plan.id}
               </div>
               <div>
-                <span className="font-medium">Costo:</span> Bs {showMoney(plan.costo || 0)}
+                <span className="font-medium">Costo:</span> $ {showMoney(plan.costo || 0)}
               </div>
             </div>
           </CardContent>
