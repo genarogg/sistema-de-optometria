@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Edit, Calendar, MapPin, Users, UsersRound } from 'lucide-react';
 import { TipoEvento, VigenciaEvento } from '@/global/enums';
-import { showMoney } from '@/functions/super-money';
+import { showMoney } from 'supermoney';
 interface Evento {
   id: number;
   nombre: string;

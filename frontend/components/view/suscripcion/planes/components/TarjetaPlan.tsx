@@ -4,7 +4,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
-import { showMoney } from '@/functions/super-money';
+import { showMoney } from 'supermoney';
 
 interface TarjetaPlanProps {
   planes: any[];

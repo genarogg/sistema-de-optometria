@@ -2,6 +2,8 @@ import { useRef, useEffect, useCallback } from 'react';
 // import { activateMoneyInput, initMoneyInputs, type MoneyInputController, type MoneyConfig } from '../../func';
 import { activateMoneyInput, initMoneyInputs, type MoneyInputController, type MoneyConfig } from 'supermoney';
 
+import { Input } from '@/components/ui/input';
+
 // ─── init global (se ejecuta una sola vez en toda la app) ─────────────────────
 let globalInitDone = false;
 
@@ -95,17 +97,15 @@ const MoneyInput = ({
     }, [handleMoneyInput, handleMoneyChange]);
 
     return (
-        <div className={`money-input-wrapper${className ? ` ${className}` : ''}`}>
-            {symbol && <span className="money-input-symbol">{symbol}</span>}
-            <input
-                {...rest}
-                ref={inputRef}
-                id={id}
-                type="money"
-                disabled={disabled}
-                {...(decimals !== undefined ? { decimals: String(decimals) } : {})}
-            />
-        </div>
+        <Input
+            {...rest}
+            ref={inputRef}
+            id={id}
+            type="money"
+            disabled={disabled}
+            className={className}
+            {...(decimals !== undefined ? { decimals: String(decimals) } : {})}
+        />
     );
 };
 

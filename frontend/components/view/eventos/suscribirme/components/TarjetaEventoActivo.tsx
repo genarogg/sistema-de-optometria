@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, MapPin, Users, UsersRound, CheckCircle, RefreshCw, Award } from 'lucide-react';
 import { TipoEvento, Rol, EstatusPagoEvento } from '@/global/enums';
 import { useAuthStore } from '@/context/auth/AuthContext';
-import { showMoney } from '@/functions/super-money';
+import { showMoney } from 'supermoney';
 import downloadCertificadoService from '../service/downloadCertificado.service';
 
 interface Evento {

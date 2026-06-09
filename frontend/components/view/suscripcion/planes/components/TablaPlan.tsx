@@ -14,7 +14,7 @@ import { Switch } from '@/components/ui/switch';
 
 import { Pencil } from 'lucide-react';
 import { actualizarPlanService } from '../service/actualizarPlan.service';
-import { showMoney } from '@/functions/super-money';
+import { showMoney } from 'supermoney';
 
 interface TablaPlanProps {
   planes: any[];

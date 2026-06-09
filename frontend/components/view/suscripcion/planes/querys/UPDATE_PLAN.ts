@@ -4,7 +4,7 @@ const UPDATE_PLAN = gql`
   mutation UpdatePlan(
     $token: String!
     $planId: Int!
-    $costo: Int!
+    $costo: Int
     $tipo: TipoSuscripcion
     $isActivo: Boolean
   ) {

@@ -18,7 +18,7 @@ import {
   CalendarDays,
 } from "lucide-react";
 
-import { showMoney } from "@/functions/super-money";
+import { showMoney } from "supermoney";
 
 import type { Suscripcion } from "../../store/suscripcionStore";
 

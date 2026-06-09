@@ -10,7 +10,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { CreditCard, CheckCircle, AlertCircle } from 'lucide-react';
 import ModalSuscribirme from './ModalSuscribirme';
 import { TipoSuscripcion, Rol } from '@/global/enums';
-import { showMoney } from '@/functions/super-money';
+import { showMoney } from 'supermoney';
 import { useAuthStore } from '@/context/auth/AuthContext';
 
 interface SuscribirmeSectionProps {

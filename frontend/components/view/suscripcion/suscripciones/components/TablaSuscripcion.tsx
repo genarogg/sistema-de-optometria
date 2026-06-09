@@ -26,7 +26,7 @@ import AccionesSuscripcion from "./AccionesSuscripcion";
 import SuscripcionDetailsModal from "./modalDetails/SuscripcionDetailsModal";
 import type { Suscripcion } from "../store/suscripcionStore";
 import getStatusColor from "../utils/getStatusColor";
-import { showMoney } from "@/functions/super-money";
+import { showMoney } from "supermoney";
 
 export interface SuscripcionMeta {
   total: number;

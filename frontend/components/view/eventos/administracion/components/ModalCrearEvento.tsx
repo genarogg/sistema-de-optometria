@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import MoneyInput from '@/components/nano/MoneyInput';
 import {
   Select,
   SelectContent,
@@ -78,7 +79,7 @@ export default function ModalCrearEvento({
   const [usuariosEncontrados, setUsuariosEncontrados] = useState<Usuario[]>([]);
   const [buscandoUsuarios, setBuscandoUsuarios] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [costoInput, setCostoInput] = useState<HTMLInputElement | null>(null);
+
   
   // Campos de aliado
   const [aliadoImg, setAliadoImg] = useState<string>('');
@@ -86,17 +87,7 @@ export default function ModalCrearEvento({
   const [cropperOpen, setCropperOpen] = useState(false);
   const [tempImage, setTempImage] = useState<string>('');
 
-  // Inicializar money inputs y escuchar eventos
-  useEffect(() => {
-    if (!costoInput) return;
 
-    const handleMoneyInput = (e: CustomEvent<{ value: number }>) => {
-      setCosto(e.detail.value);
-    };
-
-    costoInput.addEventListener('money-input', handleMoneyInput as EventListener);
-    return () => costoInput.removeEventListener('money-input', handleMoneyInput as EventListener);
-  }, [costoInput]);
 
   const isEditMode = Boolean(evento);
 
@@ -190,6 +181,7 @@ export default function ModalCrearEvento({
       setNombre(evento.nombre);
       setFecha(new Date(evento.fecha));
       setLugar(evento.lugar);
+      setCosto(evento.costo);
       setDescuentoEstudiante(evento.descuentoEstudiante);
       setDescuentoProfesor(evento.descuentoProfesor);
       setVigencia(evento.vigencia);
@@ -229,19 +221,7 @@ export default function ModalCrearEvento({
     }
   }, [evento, isOpen]);
 
-  // Separamos useEffect solo para el costoInput
-  useEffect(() => {
-    if (!costoInput) return;
-    
-    if (evento) {
-      const cents = evento.costo ?? 0;
-      setCosto(cents);
-      setTimeout(() => (costoInput as any).setCents?.(cents, false), 0);
-    } else {
-      setCosto(0);
-      setTimeout(() => (costoInput as any).setCents?.(0, false), 0);
-    }
-  }, [costoInput, evento]);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -389,11 +369,12 @@ export default function ModalCrearEvento({
 
             <div className="space-y-2">
               <Label htmlFor="costo">Costo *</Label>
-              <Input
-                ref={(el) => setCostoInput(el)}
+              <MoneyInput
                 id="costo"
-                type="money"
+                value={costo}
+                onChange={setCosto}
                 disabled={isLoading}
+                symbol="Bs."
               />
             </div>
 

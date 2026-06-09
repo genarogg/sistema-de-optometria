@@ -17,7 +17,7 @@ import SuscripcionEventoDetailsModal from "./SuscripcionEventoDetailsModal";
 import type { SuscripcionEvento } from "../store/suscripcionEventoStore";
 import { updateEstatusSuscripcionEventoService } from "../service/updateEstatusSuscripcionEvento.service";
 import getStatusColor from "../utils/getStatusColor";
-import { showMoney } from "@/functions/super-money";
+import { showMoney } from "supermoney";
 
 export interface SuscripcionEventoMeta {
   total: number;

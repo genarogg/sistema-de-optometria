@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import MoneyInput from '@/components/nano/MoneyInput';
 import {
   Select,
   SelectContent,
@@ -40,40 +41,24 @@ export default function ModalCrearPlan({
   const [costo, setCosto] = useState(0);
   const [isActivo, setIsActivo] = useState('activo');
   const [isLoading, setIsLoading] = useState(false);
-  const [costoInput, setCostoInput] = useState<HTMLInputElement | null>(null);
+
 
   const isEditMode = Boolean(plan);
 
-  // Inicializar money inputs y escuchar eventos
-  useEffect(() => {
-    if (!costoInput) return;
 
-    const handleMoneyInput = (e: CustomEvent<{ value: number }>) => {
-      setCosto(e.detail.value);
-    };
-
-    costoInput.addEventListener('money-input', handleMoneyInput as EventListener);
-    return () => costoInput.removeEventListener('money-input', handleMoneyInput as EventListener);
-  }, [costoInput]);
 
   // Sincronizar valores al abrir el modal
   useEffect(() => {
-    if (!costoInput) return;
-
     if (plan) {
       setTipo(plan.tipo);
       setIsActivo(plan.isActivo ? 'activo' : 'inactivo');
-
-      const cents = plan.costo ?? 0;
-      setCosto(cents);
-      setTimeout(() => (costoInput as any).setCents?.(cents, false), 0);
+      setCosto(plan.costo ?? 0);
     } else {
       setTipo('');
       setIsActivo('activo');
       setCosto(0);
-      setTimeout(() => (costoInput as any).setCents?.(0, false), 0);
     }
-  }, [plan, isOpen, costoInput]);
+  }, [plan, isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,11 +130,12 @@ export default function ModalCrearPlan({
 
           <div className="space-y-2">
             <Label htmlFor="costo">Costo</Label>
-            <Input
-              ref={(el) => setCostoInput(el)}
+            <MoneyInput
               id="costo"
-              type="money"
+              value={costo}
+              onChange={setCosto}
               disabled={isLoading}
+              symbol="Bs."
             />
           </div>
 
