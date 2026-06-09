@@ -72,10 +72,10 @@ const Component = ({ data }: any) => {
                     El Marqués, Quinta Isabelita, Calle Araure, Caracas 1071, Miranda, Venezuela
                 </P>
                 <P style={{ fontSize: "9px" }}>
-                    Teléfonos: (0212) 242.24.47 - (0212) 242.20.69
+                    Teléfonos: +58 (0414) 902 2296
                 </P>
                 <P style={{ fontSize: "9px" }}>
-                    <A href="mailto:Covzlaoficial@gmail.com">Covzlaoficial@gmail.com</A>
+                    <A href="mailto:juntadirectivacov@gmail.com">juntadirectivacov@gmail.com</A>
                 </P>
             </Center>
         );

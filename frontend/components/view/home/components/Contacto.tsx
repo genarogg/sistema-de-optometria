@@ -9,12 +9,12 @@ const items = [
   {
     icon: Phone,
     title: "Llámanos",
-    lines: ["+58 (0212) 242.24.47", "+58 (0212) 242.20.69"],
+    lines: ["+58 (0414) 902 2296"],
   },
   {
     icon: Mail,
     title: "Contáctanos",
-    lines: ["Covzlaoficial@gmail.com"],
+    lines: ["juntadirectivacov@gmail.com"],
   },
 ];
 

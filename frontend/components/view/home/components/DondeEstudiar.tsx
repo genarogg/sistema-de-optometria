@@ -31,7 +31,7 @@ const DondeEstudiar = () => {
             ¿Dónde estudiar Optometría?
           </h2>
           <p className="mt-5 text-muted-foreground text-lg leading-relaxed">
-            Actualmente hay <strong className="text-foreground">2 universidades en Venezuela</strong> que
+            Actualmente hay <strong className="text-foreground">3 universidades en Venezuela</strong> que
             tienen en su formación académica la carrera de Optometría:
           </p>
 

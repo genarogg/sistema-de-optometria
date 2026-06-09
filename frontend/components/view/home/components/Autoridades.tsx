@@ -11,15 +11,14 @@ import autoridad8 from "@/public/junta/autoridad8.webp";
 
 
 const miembros = [
-  { nombre: "Lcda. Maulin Milano", cargo: "Presidente (a)", foto: autoridad1 },
-  { nombre: "Lcdo. Edgar Pérez", cargo: "Vicepresidente (a)", foto: autoridad2 },
-  { nombre: "Lcdo. José Otto Rodríguez", cargo: "Secretario (a) de actas", foto: autoridad3 },
-  { nombre: "Lcda. Zuleyma Gómez", cargo: "Director (a) academico", foto: autoridad4 },
-  { nombre: "Lcdo. Carlos Ramírez", cargo: "Director (a) de finanzas", foto: autoridad5 },
-  { nombre: "Lcda. loengri ricoberi", cargo: "Director (a) de eventos", foto: autoridad6 },
-  { nombre: "Lcda. Maulin Milano (Duplicado)", cargo: "Presidente (a) (Duplicado)", foto: autoridad7 },
-  { nombre: "Lcdo. Edgar Pérez (Duplicado)", cargo: "Vicepresidente (a) (Duplicado)", foto: autoridad8 },
-  
+  { nombre: "Lcda. Edgar Pérez", cargo: "Presidente (a)", foto: autoridad1 },
+  { nombre: "Lcdo. Carlos Hernández", cargo: "Vicepresidente (a)", foto: autoridad2 },
+  { nombre: "Lcdo. Edward Valiente", cargo: "Tesorero (a)", foto: autoridad3 },
+  { nombre: "Lcda. Angel Polanco", cargo: "Sub tesorero (a)", foto: autoridad4 },
+  { nombre: "Lcdo. Florángel Alfonzo", cargo: "Secretaria (o) de Actas", foto: autoridad5 },
+  { nombre: "Lcda. Maulin Milano", cargo: "Secretaria (o) Académica", foto: autoridad6 },
+  { nombre: "Lcda. Loengry Ricoveri", cargo: "Secretaria (o) de Relaciones Públicas", foto: autoridad7 },
+  { nombre: "Lcda. Victor Calderon", cargo: "Secretaria (o) de Prensa", foto: autoridad8 },
 ];
 
 const Autoridades = () => {
@@ -29,7 +28,7 @@ const Autoridades = () => {
         <div className="max-w-3xl mx-auto text-center">
           <span className="text-sm font-semibold uppercase tracking-wider text-accent">Nuestras autoridades</span>
           <h2 className="mt-3 font-display text-4xl md:text-5xl font-extrabold text-foreground">
-            Junta Directiva Interina Actual
+            Junta Directiva
           </h2>
           <p className="mt-5 text-muted-foreground text-lg leading-relaxed">
             Profesionales comprometidos que lideran el rumbo de la Colegio de Optometristas de Venezuela.
