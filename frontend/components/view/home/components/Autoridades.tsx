@@ -1,19 +1,25 @@
 import Image from "next/image";
 
-import actas from "@/public/junta/directiva-1_resultado.webp";
-import academico from "@/public/junta/directiva-2_resultado.webp";
-import presidente from "@/public/junta/directiva-3_resultado.webp";
-import finanzas from "@/public/junta/directiva-4_resultado.webp";
-import vicepresidente from "@/public/junta/directiva-6.webp";
-import Eventos from "@/public/junta/directiva-5.webp";
+import autoridad1 from "@/public/junta/autoridad1.webp";
+import autoridad2 from "@/public/junta/autoridad2.webp";
+import autoridad3 from "@/public/junta/autoridad3.webp";
+import autoridad4 from "@/public/junta/autoridad4.webp";
+import autoridad5 from "@/public/junta/autoridad5.webp";
+import autoridad6 from "@/public/junta/autoridad6.webp";
+import autoridad7 from "@/public/junta/autoridad7.webp";
+import autoridad8 from "@/public/junta/autoridad8.webp";
+
 
 const miembros = [
-  { nombre: "Lcda. Maulin Milano", cargo: "Presidente (a)", foto: presidente },
-  { nombre: "Lcdo. Edgar Pérez", cargo: "Vicepresidente (a)", foto: vicepresidente },
-  { nombre: "Lcdo. José Otto Rodríguez", cargo: "Secretario (a) de actas", foto: actas },
-  { nombre: "Lcda. Zuleyma Gómez", cargo: "Director (a) academico", foto: academico },
-  { nombre: "Lcdo. Carlos Ramírez", cargo: "Director (a) de finanzas", foto: finanzas },
-  { nombre: "Lcda. loengri ricoberi", cargo: "Director (a) de eventos", foto: Eventos },
+  { nombre: "Lcda. Maulin Milano", cargo: "Presidente (a)", foto: autoridad1 },
+  { nombre: "Lcdo. Edgar Pérez", cargo: "Vicepresidente (a)", foto: autoridad2 },
+  { nombre: "Lcdo. José Otto Rodríguez", cargo: "Secretario (a) de actas", foto: autoridad3 },
+  { nombre: "Lcda. Zuleyma Gómez", cargo: "Director (a) academico", foto: autoridad4 },
+  { nombre: "Lcdo. Carlos Ramírez", cargo: "Director (a) de finanzas", foto: autoridad5 },
+  { nombre: "Lcda. loengri ricoberi", cargo: "Director (a) de eventos", foto: autoridad6 },
+  { nombre: "Lcda. Maulin Milano (Duplicado)", cargo: "Presidente (a) (Duplicado)", foto: autoridad7 },
+  { nombre: "Lcdo. Edgar Pérez (Duplicado)", cargo: "Vicepresidente (a) (Duplicado)", foto: autoridad8 },
+  
 ];
 
 const Autoridades = () => {
@@ -30,7 +36,7 @@ const Autoridades = () => {
           </p>
         </div>
 
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {miembros.map((m) => (
             <article
               key={m.nombre}
