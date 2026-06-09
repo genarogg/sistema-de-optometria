@@ -71,7 +71,7 @@ const BitacoraView = memo(function BitacoraView() {
 
       </CardHeader>
 
-      <CardContent className="pt-4">
+      <CardContent className="pt-4 max-sm:px-0 max-sm:px-0 max-sm:max-w-[96vw]">
 
         {isMobile ? (
           <BitacoraCardList
