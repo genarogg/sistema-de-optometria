@@ -171,32 +171,7 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                     )}
                   </div>
                 </div>
-                <div className="flex gap-1">
-                  {/* Botón Descargar certificado - solo si el usuario asistió */}
-                  {estatus === EstatusPagoEvento.ASISTIO && usuario && (
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => handleDownloadCertificado(evento)}
-                      disabled={downloadingMap.get(evento.id)}
-                      title="Descargar certificado"
-                    >
-                      <Award className="h-4 w-4 mr-2" />
-                      Certificado
-                    </Button>
-                  )}
-                  <Button 
-                    variant={botonConfig.variant} 
-                    size="sm" 
-                    onClick={() => botonConfig.disabled ? null : onSuscribirse(evento)}
-                    disabled={botonConfig.disabled}
-                  >
-                    <div className="flex items-center gap-2">
-                      {botonConfig.icono}
-                      {botonConfig.texto}
-                    </div>
-                  </Button>
-                </div>
+
               </div>
             </CardHeader>
             <CardContent>
@@ -235,9 +210,9 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                   <p className="text-sm font-medium mb-2">Alianza:</p>
                   <div className="flex items-center gap-3">
                     {evento.aliadoImg && (
-                      <img 
-                        src={evento.aliadoImg} 
-                        alt={evento.aliadoNombre || 'Aliado'} 
+                      <img
+                        src={evento.aliadoImg}
+                        alt={evento.aliadoNombre || 'Aliado'}
                         className="w-12 h-12 object-cover rounded-md border"
                       />
                     )}
@@ -247,6 +222,31 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                   </div>
                 </div>
               )}
+              <div className="flex justify-end items-center mt-4 gap-2 border-t pt-4">
+                {estatus === EstatusPagoEvento.ASISTIO && usuario && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDownloadCertificado(evento)}
+                    disabled={downloadingMap.get(evento.id)}
+                    title="Descargar certificado"
+                  >
+                    <Award className="h-4 w-4 mr-2" />
+                    Certificado
+                  </Button>
+                )}
+                <Button
+                  variant={botonConfig.variant}
+                  size="sm"
+                  onClick={() => botonConfig.disabled ? null : onSuscribirse(evento)}
+                  disabled={botonConfig.disabled}
+                >
+                  <div className="flex items-center gap-2">
+                    {botonConfig.icono}
+                    {botonConfig.texto}
+                  </div>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         );

@@ -11,7 +11,7 @@ import SuscripcionesEventoSection from './suscripciones';
 import SuscribirmeEventosSection from './suscribirme';
 
 export default function EventosView() {
-  const { usuario } = useAuthStore();
+  const { usuario, isAuthenticated } = useAuthStore();
 
   const [activeTab, setActiveTab] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -44,17 +44,15 @@ export default function EventosView() {
 
       <CardContent className="flex flex-col gap-4 pt-4">
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="flex w-full">
-            <TabsTrigger value="suscribirme">Suscribirme</TabsTrigger>
+          {isAuthenticated && (
 
-            {isSuperUsuarioOrAdmin && (
-              <TabsTrigger value="suscripciones">Suscripciones de Eventos</TabsTrigger>
-            )}
-            {isSuperUsuarioOrAdmin && (
-              <TabsTrigger value="administracion">Administrar Eventos</TabsTrigger>
-            )}
-          </TabsList>
+            <TabsList className="flex w-full">
+              <TabsTrigger value="suscribirme">Suscribirme</TabsTrigger>
+              <TabsTrigger value="suscripciones">Suscripciones</TabsTrigger>
+              <TabsTrigger value="administracion">Administrar</TabsTrigger>
+            </TabsList>
 
+          )}
           <TabsContent value="suscribirme" className="space-y-4 mt-4">
             <SuscribirmeEventosSection />
           </TabsContent>
