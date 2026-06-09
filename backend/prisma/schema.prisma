@@ -85,6 +85,8 @@ enum TipoEvento {
 
 enum TipoSuscripcion {
   AGREMIADO
+  AGREMIADO_TSU
+  AGREMIADO_LICENCIADO
   ESTUDIANTE
   PROFESOR
   VISITANTE
@@ -174,7 +176,7 @@ model Autoridad {
 
 model Gremio {
   id             Int            @id @default(autoincrement())
-  numeroGremio   Int            @unique
+  numeroGremio   Int?           @unique
   nivelAcademico NivelAcademico @default(NO_ASIGNADO)
 
   usuarioId Int     @unique

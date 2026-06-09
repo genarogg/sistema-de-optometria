@@ -1,5 +1,5 @@
 import { prisma, verificarToken, successResponse, errorResponse, log, crearBitacora } from "@fn";
-import { Rol, EstatusSuscripcion, AccionesBitacora, TipoSuscripcion } from "@prisma/client";
+import { Rol, EstatusSuscripcion, AccionesBitacora, TipoSuscripcion, NivelAcademico } from "@prisma/client";
 
 interface UpdateSuscripcionEstatusArgs {
     token: string;
@@ -60,10 +60,16 @@ const updateSuscripcionEstatus = async (_: unknown, args: UpdateSuscripcionEstat
 
         if (!esAutoridadVigente && noEsAdminNiSuper) {
             let nuevoRol;
+            
+            const tipoSuscripcion = suscripcionActualizada.planSuscripcion.tipo;
 
             if (estatus === EstatusSuscripcion.VALIDADO) {
-                const tipoSuscripcion = suscripcionActualizada.planSuscripcion.tipo;
-                if (tipoSuscripcion === TipoSuscripcion.AGREMIADO) {
+
+                if (
+                    tipoSuscripcion === TipoSuscripcion.AGREMIADO ||
+                    tipoSuscripcion === TipoSuscripcion.AGREMIADO_TSU ||
+                    tipoSuscripcion === TipoSuscripcion.AGREMIADO_LICENCIADO
+                ) {
                     nuevoRol = Rol.AGREMIADO_SOLVENTE;
                 } else if (tipoSuscripcion === TipoSuscripcion.ESTUDIANTE) {
                     nuevoRol = Rol.ESTUDIANTE;
@@ -78,6 +84,25 @@ const updateSuscripcionEstatus = async (_: unknown, args: UpdateSuscripcionEstat
                 where: { id: usuarioSuscripcion.id },
                 data: { rol: nuevoRol }
             });
+
+            let nuevoNivelAcademico = null;
+
+            if (tipoSuscripcion === TipoSuscripcion.AGREMIADO_TSU) {
+                nuevoNivelAcademico = NivelAcademico.TSU;
+            } else if (tipoSuscripcion === TipoSuscripcion.AGREMIADO_LICENCIADO) {
+                nuevoNivelAcademico = NivelAcademico.LICENCIADO;
+            }
+
+            if (nuevoNivelAcademico) {
+                await prisma.gremio.upsert({
+                    where: { usuarioId: usuarioSuscripcion.id },
+                    update: { nivelAcademico: nuevoNivelAcademico },
+                    create: {
+                        usuarioId: usuarioSuscripcion.id,
+                        nivelAcademico: nuevoNivelAcademico,
+                    },
+                });
+            }
         }
 
 
