@@ -4,6 +4,8 @@ import useSuscripcionStore from "../store/suscripcionStore";
 import { EstatusSuscripcion } from "@/global/enums";
 import { isProd } from "@/env";
 
+import { notify } from "@/components/nano";
+
 interface UpdateEstatusSuscripcionParams {
   suscripcionId: number;
   nuevoEstatus: EstatusSuscripcion;
@@ -22,7 +24,7 @@ export async function updateEstatusSuscripcionService({
 
   try {
     const client = clientApollo;
-    await client.mutate({
+    const resoult = await client.mutate({
       mutation: UPDATE_SUSCRIPCION_ESTATUS,
       variables: {
         token,
@@ -30,6 +32,15 @@ export async function updateEstatusSuscripcionService({
         estatus: nuevoEstatus,
       },
     });
+
+
+    if (resoult.data) {
+      notify({
+        message: (resoult.data as any).updateSuscripcionEstatus?.message,
+        type: (resoult.data as any).updateSuscripcionEstatus?.type,
+      });
+    }
+
   } catch (err) {
     console.error("Error al actualizar estatus:", err);
     // Aqui podrias hacer un rollback si lo deseas

@@ -36,13 +36,13 @@ const updateSuscripcionEstatus = async (_: unknown, args: UpdateSuscripcionEstat
             return errorResponse({ message: "Suscripción no encontrada" });
         }
 
-        if (suscripcion.estatus !== EstatusSuscripcion.PENDIENTE) {
-            return errorResponse({ message: "Solo se puede actualizar el estatus de suscripciones pendientes" });
-        }
+        // if (suscripcion.estatus !== EstatusSuscripcion.PENDIENTE) {
+        //     return errorResponse({ message: "Solo se puede actualizar el estatus de suscripciones pendientes" });
+        // }
 
-        if (estatus === EstatusSuscripcion.PENDIENTE) {
-            return errorResponse({ message: "El estatus debe cambiarse a un estado diferente de pendiente" });
-        }
+        // if (estatus === EstatusSuscripcion.PENDIENTE) {
+        //     return errorResponse({ message: "El estatus debe cambiarse a un estado diferente de pendiente" });
+        // }
 
         const suscripcionActualizada = await prisma.suscripcion.update({
             where: { id: suscripcionId },
