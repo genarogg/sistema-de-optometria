@@ -95,7 +95,7 @@ const FieldRow = ({
     }}
   >
     <div style={{ display: "flex", alignItems: "center", gap: 6, width: 148, flexShrink: 0 }}>
-      <span style={{ color: "#93c5fd", display: "flex", alignItems: "center" }}>{icon}</span>
+      <span style={{ color: "#0b131bff", display: "flex", alignItems: "center" }}>{icon}</span>
       <span
         style={{
           color: "#475569",
@@ -151,7 +151,7 @@ const FieldCard = ({
         display: "flex",
         alignItems: "center",
         gap: 5,
-        color: "#93c5fd",
+        color: "#0b131bff",
         fontSize: 10,
         fontWeight: 600,
         letterSpacing: "0.1em",
@@ -199,7 +199,7 @@ const MetricCard = ({
         display: "flex",
         alignItems: "center",
         gap: 5,
-        color: "#93c5fd",
+        color: "#0b131bff",
         fontSize: 10,
         fontWeight: 600,
         letterSpacing: "0.1em",
@@ -243,7 +243,7 @@ const SuscripcionDetailsModal: React.FC<SuscripcionDetailsModalProps> = ({
   const campos = [
     { icon: <BadgeInfo size={11} />, label: "Cédula", value: suscripcion.usuario.cedula },
     { icon: <User size={11} />, label: "Nombre completo", value: nombreCompleto },
-    { icon: <Mail size={11} />, label: "Correo electrónico", value: suscripcion.usuario.correo },
+    // { icon: <Mail size={11} />, label: "Correo electrónico", value: suscripcion.usuario.correo },
     { icon: <Phone size={11} />, label: "Teléfono", value: suscripcion.usuario.telefono },
     { icon: <ShieldCheck size={11} />, label: "Rol en el sistema", value: suscripcion.usuario.rol },
     { icon: <CalendarDays size={11} />, label: "Fecha de registro", value: formatearFecha(suscripcion.createdAt) },
@@ -277,7 +277,7 @@ const SuscripcionDetailsModal: React.FC<SuscripcionDetailsModalProps> = ({
     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingBottom: 4 }}>
       <span style={{ color: "#64748b", fontSize: 10 }}>ID interno · {suscripcion.id}</span>
       <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-        <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#93c5fd" }} />
+        <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#0b131bff" }} />
         <span style={{ color: "#64748b", fontSize: 10 }}>Sistema de suscripciones</span>
       </div>
     </div>
@@ -341,7 +341,7 @@ const SuscripcionDetailsModal: React.FC<SuscripcionDetailsModalProps> = ({
             <div>
               <p
                 style={{
-                  color: "#93c5fd",
+                  color: "#0b131bff",
                   fontSize: 10,
                   fontWeight: 600,
                   letterSpacing: "0.14em",
