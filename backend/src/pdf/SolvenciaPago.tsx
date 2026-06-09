@@ -10,16 +10,36 @@ import {
     Img,
     Layout,
     P,
-
+    Font,
     Row,
     Strong,
     View
 } from "@react-pdf-levelup/core";
-
+import path from "path";
 import { QRstyle } from "@react-pdf-levelup/qr";
 
+
+const getFontPath = (fontName: string) =>
+    path.join(process.cwd(), "src", "pdf", "fonts", fontName);
+
+
+Font.register({
+    family: "Courier Prime",
+    fonts: [
+        {
+            src: getFontPath("CourierPrime-Regular.ttf"),
+            fontWeight: "normal",
+        },
+        {
+            src: getFontPath("CourierPrime-Bold.ttf"),
+            fontWeight: "bold",
+        },
+    ],
+});
+
+
 const Component = ({ data }: any) => {
-    const colorFull = "#019a9d"
+    const colorFull = "#3366cc"
 
     const dataFull = {
         nombreCompleto: data?.nombreCompleto || "Genaro Octavio",
@@ -44,9 +64,9 @@ const Component = ({ data }: any) => {
                     <P style={{ marginBottom: "3", fontSize: "11px" }}>
                         <Strong>COLEGIO DE OPTOMETRISTAS DE VENEZUELA</Strong>
                     </P>
-                    {/* <P style={{ fontSize: "11px" }}>
-                        <Strong>JUNTA DIRECTIVA INTERINA</Strong>
-                    </P> */}
+                    <P style={{ fontSize: "11px" }}>
+                        <Strong>JUNTA DIRECTIVA</Strong>
+                    </P>
                 </Center>
                 <Img
                     src="https://genarogg.github.io/media/covzla/escudo-optometria.png"
@@ -134,16 +154,16 @@ const Component = ({ data }: any) => {
                                         }}
                                         dotsOptions={{
                                             type: "classy",
-                                            color: "#019a9d"
+                                            color: "#3366cc"
                                         }}
                                         cornersSquareOptions={{
                                             type: "extra-rounded",
-                                            color: "#019a9d"
+                                            color: "#3366cc"
                                         }}
                                     />
                                 </Center>
 
-                                <View style={{ width: "180px", borderTop: '1px solid #019a9d', marginBottom: "5px" }} />
+                                <View style={{ width: "180px", borderTop: '1px solid #3366cc', marginBottom: "5px" }} />
 
                                 <P style={{ fontSize: "9px" }}><Strong>Escanee para comprobar la validez</Strong></P>
                                 <P style={{ fontSize: "9px" }}>Documento válido por 30 días</P>
@@ -158,8 +178,9 @@ const Component = ({ data }: any) => {
 
     return (
         <Layout style={{
-            fontFamily: "Courier",
-            paddingBottom: 0
+
+            paddingBottom: 0,
+            fontFamily: "Courier Prime"
         }}
             padding={62}
             backgroundColor="#F0F7F7"

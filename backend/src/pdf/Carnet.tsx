@@ -11,10 +11,29 @@ import {
     P,
     Row,
     Strong,
-    View
+    View,
+    Font
 } from "@react-pdf-levelup/core";
-
+import path from "path";
 import { QRstyle } from "@react-pdf-levelup/qr";
+
+
+const getFontPath = (fontName: string) =>
+    path.join(process.cwd(), "src", "pdf", "fonts", fontName);
+
+Font.register({
+    family: "Courier Prime",
+    fonts: [
+        {
+            src: getFontPath("CourierPrime-Regular.ttf"),
+            fontWeight: "normal",
+        },
+        {
+            src: getFontPath("CourierPrime-Bold.ttf"),
+            fontWeight: "bold",
+        },
+    ],
+});
 
 const ConstanciaSolvencia = ({ data }: any) => {
     const width1 = 340;
@@ -292,7 +311,7 @@ const ConstanciaSolvencia = ({ data }: any) => {
     }
 
     return (
-        <Layout size="A4" orientation="v">
+        <Layout size="A4" orientation="v" style={{ fontFamily: "Courier Prime" }}>
 
             <View style={{
                 position: "relative",
