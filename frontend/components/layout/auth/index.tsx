@@ -8,7 +8,6 @@ import { OptometrySpinner } from '@/components/ux/spinner';
 import { useAuthStore } from '@/context/auth/AuthContext';
 import useValidarSesion from "@/context/auth/useValidarSesion"
 
-import { initMoneyInputs } from "@/functions/super-money"
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -34,10 +33,6 @@ const Layout: React.FC<LayoutProps> = ({
     // Si es ruta dashboard, mostramos spinner mientras loading o isAuthenticated=false
     const showSpinner = isDashboardRoute ? loading || !isAuthenticated : loading;
     useValidarSesion();
-
-    React.useEffect(() => {
-        initMoneyInputs();
-    }, [])
 
     return (
         <div className={`containerAll clean ${where}`}>
