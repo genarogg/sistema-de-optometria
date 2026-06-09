@@ -101,7 +101,7 @@ const ConstanciaSolvencia = ({ data }: any) => {
                         />
                     </Div>
                 </Div>
-                <BR style={{ marginTop: 62 }} />
+                <BR style={{ marginTop: 80 }} />
 
                 <Div style={{
                     display: "flex",
@@ -134,9 +134,10 @@ const ConstanciaSolvencia = ({ data }: any) => {
                     textAlign: "center",
                     textTransform: "uppercase",
                     maxWidth: "130px",
+                    marginTop: 2
 
                 }}>
-                    <Strong style={{ fontSize: "7px", color: "#bfa454", lineHeight: "8px", maxWidth: "90px", marginTop: "-15px" }}>
+                    <Strong style={{ fontSize: "7px", color: "#3366cc", lineHeight: "8px", maxWidth: "90px" }}>
                         {dataFull.cargo ? dataFull.cargo : dataFull.nivelAcademico}
                     </Strong>
                 </Div>
@@ -183,10 +184,10 @@ const ConstanciaSolvencia = ({ data }: any) => {
                     //border:"1px solid red",
                     fontSize: "6px",
                     textAlign: "center",
-                    color: "#bfa454",
+                    color: "#3366cc",
                     fontWeight: "bold",
                     lineHeight: "7px",
-                    marginTop: "-10",
+
                     textTransform: "uppercase"
 
                 }}>
@@ -232,12 +233,12 @@ const ConstanciaSolvencia = ({ data }: any) => {
                                     <Div style={{
                                         position: "absolute", bottom: "-16px", right: "-10px",
                                         overflow: "hidden",
-                                        transform: "scale(.8)",
+                                        transform: "scale(.6)",
                                         borderRadius: "35px"
                                     }}>
                                         <QRstyle
                                             url={dataFull.urlQR}
-                                            size={80}
+                                            size={90}
 
 
                                             imageOptions={{
@@ -246,11 +247,11 @@ const ConstanciaSolvencia = ({ data }: any) => {
                                             }}
                                             dotsOptions={{
                                                 type: "classy-rounded",
-                                                color: "#bfa454"
+                                                color: "#3366cc"
                                             }}
                                             cornersSquareOptions={{
                                                 type: "extra-rounded",
-                                                color: "#bfa454"
+                                                color: "#3366cc"
                                             }}
 
                                             backgroundOptions={{
@@ -269,35 +270,45 @@ const ConstanciaSolvencia = ({ data }: any) => {
                                     justifyContent: "center",
                                     alignItems: "center",
                                     left: "9px"
+
                                 }}
                             >
-                                <Img
-                                    src={dataFull.autoridad.firma}
-                                    style={{
-                                        height: "40px",
-                                        width: "58px",
-                                        marginBottom: "0px",
+                                <Div style={{
+                                    height: "40px",
+                                    width: "40px",
+                                }}>
+                                    <Img
 
-                                    }}
-                                />
+                                        src={dataFull.autoridad.firma}
+                                        style={{
+
+                                            marginBottom: "0px",
+                                            objectFill: "cover"
+                                        }}
+                                    />
+                                </Div>
+
                                 <P style={{
                                     fontSize: "5px",
                                     top: "0",
                                     marginBottom: "0",
-                                    color: "#282828"
+                                    color: "#3366cc",
+                                    fontWeight: "bold"
                                 }}>
                                     {dataFull.autoridad.nombreCompletos}<BR />{dataFull.autoridad.apellidosCompletos}
                                 </P>
                                 <View style={{
                                     width: "95%",
-                                    borderTop: '1px solid #282828',
+                                    borderTop: '1px solid #3366cc',
                                     marginTop: 2,
-                                    marginBottom: 2
+                                    marginBottom: 2,
+                                    fontWeight: "bold"
                                 }} />
                                 <P style={{
                                     fontSize: "4px",
                                     marginBottom: "0px",
-                                    color: "#282828"
+                                    color: "#3366cc",
+                                    fontWeight: "bold"
                                 }}>
                                     Director (a) del COV
                                 </P>
@@ -311,7 +322,7 @@ const ConstanciaSolvencia = ({ data }: any) => {
     }
 
     return (
-        <Layout size="A4" orientation="v" style={{ fontFamily: "Courier Prime" }}>
+        <Layout size="A4" orientation="v" style={{ fontFamily: "Courier Prime", }}>
 
             <View style={{
                 position: "relative",
