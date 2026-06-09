@@ -1,4 +1,5 @@
 import { Eye, Mail, MapPin } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -29,12 +30,9 @@ const Footer = () => {
           <p className="text-sm text-primary-foreground/80 mb-4">
             Forma parte del gremio que está transformando la optometría venezolana.
           </p>
-          <a
-            href="mailto:contacto@covptometria.org"
-            className="inline-flex px-5 py-2.5 rounded-full font-semibold bg-primary-foreground text-primary hover:bg-primary-foreground/90 transition-colors"
-          >
+          <Link href="/dashboard/login" className="inline-flex px-5 py-2.5 rounded-full font-semibold bg-primary-foreground text-primary hover:bg-primary-foreground/90 transition-colors">
             Agremiarme
-          </a>
+          </Link>
         </div>
       </div>
       <div className="border-t border-primary-foreground/15 py-5 text-center text-xs text-primary-foreground/70">
