@@ -74,7 +74,7 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
         });
 
         const directorEventos = await prisma.autoridad.findFirst({
-            where: { tipoAutoridad: TipoAutoridad.DIRECTOR_EVENTOS, vigente: true },
+            where: { tipoAutoridad: TipoAutoridad.SECRETARIO_EVENTOS, vigente: true },
             orderBy: { id: 'desc' },
             include: { usuario: true },
         });

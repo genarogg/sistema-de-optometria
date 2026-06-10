@@ -69,9 +69,9 @@ enum Rol {
 enum TipoAutoridad {
   PRESIDENTE
   VICEPRESIDENTE
-  DIRECTOR_EVENTOS
-  DIRECTOR_ACADEMICO
-  DIRECTOR_FINANSAS
+  SECRETARIO_EVENTOS
+  SECRETARIO_ACADEMICO
+  SECRETARIO_FINANSAS
   SECRETARIO_GENERAL
   SECRETARIO_ACTAS
   SECRETARIO_PRENSA
@@ -208,8 +208,11 @@ model Evento {
   usuarioId           Int
   Usuario             Usuario        @relation(fields: [usuarioId], references: [id])
 
-  aliadoImg    String?
-  aliadoNombre String?
+  aliadoInstitucionImg      String?
+  aliadoInstitucionNombre   String?
+  aliadoAutorizoFirmaImg    String?
+  aliadoAutorizoNombreFirma String?
+  aliadoAutorizoCargo       String?
 
   ponenteEvento     PonenteEvento[]
   suscripcionEvento SuscripcionEvento[]

@@ -18,8 +18,11 @@ interface ActualizarEventoArgs {
     descuentoProfesor?: number;
     vigencia?: VigenciaEvento;
     ponentes?: PonenteInput[];
-    aliadoImg?: string;
-    aliadoNombre?: string;
+    aliadoInstitucionImg?: string;
+    aliadoInstitucionNombre?: string;
+    aliadoAutorizoFirmaImg?: string;
+    aliadoAutorizoNombreFirma?: string;
+    aliadoAutorizoCargo?: string;
 }
 
 const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
@@ -37,8 +40,11 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         descuentoProfesor, 
         vigencia, 
         ponentes,
-        aliadoImg,
-        aliadoNombre
+        aliadoInstitucionImg,
+        aliadoInstitucionNombre,
+        aliadoAutorizoFirmaImg,
+        aliadoAutorizoNombreFirma,
+        aliadoAutorizoCargo
     } = args;
 
     if (!token) {
@@ -68,17 +74,21 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
             return errorResponse({ message: "El evento no existe" });
         }
 
-        const data: any = {};
-        if (nombre !== undefined) data.nombre = nombre;
-        if (fecha !== undefined) data.fecha = fecha;
-        if (lugar !== undefined) data.lugar = lugar;
-        if (costo !== undefined) data.costo = costo;
-        if (tipo !== undefined) data.tipo = tipo;
-        if (descuentoEstudiante !== undefined) data.descuentoEstudiante = descuentoEstudiante;
-        if (descuentoProfesor !== undefined) data.descuentoProfesor = descuentoProfesor;
-        if (vigencia !== undefined) data.vigencia = vigencia;
-        if (aliadoImg !== undefined) data.aliadoImg = aliadoImg;
-        if (aliadoNombre !== undefined) data.aliadoNombre = aliadoNombre;
+        const data = {
+            nombre,
+            fecha,
+            lugar,
+            costo,
+            tipo,
+            descuentoEstudiante,
+            descuentoProfesor,
+            vigencia,
+            aliadoInstitucionImg,
+            aliadoInstitucionNombre,
+            aliadoAutorizoFirmaImg,
+            aliadoAutorizoNombreFirma,
+            aliadoAutorizoCargo,
+        };
 
         const eventoActualizado = await prisma.evento.update({
             where: { id: eventoId },

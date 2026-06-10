@@ -17,8 +17,11 @@ interface CrearEventoArgs {
     descuentoProfesor?: number;
     vigencia?: VigenciaEvento;
     ponentes?: PonenteInput[];
-    aliadoImg?: string;
-    aliadoNombre?: string;
+    aliadoInstitucionImg?: string;
+    aliadoInstitucionNombre?: string;
+    aliadoAutorizoFirmaImg?: string;
+    aliadoAutorizoNombreFirma?: string;
+    aliadoAutorizoCargo?: string;
 }
 
 const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
@@ -35,8 +38,11 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
         descuentoProfesor = 0, 
         vigencia = VigenciaEvento.VIGENTE, 
         ponentes = [],
-        aliadoImg,
-        aliadoNombre
+        aliadoInstitucionImg,
+        aliadoInstitucionNombre,
+        aliadoAutorizoFirmaImg,
+        aliadoAutorizoNombreFirma,
+        aliadoAutorizoCargo
     } = args;
 
     if (!token) {
@@ -69,8 +75,11 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
                 descuentoProfesor,
                 vigencia,
                 usuarioId: usuario.id,
-                aliadoImg,
-                aliadoNombre,
+                aliadoInstitucionImg,
+                aliadoInstitucionNombre,
+                aliadoAutorizoFirmaImg,
+                aliadoAutorizoNombreFirma,
+                aliadoAutorizoCargo,
             },
         });
 
