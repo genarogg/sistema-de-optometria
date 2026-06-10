@@ -74,6 +74,7 @@ type EventosActivosResponse {
   type: String
   message: String
   data: EventosActivosData
+  meta: Meta
 }
 
 type EventosActivosData {
@@ -95,7 +96,13 @@ extend type Query {
     tipo: TipoEvento
   ): EventosResponse!
 
-  getEventosActivos(token: String!): EventosActivosResponse!
+  getEventosActivos(
+    token: String!
+    page: Int
+    pageSize: Int
+    filtro: String
+    tipo: TipoEvento
+  ): EventosActivosResponse!
 
   getSuscripcionesEvento(
     token: String!
