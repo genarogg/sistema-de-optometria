@@ -52,7 +52,7 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
 
   const calcularPrecio = (evento: Evento) => {
     let descuento = 0;
-    
+
     if (usuario?.rol === Rol.ESTUDIANTE) {
       descuento = evento.descuentoEstudiante;
     } else if (usuario?.rol === Rol.PROFESOR) {
@@ -66,7 +66,7 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
 
   const getDescuentoTexto = (evento: Evento) => {
     if (!usuario?.rol) return null;
-    
+
     if (usuario.rol === Rol.ESTUDIANTE && evento.descuentoEstudiante > 0) {
       return `Descuento estudiante: ${evento.descuentoEstudiante}%`;
     }
@@ -85,7 +85,7 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
 
   const getBotonConfig = (evento: Evento) => {
     const estatus = getEstadoSuscripcion(evento.id);
-    
+
     if (!estatus) {
       return {
         variant: "default" as const,
@@ -115,10 +115,10 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
 
     if (estatus === EstatusPagoEvento.PAGADO) {
       return {
-        variant: "outline" as const,
-        disabled: false,
-        texto: "Descargar Carnet",
-        icono: <FileText className="h-4 w-4 mr-2" />
+        variant: "secondary" as const,
+        disabled: true,
+        texto: "Suscripto",
+        icono: <CheckCircle className="h-4 w-4 mr-2" />
       };
     }
 
@@ -144,7 +144,7 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
     if (downloadingMap.get(evento.id)) return;
 
     setDownloadingMap(prev => new Map(prev).set(evento.id, true));
-    
+
     await downloadCertificadoService({
       eventoId: evento.id,
       usuario: usuario,
@@ -191,9 +191,9 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                     {estatus && (
                       <Badge variant={
                         estatus === EstatusPagoEvento.PAGADO ? "default" :
-                        estatus === EstatusPagoEvento.PENDIENTE ? "default" :
-                        estatus === EstatusPagoEvento.RECHAZADO ? "destructive" :
-                        estatus === EstatusPagoEvento.NO_ASISTIO ? "destructive" : "outline"
+                          estatus === EstatusPagoEvento.PENDIENTE ? "default" :
+                            estatus === EstatusPagoEvento.RECHAZADO ? "destructive" :
+                              estatus === EstatusPagoEvento.NO_ASISTIO ? "destructive" : "outline"
                       }>
                         {estatus}
                       </Badge>
@@ -276,17 +276,19 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                     Carnet
                   </Button>
                 )}
-                <Button
-                  variant={botonConfig.variant}
-                  size="sm"
-                  onClick={() => botonConfig.disabled ? null : onSuscribirse(evento)}
-                  disabled={botonConfig.disabled}
-                >
-                  <div className="flex items-center gap-2">
-                    {botonConfig.icono}
-                    {botonConfig.texto}
-                  </div>
-                </Button>
+                {estatus !== EstatusPagoEvento.NO_ASISTIO && estatus !== EstatusPagoEvento.ASISTIO && (
+                  <Button
+                    variant={botonConfig.variant}
+                    size="sm"
+                    onClick={() => botonConfig.disabled ? null : onSuscribirse(evento)}
+                    disabled={botonConfig.disabled}
+                  >
+                    <div className="flex items-center gap-2">
+                      {botonConfig.icono}
+                      {botonConfig.texto}
+                    </div>
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>

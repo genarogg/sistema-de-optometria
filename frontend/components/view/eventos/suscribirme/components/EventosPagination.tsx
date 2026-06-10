@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 interface EventosPaginationProps {
     currentPage: number
@@ -18,8 +19,10 @@ const EventosPagination: React.FC<EventosPaginationProps> = ({ currentPage, tota
                     size="sm"
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
+                    className="flex items-center gap-1"
                 >
-                    Anterior
+                    <ChevronLeft className="h-4 w-4" />
+                    {/* <span className="hidden md:inline">Anterior</span> */}
                 </Button>
                 <div className="flex items-center space-x-1">
                     {Array.from({ length: totalPages }, (_, i) => {
@@ -58,8 +61,10 @@ const EventosPagination: React.FC<EventosPaginationProps> = ({ currentPage, tota
                     size="sm"
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
+                    className="flex items-center gap-1"
                 >
-                    Siguiente
+                    {/* <span className="hidden md:inline">Siguiente</span> */}
+                    <ChevronRight className="h-4 w-4" />
                 </Button>
             </div>
         </div>
