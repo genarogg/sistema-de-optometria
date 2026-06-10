@@ -96,7 +96,7 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
         const CORS_URL = process.env.CORS_URL || "";
 
         const data = {
-            imgAliada: evento.aliadoImg || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+            imgAliada: evento.aliadoInstitucionImg || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
             nombreYApellido: `${usuario.primerNombre} ${usuario.primerApellido}`.trim(),
             cedula: usuario.cedula,
             lugarEvento: evento.lugar,

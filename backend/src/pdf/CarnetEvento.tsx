@@ -337,7 +337,7 @@ const CarnetEvento = ({ data }: any) => {
     }
 
     return (
-        <Layout size="A4" orientation="v">
+        <Layout size="A4" orientation="v" style={{ fontFamily: "Courier Prime" }}>
 
             <View style={{
                 position: "relative",
