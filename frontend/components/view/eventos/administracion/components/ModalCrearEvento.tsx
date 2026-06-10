@@ -82,10 +82,14 @@ export default function ModalCrearEvento({
 
   
   // Campos de aliado
-  const [aliadoImg, setAliadoImg] = useState<string>('');
-  const [aliadoNombre, setAliadoNombre] = useState<string>('');
+  const [aliadoInstitucionImg, setAliadoInstitucionImg] = useState<string>('');
+  const [aliadoInstitucionNombre, setAliadoInstitucionNombre] = useState<string>('');
+  const [aliadoAutorizoFirmaImg, setAliadoAutorizoFirmaImg] = useState<string>('');
+  const [aliadoAutorizoNombreFirma, setAliadoAutorizoNombreFirma] = useState<string>('');
+  const [aliadoAutorizoCargo, setAliadoAutorizoCargo] = useState<string>('');
   const [cropperOpen, setCropperOpen] = useState(false);
   const [tempImage, setTempImage] = useState<string>('');
+  const [currentImageField, setCurrentImageField] = useState<string | null>(null);
 
 
 
@@ -161,16 +165,36 @@ export default function ModalCrearEvento({
     const base64 = await handleImageSelect(e);
     if (base64) {
       setTempImage(base64);
+      setCurrentImageField('aliadoInstitucionImg');
+      setCropperOpen(true);
+    }
+  };
+
+  const handleAliadoAutorizoFirmaImageSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const base64 = await handleImageSelect(e);
+    if (base64) {
+      setTempImage(base64);
+      setCurrentImageField('aliadoAutorizoFirmaImg');
       setCropperOpen(true);
     }
   };
 
   const handleCropComplete = (croppedImage: string) => {
-    setAliadoImg(croppedImage);
+    if (currentImageField === 'aliadoInstitucionImg') {
+      setAliadoInstitucionImg(croppedImage);
+    } else if (currentImageField === 'aliadoAutorizoFirmaImg') {
+      setAliadoAutorizoFirmaImg(croppedImage);
+    }
+    setCurrentImageField(null);
   };
 
-  const clearAliadoImg = () => {
-    setAliadoImg('');
+
+    const clearAliadoInstitucionImg = () => {
+    setAliadoInstitucionImg('');
+  };
+
+  const clearAliadoAutorizoFirmaImg = () => {
+    setAliadoAutorizoFirmaImg('');
   };
 
   // Separamos useEffect para establecer valores iniciales (sin depender de costoInput)
@@ -185,8 +209,11 @@ export default function ModalCrearEvento({
       setDescuentoEstudiante(evento.descuentoEstudiante);
       setDescuentoProfesor(evento.descuentoProfesor);
       setVigencia(evento.vigencia);
-      setAliadoImg(evento.aliadoImg || '');
-      setAliadoNombre(evento.aliadoNombre || '');
+      setAliadoInstitucionImg(evento.aliadoInstitucionImg || '');
+      setAliadoInstitucionNombre(evento.aliadoInstitucionNombre || '');
+      setAliadoAutorizoFirmaImg(evento.aliadoAutorizoFirmaImg || '');
+      setAliadoAutorizoNombreFirma(evento.aliadoAutorizoNombreFirma || '');
+      setAliadoAutorizoCargo(evento.aliadoAutorizoCargo || '');
       
       // Establecemos el tipo después de un pequeño delay para asegurar que el componente Select esté listo
       setTimeout(() => {
@@ -216,8 +243,11 @@ export default function ModalCrearEvento({
       setPonentes([]);
       setBusquedaCedula('');
       setUsuariosEncontrados([]);
-      setAliadoImg('');
-      setAliadoNombre('');
+      setAliadoInstitucionImg('');
+      setAliadoInstitucionNombre('');
+      setAliadoAutorizoFirmaImg('');
+      setAliadoAutorizoNombreFirma('');
+      setAliadoAutorizoCargo('');
     }
   }, [evento, isOpen]);
 
@@ -260,8 +290,11 @@ export default function ModalCrearEvento({
           descuentoProfesor,
           vigencia: vigencia || undefined,
           ponentes: ponentesData,
-          aliadoImg: aliadoImg || undefined,
-          aliadoNombre: aliadoNombre || undefined,
+          aliadoInstitucionImg: aliadoInstitucionImg || undefined,
+          aliadoInstitucionNombre: aliadoInstitucionNombre || undefined,
+          aliadoAutorizoFirmaImg: aliadoAutorizoFirmaImg || undefined,
+          aliadoAutorizoNombreFirma: aliadoAutorizoNombreFirma || undefined,
+          aliadoAutorizoCargo: aliadoAutorizoCargo || undefined,
         });
       } else {
         await crearEventoService({
@@ -274,8 +307,11 @@ export default function ModalCrearEvento({
           descuentoProfesor,
           vigencia: vigencia || undefined,
           ponentes: ponentesData,
-          aliadoImg: aliadoImg || undefined,
-          aliadoNombre: aliadoNombre || undefined,
+          aliadoInstitucionImg: aliadoInstitucionImg || undefined,
+          aliadoInstitucionNombre: aliadoInstitucionNombre || undefined,
+          aliadoAutorizoFirmaImg: aliadoAutorizoFirmaImg || undefined,
+          aliadoAutorizoNombreFirma: aliadoAutorizoNombreFirma || undefined,
+          aliadoAutorizoCargo: aliadoAutorizoCargo || undefined,
         });
       }
 
@@ -290,8 +326,11 @@ export default function ModalCrearEvento({
       setPonentes([]);
       setBusquedaCedula('');
       setUsuariosEncontrados([]);
-      setAliadoImg('');
-      setAliadoNombre('');
+      setAliadoInstitucionImg('');
+      setAliadoInstitucionNombre('');
+      setAliadoAutorizoFirmaImg('');
+      setAliadoAutorizoNombreFirma('');
+      setAliadoAutorizoCargo('');
       onClose();
       onSuccess?.();
     } catch (error) {
@@ -331,12 +370,12 @@ export default function ModalCrearEvento({
                   <Button
                     variant="outline"
                     className={cn(
-                      "w-full justify-start text-left font-normal",
+                      "w-full justify-start text-left font-normal bg-transparent text-foreground",
                       !fecha && "text-muted-foreground"
                     )}
                     disabled={isLoading}
                   >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    <CalendarIcon className="mr-2 h-4 w-4 " />
                     {fecha ? (
                       format(fecha, "PPP", { locale: es })
                     ) : (
@@ -455,37 +494,37 @@ export default function ModalCrearEvento({
                 <Label>Aliado del Evento</Label>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="aliadoNombre">Nombre del Aliado</Label>
+                  <Label htmlFor="aliadoInstitucionNombre">Nombre del Aliado</Label>
                   <Input
-                    id="aliadoNombre"
-                    value={aliadoNombre}
-                    onChange={(e) => setAliadoNombre(e.target.value)}
+                    id="aliadoInstitucionNombre"
+                    value={aliadoInstitucionNombre}
+                    onChange={(e) => setAliadoInstitucionNombre(e.target.value)}
                     disabled={isLoading}
                     placeholder="Nombre del aliado"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Imagen del Aliado</Label>
+                  <Label>Imagen de la Institución Aliada</Label>
                   <div className="relative">
                     <input
                       type="file"
                       accept="image/*"
                       onChange={handleAliadoImageSelect}
                       className="hidden"
-                      id="aliado-image-upload"
+                      id="aliado-institucion-image-upload"
                       disabled={isLoading}
                     />
                     
                     <div
                       className="w-full h-24 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer hover:border-gray-400 hover:bg-gray-50 transition-colors relative"
-                      onClick={() => document.getElementById('aliado-image-upload')?.click()}
+                      onClick={() => document.getElementById('aliado-institucion-image-upload')?.click()}
                     >
-                      {aliadoImg ? (
+                      {aliadoInstitucionImg ? (
                         <>
                           <img
-                            src={aliadoImg}
-                            alt="Aliado"
+                            src={aliadoInstitucionImg}
+                            alt="Imagen Institución Aliada"
                             className="w-full h-full object-cover rounded-md"
                           />
                           <Button
@@ -495,7 +534,7 @@ export default function ModalCrearEvento({
                             className="absolute -top-2 -right-2 w-6 h-6 z-10"
                             onClick={(e) => {
                               e.stopPropagation();
-                              clearAliadoImg();
+                              clearAliadoInstitucionImg();
                             }}
                             disabled={isLoading}
                           >
@@ -506,7 +545,78 @@ export default function ModalCrearEvento({
                         <div className="flex flex-col items-center gap-2">
                           <Upload className="w-8 h-8 text-gray-400" />
                           <span className="text-sm text-gray-500">
-                            Haz clic para subir imagen
+                            Haz clic para subir imagen de institución
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="aliadoAutorizoNombreFirma">Nombre del Autorizador de Firma</Label>
+                  <Input
+                    id="aliadoAutorizoNombreFirma"
+                    value={aliadoAutorizoNombreFirma}
+                    onChange={(e) => setAliadoAutorizoNombreFirma(e.target.value)}
+                    disabled={isLoading}
+                    placeholder="Nombre de quien autoriza la firma"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="aliadoAutorizoCargo">Cargo del Autorizador de Firma</Label>
+                  <Input
+                    id="aliadoAutorizoCargo"
+                    value={aliadoAutorizoCargo}
+                    onChange={(e) => setAliadoAutorizoCargo(e.target.value)}
+                    disabled={isLoading}
+                    placeholder="Cargo de quien autoriza la firma"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Imagen de Firma del Autorizador</Label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAliadoAutorizoFirmaImageSelect}
+                      className="hidden"
+                      id="aliado-firma-image-upload"
+                      disabled={isLoading}
+                    />
+                    
+                    <div
+                      className="w-full h-24 border-2 border-dashed border-gray-300 rounded-md flex items-center justify-center cursor-pointer hover:border-gray-400 hover:bg-gray-50 transition-colors relative"
+                      onClick={() => document.getElementById('aliado-firma-image-upload')?.click()}
+                    >
+                      {aliadoAutorizoFirmaImg ? (
+                        <>
+                          <img
+                            src={aliadoAutorizoFirmaImg}
+                            alt="Imagen de Firma del Autorizador"
+                            className="w-full h-full object-cover rounded-md"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="icon"
+                            className="absolute -top-2 -right-2 w-6 h-6 z-10"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              clearAliadoAutorizoFirmaImg();
+                            }}
+                            disabled={isLoading}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </>
+                      ) : (
+                        <div className="flex flex-col items-center gap-2">
+                          <Upload className="w-8 h-8 text-gray-400" />
+                          <span className="text-sm text-gray-500">
+                            Haz clic para subir imagen de firma
                           </span>
                         </div>
                       )}
@@ -554,7 +664,7 @@ export default function ModalCrearEvento({
                         onClick={() => agregarPonente(usuario)}
                         disabled={isLoading}
                       >
-                        <UserPlus className="h-4 w-4" />
+                        <UserPlus className="h-4 w-4 text-secondary" />
                       </Button>
                     </div>
                   ))}

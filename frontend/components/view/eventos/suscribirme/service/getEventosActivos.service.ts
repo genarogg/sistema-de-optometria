@@ -28,8 +28,7 @@ export async function getEventosActivosService() {
     const eventos: any[] = responseData?.eventos ?? [];
     const suscripcionesEventoUsuario: any[] = responseData?.suscripcionesEventoUsuario ?? [];
     
-    console.log("eventos activos:", eventos);
-    console.log("suscripciones evento usuario:", suscripcionesEventoUsuario);
+
     
     setEventos(eventos);
     setSuscripcionesEventoUsuario(suscripcionesEventoUsuario);

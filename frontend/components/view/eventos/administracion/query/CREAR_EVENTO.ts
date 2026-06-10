@@ -12,8 +12,11 @@ const CREAR_EVENTO = gql`
     $descuentoEstudiante: Int
     $descuentoProfesor: Int
     $vigencia: VigenciaEvento
-    $aliadoImg: String
-    $aliadoNombre: String
+    $aliadoInstitucionImg: String
+    $aliadoInstitucionNombre: String
+    $aliadoAutorizoFirmaImg: String
+    $aliadoAutorizoNombreFirma: String
+    $aliadoAutorizoCargo: String
   ) {
     crearEvento(
       token: $token
@@ -26,8 +29,11 @@ const CREAR_EVENTO = gql`
       descuentoEstudiante: $descuentoEstudiante
       descuentoProfesor: $descuentoProfesor
       vigencia: $vigencia
-      aliadoImg: $aliadoImg
-      aliadoNombre: $aliadoNombre
+      aliadoInstitucionImg: $aliadoInstitucionImg
+      aliadoInstitucionNombre: $aliadoInstitucionNombre
+      aliadoAutorizoFirmaImg: $aliadoAutorizoFirmaImg
+      aliadoAutorizoNombreFirma: $aliadoAutorizoNombreFirma
+      aliadoAutorizoCargo: $aliadoAutorizoCargo
     ) {
       message
       type
@@ -41,8 +47,11 @@ const CREAR_EVENTO = gql`
         descuentoProfesor
         tipo
         vigencia
-        aliadoImg
-        aliadoNombre
+        aliadoInstitucionImg
+        aliadoInstitucionNombre
+        aliadoAutorizoFirmaImg
+        aliadoAutorizoNombreFirma
+        aliadoAutorizoCargo
         ponenteEvento {
           id
           usuarioId

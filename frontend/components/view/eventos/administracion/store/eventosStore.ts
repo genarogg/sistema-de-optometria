@@ -64,7 +64,7 @@ const useEventosStore = create<EventosState>((set) => ({
 
   agregarEvento: (evento) =>
     set((state) => ({
-      eventos: [...state.eventos, evento],
+      eventos: [evento, ...state.eventos],
     })),
 }));
 

@@ -19,8 +19,11 @@ interface CrearEventoParams {
   descuentoProfesor?: number;
   vigencia?: string;
   ponentes?: PonenteInput[];
-  aliadoImg?: string;
-  aliadoNombre?: string;
+  aliadoInstitucionImg?: string;
+  aliadoInstitucionNombre?: string;
+  aliadoAutorizoFirmaImg?: string;
+  aliadoAutorizoNombreFirma?: string;
+  aliadoAutorizoCargo?: string;
 }
 
 export async function crearEventoService(params: CrearEventoParams) {
