@@ -39,7 +39,7 @@ export interface Autoridad {
 
 export interface Gremio {
   id: number
-  numeroGremio: number
+  numeroGremio?: number
   nivelAcademico: NivelAcademico
   usuarioId: number
   usuario?: Usuario
@@ -68,8 +68,11 @@ export interface Evento {
   vigencia: VigenciaEvento
   usuarioId: number
   Usuario?: Usuario
-  aliadoImg?: string
-  aliadoNombre?: string
+  aliadoInstitucionImg?: string
+  aliadoInstitucionNombre?: string
+  aliadoAutorizoFirmaImg?: string
+  aliadoAutorizoNombreFirma?: string
+  aliadoAutorizoCargo?: string
   ponenteEvento?: PonenteEvento[]
   suscripcionEvento?: SuscripcionEvento[]
   createdAt: Date
