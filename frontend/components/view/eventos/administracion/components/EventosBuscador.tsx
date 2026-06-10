@@ -81,7 +81,7 @@ export default function EventosBuscador({
       </div>
 
       <div className="flex gap-2">
-        <Button onClick={onCreateClick}>
+        <Button onClick={onCreateClick} className='max-sm:w-full'>
           <Plus className="h-4 w-4 mr-2" />
           Crear Evento
         </Button>
