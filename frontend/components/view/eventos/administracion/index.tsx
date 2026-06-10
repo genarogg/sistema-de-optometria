@@ -8,6 +8,7 @@ import EventosBuscador from './components/EventosBuscador';
 import TarjetaEvento from './components/TarjetaEvento';
 import ModalCrearEvento from './components/ModalCrearEvento';
 import ModalPonentesEvento from './components/ModalPonentesEvento';
+import EventosPagination from './components/EventosPagination';
 import { useEventosFilters } from './hook/useEventosFilters';
 import { getEventosService } from './service/getEventos.service';
 import useEventosStore from './store/eventosStore';
@@ -18,11 +19,14 @@ export default function AdministrarEventosSection() {
   const [isPonentesModalOpen, setIsPonentesModalOpen] = React.useState(false);
   const [selectedEvento, setSelectedEvento] = React.useState<any>(null);
 
-  const { eventos, cargando, error } = useEventosStore(
+  const { eventos, cargando, error, paginaActual, totalPaginas, setPaginaActual } = useEventosStore(
     useShallow((state) => ({
       eventos: state.eventos,
       cargando: state.cargando,
       error: state.error,
+      paginaActual: state.paginaActual,
+      totalPaginas: state.totalPaginas,
+      setPaginaActual: state.setPaginaActual,
     }))
   );
 
@@ -38,7 +42,7 @@ export default function AdministrarEventosSection() {
 
   useEffect(() => {
     getEventosService();
-  }, []);
+  }, [paginaActual]);
 
   return (
     <div className="flex flex-col gap-4 ">
@@ -86,6 +90,14 @@ export default function AdministrarEventosSection() {
               setSelectedEvento(evento);
               setIsPonentesModalOpen(true);
             }}
+          />
+        )}
+
+        {filteredEventos.length > 0 && totalPaginas > 1 && (
+          <EventosPagination
+            currentPage={paginaActual}
+            totalPages={totalPaginas}
+            setCurrentPage={setPaginaActual}
           />
         )}
       </div>

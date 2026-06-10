@@ -6,7 +6,7 @@ import notify from "@/components/nano/notify";
 
 export async function getEventosService() {
   console.log("getEventosService");
-  const { setEventos, setCargando, setError, paginaActual, itemsPorPagina, filtro, vigenciaFiltro, tipoFiltro } = useEventosStore.getState();
+  const { setEventos, setCargando, setError, paginaActual, itemsPorPagina, filtro, vigenciaFiltro, tipoFiltro, setTotalPaginas } = useEventosStore.getState();
 
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") ?? "" : "";
@@ -30,8 +30,12 @@ export async function getEventosService() {
 
     const data = result.data as any;
     const eventos: any[] = data?.getEventos?.data ?? [];
+    const meta = data?.getEventos?.meta ?? { total: 0, limit: itemsPorPagina };
+    const totalPaginasCalculadas = Math.ceil(meta.total / meta.limit);
+
     console.log("eventos:", eventos);
     setEventos(eventos);
+    setTotalPaginas(totalPaginasCalculadas);
 
     if (data?.getEventos?.type && data?.getEventos?.message) {
       notify({ type: data.getEventos.type, message: data.getEventos.message });

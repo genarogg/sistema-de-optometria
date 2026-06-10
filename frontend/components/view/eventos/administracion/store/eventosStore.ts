@@ -24,6 +24,7 @@ interface EventosState {
   error: string | null;
   paginaActual: number;
   itemsPorPagina: number;
+  totalPaginas: number;
 
   setEventos: (eventos: Evento[]) => void;
   setFiltro: (filtro: string) => void;
@@ -32,6 +33,7 @@ interface EventosState {
   setCargando: (cargando: boolean) => void;
   setError: (error: string | null) => void;
   setPaginaActual: (pagina: number) => void;
+  setTotalPaginas: (totalPaginas: number) => void;
 
   actualizarEvento: (id: number, cambios: Partial<Omit<Evento, "id">>) => void;
   agregarEvento: (evento: any) => void;
@@ -46,6 +48,7 @@ const useEventosStore = create<EventosState>((set) => ({
   error: null,
   paginaActual: 1,
   itemsPorPagina: 20,
+  totalPaginas: 1,
 
   setEventos: (eventos) => set({ eventos }),
   setFiltro: (filtro) => set({ filtro }),
@@ -54,6 +57,7 @@ const useEventosStore = create<EventosState>((set) => ({
   setCargando: (cargando) => set({ cargando }),
   setError: (error) => set({ error }),
   setPaginaActual: (paginaActual) => set({ paginaActual }),
+  setTotalPaginas: (totalPaginas) => set({ totalPaginas }),
 
   actualizarEvento: (id, cambios) =>
     set((state) => ({
