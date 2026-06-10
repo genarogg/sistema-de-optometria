@@ -41,7 +41,7 @@ const ConstanciaSolvencia = ({ data }: any) => {
     const internalWidth1 = (width1 / 2) - 2
     const internalHeight1 = height1 - 4
 
-    const colorFull = "#019a9d"
+    const colorFull = "#006BC5"
     const urlAsset = "https://genarogg.github.io/media/cov"
 
 
@@ -82,8 +82,8 @@ const ConstanciaSolvencia = ({ data }: any) => {
                 >
                     <Div
                         style={{
-                            border: "7px solid #019a9d",
-                            backgroundColor: "#019a9d",
+                            border: "7px solid #006BC5",
+                            backgroundColor: "#006BC5",
                             borderRadius: "500px",
                             width: "75px",
                             height: "75px",
@@ -112,12 +112,12 @@ const ConstanciaSolvencia = ({ data }: any) => {
                     maxWidth: "130px",
 
                 }}>
-                    <Strong style={{ fontSize: "8px", color: "#019a9d" }} >
+                    <Strong style={{ fontSize: "8px", color: "#006BC5" }} >
                         {dataFull.nombreCompleto}
                     </Strong>
                     <BR />
 
-                    <Strong style={{ fontSize: "7px", lineHeight: "8px", maxWidth: "90px", color: "#019a9d", marginTop: "-10px" }}>
+                    <Strong style={{ fontSize: "7px", lineHeight: "8px", maxWidth: "90px", color: "#006BC5", marginTop: "-10px" }}>
                         {dataFull.apellidosCompletos}
                     </Strong>
 
@@ -137,7 +137,7 @@ const ConstanciaSolvencia = ({ data }: any) => {
                     marginTop: 2
 
                 }}>
-                    <Strong style={{ fontSize: "7px", color: "#3366cc", lineHeight: "8px", maxWidth: "90px" }}>
+                    <Strong style={{ fontSize: "7px", color: "#af7c28", lineHeight: "8px", maxWidth: "90px" }}>
                         {dataFull.cargo ? dataFull.cargo : dataFull.nivelAcademico}
                     </Strong>
                 </Div>
@@ -155,11 +155,11 @@ const ConstanciaSolvencia = ({ data }: any) => {
                         maxWidth: "120px",
                     }}
                 >
-                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#019a9d" }}>
+                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#006BC5" }}>
                         CI: {dataFull.cedula}
                     </P>
-                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#019a9d" }}>NUMERO COV: {dataFull.numeroGremio}</P>
-                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#019a9d" }}>Vence: {dataFull.fechaVencimiento}</P>
+                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#006BC5" }}>NUMERO COV: {dataFull.numeroGremio}</P>
+                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#006BC5" }}>Vence: {dataFull.fechaVencimiento}</P>
                 </Div>
             </>
         )
@@ -184,7 +184,7 @@ const ConstanciaSolvencia = ({ data }: any) => {
                     //border:"1px solid red",
                     fontSize: "6px",
                     textAlign: "center",
-                    color: "#3366cc",
+                    color: "#af7c28",
                     fontWeight: "bold",
                     lineHeight: "7px",
 
@@ -206,7 +206,7 @@ const ConstanciaSolvencia = ({ data }: any) => {
                         fontWeight: "bold",
                         fontSize: "6px",
                         lineHeight: 1.5,
-                        color: "#019a9d"
+                        color: "#006BC5"
 
                     }}
                 >
@@ -247,11 +247,11 @@ const ConstanciaSolvencia = ({ data }: any) => {
                                             }}
                                             dotsOptions={{
                                                 type: "classy-rounded",
-                                                color: "#3366cc"
+                                                color: "#006BC5"
                                             }}
                                             cornersSquareOptions={{
                                                 type: "extra-rounded",
-                                                color: "#3366cc"
+                                                color: "#006BC5"
                                             }}
 
                                             backgroundOptions={{
@@ -292,14 +292,14 @@ const ConstanciaSolvencia = ({ data }: any) => {
                                     fontSize: "5px",
                                     top: "0",
                                     marginBottom: "0",
-                                    color: "#3366cc",
+                                    color: "#af7c28",
                                     fontWeight: "bold"
                                 }}>
                                     {dataFull.autoridad.nombreCompletos}<BR />{dataFull.autoridad.apellidosCompletos}
                                 </P>
                                 <View style={{
                                     width: "95%",
-                                    borderTop: '1px solid #3366cc',
+                                    borderTop: '1px solid #af7c28',
                                     marginTop: 2,
                                     marginBottom: 2,
                                     fontWeight: "bold"
@@ -307,10 +307,10 @@ const ConstanciaSolvencia = ({ data }: any) => {
                                 <P style={{
                                     fontSize: "4px",
                                     marginBottom: "0px",
-                                    color: "#3366cc",
+                                    color: "#af7c28",
                                     fontWeight: "bold"
                                 }}>
-                                    Director (a) del COV
+                                    Presidente (a) del COV
                                 </P>
 
                             </Center>

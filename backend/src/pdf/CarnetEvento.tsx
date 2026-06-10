@@ -40,7 +40,7 @@ const CarnetEvento = ({ data }: any) => {
     const internalWidth1 = (width1 / 2) - 2
     const internalHeight1 = height1 - 4
 
-    const colorFull = "#019a9d"
+    const colorFull = "#006BC5"
     const urlAsset = "https://genarogg.github.io/media/cov"
 
 
@@ -83,8 +83,8 @@ const CarnetEvento = ({ data }: any) => {
                 >
                     <Div
                         style={{
-                            border: "7px solid #019a9d",
-                            backgroundColor: "#019a9d",
+                            border: "7px solid #006BC5",
+                            backgroundColor: "#006BC5",
                             borderRadius: "500px",
                             width: "75px",
                             height: "75px",
@@ -113,10 +113,10 @@ const CarnetEvento = ({ data }: any) => {
                     maxWidth: "130px",
 
                 }}>
-                    <Strong style={{ fontSize: "8px", color: "#3366cc", marginBottom: 2 }} >
+                    <Strong style={{ fontSize: "8px", color: "#af7c28", marginBottom: 2 }} >
                         {dataFull.tipoParticipacion}
                     </Strong>
-                    <Strong style={{ fontSize: "8px", color: "#019a9d" }} >
+                    <Strong style={{ fontSize: "8px", color: "#006BC5" }} >
                         {dataFull.nombreCompleto}
                     </Strong>
 
@@ -137,7 +137,7 @@ const CarnetEvento = ({ data }: any) => {
                     marginTop: 2
 
                 }}>
-                    <Strong style={{ fontSize: "7px", color: "#3366cc", lineHeight: "8px", maxWidth: "90px" }}>
+                    <Strong style={{ fontSize: "7px", color: "#af7c28", lineHeight: "8px", maxWidth: "90px" }}>
                         {dataFull.nivelAcademico}
                     </Strong>
                 </Div>
@@ -156,13 +156,13 @@ const CarnetEvento = ({ data }: any) => {
                     }}
                 >
 
-                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#019a9d" }}>
+                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#006BC5" }}>
                         CI: {dataFull.cedula}
                     </P>
-                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#019a9d" }}>
+                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#006BC5" }}>
                         {dataFull.rol}
                     </P>
-                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#019a9d" }}>Vence: {dataFull.fechaVencimiento}</P>
+                    <P style={{ fontSize: "7px", marginBottom: "2px", color: "#006BC5" }}>Vence: {dataFull.fechaVencimiento}</P>
                 </Div>
             </>
         )
@@ -197,7 +197,7 @@ const CarnetEvento = ({ data }: any) => {
                             fontWeight: "bold",
                             fontSize: "6px",
                             lineHeight: 1.5,
-                            color: "#3366cc",
+                            color: "#af7c28",
 
 
                         }}
@@ -215,7 +215,7 @@ const CarnetEvento = ({ data }: any) => {
                             fontWeight: "bold",
                             fontSize: "6px",
                             lineHeight: 1.5,
-                            color: "#019a9d",
+                            color: "#006BC5",
 
 
                         }}
@@ -262,11 +262,11 @@ const CarnetEvento = ({ data }: any) => {
                                             }}
                                             dotsOptions={{
                                                 type: "classy-rounded",
-                                                color: "#3366cc"
+                                                color: "#006BC5"
                                             }}
                                             cornersSquareOptions={{
                                                 type: "extra-rounded",
-                                                color: "#3366cc"
+                                                color: "#006BC5"
                                             }}
 
                                             backgroundOptions={{
@@ -307,14 +307,14 @@ const CarnetEvento = ({ data }: any) => {
                                     fontSize: "5px",
                                     top: "0",
                                     marginBottom: "0",
-                                    color: "#3366cc",
+                                    color: "#af7c28",
                                     fontWeight: "bold"
                                 }}>
                                     {dataFull.autoridad.nombreCompletos}<BR />{dataFull.autoridad.apellidosCompletos}
                                 </P>
                                 <View style={{
                                     width: "95%",
-                                    borderTop: '1px solid #3366cc',
+                                    borderTop: '1px solid #af7c28',
                                     marginTop: 2,
                                     marginBottom: 2,
                                     fontWeight: "bold"
@@ -322,10 +322,10 @@ const CarnetEvento = ({ data }: any) => {
                                 <P style={{
                                     fontSize: "4px",
                                     marginBottom: "0px",
-                                    color: "#3366cc",
+                                    color: "#af7c28",
                                     fontWeight: "bold"
                                 }}>
-                                    Director (a) del COV
+                                    Presidente (a) del COV
                                 </P>
 
                             </Center>
