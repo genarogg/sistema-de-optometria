@@ -26,7 +26,8 @@ export default function AccionesSuscripcion({
 
   const esAdminOSuperUsuario =
     rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
-  const esTipoAgremiado = suscripcion.planSuscripcion?.tipo === TipoSuscripcion.AGREMIADO;
+  const esTipoAgremiado = suscripcion.planSuscripcion?.tipo === TipoSuscripcion.AGREMIADO ||
+  suscripcion.planSuscripcion?.tipo === TipoSuscripcion.AGREMIADO_LICENCIADO ||suscripcion.planSuscripcion?.tipo === TipoSuscripcion.AGREMIADO_TSU ;
 
   const handleDownloadDocumento = async (tipo: TipoDeDocumento) => {
     if (downloading[tipo]) return;
