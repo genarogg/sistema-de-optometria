@@ -334,7 +334,7 @@ const ConstanciaSolvencia = ({ data }: any) => {
             }}>
 
                 <ImgBg
-                    src={urlAsset + "/bg-carnet-cvo3.png"}
+                    src={urlAsset + "/bg-carnet-cvo6.png"}
                     opacity={1}>
                     <Container style={{ width: "100%" }}>
                         <Row style={{ width: "100%" }}>
