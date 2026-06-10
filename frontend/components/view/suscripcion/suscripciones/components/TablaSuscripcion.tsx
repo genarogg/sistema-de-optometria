@@ -65,10 +65,7 @@ const TablaSuscripcion: React.FC<TablaSuscripcionProps> = React.memo(
       rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
 
     const itemsPorPagina = meta?.limit || 10;
-    const suscripcionesPaginadas = useMemo(() => {
-      const inicio = (paginaActual - 1) * itemsPorPagina;
-      return suscripciones.slice(inicio, inicio + itemsPorPagina);
-    }, [suscripciones, paginaActual, itemsPorPagina]);
+    const suscripcionesPaginadas = suscripciones;
 
     const handleEstatusChange = useCallback(
       (suscripcionId: number, nuevoEstatus: string) => {

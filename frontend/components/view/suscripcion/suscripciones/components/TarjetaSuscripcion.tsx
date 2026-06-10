@@ -49,10 +49,7 @@ const TarjetaSuscripcion: React.FC<TarjetaSuscripcionProps> = React.memo(
     const esAdminOSuperUsuario =
       rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
 
-    const suscripcionesPaginadas = useMemo(() => {
-      const inicio = (paginaActual - 1) * itemsPorPagina;
-      return suscripciones.slice(inicio, inicio + itemsPorPagina);
-    }, [suscripciones, paginaActual, itemsPorPagina]);
+    const suscripcionesPaginadas = suscripciones;
 
     const handleEstatusChange = useCallback(
       (suscripcionId: number, nuevoEstatus: string) => {
