@@ -193,7 +193,7 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                   <span className="font-semibold text-lg text-primary">$ {showMoney(precio)}</span>
                   {!usuario?.rol && evento.costo !== precio && (
                     <span className="text-xs text-muted-foreground line-through ml-2">
-                      Bs {showMoney(evento.costo)}
+                      $ {showMoney(evento.costo)}
                     </span>
                   )}
                 </div>

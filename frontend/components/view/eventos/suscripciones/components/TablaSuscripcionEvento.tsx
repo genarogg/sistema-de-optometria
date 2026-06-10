@@ -118,7 +118,7 @@ const TablaSuscripcionEvento: React.FC<TablaSuscripcionEventoProps> = React.memo
                       {suscripcion.evento.nombre}
                     </TableCell>
                     <TableCell className="text-sm border-r">
-                      Bs {showMoney(suscripcion.precioAlSuscripcion)}
+                      $ {showMoney(suscripcion.precioAlSuscripcion)}
                     </TableCell>
                     <TableCell className="border-r">
                       <div className="flex items-center justify-center w-full h-full">

@@ -99,7 +99,9 @@ export function ImageCropper({ open, onOpenChange, imageSrc, onCropComplete }: I
 
     ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, outputSize, outputSize)
 
-    const croppedBase64 = canvas.toDataURL("image/jpeg", 0.9)
+    // Check if the original image is PNG to preserve transparency
+    const isPng = imageSrc.startsWith("data:image/png");
+    const croppedBase64 = isPng ? canvas.toDataURL("image/png") : canvas.toDataURL("image/jpeg", 0.9);
     onCropComplete(croppedBase64)
     onOpenChange(false)
     handleReset()
