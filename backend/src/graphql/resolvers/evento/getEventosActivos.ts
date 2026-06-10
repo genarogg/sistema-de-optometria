@@ -35,9 +35,31 @@ const getEventosActivos = async (_: unknown, args: GetEventosActivosArgs) => {
         const skip = (page - 1) * pageSize;
         const take = pageSize;
 
-        const whereClause: Prisma.EventoWhereInput = {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Normalize to start of day for comparison
+
+        const activeEventsWhereClause: Prisma.EventoWhereInput = {
             vigencia: VigenciaEvento.VIGENTE,
-            AND: [],
+            fecha: { gte: today },
+        };
+
+        const userSubscriptions = await prisma.suscripcionEvento.findMany({
+            where: { usuarioId: usuario.id },
+            select: { eventoId: true, estatus: true },
+        });
+
+        const subscribedEventIds = userSubscriptions.map(sub => sub.eventoId);
+
+        const pastSubscribedEventsWhereClause: Prisma.EventoWhereInput = {
+            id: { in: subscribedEventIds },
+            fecha: { lt: today },
+        };
+
+        const combinedWhereClause: Prisma.EventoWhereInput = {
+            OR: [
+                activeEventsWhereClause,
+                pastSubscribedEventsWhereClause,
+            ],
         };
 
         const andConditions: Prisma.EventoWhereInput[] = [];
@@ -56,12 +78,16 @@ const getEventosActivos = async (_: unknown, args: GetEventosActivosArgs) => {
         }
 
         if (andConditions.length > 0) {
-            whereClause.AND = andConditions;
+            if (combinedWhereClause.AND) {
+                (combinedWhereClause.AND as Prisma.EventoWhereInput[]).push(...andConditions);
+            } else {
+                combinedWhereClause.AND = andConditions;
+            }
         }
 
         const [eventos, total] = await prisma.$transaction([
             prisma.evento.findMany({
-                where: whereClause,
+                where: combinedWhereClause,
                 include: {
                     ponenteEvento: {
                         include: {
@@ -73,7 +99,7 @@ const getEventosActivos = async (_: unknown, args: GetEventosActivosArgs) => {
                 skip,
                 take,
             }),
-            prisma.evento.count({ where: whereClause }),
+            prisma.evento.count({ where: combinedWhereClause }),
         ]);
 
         // busca al usuario con sus eventos

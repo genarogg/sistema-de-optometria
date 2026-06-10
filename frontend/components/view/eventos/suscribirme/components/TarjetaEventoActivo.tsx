@@ -120,6 +120,15 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
       };
     }
 
+    if (estatus === EstatusPagoEvento.NO_ASISTIO) {
+      return {
+        variant: "secondary" as const,
+        disabled: true,
+        texto: "No Asistió",
+        icono: null
+      };
+    }
+
     return {
       variant: "default" as const,
       disabled: false,
@@ -167,7 +176,8 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                       <Badge variant={
                         estatus === EstatusPagoEvento.PAGADO ? "secondary" :
                         estatus === EstatusPagoEvento.PENDIENTE ? "default" :
-                        estatus === EstatusPagoEvento.RECHAZADO ? "destructive" : "outline"
+                        estatus === EstatusPagoEvento.RECHAZADO ? "destructive" :
+                        estatus === EstatusPagoEvento.NO_ASISTIO ? "destructive" : "outline"
                       }>
                         {estatus}
                       </Badge>
