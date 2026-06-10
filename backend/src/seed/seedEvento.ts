@@ -13,7 +13,7 @@ const seedEvento = async () => {
         return;
     }
 
-    const eventosData = [
+    const eventosToCreate = [
         {
             nombre: "Taller de Contactología Avanzada",
             fecha: new Date("2026-06-15"),
@@ -43,7 +43,22 @@ const seedEvento = async () => {
         },
     ];
 
-    for (const evento of eventosData) {
+    const eventTypes = [TipoEvento.TALLER, TipoEvento.DIPLOMADO, TipoEvento.CONGRESO];
+
+    for (let i = 0; i < 97; i++) { // Generate 97 more events to reach 100 total
+        const date = new Date(2027, (i % 12), (i % 28) + 1);
+        eventosToCreate.push({
+            nombre: `Evento Generado ${i + 1}`,
+            fecha: date,
+            lugar: `Lugar Generado ${i + 1}`,
+            costo: 1000 + (i * 100),
+            tipo: eventTypes[i % eventTypes.length],
+            descuentoEstudiante: (i % 5) * 2,
+            descuentoProfesor: (i % 5) * 2,
+        });
+    }
+
+    for (const evento of eventosToCreate) {
         const existingEvento = await prisma.evento.findFirst({
             where: { nombre: evento.nombre },
         });

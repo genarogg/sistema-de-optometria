@@ -2,50 +2,69 @@ import { prisma } from "@fn";
 import { NivelAcademico } from "@prisma/client";
 
 const seedGremio = async () => {
-    const gremiosData = [
-        {
-            emailUsuario: "ana.perez@optometria.com",
-            numeroGremio: 1001,
-            nivelAcademico: NivelAcademico.LICENCIADO,
-        },
-        {
-            emailUsuario: "carlos.lopez@optometria.com",
-            numeroGremio: 1002,
-            nivelAcademico: NivelAcademico.LICENCIADO,
-        },
-        {
-            emailUsuario: "genarrogg@gmail.com",
-            numeroGremio: 999,
-            nivelAcademico: NivelAcademico.LICENCIADO,
-        },
-    ];
+    const gremiosToCreate = [];
 
-    const usuarios = await prisma.usuario.findMany({
-        where: {
-            email: { in: gremiosData.map(g => g.emailUsuario) },
-        },
+    // Existing gremios
+    gremiosToCreate.push({
+        emailUsuario: "ana.perez@optometria.com",
+        numeroGremio: 1001,
+        nivelAcademico: NivelAcademico.LICENCIADO,
+    });
+    gremiosToCreate.push({
+        emailUsuario: "carlos.lopez@optometria.com",
+        numeroGremio: 1002,
+        nivelAcademico: NivelAcademico.LICENCIADO,
+    });
+    gremiosToCreate.push({
+        emailUsuario: "genarrogg@gmail.com",
+        numeroGremio: 999,
+        nivelAcademico: NivelAcademico.LICENCIADO,
+    });
+
+    // Fetch all users
+    const allUsers = await prisma.usuario.findMany({
         select: { id: true, email: true },
     });
 
-    const usuarioMap = new Map(usuarios.map(u => [u.email, u.id]));
+    const existingGremioUsers = await prisma.gremio.findMany({
+        select: { usuarioId: true },
+    });
 
-    for (const gremio of gremiosData) {
-        const usuarioId = usuarioMap.get(gremio.emailUsuario);
-        if (!usuarioId) {
+    const existingGremioUserIds = new Set(existingGremioUsers.map(g => g.usuarioId));
+
+    const usersWithoutGremio = allUsers.filter(user => !existingGremioUserIds.has(user.id));
+
+    const academicLevels = [NivelAcademico.LICENCIADO, NivelAcademico.LICENCIADO, NivelAcademico.LICENCIADO, NivelAcademico.LICENCIADO];
+
+    // Generate additional gremios for users without one, up to 100 or more
+    let gremioCounter = 1003;
+    for (let i = 0; i < usersWithoutGremio.length && gremiosToCreate.length < 100; i++) {
+        const user = usersWithoutGremio[i];
+        gremiosToCreate.push({
+            emailUsuario: user.email,
+            numeroGremio: gremioCounter++,
+            nivelAcademico: academicLevels[i % academicLevels.length],
+        });
+    }
+
+    for (const gremio of gremiosToCreate) {
+        const usuario = allUsers.find(u => u.email === gremio.emailUsuario);
+
+        if (!usuario) {
             console.log(`⚠️ Usuario ${gremio.emailUsuario} no encontrado para crear gremio`);
             continue;
         }
 
         const existingGremio = await prisma.gremio.findFirst({
-            where: { usuarioId },
+            where: { usuarioId: usuario.id },
         });
 
         if (!existingGremio) {
             await prisma.gremio.create({
                 data: {
                     numeroGremio: gremio.numeroGremio,
-                    nivelAcademico: NivelAcademico.LICENCIADO,
-                    usuarioId,
+                    nivelAcademico: gremio.nivelAcademico,
+                    usuarioId: usuario.id,
                 },
             });
             console.log(`✅ Gremio para ${gremio.emailUsuario} creado (número: ${gremio.numeroGremio})`);

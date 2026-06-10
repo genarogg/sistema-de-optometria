@@ -1,4 +1,4 @@
-import { prisma, verificarToken, successResponse, errorResponse, log,  } from "@fn";
+import { prisma, verificarToken, successResponse, errorResponse, log, } from "@fn";
 import { Rol, EstatusSuscripcion } from "@prisma/client";
 
 interface GetSuscripcionesArgs {
@@ -93,8 +93,7 @@ const getSuscripciones = async (_: unknown, args: GetSuscripcionesArgs) => {
                 createdAt: "desc",
             },
         });
-
-        const totalPaginas = Math.ceil(total / itemsPorPagina);
+        console.log(suscripciones)
 
         return successResponse({
             message: "Suscripciones obtenidas correctamente",

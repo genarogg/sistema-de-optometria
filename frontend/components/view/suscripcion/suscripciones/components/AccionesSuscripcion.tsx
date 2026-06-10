@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Eye, ImageIcon, CreditCard, ShieldCheck, Receipt } from 'lucide-react';
 import { EstatusSuscripcion, Rol, TipoDeDocumento, TipoSuscripcion } from '@/global/enums';
 import WhatsappButton from '@/components/ux/btn/whatsapp';
-import downloadDocumentoService  from '../service/downloadDocumento.service';
+import downloadDocumentoService from '../service/downloadDocumento.service';
 
 interface AccionesSuscripcionProps {
   suscripcion: any;
@@ -23,13 +23,14 @@ export default function AccionesSuscripcion({
 }: AccionesSuscripcionProps) {
   const router = useRouter();
   const [downloading, setDownloading] = useState<Partial<Record<TipoDeDocumento, boolean>>>({});
+
   const esAdminOSuperUsuario =
     rolActual === Rol.ADMINISTRADOR || rolActual === Rol.SUPER_USUARIO;
   const esTipoAgremiado = suscripcion.planSuscripcion?.tipo === TipoSuscripcion.AGREMIADO;
 
   const handleDownloadDocumento = async (tipo: TipoDeDocumento) => {
     if (downloading[tipo]) return;
-    
+
     const setDownloadingType = (docType: TipoDeDocumento, isDownloading: boolean) => {
       setDownloading(prev => ({
         ...prev,
@@ -44,7 +45,7 @@ export default function AccionesSuscripcion({
       setDownloading: setDownloadingType,
     });
 
-    if (result === "No tiene foto de perfil, cargue una primero") {
+    if (result === "No tiene foto de perfil, cargue una primero" && !esAdminOSuperUsuario) {
       router.push('/dashboard/perfil');
     }
   };

@@ -1,35 +1,42 @@
 import { prisma } from "@fn";
 
 const seedPonenteEvento = async () => {
-    const profesor = await prisma.usuario.findFirst({
+    const profesores = await prisma.usuario.findMany({
         where: { rol: "PROFESOR" },
     });
+    const eventos = await prisma.evento.findMany();
 
-    const evento = await prisma.evento.findFirst();
-
-    if (!profesor || !evento) {
-        console.log("⚠️ No se encontró profesor o evento para crear ponente_evento");
+    if (profesores.length === 0 || eventos.length === 0) {
+        console.log("⚠️ No hay profesores o eventos para crear ponente_evento");
         return;
     }
 
-    const existing = await prisma.ponenteEvento.findFirst({
-        where: {
-            usuarioId: profesor.id,
-            eventoId: evento.id,
-        },
-    });
+    const numRecordsToCreate = 100; // Ensure at least 100 records
+    let createdCount = 0;
 
-    if (!existing) {
-        await prisma.ponenteEvento.create({
-            data: {
-                usuarioId: profesor.id,
-                eventoId: evento.id,
+    for (let i = 0; i < numRecordsToCreate; i++) {
+        const randomProfesor = profesores[Math.floor(Math.random() * profesores.length)];
+        const randomEvento = eventos[Math.floor(Math.random() * eventos.length)];
+
+        const existing = await prisma.ponenteEvento.findFirst({
+            where: {
+                usuarioId: randomProfesor.id,
+                eventoId: randomEvento.id,
             },
         });
-        console.log(`✅ Ponente_Evento creado: ${profesor.email} en "${evento.nombre}"`);
-    } else {
-        console.log(`ℹ️ Ponente_Evento ya existe`);
+
+        if (!existing) {
+            await prisma.ponenteEvento.create({
+                data: {
+                    usuarioId: randomProfesor.id,
+                    eventoId: randomEvento.id,
+                },
+            });
+            createdCount++;
+            // console.log(`✅ Ponente_Evento creado: ${randomProfesor.email} en "${randomEvento.nombre}"`);
+        }
     }
+    console.log(`🎉 Total de ponente_evento creados: ${createdCount}`);
 };
 
 export default seedPonenteEvento;

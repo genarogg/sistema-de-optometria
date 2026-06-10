@@ -54,7 +54,7 @@ const BitacoraTable = memo(function BitacoraTable({
             <TableHead className="text-sm font-semibold">
               Usuario
             </TableHead>
-            <TableHead className="text-sm font-semibold text-center">
+            <TableHead className="text-sm font-semibold ">
               Tipo
             </TableHead>
             <TableHead className="text-sm font-semibold text-right">
@@ -99,7 +99,7 @@ const BitacoraTable = memo(function BitacoraTable({
                   <TableCell className="font-medium text-sm">
                     {entry.usuario.email}
                   </TableCell>
-                  <TableCell className="text-sm text-center">
+                  <TableCell className="text-sm ">
                     <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground text-xs">
                       {entry.type}
                     </span>

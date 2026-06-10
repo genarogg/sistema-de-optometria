@@ -9,7 +9,7 @@ const seedUsers = async () => {
             primerApellido: "González",
             segundoApellido: "González",
             email: "genarrogg@gmail.com",
-            password: "#2Programadores",
+            password: "xx",
             telefono: "04127554970",
             cedula: "25074591",
             rol: Rol.SUPER_USUARIO,
@@ -217,6 +217,24 @@ const seedUsers = async () => {
             rol: Rol.AGREMIADO_INSOLVENTE,
         },
     ];
+
+    // Generar 80 usuarios adicionales para asegurar al menos 100 registros
+    const roles = [Rol.AGREMIADO_INSOLVENTE, Rol.AGREMIADO_SOLVENTE, Rol.ESTUDIANTE, Rol.PROFESOR, Rol.VISITANTE];
+    for (let i = 0; i < 80; i++) {
+        const index = i + 8; // Offset para cédulas y teléfonos
+        const rol = roles[i % roles.length];
+        usersData.push({
+            primerNombre: `UsuarioGenerado${i}`,
+            segundoNombre: "",
+            primerApellido: `Apellido${i}`,
+            segundoApellido: "",
+            email: `generado${i}@example.com`,
+            password: "password123",
+            telefono: `0412555${String(1000 + i).padStart(4, '0')}`,
+            cedula: `5000000${String(i).padStart(2, '0')}`,
+            rol: rol,
+        });
+    }
 
     const existingEmails = await prisma.usuario.findMany({
         where: {

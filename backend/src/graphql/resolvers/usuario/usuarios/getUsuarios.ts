@@ -47,8 +47,8 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
                         { rol: { in: [Rol.SUPER_USUARIO, Rol.ADMINISTRADOR] } },
                         { 
                             rol: Rol.AGREMIADO_SOLVENTE, 
-                            gremio: { 
-                                is: null 
+                            gremio: {
+                                numeroGremio: null
                             } 
                         }
                     ];
@@ -74,8 +74,8 @@ const getUsuarios = async (_: unknown, args: GetUsuariosArgs) => {
                         { rol: Rol.ADMINISTRADOR },
                         { 
                             rol: Rol.AGREMIADO_SOLVENTE, 
-                            gremio: { 
-                                is: null 
+                            gremio: {
+                                numeroGremio: null
                             } 
                         }
                     ];
