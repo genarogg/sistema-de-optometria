@@ -17,7 +17,7 @@ extend type Query {
 
   getCarnetEvento(
     token: String!
-    usuarioId: Int!
+    usuarioId: Int
     eventoId: Int!
   ): DocumentoResponse!
   

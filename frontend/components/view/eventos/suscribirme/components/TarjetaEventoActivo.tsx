@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, Users, UsersRound, CheckCircle, RefreshCw, Award } from 'lucide-react';
+import { Calendar, MapPin, Users, UsersRound, CheckCircle, RefreshCw, Award, FileText } from 'lucide-react';
 import { TipoEvento, Rol, EstatusPagoEvento } from '@/global/enums';
 import { useAuthStore } from '@/context/auth/AuthContext';
 import { showMoney } from 'supermoney';
 import downloadCertificadoService from '../service/downloadCertificado.service';
+import downloadCarnetEventoService from '../service/downloadCarnetEvento.service';
 
 interface Evento {
   id: number;
@@ -37,6 +38,7 @@ interface TarjetaEventoActivoProps {
 export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcionesMap }: TarjetaEventoActivoProps) {
   const { usuario } = useAuthStore();
   const [downloadingMap, setDownloadingMap] = useState<Map<number, boolean>>(new Map());
+  const [downloadingCarnetMap, setDownloadingCarnetMap] = useState<Map<number, boolean>>(new Map());
 
   console.log(eventos)
 
@@ -113,10 +115,10 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
 
     if (estatus === EstatusPagoEvento.PAGADO) {
       return {
-        variant: "secondary" as const,
-        disabled: true,
-        texto: "Suscripto",
-        icono: <CheckCircle className="h-4 w-4 mr-2" />
+        variant: "outline" as const,
+        disabled: false,
+        texto: "Descargar Carnet",
+        icono: <FileText className="h-4 w-4 mr-2" />
       };
     }
 
@@ -156,6 +158,20 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
     });
   };
 
+  const handleDownloadCarnet = async (eventoId: number) => {
+    if (!usuario) return;
+    if (downloadingCarnetMap.get(eventoId)) return;
+
+    setDownloadingCarnetMap(prev => new Map(prev).set(eventoId, true));
+
+    await downloadCarnetEventoService({
+      eventoId: eventoId,
+      setDownloading: (val) => {
+        setDownloadingCarnetMap(prev => new Map(prev).set(eventoId, val));
+      },
+    });
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {eventos.map((evento) => {
@@ -174,7 +190,7 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                     <Badge variant="outline">{evento.tipo}</Badge>
                     {estatus && (
                       <Badge variant={
-                        estatus === EstatusPagoEvento.PAGADO ? "secondary" :
+                        estatus === EstatusPagoEvento.PAGADO ? "default" :
                         estatus === EstatusPagoEvento.PENDIENTE ? "default" :
                         estatus === EstatusPagoEvento.RECHAZADO ? "destructive" :
                         estatus === EstatusPagoEvento.NO_ASISTIO ? "destructive" : "outline"
@@ -246,6 +262,18 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                   >
                     <Award className="h-4 w-4 mr-2" />
                     Certificado
+                  </Button>
+                )}
+                {estatus === EstatusPagoEvento.PAGADO && usuario && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDownloadCarnet(evento.id)}
+                    disabled={downloadingCarnetMap.get(evento.id)}
+                    title="Descargar carnet"
+                  >
+                    <FileText className="h-4 w-4 mr-2" />
+                    Carnet
                   </Button>
                 )}
                 <Button
