@@ -6,7 +6,7 @@ import notify from "@/components/nano/notify";
 
 export async function getEventosActivosService() {
   console.log("getEventosActivosService");
-  const { setEventos, setSuscripcionesEventoUsuario, setCargando, setError } = useEventosActivosStore.getState();
+  const { setEventos, setSuscripcionesEventoUsuario, setCargando, setError, paginaActual, itemsPorPagina, filtro, tipoFiltro, setTotalPaginas } = useEventosActivosStore.getState();
 
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") ?? "" : "";
@@ -18,20 +18,26 @@ export async function getEventosActivosService() {
     const client = clientApollo;
     const result = await client.query({
       query: GET_EVENTOS_ACTIVOS,
-      variables: { 
-        token
+      variables: {
+        token,
+        page: paginaActual,
+        pageSize: itemsPorPagina,
+        filtro: filtro || undefined,
+        tipo: tipoFiltro || undefined
       },
     });
 
     const data = result.data as any;
     const responseData = data?.getEventosActivos?.data;
+    const meta = data?.getEventosActivos?.meta ?? { total: 0, limit: itemsPorPagina };
+    const totalPaginasCalculadas = Math.ceil(meta.total / meta.limit);
+
     const eventos: any[] = responseData?.eventos ?? [];
     const suscripcionesEventoUsuario: any[] = responseData?.suscripcionesEventoUsuario ?? [];
-    
 
-    
     setEventos(eventos);
     setSuscripcionesEventoUsuario(suscripcionesEventoUsuario);
+    setTotalPaginas(totalPaginasCalculadas);
 
     // if (data?.getEventosActivos?.type && data?.getEventosActivos?.message) {
     //   notify({ type: data.getEventosActivos.type, message: data.getEventosActivos.message });

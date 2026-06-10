@@ -11,8 +11,11 @@ interface Evento {
   descuentoProfesor: number;
   tipo: string;
   vigencia: string;
-  aliadoNombre?: string;
-  aliadoImg?: string;
+  aliadoInstitucionImg?: string;
+  aliadoInstitucionNombre?: string;
+  aliadoAutorizoFirmaImg?: string;
+  aliadoAutorizoNombreFirma?: string;
+  aliadoAutorizoCargo?: string;
   ponenteEvento: any[];
 }
 
@@ -29,6 +32,9 @@ interface EventosActivosState {
   error: string | null;
   filtro: string;
   tipoFiltro: string | null;
+  paginaActual: number;
+  itemsPorPagina: number;
+  totalPaginas: number;
   
   setEventos: (eventos: Evento[]) => void;
   setSuscripcionesEventoUsuario: (suscripciones: SuscripcionEvento[]) => void;
@@ -36,6 +42,8 @@ interface EventosActivosState {
   setError: (error: string | null) => void;
   setFiltro: (filtro: string) => void;
   setTipoFiltro: (tipo: string | null) => void;
+  setPaginaActual: (pagina: number | ((prevState: number) => number)) => void;
+  setTotalPaginas: (totalPaginas: number) => void;
 }
 
 const useEventosActivosStore = create<EventosActivosState>((set) => ({
@@ -45,6 +53,9 @@ const useEventosActivosStore = create<EventosActivosState>((set) => ({
   error: null,
   filtro: "",
   tipoFiltro: null,
+  paginaActual: 1,
+  itemsPorPagina: 20,
+  totalPaginas: 1,
 
   setEventos: (eventos) => set({ eventos }),
   setSuscripcionesEventoUsuario: (suscripciones) => set({ suscripcionesEventoUsuario: suscripciones }),
@@ -52,6 +63,10 @@ const useEventosActivosStore = create<EventosActivosState>((set) => ({
   setError: (error) => set({ error }),
   setFiltro: (filtro) => set({ filtro }),
   setTipoFiltro: (tipo) => set({ tipoFiltro: tipo }),
+  setPaginaActual: (paginaActual) => set((state) => ({
+    paginaActual: typeof paginaActual === 'function' ? paginaActual(state.paginaActual) : paginaActual,
+  })),
+  setTotalPaginas: (totalPaginas) => set({ totalPaginas }),
 }));
 
 export default useEventosActivosStore;

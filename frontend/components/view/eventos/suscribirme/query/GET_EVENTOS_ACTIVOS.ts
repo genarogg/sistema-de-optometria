@@ -1,8 +1,20 @@
 import { gql } from "@apollo/client";
 
 const GET_EVENTOS_ACTIVOS = gql`
- query GetEventosActivos($token: String!) {
-    getEventosActivos(token: $token) {
+  query GetEventosActivos(
+    $token: String!
+    $page: Int
+    $pageSize: Int
+    $filtro: String
+    $tipo: TipoEvento
+  ) {
+    getEventosActivos(
+      token: $token
+      page: $page
+      pageSize: $pageSize
+      filtro: $filtro
+      tipo: $tipo
+    ) {
       type
       message
       data {
@@ -16,8 +28,11 @@ const GET_EVENTOS_ACTIVOS = gql`
           descuentoProfesor
           tipo
           vigencia
-          aliadoNombre
-          aliadoImg
+          aliadoInstitucionImg
+          aliadoInstitucionNombre
+          aliadoAutorizoFirmaImg
+          aliadoAutorizoNombreFirma
+          aliadoAutorizoCargo
           ponenteEvento {
             id
             usuarioId
@@ -34,6 +49,11 @@ const GET_EVENTOS_ACTIVOS = gql`
           eventoId
           estatus
         }
+      }
+      meta {
+        total
+        page
+        limit
       }
     }
   }

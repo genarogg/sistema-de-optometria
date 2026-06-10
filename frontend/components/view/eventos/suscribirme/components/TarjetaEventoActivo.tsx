@@ -20,8 +20,11 @@ interface Evento {
   descuentoProfesor: number;
   tipo: string;
   vigencia: string;
-  aliadoNombre?: string;
-  aliadoImg?: string;
+  aliadoInstitucionImg?: string;
+  aliadoInstitucionNombre?: string;
+  aliadoAutorizoFirmaImg?: string;
+  aliadoAutorizoNombreFirma?: string;
+  aliadoAutorizoCargo?: string;
   ponenteEvento: any[];
 }
 
@@ -205,19 +208,19 @@ export default function TarjetaEventoActivo({ eventos, onSuscribirse, suscripcio
                   </Badge>
                 </div>
               )}
-              {(evento.aliadoNombre || evento.aliadoImg) && (
+              {(evento.aliadoInstitucionNombre || evento.aliadoInstitucionImg) && (
                 <div className="mt-3 pt-3 border-t">
                   <p className="text-sm font-medium mb-2">Alianza:</p>
                   <div className="flex items-center gap-3">
-                    {evento.aliadoImg && (
+                    {evento.aliadoInstitucionImg && (
                       <img
-                        src={evento.aliadoImg}
-                        alt={evento.aliadoNombre || 'Aliado'}
+                        src={evento.aliadoInstitucionImg}
+                        alt={evento.aliadoInstitucionNombre || 'Aliado'}
                         className="w-12 h-12 object-cover rounded-md border"
                       />
                     )}
-                    {evento.aliadoNombre && (
-                      <span className="text-sm font-medium">{evento.aliadoNombre}</span>
+                    {evento.aliadoInstitucionNombre && (
+                      <span className="text-sm font-medium">{evento.aliadoInstitucionNombre}</span>
                     )}
                   </div>
                 </div>

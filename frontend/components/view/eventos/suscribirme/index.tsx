@@ -6,6 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle } from 'lucide-react';
 import TarjetaEventoActivo from './components/TarjetaEventoActivo';
 import ModalSuscribirseEvento from './components/ModalSuscribirseEvento';
+import EventosPagination from './components/EventosPagination';
 import { getEventosActivosService } from './service/getEventosActivos.service';
 import useEventosActivosStore from './store/eventosActivosStore';
 import { useShallow } from 'zustand/react/shallow';
@@ -15,7 +16,7 @@ export default function SuscribirmeEventosSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvento, setSelectedEvento] = useState<any>(null);
 
-  const { eventos, suscripcionesEventoUsuario, cargando, error, filtro, tipoFiltro } = useEventosActivosStore(
+  const { eventos, suscripcionesEventoUsuario, cargando, error, filtro, tipoFiltro, paginaActual, totalPaginas, setPaginaActual } = useEventosActivosStore(
     useShallow((state) => ({
       eventos: state.eventos,
       suscripcionesEventoUsuario: state.suscripcionesEventoUsuario,
@@ -23,12 +24,15 @@ export default function SuscribirmeEventosSection() {
       error: state.error,
       filtro: state.filtro,
       tipoFiltro: state.tipoFiltro,
+      paginaActual: state.paginaActual,
+      totalPaginas: state.totalPaginas,
+      setPaginaActual: state.setPaginaActual,
     }))
   );
 
   useEffect(() => {
     getEventosActivosService();
-  }, []);
+  }, [paginaActual]);
 
   // Create a map of eventoId to estatus
   const suscripcionesMap = useMemo(() => {
@@ -77,6 +81,14 @@ export default function SuscribirmeEventosSection() {
               setIsModalOpen(true);
             }}
             suscripcionesMap={suscripcionesMap}
+          />
+        )}
+
+        {filteredEventos.length > 0 && totalPaginas > 1 && (
+          <EventosPagination
+            currentPage={paginaActual}
+            totalPages={totalPaginas}
+            setCurrentPage={setPaginaActual}
           />
         )}
       </div>
