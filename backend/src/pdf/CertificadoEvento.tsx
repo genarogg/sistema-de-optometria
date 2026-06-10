@@ -45,7 +45,6 @@ const Component = ({ data }: any) => {
 
 
   const dataFull = {
-    imgAliada: data?.imgAliada || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
     nombreYApellido: data?.nombreYApellido || "Genaro Gonzalez",
     cedula: data?.cedula || "25074591",
     lugarEvento: data?.lugarEvento || "CARACAS",
@@ -54,18 +53,27 @@ const Component = ({ data }: any) => {
     nombreDelEvento: data?.nombreDelEvento || "Diplomado en Optometría Pediátrica",
     tipoEvento: data?.tipoEvento || "CONGRESO",
     rol: data?.rol || "VISITANTE",
-    presidente: {
-      nombreYApellido: data?.presidente.nombreYApellido || "Genaro Gonzalez",
-      firmaUrl: data?.presidente.firmaUrl || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+    autoridades: {
+        presidente: {
+            nombreYApellido: data?.autoridades?.presidente?.nombreYApellido || "Genaro Gonzalez",
+            firmaUrl: data?.autoridades?.presidente?.firmaUrl || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+        },
+        secretarioAcademico: {
+            nombreYApellido: data?.autoridades?.secretarioAcademico?.nombreYApellido || "Genaro Gonzalez",
+            firmaUrl: data?.autoridades?.secretarioAcademico?.firmaUrl || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+        },
     },
-    vicepresidente: {
-      nombreYApellido: data?.vicepresidente.nombreYApellido || "Genaro Gonzalez",
-      firmaUrl: data?.vicepresidente.firmaUrl || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
-    },
-    directorEvento: {
-      nombreYApellido: data?.directorEvento.nombreYApellido || "Genaro Gonzalez",
-      firmaUrl: data?.directorEvento.firmaUrl || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
-    },
+    aliado: {
+        institucion: {
+            logoAliado: data?.aliado?.institucion?.logoAliado || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+            nombre: data?.aliado?.institucion?.nombre || "Nombre Institucion Aliada",
+        },
+        autoridad: {
+            nombre: data?.aliado?.autoridad?.nombre || "Nombre Autoridad Aliada",
+            firma: data?.aliado?.autoridad?.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+            cargo: data?.aliado?.autoridad?.cargo || "Cargo Autoridad Aliada",
+        }
+    }
   }
 
   const Membrete = () => {
@@ -91,7 +99,7 @@ const Component = ({ data }: any) => {
             <Col1></Col1>
             <Col2 style={{ left: -75 }}>
               <Center>
-                <Img style={{ width: 110 }} src="https://genarogg.github.io/media/cov/logo-3d-cov.png" />
+                <Img style={{ width: 110 }} src={dataFull.aliado.institucion.logoAliado} />
               </Center>
             </Col2>
           </Row>
@@ -138,13 +146,12 @@ const Component = ({ data }: any) => {
         <Row style={{ display: "flex", justifyContent: "space-evenly", marginTop: 10 }}>
           <Col2 >
             <Center style={{ width: 140, height: 140, fontFamily: "Courier" }}>
-              <Img src={dataFull.presidente.firmaUrl} style={{ width: 90, height: 90 }} />
+              <Img src={dataFull.autoridades.presidente.firmaUrl} style={{ width: 90, height: 90 }} />
               <Img src="https://genarogg.github.io/media/cov/linea-de-firmas.png" />
               <Strong>
                 <P style={{ textTransform: "capitalize", fontSize: 12, color: "#0c82b0" }}>
-                  {dataFull.presidente.nombreYApellido}
+                  {dataFull.autoridades.presidente.nombreYApellido}
                 </P>
-
               </Strong>
               <Strong>
                 <P style={{ color: "#a07832" }}>PRESIDENTE</P>
@@ -153,36 +160,34 @@ const Component = ({ data }: any) => {
           </Col2>
           <Col2 >
             <Center style={{ width: 140, height: 140, fontFamily: "Courier" }}>
-              <Img src={dataFull.vicepresidente.firmaUrl} style={{ width: 90, height: 90 }} />
+              <Img src={dataFull.autoridades.secretarioAcademico.firmaUrl} style={{ width: 90, height: 90 }} />
               <Img src="https://genarogg.github.io/media/cov/linea-de-firmas.png" />
               <Strong>
                 <P style={{ textTransform: "capitalize", fontSize: 12, color: "#0c82b0" }}>
-                  {dataFull.vicepresidente.nombreYApellido}
+                  {dataFull.autoridades.secretarioAcademico.nombreYApellido}
                 </P>
-
-
               </Strong>
               <Strong>
-                <P style={{ color: "#a07832" }}>VICEPRESIDENTE</P>
+                <P style={{ color: "#a07832" }}>SECRETARIO ACADÉMICO</P>
               </Strong>
             </Center>
           </Col2>
-          <Col2 >
-            <Center style={{ width: 140, height: 140, fontFamily: "Courier" }}>
-              <Img src={dataFull.directorEvento.firmaUrl} style={{ width: 90, height: 90 }} />
-              <Img src="https://genarogg.github.io/media/cov/linea-de-firmas.png" />
-              <Strong>
-                <P style={{ textTransform: "capitalize", fontSize: 12, color: "#0c82b0" }}>
-                  {dataFull.directorEvento.nombreYApellido}
-                </P>
-
-
-              </Strong>
-              <Strong>
-                <P style={{ color: "#a07832" }}>DIR. EVENTOS</P>
-              </Strong>
-            </Center>
-          </Col2>
+          {dataFull.aliado.institucion.logoAliado && (
+            <Col2 >
+              <Center style={{ width: 140, height: 140, fontFamily: "Courier" }}>
+                <Img src={dataFull.aliado.autoridad.firma} style={{ width: 90, height: 90 }} />
+                <Img src="https://genarogg.github.io/media/cov/linea-de-firmas.png" />
+                <Strong>
+                  <P style={{ textTransform: "capitalize", fontSize: 12, color: "#0c82b0" }}>
+                    {dataFull.aliado.autoridad.nombre}
+                  </P>
+                </Strong>
+                <Strong>
+                  <P style={{ color: "#a07832" }}>{dataFull.aliado.autoridad.cargo}</P>
+                </Strong>
+              </Center>
+            </Col2>
+          )}
           <Col2 >
             <Center style={{ width: 140, height: 140, }}>
 

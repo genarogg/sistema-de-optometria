@@ -67,14 +67,8 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
             include: { usuario: true },
         });
 
-        const vicepresidente = await prisma.autoridad.findFirst({
-            where: { tipoAutoridad: TipoAutoridad.VICEPRESIDENTE, vigente: true },
-            orderBy: { id: 'desc' },
-            include: { usuario: true },
-        });
-
-        const directorEventos = await prisma.autoridad.findFirst({
-            where: { tipoAutoridad: TipoAutoridad.SECRETARIO_EVENTOS, vigente: true },
+        const secretarioAcademico = await prisma.autoridad.findFirst({
+            where: { tipoAutoridad: TipoAutoridad.SECRETARIO_ACADEMICO, vigente: true },
             orderBy: { id: 'desc' },
             include: { usuario: true },
         });
@@ -83,20 +77,23 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
             return errorResponse({ message: "No se encontró la autoridad presidente" });
         }
 
+        if (!secretarioAcademico) {
+            return errorResponse({ message: "No se encontró la autoridad secretario académico" });
+        }
+
         const documentoSolicitado = await crearDocumentoSolicitado({
             usuarioId: usuario.id,
             autoridadId: presidente.id,
-            tipo: evento.tipo === TipoEvento.TALLER 
-                ? TipoDeDocumento.CERTIFICADO_TALLER 
-                : evento.tipo === TipoEvento.DIPLOMADO 
-                    ? TipoDeDocumento.CERTIFICADO_DIPLOMADO 
+            tipo: evento.tipo === TipoEvento.TALLER
+                ? TipoDeDocumento.CERTIFICADO_TALLER
+                : evento.tipo === TipoEvento.DIPLOMADO
+                    ? TipoDeDocumento.CERTIFICADO_DIPLOMADO
                     : TipoDeDocumento.CERTIFICADO_CONGRESO,
         });
 
         const CORS_URL = process.env.CORS_URL || "";
 
         const data = {
-            imgAliada: evento.aliadoInstitucionImg || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
             nombreYApellido: `${usuario.primerNombre} ${usuario.primerApellido}`.trim(),
             cedula: usuario.cedula,
             lugarEvento: evento.lugar,
@@ -105,34 +102,38 @@ const getCertificado = async (_: unknown, args: GetCertificadoArgs) => {
             nombreDelEvento: evento.nombre,
             tipoEvento: evento.tipo,
             rol: usuario.rol,
-            presidente: {
-                nombreYApellido: presidente.usuario 
-                    ? `${presidente.usuario.primerNombre} ${presidente.usuario.primerApellido}`.trim() 
-                    : "Genaro Gonzalez",
-                firmaUrl: presidente.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
+            autoridades: {
+                presidente: {
+                    nombreYApellido: `${presidente.usuario.primerNombre} ${presidente.usuario.primerApellido}`.trim(),
+                    firmaUrl: presidente.firma
+                },
+                secretarioAcademico: {
+                    nombreYApellido: `${secretarioAcademico.usuario.primerNombre} ${secretarioAcademico.usuario.primerApellido}`.trim(),
+                    firmaUrl: secretarioAcademico.firma,
+                },
             },
-            vicepresidente: {
-                nombreYApellido: vicepresidente?.usuario 
-                    ? `${vicepresidente.usuario.primerNombre} ${vicepresidente.usuario.primerApellido}`.trim() 
-                    : "Genaro Gonzalez",
-                firmaUrl: vicepresidente?.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
-            },
-            directorEvento: {
-                nombreYApellido: directorEventos?.usuario 
-                    ? `${directorEventos.usuario.primerNombre} ${directorEventos.usuario.primerApellido}`.trim() 
-                    : "Genaro Gonzalez",
-                firmaUrl: directorEventos?.firma || "https://genarogg.github.io/media/genarogg/avatar-placehorder.jpg",
-            },
+            aliado: {
+                institucion: {
+                    logoAliado: evento.aliadoInstitucionImg,
+                    nombre: evento.aliadoInstitucionNombre,
+                },
+                autoridad: {
+                    nombre: evento.aliadoAutorizoNombreFirma?.trim(),
+                    firma: evento.aliadoAutorizoFirmaImg,
+                    cargo: evento.aliadoAutorizoCargo
+                }
+            }
+
         };
 
         const documento = await generatePDF({ template: CertificadoEvento, data });
 
         await crearBitacora({
             usuarioId: usuarioVerificado.id,
-            type: evento.tipo === TipoEvento.TALLER 
-                ? AccionesBitacora.GENERACION_CERTIFICADO_TALLER 
-                : evento.tipo === TipoEvento.DIPLOMADO 
-                    ? AccionesBitacora.GENERACION_CERTIFICADO_DIPLOMADO 
+            type: evento.tipo === TipoEvento.TALLER
+                ? AccionesBitacora.GENERACION_CERTIFICADO_TALLER
+                : evento.tipo === TipoEvento.DIPLOMADO
+                    ? AccionesBitacora.GENERACION_CERTIFICADO_DIPLOMADO
                     : AccionesBitacora.GENERACION_CERTIFICADO_CONGRESO,
         });
 
