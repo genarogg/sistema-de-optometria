@@ -97,12 +97,12 @@ export default function SuscribirmeSection({ onSubscriptionSuccess }: Suscribirm
                   <CreditCard className="h-5 w-5" />
                   {plan.tipo}
                 </CardTitle>
-                {planStatus && (
+                {/* {planStatus && (
                   <div className={`flex items-center gap-1 p-1.5 rounded-md ${planStatus.color === 'text-yellow-600' ? 'bg-yellow-50' : 'bg-green-50'}`}>
                     <planStatus.icon className={`h-4 w-4 ${planStatus.color}`} />
                     <span className={`text-sm font-medium ${planStatus.color}`}>{planStatus.text}</span>
                   </div>
-                )}
+                )} */}
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-3xl font-bold text-primary">{plan.costo > 0 ? `$ ${showMoney(plan.costo)}` : 'Sin Costo'}</div>
