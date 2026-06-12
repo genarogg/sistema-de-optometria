@@ -78,11 +78,8 @@ export function ImageCropper({ open, onOpenChange, imageSrc, onCropComplete }: I
     const container = containerRef.current
     const containerRect = container.getBoundingClientRect()
 
-    const imgNaturalWidth = img.naturalWidth
-    const imgNaturalHeight = img.naturalHeight
     const imgDisplayWidth = img.offsetWidth * zoom
     const imgDisplayHeight = img.offsetHeight * zoom
-
     const centerX = containerRect.width / 2
     const centerY = containerRect.height / 2
     const imgX = centerX - imgDisplayWidth / 2 + position.x
@@ -90,18 +87,22 @@ export function ImageCropper({ open, onOpenChange, imageSrc, onCropComplete }: I
     const cropX = centerX - cropSize / 2
     const cropY = centerY - cropSize / 2
 
-    const scaleX = imgNaturalWidth / imgDisplayWidth
-    const scaleY = imgNaturalHeight / imgDisplayHeight
+    const scaleX = img.naturalWidth / imgDisplayWidth
+    const scaleY = img.naturalHeight / imgDisplayHeight
     const sourceX = (cropX - imgX) * scaleX
     const sourceY = (cropY - imgY) * scaleY
     const sourceWidth = cropSize * scaleX
     const sourceHeight = cropSize * scaleY
 
+    // Clip circular — fondo queda transparente
+    ctx.beginPath()
+    ctx.arc(outputSize / 2, outputSize / 2, outputSize / 2, 0, Math.PI * 2)
+    ctx.clip()
+
     ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, outputSize, outputSize)
 
-    // Check if the original image is PNG to preserve transparency
-    const isPng = imageSrc.startsWith("data:image/png");
-    const croppedBase64 = isPng ? canvas.toDataURL("image/png") : canvas.toDataURL("image/jpeg", 0.9);
+    // PNG para preservar transparencia
+    const croppedBase64 = canvas.toDataURL("image/png")
     onCropComplete(croppedBase64)
     onOpenChange(false)
     handleReset()
@@ -195,34 +196,34 @@ export function ImageCropper({ open, onOpenChange, imageSrc, onCropComplete }: I
           </div>
         </div>
 
-     <DialogFooter>
-              <Button 
-                variant="outline" 
-                onClick={() => onOpenChange(false)}
-                style={{
-                  backgroundColor: "#ffffff",
-                  border: "1px solid #d1d5db",
-                  color: "#111827",
-                  cursor: "pointer"
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f3f4f6"}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#ffffff"}
-              >
-                Cancelar
-              </Button>
-              <Button 
-                onClick={handleCrop}
-                style={{
-                  backgroundColor: "#2563eb",
-                  color: "#ffffff",
-                  cursor: "pointer"
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#1d4ed8"}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#2563eb"}
-              >
-                Aplicar recorte
-              </Button>
-            </DialogFooter>
+        <DialogFooter>
+          <Button
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+            style={{
+              backgroundColor: "#ffffff",
+              border: "1px solid #d1d5db",
+              color: "#111827",
+              cursor: "pointer"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#f3f4f6"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#ffffff"}
+          >
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleCrop}
+            style={{
+              backgroundColor: "#2563eb",
+              color: "#ffffff",
+              cursor: "pointer"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#1d4ed8"}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#2563eb"}
+          >
+            Aplicar recorte
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

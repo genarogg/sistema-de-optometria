@@ -66,44 +66,47 @@ export function ImageCropper({ open, onOpenChange, imageSrc, onCropComplete }: I
   }
 
   const handleCrop = () => {
-    if (!imageRef.current || !containerRef.current) return
-    const canvas = document.createElement("canvas")
-    const ctx = canvas.getContext("2d")
-    if (!ctx) return
-    const outputSize = 400
-    canvas.width = outputSize
-    canvas.height = outputSize
+  if (!imageRef.current || !containerRef.current) return
+  const canvas = document.createElement("canvas")
+  const ctx = canvas.getContext("2d")
+  if (!ctx) return
+  const outputSize = 400
+  canvas.width = outputSize
+  canvas.height = outputSize
 
-    const img = imageRef.current
-    const container = containerRef.current
-    const containerRect = container.getBoundingClientRect()
+  const img = imageRef.current
+  const container = containerRef.current
+  const containerRect = container.getBoundingClientRect()
 
-    const imgNaturalWidth = img.naturalWidth
-    const imgNaturalHeight = img.naturalHeight
-    const imgDisplayWidth = img.offsetWidth * zoom
-    const imgDisplayHeight = img.offsetHeight * zoom
+  const imgDisplayWidth = img.offsetWidth * zoom
+  const imgDisplayHeight = img.offsetHeight * zoom
+  const centerX = containerRect.width / 2
+  const centerY = containerRect.height / 2
+  const imgX = centerX - imgDisplayWidth / 2 + position.x
+  const imgY = centerY - imgDisplayHeight / 2 + position.y
+  const cropX = centerX - cropSize / 2
+  const cropY = centerY - cropSize / 2
 
-    const centerX = containerRect.width / 2
-    const centerY = containerRect.height / 2
-    const imgX = centerX - imgDisplayWidth / 2 + position.x
-    const imgY = centerY - imgDisplayHeight / 2 + position.y
-    const cropX = centerX - cropSize / 2
-    const cropY = centerY - cropSize / 2
+  const scaleX = img.naturalWidth / imgDisplayWidth
+  const scaleY = img.naturalHeight / imgDisplayHeight
+  const sourceX = (cropX - imgX) * scaleX
+  const sourceY = (cropY - imgY) * scaleY
+  const sourceWidth = cropSize * scaleX
+  const sourceHeight = cropSize * scaleY
 
-    const scaleX = imgNaturalWidth / imgDisplayWidth
-    const scaleY = imgNaturalHeight / imgDisplayHeight
-    const sourceX = (cropX - imgX) * scaleX
-    const sourceY = (cropY - imgY) * scaleY
-    const sourceWidth = cropSize * scaleX
-    const sourceHeight = cropSize * scaleY
+  // Clip circular — fondo queda transparente
+  ctx.beginPath()
+  ctx.arc(outputSize / 2, outputSize / 2, outputSize / 2, 0, Math.PI * 2)
+  ctx.clip()
 
-    ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, outputSize, outputSize)
+  ctx.drawImage(img, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, outputSize, outputSize)
 
-    const croppedBase64 = canvas.toDataURL("image/jpeg", 0.9)
-    onCropComplete(croppedBase64)
-    onOpenChange(false)
-    handleReset()
-  }
+  // PNG para preservar transparencia
+  const croppedBase64 = canvas.toDataURL("image/png")
+  onCropComplete(croppedBase64)
+  onOpenChange(false)
+  handleReset()
+}
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
