@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, Users, UsersRound, CheckCircle, RefreshCw, Award, FileText } from 'lucide-react';
+import { Calendar, MapPin, UsersRound, CheckCircle, RefreshCw, Award, FileText } from 'lucide-react';
 import { TipoEvento, Rol, EstatusPagoEvento } from '@/global/enums';
 import { useAuthStore } from '@/context/auth/AuthContext';
 import { showMoney } from 'supermoney';

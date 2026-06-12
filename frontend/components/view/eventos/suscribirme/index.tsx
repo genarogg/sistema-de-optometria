@@ -10,10 +10,13 @@ import EventosPagination from './components/EventosPagination';
 import { getEventosActivosService } from './service/getEventosActivos.service';
 import useEventosActivosStore from './store/eventosActivosStore';
 import { useShallow } from 'zustand/react/shallow';
-import { EstatusPagoEvento } from '@/global/enums';
+import { EstatusPagoEvento, Rol } from '@/global/enums';
+import VisitanteModal from './components/VisitanteModal';
+import useUsuariosStore from '../../usuario/store/usuariosStore';
 
 export default function SuscribirmeEventosSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVisitanteModalOpen, setIsVisitanteModalOpen] = useState(false);
   const [selectedEvento, setSelectedEvento] = useState<any>(null);
 
   const { eventos, suscripcionesEventoUsuario, cargando, error, filtro, tipoFiltro, paginaActual, totalPaginas, setPaginaActual } = useEventosActivosStore(
@@ -30,9 +33,21 @@ export default function SuscribirmeEventosSection() {
     }))
   );
 
+  const { rolActual } = useUsuariosStore(
+    useShallow((state) => ({
+      rolActual: state.rolActual,
+    }))
+  );
+
   useEffect(() => {
     getEventosActivosService();
   }, [paginaActual]);
+
+  useEffect(() => {
+    if (rolActual === Rol.VISITANTE || rolActual === Rol.AGREMIADO_INSOLVENTE) {
+      setIsVisitanteModalOpen(true);
+    }
+  }, [rolActual]);
 
   // Create a map of eventoId to estatus
   const suscripcionesMap = useMemo(() => {
@@ -104,6 +119,13 @@ export default function SuscribirmeEventosSection() {
           getEventosActivosService();
         }}
       />
+
+      <VisitanteModal
+        isOpen={isVisitanteModalOpen}
+        rol={rolActual}
+        onClose={() => setIsVisitanteModalOpen(false)}
+      />
+
     </div>
   );
 }

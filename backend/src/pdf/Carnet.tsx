@@ -263,14 +263,15 @@ const ConstanciaSolvencia = ({ data }: any) => {
                             </Center>
                         </Col6>
 
-                        <Col6>
+                     <Col6>
                             <Center
                                 style={{
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
-                                    left: "9px"
-
+                                    left: "9px",
+   backgroundColor:"#ffffff6c",
+   borderRadius:5
                                 }}
                             >
                                 <Div style={{
@@ -292,14 +293,15 @@ const ConstanciaSolvencia = ({ data }: any) => {
                                     fontSize: "5px",
                                     top: "0",
                                     marginBottom: "0",
-                                    color: "#af7c28",
-                                    fontWeight: "bold"
+                                    color: "#000",
+                                    fontWeight: "bold",
+                                 
                                 }}>
                                     {dataFull.autoridad.nombreCompletos}<BR />{dataFull.autoridad.apellidosCompletos}
                                 </P>
                                 <View style={{
                                     width: "95%",
-                                    borderTop: '1px solid #af7c28',
+                                    borderTop: '1px solid #000',
                                     marginTop: 2,
                                     marginBottom: 2,
                                     fontWeight: "bold"
@@ -307,8 +309,9 @@ const ConstanciaSolvencia = ({ data }: any) => {
                                 <P style={{
                                     fontSize: "4px",
                                     marginBottom: "0px",
-                                    color: "#af7c28",
-                                    fontWeight: "bold"
+                                    color: "#000",
+                                    fontWeight: "bold",
+                                 
                                 }}>
                                     Presidente (a) del COV
                                 </P>

@@ -233,48 +233,56 @@ const CarnetEvento = ({ data }: any) => {
                         <Col6>
                             <Center
                                 style={{
-
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "center",
-
+                                    left: "9px",
+                                    backgroundColor: "#ffffff6c",
+                                    borderRadius: 5
                                 }}
                             >
                                 <Div style={{
-                                    position: "relative", width: "60px", height: "60px",
+                                    height: "40px",
+                                    width: "40px",
                                 }}>
+                                    <Img
 
+                                        src={dataFull.autoridad.firma}
+                                        style={{
 
-                                    <Div style={{
-                                        position: "absolute", bottom: "-16px", right: "-10px",
-                                        overflow: "hidden",
-                                        transform: "scale(.6)",
-                                        borderRadius: "35px"
-                                    }}>
-                                        <QRstyle
-                                            url={dataFull.urlQR}
-                                            size={90}
-
-
-                                            imageOptions={{
-                                                imageSize: 0.4,
-                                                margin: 2
-                                            }}
-                                            dotsOptions={{
-                                                type: "classy-rounded",
-                                                color: "#006BC5"
-                                            }}
-                                            cornersSquareOptions={{
-                                                type: "extra-rounded",
-                                                color: "#006BC5"
-                                            }}
-
-                                            backgroundOptions={{
-                                                color: "#fff"
-                                            }}
-                                        />
-                                    </Div>
+                                            marginBottom: "0px",
+                                            objectFill: "cover"
+                                        }}
+                                    />
                                 </Div>
+
+                                <P style={{
+                                    fontSize: "5px",
+                                    top: "0",
+                                    marginBottom: "0",
+                                    color: "#000",
+                                    fontWeight: "bold",
+
+                                }}>
+                                    {dataFull.autoridad.nombreCompletos}<BR />{dataFull.autoridad.apellidosCompletos}
+                                </P>
+                                <View style={{
+                                    width: "95%",
+                                    borderTop: '1px solid #000',
+                                    marginTop: 2,
+                                    marginBottom: 2,
+                                    fontWeight: "bold"
+                                }} />
+                                <P style={{
+                                    fontSize: "4px",
+                                    marginBottom: "0px",
+                                    color: "#000",
+                                    fontWeight: "bold",
+
+                                }}>
+                                    Presidente (a) del COV
+                                </P>
+
                             </Center>
                         </Col6>
 
