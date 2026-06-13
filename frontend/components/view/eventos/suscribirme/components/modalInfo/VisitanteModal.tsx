@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { Lock, Star, CalendarDays, X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Rol } from "@/global/enums"
-import "@/components/modalInfo/modalInfo.css"
+import "./modalInfo.css"
 
 interface VisitanteModalProps {
   isOpen: boolean
@@ -58,6 +58,7 @@ const VisitanteModal: React.FC<VisitanteModalProps> = ({ isOpen, rol, onClose })
     }
   }, [isOpen, rol])
 
+  console.log("VisitanteModal renderizado - isOpen:", isOpen, "rol:", rol, "mounted:", mounted, "active:", active)
   if (!mounted || (rol !== Rol.VISITANTE && rol !== Rol.AGREMIADO_INSOLVENTE)) return null
 
   const handleSuscripcion = () => {

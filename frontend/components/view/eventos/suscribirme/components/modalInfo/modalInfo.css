@@ -1,0 +1,226 @@
+/* Modal Overlay */
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Animated Background */
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.modal-background-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.2;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.8) 0%,
+    transparent 70%
+  );
+}
+
+/* Floating Particles */
+.modal-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Inner Content */
+.modal-inner-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  width: 100%;
+  min-height: 400px;
+  /* max-width: 95vw; */
+}
+
+/* Close Button */
+.modal-close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+  z-index: 20;
+}
+
+.modal-close-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Icon Wrapper */
+.modal-icon-wrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.modal-icon-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-icon-circle > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-icon-circle svg {
+  width: 48px;
+  height: 48px;
+}
+
+/* Pulse Rings */
+.modal-pulse-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  border: 2px solid;
+  pointer-events: none;
+}
+
+/* Subtitle Badge */
+.modal-subtitle-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.modal-subtitle-badge span {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Title */
+.modal-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Message */
+.modal-message {
+  text-align: center;
+  max-width: 400px;
+  line-height: 1.6;
+  opacity: 0.95;
+  font-size: 1rem;
+}
+
+/* Decorative Line */
+.modal-decorative-line {
+  height: 4px;
+  border-radius: 9999px;
+  margin-top: 1.5rem;
+  opacity: 0.5;
+}
+
+/* Button Wrapper */
+.modal-button-wrapper {
+  margin-top: 2rem;
+}
+
+/* Action Button */
+.modal-action-button {
+  padding: 0.625rem 2rem;
+  border-radius: 9999px;
+  border: none;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-action-button:active {
+  transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .modal-inner-content {
+    padding: 2rem 1.5rem;
+    min-height: 350px;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .modal-message {
+    font-size: 0.9375rem;
+  }
+
+  .modal-icon-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .modal-icon-circle svg {
+    width: 40px;
+    height: 40px;
+  }
+}
