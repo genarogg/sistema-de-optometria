@@ -20,14 +20,17 @@ import TablaUsuarios from "./components/TablaUsuarios";
 import TarjetaUsuario from "./components/TarjetaUsuario";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { isProd } from "@/env";
+import { useAuthStore } from "@/context/auth/AuthContext";
 
 const UsuariosView: React.FC = () => {
   const usuarios = useUsuariosStore((s) => s.usuarios);
-  const rolActual = useUsuariosStore((s) => s.rolActual);
+
   const cargando = useUsuariosStore((s) => s.cargando);
   const error = useUsuariosStore((s) => s.error);
 
   const isMobile = useIsMobile();
+
+  const rolActual = useAuthStore((s) => s.usuario?.rol ?? Rol.ADMINISTRADOR);
 
   useEffect(() => {
     getUsuariosService({});
@@ -51,24 +54,7 @@ const UsuariosView: React.FC = () => {
             )}
           </div>
 
-          {/* Selector de rol */}
-          {/* {mostrarSelectorRol && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground shrink-0">Ver como:</span>
-              <Select value={rolActual} onValueChange={handleRolChange}>
-                <SelectTrigger className="w-[160px]">
-                  <SelectValue placeholder="Selecciona rol" />
-                </SelectTrigger>
-                <SelectContent>
-                  {rolesSeleccionables.map((rol) => (
-                    <SelectItem key={rol} value={rol}>
-                      {rol}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )} */}
+       
         </div>
 
         {/* Buscador */}

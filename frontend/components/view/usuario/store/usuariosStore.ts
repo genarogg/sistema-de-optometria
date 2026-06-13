@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { Rol } from "@/global/enums";
 
 
+
 export interface Usuario {
   id: string;
   primerNombre: string;
@@ -27,14 +28,14 @@ export interface Usuario {
 
 interface UsuariosState {
   usuarios: Usuario[];
-  rolActual: Rol;
+
   filtro: string;
   cargando: boolean;
   error: string | null;
 
   // Setters
   setUsuarios: (usuarios: Usuario[]) => void;
-  setRolActual: (rol: Rol) => void;
+
   setFiltro: (filtro: string) => void;
   setCargando: (cargando: boolean) => void;
   setError: (error: string | null) => void;
@@ -45,13 +46,13 @@ interface UsuariosState {
 
 const useUsuariosStore = create<UsuariosState>((set) => ({
   usuarios: [],
-  rolActual: Rol.VISITANTE,
+
   filtro: "",
   cargando: false,
   error: null,
 
   setUsuarios: (usuarios) => set({ usuarios }),
-  setRolActual: (rolActual) => set({ rolActual }),
+
   setFiltro: (filtro) => set({ filtro }),
   setCargando: (cargando) => set({ cargando }),
   setError: (error) => set({ error }),
