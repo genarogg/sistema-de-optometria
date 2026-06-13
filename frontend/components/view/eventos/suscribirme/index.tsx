@@ -12,12 +12,14 @@ import useEventosActivosStore from './store/eventosActivosStore';
 import { useShallow } from 'zustand/react/shallow';
 import { EstatusPagoEvento, Rol } from '@/global/enums';
 import VisitanteModal from './components/modalInfo/VisitanteModal';
-import useUsuariosStore from '../../usuario/store/usuariosStore';
+import { useAuthStore } from '@/context/auth/AuthContext';
 
 export default function SuscribirmeEventosSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isVisitanteModalOpen, setIsVisitanteModalOpen] = useState(false);
   const [selectedEvento, setSelectedEvento] = useState<any>(null);
+
+  const { usuario } = useAuthStore();
 
   const { eventos, suscripcionesEventoUsuario, cargando, error, filtro, tipoFiltro, paginaActual, totalPaginas, setPaginaActual } = useEventosActivosStore(
     useShallow((state) => ({
@@ -33,21 +35,20 @@ export default function SuscribirmeEventosSection() {
     }))
   );
 
-  const { rolActual } = useUsuariosStore(
-    useShallow((state) => ({
-      rolActual: state.rolActual,
-    }))
-  );
+  if (!usuario) {
+    return null;
+  }
+
 
   useEffect(() => {
     getEventosActivosService();
   }, [paginaActual]);
 
   useEffect(() => {
-    if (rolActual === Rol.VISITANTE || rolActual === Rol.AGREMIADO_INSOLVENTE) {
+    if (usuario.rol === Rol.VISITANTE || usuario.rol === Rol.AGREMIADO_INSOLVENTE) {
       setIsVisitanteModalOpen(true);
     }
-  }, [rolActual]);
+  }, [usuario.rol]);
 
   // Create a map of eventoId to estatus
   const suscripcionesMap = useMemo(() => {
@@ -59,8 +60,8 @@ export default function SuscribirmeEventosSection() {
   }, [suscripcionesEventoUsuario]);
 
   const filteredEventos = eventos.filter(evento => {
-    const matchesFiltro = !filtro || 
-      evento.nombre.toLowerCase().includes(filtro.toLowerCase()) || 
+    const matchesFiltro = !filtro ||
+      evento.nombre.toLowerCase().includes(filtro.toLowerCase()) ||
       evento.lugar.toLowerCase().includes(filtro.toLowerCase());
     const matchesTipo = !tipoFiltro || evento.tipo === tipoFiltro;
     return matchesFiltro && matchesTipo;
@@ -122,7 +123,7 @@ export default function SuscribirmeEventosSection() {
 
       <VisitanteModal
         isOpen={isVisitanteModalOpen}
-        rol={rolActual}
+        rol={usuario.rol}
         onClose={() => setIsVisitanteModalOpen(false)}
       />
 
