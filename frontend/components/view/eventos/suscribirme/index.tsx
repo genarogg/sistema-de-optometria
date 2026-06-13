@@ -11,7 +11,7 @@ import { getEventosActivosService } from './service/getEventosActivos.service';
 import useEventosActivosStore from './store/eventosActivosStore';
 import { useShallow } from 'zustand/react/shallow';
 import { EstatusPagoEvento, Rol } from '@/global/enums';
-import VisitanteModal from './components/VisitanteModal';
+import VisitanteModal from './components/modalInfo/VisitanteModal';
 import useUsuariosStore from '../../usuario/store/usuariosStore';
 
 export default function SuscribirmeEventosSection() {

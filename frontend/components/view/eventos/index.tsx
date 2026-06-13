@@ -44,7 +44,7 @@ export default function EventosView() {
 
       <CardContent className="flex flex-col gap-4 pt-4">
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          {isAuthenticated && (
+          {isSuperUsuarioOrAdmin && (
 
             <TabsList className="flex w-full">
               <TabsTrigger value="suscribirme">Suscribirme</TabsTrigger>
