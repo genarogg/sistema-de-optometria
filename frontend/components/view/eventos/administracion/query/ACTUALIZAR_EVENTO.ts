@@ -11,6 +11,7 @@ const ACTUALIZAR_EVENTO = gql`
     $tipo: TipoEvento
     $descuentoEstudiante: Int
     $descuentoProfesor: Int
+    $descuentoAgremiado: Int
     $vigencia: VigenciaEvento
     $ponentes: [PonenteInput!]
     $aliadoInstitucionImg: String
@@ -29,6 +30,7 @@ const ACTUALIZAR_EVENTO = gql`
       tipo: $tipo
       descuentoEstudiante: $descuentoEstudiante
       descuentoProfesor: $descuentoProfesor
+      descuentoAgremiado: $descuentoAgremiado
       vigencia: $vigencia
       ponentes: $ponentes
       aliadoInstitucionImg: $aliadoInstitucionImg
@@ -47,6 +49,7 @@ const ACTUALIZAR_EVENTO = gql`
         costo
         descuentoEstudiante
         descuentoProfesor
+        descuentoAgremiado
         tipo
         vigencia
         aliadoInstitucionImg

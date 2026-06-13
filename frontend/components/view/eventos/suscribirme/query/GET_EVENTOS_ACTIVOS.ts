@@ -26,6 +26,7 @@ const GET_EVENTOS_ACTIVOS = gql`
           costo
           descuentoEstudiante
           descuentoProfesor
+          descuentoAgremiado
           tipo
           vigencia
           aliadoInstitucionImg

@@ -15,6 +15,7 @@ interface Evento {
   costo: number;
   descuentoEstudiante: number;
   descuentoProfesor: number;
+  descuentoAgremiado: number;
   tipo: string;
   vigencia: string;
   aliadoInstitucionImg?: string;
@@ -106,6 +107,9 @@ export default function TarjetaEvento({ eventos, onEdit, onVerPonentes }: Tarjet
                   )}
                   {evento.descuentoProfesor > 0 && (
                     <span>Profesores: {evento.descuentoProfesor}%</span>
+                  )}
+                   {evento.descuentoAgremiado > 0 && (
+                    <span>Agremiados: {evento.descuentoAgremiado}%</span>
                   )}
                 </div>
               </div>

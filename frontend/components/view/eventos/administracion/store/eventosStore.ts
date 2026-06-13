@@ -8,6 +8,7 @@ interface Evento {
   costo: number;
   descuentoEstudiante: number;
   descuentoProfesor: number;
+  descuentoAgremiado: number;
   tipo: string;
   vigencia: string;
   aliadoInstitucionImg?: string

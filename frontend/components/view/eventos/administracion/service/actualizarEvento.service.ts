@@ -18,6 +18,7 @@ interface ActualizarEventoParams {
   tipo?: string;
   descuentoEstudiante?: number;
   descuentoProfesor?: number;
+  descuentoAgremiado?: number;
   vigencia?: string;
   ponentes?: PonenteInput[];
   aliadoInstitucionImg?: string;

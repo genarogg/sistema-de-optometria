@@ -93,6 +93,7 @@ CREATE TABLE "Evento" (
     "tipo" "TipoEvento" NOT NULL,
     "descuentoEstudiante" INTEGER NOT NULL DEFAULT 0,
     "descuentoProfesor" INTEGER NOT NULL DEFAULT 0,
+    "descuentoAgremiado" INTEGER NOT NULL DEFAULT 0,
     "vigencia" "VigenciaEvento" NOT NULL DEFAULT 'VIGENTE',
     "usuarioId" INTEGER NOT NULL,
     "aliadoInstitucionImg" TEXT,

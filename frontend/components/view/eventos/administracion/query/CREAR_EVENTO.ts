@@ -11,6 +11,7 @@ const CREAR_EVENTO = gql`
     $ponentes: [PonenteInput!]
     $descuentoEstudiante: Int
     $descuentoProfesor: Int
+    $descuentoAgremiado: Int
     $vigencia: VigenciaEvento
     $aliadoInstitucionImg: String
     $aliadoInstitucionNombre: String
@@ -28,6 +29,7 @@ const CREAR_EVENTO = gql`
       ponentes: $ponentes
       descuentoEstudiante: $descuentoEstudiante
       descuentoProfesor: $descuentoProfesor
+      descuentoAgremiado: $descuentoAgremiado
       vigencia: $vigencia
       aliadoInstitucionImg: $aliadoInstitucionImg
       aliadoInstitucionNombre: $aliadoInstitucionNombre
@@ -45,6 +47,7 @@ const CREAR_EVENTO = gql`
         costo
         descuentoEstudiante
         descuentoProfesor
+        descuentoAgremiado
         tipo
         vigencia
         aliadoInstitucionImg

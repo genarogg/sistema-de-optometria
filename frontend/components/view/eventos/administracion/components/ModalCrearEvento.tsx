@@ -114,6 +114,7 @@ export default function ModalCrearEvento({
   const [tipo, setTipo] = useState<TipoEvento | ''>('');
   const [descuentoEstudiante, setDescuentoEstudiante] = useState(0);
   const [descuentoProfesor, setDescuentoProfesor] = useState(0);
+  const [descuentoAgremiado, setDescuentoAgremiado] = useState(0);
   const [vigencia, setVigencia] = useState<VigenciaEvento | ''>(VigenciaEvento.VIGENTE);
   const [ponentes, setPonentes] = useState<Ponente[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -231,6 +232,7 @@ export default function ModalCrearEvento({
     setTipo('');
     setDescuentoEstudiante(0);
     setDescuentoProfesor(0);
+    setDescuentoAgremiado(0);
     setVigencia('');
     setPonentes([]);
     setBusquedaCedula('');
@@ -250,6 +252,7 @@ export default function ModalCrearEvento({
       setCosto(evento.costo);
       setDescuentoEstudiante(evento.descuentoEstudiante);
       setDescuentoProfesor(evento.descuentoProfesor);
+      setDescuentoAgremiado(evento.descuentoAgremiado ?? 0);
       setVigencia(evento.vigencia);
       setAliadoInstitucionImg(evento.aliadoInstitucionImg || '');
       setAliadoInstitucionNombre(evento.aliadoInstitucionNombre || '');
@@ -292,6 +295,7 @@ export default function ModalCrearEvento({
         tipo,
         descuentoEstudiante,
         descuentoProfesor,
+        descuentoAgremiado,
         vigencia: vigencia || undefined,
         ponentes: ponentesData,
         aliadoInstitucionImg: aliadoInstitucionImg || undefined,
@@ -493,6 +497,20 @@ export default function ModalCrearEvento({
                   type="number"
                   value={descuentoProfesor}
                   onChange={(e) => setDescuentoProfesor(Number(e.target.value))}
+                  disabled={isLoading}
+                  placeholder="0"
+                  min="0"
+                  max="100"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="descuentoAgremiado">Descuento agremiado (%)</Label>
+                <Input
+                  id="descuentoAgremiado"
+                  type="number"
+                  value={descuentoAgremiado}
+                  onChange={(e) => setDescuentoAgremiado(Number(e.target.value))}
                   disabled={isLoading}
                   placeholder="0"
                   min="0"

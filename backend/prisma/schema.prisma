@@ -204,6 +204,7 @@ model Evento {
   tipo                TipoEvento
   descuentoEstudiante Int            @default(0)
   descuentoProfesor   Int            @default(0)
+  descuentoAgremiado  Int            @default(0)
   vigencia            VigenciaEvento @default(VIGENTE)
   usuarioId           Int
   Usuario             Usuario        @relation(fields: [usuarioId], references: [id])

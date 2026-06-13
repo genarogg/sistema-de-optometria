@@ -55,7 +55,7 @@ const suscribirseEvento = async (_: unknown, args: SuscribirseEventoArgs) => {
         } else if (usuario.rol === Rol.PROFESOR) {
             descuento = evento.descuentoProfesor;
         } else if (usuario.rol === Rol.AGREMIADO_SOLVENTE) {
-            descuento = 50;
+            descuento = evento.descuentoAgremiado;
         }
 
         const precioAlSuscripcion = Math.round(evento.costo * (1 - descuento / 100));

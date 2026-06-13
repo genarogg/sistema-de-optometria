@@ -11,6 +11,7 @@ type Evento {
   tipo: TipoEvento!
   descuentoEstudiante: Int!
   descuentoProfesor: Int!
+  descuentoAgremiado: Int!
   vigencia: VigenciaEvento!
   usuarioId: Int!
   usuario: Usuario
@@ -135,6 +136,7 @@ extend type Mutation {
     tipo: TipoEvento!
     descuentoEstudiante: Int
     descuentoProfesor: Int
+    descuentoAgremiado: Int
     vigencia: VigenciaEvento
     ponentes: [PonenteInput!]
     aliadoInstitucionImg: String
@@ -154,6 +156,7 @@ extend type Mutation {
     tipo: TipoEvento
     descuentoEstudiante: Int
     descuentoProfesor: Int
+    descuentoAgremiado: Int
     vigencia: VigenciaEvento
     ponentes: [PonenteInput!]
     aliadoInstitucionImg: String

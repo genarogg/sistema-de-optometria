@@ -15,6 +15,7 @@ interface CrearEventoArgs {
     tipo: TipoEvento;
     descuentoEstudiante?: number;
     descuentoProfesor?: number;
+    descuentoAgremiado?: number;
     vigencia?: VigenciaEvento;
     ponentes?: PonenteInput[];
     aliadoInstitucionImg?: string;
@@ -36,6 +37,7 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
         tipo,
         descuentoEstudiante = 0, 
         descuentoProfesor = 0, 
+        descuentoAgremiado = 0,
         vigencia = VigenciaEvento.VIGENTE, 
         ponentes = [],
         aliadoInstitucionImg,
@@ -73,6 +75,7 @@ const crearEvento = async (_: unknown, args: CrearEventoArgs) => {
                 tipo,
                 descuentoEstudiante,
                 descuentoProfesor,
+                descuentoAgremiado,
                 vigencia,
                 usuarioId: usuario.id,
                 aliadoInstitucionImg,

@@ -16,6 +16,7 @@ interface ActualizarEventoArgs {
     tipo?: TipoEvento;
     descuentoEstudiante?: number;
     descuentoProfesor?: number;
+    descuentoAgremiado?: number;
     vigencia?: VigenciaEvento;
     ponentes?: PonenteInput[];
     aliadoInstitucionImg?: string;
@@ -38,6 +39,7 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
         tipo,
         descuentoEstudiante, 
         descuentoProfesor, 
+        descuentoAgremiado,
         vigencia, 
         ponentes,
         aliadoInstitucionImg,
@@ -82,6 +84,7 @@ const actualizarEvento = async (_: unknown, args: ActualizarEventoArgs) => {
             tipo,
             descuentoEstudiante,
             descuentoProfesor,
+            descuentoAgremiado,
             vigencia,
             aliadoInstitucionImg,
             aliadoInstitucionNombre,
